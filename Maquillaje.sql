@@ -743,3 +743,10 @@ BEGIN
 	WHERE [cat_Id] = @cat_Id
 END
 
+
+--/*Insertar Cliente*/
+--GO
+--CREATE OR ALTER PROCEDURE UDP_tbClientes_Insert
+--@cli_Nombres NVARCHAR(200),
+--@cli_Apellidos NVARCHAR(200),
+--@cli_Identidad NVARCHAR(13),

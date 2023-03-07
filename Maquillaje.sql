@@ -7,14 +7,14 @@ GO
 
 --************CREACION TABLA ROLES******************--
 CREATE TABLE tbRoles(
-	rol_Id					INT IDENTITY,
-	rol_Nombre				NVARCHAR(100) NOT NULL,
-	rol_UsuCreacion			INT NOT NULL,
-	rol_FechaCreacion		DATETIME NOT NULL,
-	rol_UsuModificacion		INT,
-	rol_FechaModificacion	DATETIME,
-	rol_Estado				BIT NOT NULL
-	CONSTRAINT PK_dbo_tbRoles_rol_Id PRIMARY KEY(rol_Id)
+	role_Id					INT IDENTITY,
+	role_Nombre				NVARCHAR(100) NOT NULL,
+	role_UsuCreacion			INT NOT NULL,
+	role_FechaCreacion		DATETIME NOT NULL,
+	role_UsuModificacion		INT,
+	role_FechaModificacion	DATETIME,
+	role_Estado				BIT NOT NULL
+	CONSTRAINT PK_dbo_tbRoles_role_Id PRIMARY KEY(role_Id)
 );
 GO
 
@@ -35,17 +35,17 @@ GO
 
 --***********CREACION TABLA ROLES/PANTALLA*****************---
 CREATE TABLE tbPantallasPorRoles(
-	pantrol_Id					INT IDENTITY,
-	pantrol_Identificador		NVARCHAR(100) NOT NULL,
-	rol_Id						INT NOT NULL,
+	pantrole_Id					INT IDENTITY,
+	pantrole_Identificador		NVARCHAR(100) NOT NULL,
+	role_Id						INT NOT NULL,
 	pant_Id						INT NOT NULL,
-	pantrol_UsuCreacion			INT NOT NULL,
-	pantrol_FechaCreacion		DATETIME NOT NULL,
-	pantrol_UsuModificacion		INT,
-	pantrol_FechaModificacion	DATETIME,
-	pantrol_Estado				BIT NOT NULL
-	CONSTRAINT PK_tbPantallasPorRoles_pantrol_Id PRIMARY KEY(pantrol_Id),
-	CONSTRAINT FK_tbPantallasPorRoles_tbRoles_rol_Id FOREIGN KEY(rol_Id) REFERENCES tbRoles(rol_Id),
+	pantrole_UsuCreacion			INT NOT NULL,
+	pantrole_FechaCreacion		DATETIME NOT NULL,
+	pantrole_UsuModificacion		INT,
+	pantrole_FechaModificacion	DATETIME,
+	pantrole_Estado				BIT NOT NULL
+	CONSTRAINT PK_tbPantallasPorRoles_pantrole_Id PRIMARY KEY(pantrole_Id),
+	CONSTRAINT FK_tbPantallasPorRoles_tbRoles_role_Id FOREIGN KEY(role_Id) REFERENCES tbRoles(role_Id),
 	CONSTRAINT FK_tbPantallasPorRoles_tbPantallas_pant_Id FOREIGN KEY(pant_Id)	REFERENCES tbPantallas(pant_Id)
 );
 GO
@@ -53,11 +53,11 @@ GO
 
 --****************CREACION TABLA USUARIOS****************--
 CREATE TABLE tbUsuarios(
-	usu_id					INT IDENTITY(1,1),
+	usu_Id					INT IDENTITY(1,1),
 	usu_NombreUsuario		NVARCHAR(100) NOT NULL,
 	usu_Contrasena			NVARCHAR(MAX) NOT NULL,
 	usu_EsAdmin				BIT,
-	rol_Id					INT,
+	role_Id					INT,
 	emp_Id					INT,
 	usu_UsuCreacion			INT,
 	usu_FechaCreacion		DATETIME NOT NULL,
@@ -71,14 +71,14 @@ CREATE TABLE tbUsuarios(
 GO
 CREATE OR ALTER PROCEDURE UDP_InsertUsuario
 	@usu_NombreUsuario NVARCHAR(100),	@usu_Contrasena NVARCHAR(200),
-	@usu_EsAdmin BIT,					@rol_Id INT, 
+	@usu_EsAdmin BIT,					@role_Id INT, 
 	@emp_Id INT										
 AS
 BEGIN
 	DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @usu_Contrasena));
 
-	INSERT tbUsuarios(usu_NombreUsuario, usu_Contrasena, usu_EsAdmin, rol_Id, emp_Id, usu_UsuCreacion, usu_FechaCreacion, usu_Estado)
-	VALUES(@usu_NombreUsuario, @password, @usu_EsAdmin, @rol_Id, @emp_Id, @emp_Id, GETDATE(), 1);
+	INSERT tbUsuarios(usu_NombreUsuario, usu_Contrasena, usu_EsAdmin, role_Id, emp_Id, usu_UsuCreacion, usu_FechaCreacion, usu_Estado)
+	VALUES(@usu_NombreUsuario, @password, @usu_EsAdmin, @role_Id, @emp_Id, @emp_Id, GETDATE(), 1);
 END;
 
 
@@ -90,14 +90,14 @@ EXEC UDP_InsertUsuario 'aless65', 'bonjour', 1, NULL, 1;
 --********* AGREGAR CAMPOS AUDITORIA**************--
 GO
 ALTER TABLE tbRoles
-ADD CONSTRAINT FK_tbRoles_tbUsuarios_rol_UsuCreacion_usu_id	FOREIGN KEY(rol_UsuCreacion) REFERENCES tbUsuarios(usu_id),
-	CONSTRAINT FK_tbRoles_tbUsuarios_rol_UsuModificacion_usu_id	FOREIGN KEY(rol_UsuModificacion) REFERENCES tbUsuarios(usu_id);
+ADD CONSTRAINT FK_tbRoles_tbUsuarios_role_UsuCreacion_usu_id	FOREIGN KEY(role_UsuCreacion) REFERENCES tbUsuarios(usu_id),
+	CONSTRAINT FK_tbRoles_tbUsuarios_role_UsuModificacion_usu_id	FOREIGN KEY(role_UsuModificacion) REFERENCES tbUsuarios(usu_id);
 
 
 
 
 GO
-INSERT INTO tbRoles(rol_Nombre, rol_UsuCreacion, rol_FechaCreacion, rol_Estado)
+INSERT INTO tbRoles(role_Nombre, role_UsuCreacion, role_FechaCreacion, role_Estado)
 VALUES ('Recursos humanos', 1, GETDATE(), 1),
 	   ('Vendedor', 1, GETDATE(), 1)
 
@@ -110,7 +110,7 @@ GO
 ALTER TABLE tbUsuarios
 ADD CONSTRAINT FK_tbUsuarios_tbUsuarios_usu_UsuCreacion_usu_id FOREIGN KEY(usu_UsuCreacion) REFERENCES tbUsuarios(usu_id),
 	CONSTRAINT FK_tbUsuarios_tbUsuarios_usu_UsuModificacion_usu_id FOREIGN KEY(usu_UsuModificacion) REFERENCES tbUsuarios(usu_id),
-	CONSTRAINT FK_tbUsuarios_tbRoles_rol_Id FOREIGN KEY(rol_Id) REFERENCES tbRoles(rol_Id)
+	CONSTRAINT FK_tbUsuarios_tbRoles_role_Id FOREIGN KEY(role_Id) REFERENCES tbRoles(role_Id)
 
 
 GO
@@ -477,7 +477,7 @@ BEGIN
 
 	DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usu_Contrasena);
 
-	SELECT [usu_id], [usu_NombreUsuario] [rol_Id]
+	SELECT [usu_id], [usu_NombreUsuario] [role_Id]
 	FROM [dbo].[tbUsuarios]
 	WHERE [usu_Contrasena] = @contraEncriptada
 	AND [usu_NombreUsuario] = @usu_Nombre

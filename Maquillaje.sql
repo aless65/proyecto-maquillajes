@@ -1027,3 +1027,19 @@ BEGIN
 	WHERE [user_NombreUsuario] = @user_NombreUsuario
 	AND [user_Contrasena] = @user_ContrasenaEncript
 END
+
+GO
+EXEC UDP_maqu_tbCategorias_INSERT 'Prebase de maquillaje', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Base de maquillaje', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Corrector de maquillaje', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Iluminador', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Brochas de maquillaje', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Pintalabios', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Pintalabios mate', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Brillo de labios', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Pintalabios líquido', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Perfilador de labios', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Sombra de ojos', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Máscara de pestañas', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Eyeliner', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Diseño de cejas', 1

@@ -869,122 +869,113 @@ CREATE OR ALTER PROCEDURE UDP_maqu_tbFacturas_Delete
 @fact_Id INT
 AS
 BEGIN
+	--Borrado Logico de la factura
+	UPDATE [maqu].[tbFacturas] 
+	SET fact_Estado = 0 
+	WHERE fact_Id = @fact_Id
 
---Borrado Logico de la factura
-UPDATE [maqu].[tbFacturas] 
-SET fact_Estado = 0 
-WHERE fact_Id = @fact_Id
-
---Borrado de las facturas detalles por fact_Id
-DELETE FROM maqu.tbFacturasDetalles WHERE fact_Id = @fact_Id
+	--Borrado de las facturas detalles por fact_Id
+	DELETE FROM maqu.tbFacturasDetalles WHERE fact_Id = @fact_Id
 END
 
 /*Insertar Productos*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProductos_Insert
-@prod_Nombre			NVARCHAR(100),
-@prod_PrecioUni			DECIMAL (18,2),
-@cate_Id				INT,
-@prov_Id				INT,
-@prod_Stock				INT,
-@prod_UsuCreacion		INT
+	@prod_Nombre			NVARCHAR(100),
+	@prod_PrecioUni			DECIMAL (18,2),
+	@cate_Id				INT,
+	@prov_Id				INT,
+	@prod_Stock				INT,
+	@prod_UsuCreacion		INT
 AS
 BEGIN
-INSERT INTO [maqu].[tbProductos](prod_Nombre, 
-prod_PrecioUni, cate_Id, 
-prov_Id, prod_Stock, 
-prod_UsuCreacion, prod_FechaCreacion, 
-prod_FechaModificacion, prod_UsuModificacion, 
-prod_Estado)
-VALUES(@prod_Nombre,@prod_PrecioUni,
-@cate_Id,@prov_Id,
-@prod_Stock,@prod_UsuCreacion,
-GETDATE(),NULL,
-NULL,1)
+	INSERT INTO [maqu].[tbProductos](prod_Nombre, 
+	prod_PrecioUni, cate_Id, 
+	prov_Id, prod_Stock, 
+	prod_UsuCreacion)
+	VALUES(@prod_Nombre,@prod_PrecioUni,
+	@cate_Id,@prov_Id,
+	@prod_Stock,@prod_UsuCreacion)
 END
 
 /*Editar Producto*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProducto_Update
-@prod_Nombre			NVARCHAR(100),
-@prod_PrecioUni			DECIMAL(18,2),
-@cate_Id				INT,
-@prov_Id				INT,
-@prod_Stock				INT,
-@prod_UsuModificacion   INT
+	@prod_Id				INT,
+	@prod_Nombre			NVARCHAR(100),
+	@prod_PrecioUni			DECIMAL(18,2),
+	@cate_Id				INT,
+	@prov_Id				INT,
+	@prod_Stock				INT,
+	@prod_UsuModificacion   INT
 AS
 BEGIN
-UPDATE [maqu].[tbProductos]
-SET prod_Nombre = @prod_Nombre,
-prod_PrecioUni = @prod_PrecioUni,
-cate_Id = @cate_Id,
-prov_Id = @prov_Id,
-prod_Stock = @prod_Stock,
-prod_UsuModificacion = @prod_UsuModificacion,
-prod_FechaModificacion = GETDATE()
+	UPDATE [maqu].[tbProductos]
+	SET prod_Nombre = @prod_Nombre,
+		prod_PrecioUni = @prod_PrecioUni,
+		cate_Id = @cate_Id,
+		prov_Id = @prov_Id,
+		prod_Stock = @prod_Stock,
+		prod_UsuModificacion = @prod_UsuModificacion,
+		prod_FechaModificacion = GETDATE()
+	WHERE prod_Id = @prod_Id
 END
 
 /*Eliminar Producto*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProductos_Delete
-@prod_Id INT
+	@prod_Id INT
 AS
 BEGIN
-UPDATE [maqu].[tbProductos]
-SET prod_Estado = 0
-WHERE prod_Id = @prod_Id
+	UPDATE [maqu].[tbProductos]
+	SET prod_Estado = 0
+	WHERE prod_Id = @prod_Id
 END
 
-
-SELECT * FROM [maqu].[tbProveedores]
 
 /*Insertar Proveedores*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_Insert
-@prov_Nombre					NVARCHAR(200),
-@prov_CorreoElectronico			NVARCHAR(150),
-@prov_Telefono					NVARCHAR(15),
-@prov_UsuCreacion				INT
+	@prov_Nombre					NVARCHAR(200),
+	@prov_CorreoElectronico			NVARCHAR(150),
+	@prov_Telefono					NVARCHAR(15),
+	@prov_UsuCreacion				INT
 AS
 BEGIN
-INSERT INTO [maqu].[tbProveedores](prov_Nombre, prov_CorreoElectronico, 
-prov_Telefono, prov_UsuCreacion, 
-prov_FechaCreacion, prov_UsuModificacion, 
-prov_FechaModificacion, prov_Estado)
-VALUES(@prov_Nombre,@prov_CorreoElectronico,
-@prov_Telefono,@prov_UsuCreacion,
-GETDATE(),NULL,
-NULL,1)
+	INSERT INTO [maqu].[tbProveedores](prov_Nombre, prov_CorreoElectronico, 
+				prov_Telefono, prov_UsuCreacion)
+	VALUES(@prov_Nombre,@prov_CorreoElectronico,
+			@prov_Telefono,@prov_UsuCreacion)
 END
 
 /*Editar proveedores*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_Update
-@prov_Id					INT,
-@prov_Nombre				NVARCHAR(100),
-@prov_CorreoElectronico		NVARCHAR(150),
-@prov_Telefono				NVARCHAR(15),
-@prov_UsuModificacion		INT
+	@prov_Id					INT,
+	@prov_Nombre				NVARCHAR(100),
+	@prov_CorreoElectronico		NVARCHAR(150),
+	@prov_Telefono				NVARCHAR(15),
+	@prov_UsuModificacion		INT
 AS
 BEGIN
-UPDATE [maqu].[tbProveedores]
-SET prov_Nombre = @prov_Nombre,
-prov_CorreoElectronico = @prov_CorreoElectronico,
-prov_Telefono = @prov_Telefono,
-prov_UsuModificacion = @prov_UsuModificacion,
-prov_FechaModificacion = GETDATE()
-WHERE prov_Id = @prov_Id
+	UPDATE [maqu].[tbProveedores]
+	SET prov_Nombre = @prov_Nombre,
+		prov_CorreoElectronico = @prov_CorreoElectronico,
+		prov_Telefono = @prov_Telefono,
+		prov_UsuModificacion = @prov_UsuModificacion,
+		prov_FechaModificacion = GETDATE()
+	WHERE prov_Id = @prov_Id
 END
 
 /*Eliminar Proveedores*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_DELETE 
-@prov_Id INT
+	@prov_Id INT
 AS
 BEGIN
-UPDATE [maqu].[tbProveedores]
-SET prov_Estado = 0
-WHERE prov_Id = @prov_Id
+	UPDATE [maqu].[tbProveedores]
+	SET prov_Estado = 0
+	WHERE prov_Id = @prov_Id
 END
 
 --************USUARIOS******************--
@@ -1016,4 +1007,23 @@ BEGIN
 	UPDATE acce.tbUsuarios
 	SET user_Estado = 0
 	WHERE user_Id = @user_Id
+END
+
+--************INICIAR SESIÓN******************--
+
+
+/*Login*/
+GO
+CREATE OR ALTER PROCEDURE UDP_Login
+	@user_NombreUsuario	NVARCHAR(100),
+	@user_Contrasena	NVARCHAR(100)
+AS
+BEGIN
+	DECLARE @user_ContrasenaEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @user_Contrasena)
+
+	SELECT [empe_Nombres], [empe_Apellidos], [role_Id], [user_id]
+	FROM [acce].[tbUsuarios] T1 INNER JOIN [maqu].[tbEmpleados] T2
+	ON T1.empe_Id = T2.empe_Id
+	WHERE [user_NombreUsuario] = @user_NombreUsuario
+	AND [user_Contrasena] = @user_ContrasenaEncript
 END

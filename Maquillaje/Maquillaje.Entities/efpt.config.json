@@ -1,0 +1,97 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "MaquillajeContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entities",
+   "ProjectRootNamespace": "Maquillaje.Entities",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 2,
+   "Tables": [
+      {
+         "Name": "[dbo].[tbCategorias]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbClientes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbDepartamentos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbEmpleados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbEstadosCiviles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbFacturas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbFacturasDetalles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblEmpleados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbMetodosPago]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbMunicipios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbPantallas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbPantallasPorRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbProductos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbProveedores]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbUsuarios]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "DESKTOP-BPGLHI0\\SQLEXPRESSLOCAL.Maquillaje",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

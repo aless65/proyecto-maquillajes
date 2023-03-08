@@ -956,6 +956,25 @@ GETDATE(),NULL,
 NULL,1)
 END
 
+/*Editar proveedores*/
+GO
+CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_Update
+@prov_Id					INT,
+@prov_Nombre				NVARCHAR(100),
+@prov_CorreoElectronico		NVARCHAR(150),
+@prov_Telefono				NVARCHAR(15),
+@prov_UsuModificacion		INT
+AS
+BEGIN
+UPDATE [maqu].[tbProveedores]
+SET prov_Nombre = @prov_Nombre,
+prov_CorreoElectronico = @prov_CorreoElectronico,
+prov_Telefono = @prov_Telefono,
+prov_UsuModificacion = @prov_UsuModificacion,
+prov_FechaModificacion = GETDATE()
+WHERE prov_Id = @prov_Id
+END
+
 --************USUARIOS******************--
 /*Editar usuarios*/
 GO

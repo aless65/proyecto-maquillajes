@@ -976,6 +976,17 @@ prov_FechaModificacion = GETDATE()
 WHERE prov_Id = @prov_Id
 END
 
+/*Eliminar Proveedores*/
+GO
+CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_DELETE 
+@prov_Id INT
+AS
+BEGIN
+UPDATE [maqu].[tbProveedores]
+SET prov_Estado = 0
+WHERE prov_Id = @prov_Id
+END
+
 --************USUARIOS******************--
 /*Editar usuarios*/
 GO

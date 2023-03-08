@@ -937,6 +937,7 @@ END
 
 
 SELECT * FROM [maqu].[tbProveedores]
+
 /*Insertar Proveedores*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_Insert

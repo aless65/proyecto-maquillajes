@@ -879,3 +879,59 @@ WHERE fact_Id = @fact_Id
 DELETE FROM maqu.tbFacturasDetalles WHERE fact_Id = @fact_Id
 END
 
+/*Insertar Productos*/
+GO
+CREATE OR ALTER PROCEDURE UDP_maqu_tbProductos_Insert
+@prod_Nombre			NVARCHAR(100),
+@prod_PrecioUni			DECIMAL (18,2),
+@cate_Id				INT,
+@prov_Id				INT,
+@prod_Stock				INT,
+@prod_UsuCreacion		INT
+AS
+BEGIN
+INSERT INTO [maqu].[tbProductos](prod_Nombre, 
+prod_PrecioUni, cate_Id, 
+prov_Id, prod_Stock, 
+prod_UsuCreacion, prod_FechaCreacion, 
+prod_FechaModificacion, prod_UsuModificacion, 
+prod_Estado)
+VALUES(@prod_Nombre,@prod_PrecioUni,
+@cate_Id,@prov_Id,
+@prod_Stock,@prod_UsuCreacion,
+GETDATE(),NULL,
+NULL,1)
+END
+
+/*Editar Producto*/
+GO
+CREATE OR ALTER PROCEDURE UDP_maqu_tbProducto_Update
+@prod_Nombre			NVARCHAR(100),
+@prod_PrecioUni			DECIMAL(18,2),
+@cate_Id				INT,
+@prov_Id				INT,
+@prod_Stock				INT,
+@prod_UsuModificacion   INT
+AS
+BEGIN
+UPDATE [maqu].[tbProductos]
+SET prod_Nombre = @prod_Nombre,
+prod_PrecioUni = @prod_PrecioUni,
+cate_Id = @cate_Id,
+prov_Id = @prov_Id,
+prod_Stock = @prod_Stock,
+prod_UsuModificacion = @prod_UsuModificacion,
+prod_FechaModificacion = GETDATE()
+END
+
+/*Eliminar Producto*/
+GO
+CREATE OR ALTER PROCEDURE UDP_maqu_tbProductos_Delete
+@prod_Id INT
+AS
+BEGIN
+UPDATE [maqu].[tbProductos]
+SET prod_Estado = 0
+WHERE prod_Id = @prod_Id
+END
+

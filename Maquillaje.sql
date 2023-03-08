@@ -935,3 +935,23 @@ SET prod_Estado = 0
 WHERE prod_Id = @prod_Id
 END
 
+
+SELECT * FROM [maqu].[tbProveedores]
+/*Insertar Proveedores*/
+GO
+CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_Insert
+@prov_Nombre					NVARCHAR(200),
+@prov_CorreoElectronico			NVARCHAR(150),
+@prov_Telefono					NVARCHAR(15),
+@prov_UsuCreacion				INT
+AS
+BEGIN
+INSERT INTO [maqu].[tbProveedores](prov_Nombre, prov_CorreoElectronico, 
+prov_Telefono, prov_UsuCreacion, 
+prov_FechaCreacion, prov_UsuModificacion, 
+prov_FechaModificacion, prov_Estado)
+VALUES(@prov_Nombre,@prov_CorreoElectronico,
+@prov_Telefono,@prov_UsuCreacion,
+GETDATE(),NULL,
+NULL,1)
+END

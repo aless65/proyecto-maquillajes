@@ -978,19 +978,30 @@ END
 --************USUARIOS******************--
 /*Editar usuarios*/
 GO
-CREATE OR ALTER PROCEDURE UDP_tbUsuarios_UPDATE
+CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_UPDATE
 	@user_Id					INT,
 	@user_EsAdmin				BIT,
 	@role_Id					INT,
 	@empe_Id					INT,
-	@user_UsuarioModificacion	INT
+	@user_UsuModificacion	INT
 AS
 BEGIN
 	UPDATE acce.tbUsuarios
 	SET user_EsAdmin = @user_EsAdmin,
 		role_Id = @role_Id,
 		empe_Id = @empe_Id,
-		user_UsuarioModificacion = @user_UsuarioModificacion
+		user_UsuModificacion = @user_UsuModificacion,
 		user_FechaModificacion = GETDATE()
+	WHERE user_Id = @user_Id
+END
+
+/*Eliminar usuarios*/
+GO
+CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_DELETE
+	@user_Id	INT
+AS
+BEGIN
+	UPDATE acce.tbUsuarios
+	SET user_Estado = 0
 	WHERE user_Id = @user_Id
 END

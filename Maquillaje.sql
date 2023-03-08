@@ -136,7 +136,7 @@ GO
 INSERT INTO [acce].[tbPantallas](pant_Nombre, pant_UsuCreacion)
 VALUES('Departamentos', 1),
 	  ('Municipios', 1),
-	  ('Categor�as', 1)
+	  ('Categorias', 1)
 
 
 --*******************************************--
@@ -359,22 +359,22 @@ INSERT DE LA BASE DE DATOS
 
 GO
 INSERT gral.tbDepartamentos(depa_Id, depa_Nombre, depa_UsuCreacion)
-VALUES('01','Atl�ntida', 1),
-      ('02','Col�n', 1),
+VALUES('01','Atlantida', 1),
+      ('02','Colon', 1),
 	  ('03','Comayagua', 1),
-	  ('04','Cop�n', 1),
-	  ('05','Cort�s', 1),
+	  ('04','Copan', 1),
+	  ('05','Cortes', 1),
 	  ('06','Choluteca', 1),
-	  ('07','El Para�so', 1),
-	  ('08','Francisco Moraz�n', 1),
+	  ('07','El Paraiso', 1),
+	  ('08','Francisco Morazan', 1),
 	  ('09','Gracias a Dios', 1),
-	  ('10','Intibuc�', 1),
-	  ('11','Islas de La Bah�a', 1),
+	  ('10','Intibuca', 1),
+	  ('11','Islas de La Bahia', 1),
 	  ('12','La Paz', 1),
 	  ('13','Lempira', 1),
 	  ('14','Ocotepeque', 1),
 	  ('15','Olancho', 1),
-	  ('16','Santa B�rbara', 1),
+	  ('16','Santa Barbara', 1),
 	  ('17','Valle', 1),
 	  ('18','Yoro', 1);
 
@@ -388,38 +388,38 @@ VALUES('0101','La Ceiba ','01', 1),
 	  ('0201','Trujillo','02', 1),
 	  ('0202','Balfate','02', 1),
 	  ('0203','Iriona','02', 1),
-	  ('0204','Lim�n','02', 1),
-	  ('0205','Sab�','02', 1),
+	  ('0204','Limon','02', 1),
+	  ('0205','Saba','02', 1),
 	  ('0301','Comayagua','03', 1),
 	  ('0302','Ajuterique','03', 1),
       ('0303','El Rosario','03', 1),
-	  ('0304','Esqu�as','03', 1),
+	  ('0304','Esquias','03', 1),
       ('0305','Humuya','03', 1),
-	  ('0401','Santa Rosa de Cop�n','04', 1),
-	  ('0402','Caba�as','04', 1),
-      ('0403','Concepci�n','04', 1),
-	  ('0404','Cop�n Ruinas','04', 1),
-      ('0405','Corqu�n','04', 1),
+	  ('0401','Santa Rosa de Copan','04', 1),
+	  ('0402','Cabanas','04', 1),
+      ('0403','Concepcion','04', 1),
+	  ('0404','Copan Ruinas','04', 1),
+      ('0405','Corquin','04', 1),
 	  ('0501','San Pedro Sula ','05', 1),
       ('0502','Choloma ','05', 1),
       ('0503','Omoa','05', 1),
       ('0504','Pimienta','05', 1),
 	  ('0505','Potrerillos','05', 1),
-	  ('0506','Puerto Cort�s','05', 1),
+	  ('0506','Puerto Cortes','05', 1),
 	  ('0601','Choluteca','06', 1),
       ('0602','Apacilagua','06', 1),
-      ('0603','Concepci�n de Mar�a','06', 1),
+      ('0603','Concepcion de Maria','06', 1),
       ('0604','Duyure','06', 1),
 	  ('0605','El Corpus','07', 1),
-	  ('0701','Yuscar�n','07', 1),
+	  ('0701','Yuscaran','07', 1),
       ('0702','Alauca','07', 1),
-      ('0703','Danl�','07', 1),
-	  ('0704','El Para�so','07', 1),
-      ('0705','G�inope','07', 1),
-	  ('0801','Distrito Central (Comayag�ela y Tegucigalpa)','08', 1),
-      ('0802','Alubar�n','08', 1),
+      ('0703','Danli','07', 1),
+	  ('0704','El Paraiso','07', 1),
+      ('0705','Ghinope','07', 1),
+	  ('0801','Distrito Central (Comayaguela y Tegucigalpa)','08', 1),
+      ('0802','Alubaran','08', 1),
       ('0803','Cedros','08', 1),
-      ('0804','Curar�n','08', 1),
+      ('0804','Curaron','08', 1),
 	  ('0805','El Porvenir','08', 1),
 	  ('0901','Puerto Lempira','09', 1),
       ('0902','Brus Laguna','09', 1),
@@ -429,33 +429,33 @@ VALUES('0101','La Ceiba ','01', 1),
 	  ('1001','La Esperanza','10', 1),
       ('1002','Camasca','10', 1),
       ('1003','Colomoncagua','10', 1),
-	  ('1004','Concepci�n','10', 1),
+	  ('1004','Concepcion','10', 1),
       ('1005','Dolores','10', 1),
-	  ('1101','Roat�n','11', 1),
+	  ('1101','Roatan','11', 1),
       ('1102','Guanaja','11', 1),
-      ('1103','Jos� Santos Guardiola','11', 1),
+      ('1103','Jose Santos Guardiola','11', 1),
 	  ('1104','Utila','11', 1),
 	  ('1201','La Paz','12', 1),
       ('1202','Aguanqueterique','12', 1),
-      ('1203','Caba�as','12', 1),
+      ('1203','Cabanas','12', 1),
 	  ('1204','Cane','12', 1),
       ('1205','Chinacla','12', 1),
 	  ('1301','Gracias','13', 1),
-      ('1302','Bel�n','13', 1),
+      ('1302','Belen','13', 1),
       ('1303','Candelaria','13', 1),
 	  ('1304','Cololaca','13', 1),
       ('1305','Erandique','13', 1),
 	  ('1401','Ocotepeque','14', 1),
-      ('1402','Bel�n Gualcho','14', 1),
-      ('1403','Concepci�n','14', 1),
-	  ('1404','Dolores Merend�n','14', 1),
+      ('1402','Belen Gualcho','14', 1),
+      ('1403','Concepcion','14', 1),
+	  ('1404','Dolores Merendon','14', 1),
       ('1405','Fraternidad','14', 1),
 	  ('1501','Juticalpa','15', 1),
       ('1502','Campamento','15', 1),
       ('1503','Catacamas','15', 1),
 	  ('1504','Concordia','15', 1),
-      ('1505','Dulce Nombre de Culm�','15', 1),
-	  ('1601','Santa B�rbara','16', 1),
+      ('1505','Dulce Nombre de Culmo','15', 1),
+	  ('1601','Santa Barbara','16', 1),
       ('1602','Arada','16', 1),
       ('1603','Atima','16', 1),
 	  ('1604','Azacualpa','16', 1),
@@ -469,7 +469,7 @@ VALUES('0101','La Ceiba ','01', 1),
       ('1802','Arenal','18', 1),
       ('1803','El Negrito','18', 1),
 	  ('1804','El Progreso','18', 1),
-      ('1805','Joc�n','18', 1)
+      ('1805','Jocon','18', 1)
 
 
 --********PROCEDIMIENTOS****************---
@@ -487,7 +487,7 @@ GO
 EXEC UDP_maqu_tbMetodosPago_INSERT 'Efectivo', 1
 
 
---Iniciar sesi�n
+--Iniciar sesion
 GO
 CREATE OR ALTER PROCEDURE UDP_Login
 	@user_Nombre NVARCHAR(100), @user_Contrasena NVARCHAR(200)
@@ -685,8 +685,8 @@ BEGIN
 	WHERE depa_Id = @depa_Id
 END
 
---**************** M�TODOS DE PAGO ****************--
-/*Insert m�todos de pago*/
+--**************** MeTODOS DE PAGO ****************--
+/*Insert metodos de pago*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbMetodosPago_INSERT
 	@meto_Nombre				NVARCHAR(100),
@@ -697,7 +697,7 @@ BEGIN
 	VALUES (@meto_Nombre, @meto_UsuCreacion)
 END
 
-/*Editar m�todos de pago*/
+/*Editar metodos de pago*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbMetodosPago_UPDATE
 	@meto_Id 				INT,
@@ -712,7 +712,7 @@ BEGIN
 	WHERE 	[meto_Id] = @meto_Id
 END
 
-/*Eliminar m�todos de pago*/
+/*Eliminar metodos de pago*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbMetodosPago_DELETE
 	@meto_Id INT
@@ -724,8 +724,8 @@ BEGIN
 END
 
 
---**************** CATEGOR�AS ****************--
-/*Insertar categor�a*/
+--**************** CATEGORIAS ****************--
+/*Insertar categoria*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_INSERT
 	@cate_Nombre 			NVARCHAR(100),
@@ -736,7 +736,7 @@ BEGIN
 	VALUES(@cate_Nombre, @cate_UsuCreacion)
 END
 
-/*Editar categor�a*/
+/*Editar categoria*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_UPDATE
 	@cate_Id					INT,
@@ -751,7 +751,7 @@ BEGIN
 	WHERE 	[cate_Id] = @cate_Id
 END
 
-/*Eliminar categor�a*/
+/*Eliminar categoria*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_ELIMINAR
 	@cate_Id	INT

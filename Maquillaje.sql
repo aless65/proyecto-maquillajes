@@ -117,10 +117,8 @@ ADD CONSTRAINT FK_acce_tbRoles_acce_tbUsuarios_role_UsuCreacion_user_Id 	FOREIGN
 
 GO
 INSERT INTO acce.tbRoles(role_Nombre, role_UsuCreacion)
-VALUES ('Recursos humanos', 1),
+VALUES ('Admin', 1),
 	   ('Vendedor', 1)
-
-
 
 
 --********* ALTERAR TABLA USUARIOS **************--
@@ -131,13 +129,10 @@ ADD CONSTRAINT FK_acce_tbUsuarios_acce_tbUsuarios_user_UsuCreacion_user_Id  FORE
 	CONSTRAINT FK_acce_tbUsuarios_acce_tbUsuarios_user_UsuModificacion_user_Id  FOREIGN KEY(user_UsuModificacion) REFERENCES acce.tbUsuarios([user_Id]),
 	CONSTRAINT FK_acce_tbUsuarios_acce_tbRoles_role_Id FOREIGN KEY(role_Id) REFERENCES acce.tbRoles(role_Id)
 
-
-GO
-INSERT INTO [acce].[tbPantallas](pant_Nombre, pant_UsuCreacion)
-VALUES('Departamentos', 1),
-	  ('Municipios', 1),
-	  ('Categorias', 1)
-
+GO 
+ALTER TABLE [acce].[tbPantallasPorRoles]
+ADD CONSTRAINT FK_acce_tbPantallasPorRoles_acce_tbUsuarios_pantrole_UsuCreacion_user_Id FOREIGN KEY([pantrole_UsuCreacion]) REFERENCES acce.tbUsuarios([user_Id]),
+	CONSTRAINT FK_acce_tbPantallasPorRoles_acce_tbUsuarios_pantrole_UsuModificacion_user_Id FOREIGN KEY([pantrole_UsuModificacion]) REFERENCES acce.tbUsuarios([user_Id])
 
 --*******************************************--
 --********TABLA DEPARTAMENTO****************---
@@ -1046,3 +1041,12 @@ EXEC UDP_maqu_tbCategorias_INSERT 'Diseño de cejas', 1
 
 GO
 EXEC UDP_acce_tbUsuarios_UPDATE 1, 1, 1, 1, 1
+
+INSERT INTO [acce].[tbRoles]([role_Nombre], [role_UsuCreacion])
+VALUES ('Inventario', 1),
+	   ('Recursos Humanos', 1)
+
+INSERT INTO [acce].[tbPantallasPorRoles] ([pantrole_Identificador], [role_Id], [pant_Id], [pantrole_UsuCreacion])
+VALUES ('Vendedor-Facturas', 2, 7, 1),
+	   ('Vendedor-FacturasDetalles', 2, 8, 1),
+	   ('Vendedor-Clientes', 2, 5, 1)

@@ -634,9 +634,20 @@ BEGIN
 	WHERE 	empe_Id = @empe_Id
 END
 
-
 GO
+
 EXEC UPD_maqu_tbEmpleados_Insert 'Alessia', 'Medina', '0501200506728', '2005-05-06', 'F', 1, '0501', 'casa', '99349019', 'aless@hootmail.com', 1
+EXEC UPD_maqu_tbEmpleados_Insert 'Juan', 'García', '0501199201234', '1992-01-05', 'M', 2, '0101', 'Calle 1', '99999999', 'juan@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'María', 'González', '0501199123456', '1991-01-01', 'F', 3, '0102', 'Calle 2', '88888888', 'maria@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Pedro', 'Hernández', '0501198809876', '1988-01-01', 'M', 4, '0203', 'Calle 3', '77777777', 'pedro@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Ana', 'Martínez', '0501198504321', '1985-01-01', 'F', 1, '0304', 'Calle 4', '66666666', 'ana@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Luis', 'Guzmán', '0501198008765', '1980-01-01', 'M', 2, '0204', 'Calle 5', '55555555', 'luis@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Lucía', 'Sánchez', '0501197912345', '1979-01-01', 'F', 3, '0701', 'Calle 6', '44444444', 'lucia@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Carlos', 'Pérez', '0501197609876', '1976-01-01', 'M', 4, '0506', 'Calle 7', '33333333', 'carlos@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Marta', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001', 'Calle 8', '22222222', 'marta@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Jorge', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002', 'Calle 9', '11111111', 'jorge@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Laura', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802', 'Calle 10', '00000000', 'laura@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Diego', 'Gómez', '0501196409876', '1964-01-01', 'M', 4, '0803', 'Calle 11', '99999999', 'diego@mail.com', 1;
 
 GO
 ALTER TABLE acce.tbUsuarios
@@ -823,6 +834,9 @@ BEGIN
 	WHERE clie_Id = @clie_Id
 END
 
+EXECUTE UDP_maqu_tbClientes_Insert 'Christopher','Aguilar','0501200414817','M','0501','calle 1','99122657','chris@gmail.com',1
+
+--*********Facturas*************-
 /*Insertar Factura*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbFacturas_Insert

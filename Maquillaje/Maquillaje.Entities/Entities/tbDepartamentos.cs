@@ -13,16 +13,16 @@ namespace Maquillaje.Entities.Entities
             tbMunicipios = new HashSet<tbMunicipios>();
         }
 
-        public string dep_Id { get; set; }
-        public string dep_Nombre { get; set; }
-        public int dep_UsuCreacion { get; set; }
-        public DateTime dep_FechaCreacion { get; set; }
-        public int? dep_UsuModificacion { get; set; }
-        public DateTime? dep_FechaModificacion { get; set; }
-        public bool dep_Estado { get; set; }
+        public string depa_Id { get; set; }
+        public string depa_Nombre { get; set; }
+        public int depa_UsuCreacion { get; set; }
+        public DateTime depa_FechaCreacion { get; set; }
+        public int? depa_UsuModificacion { get; set; }
+        public DateTime? depa_FechaModificacion { get; set; }
+        public bool? depa_Estado { get; set; }
 
-        public virtual tbUsuarios dep_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios dep_UsuModificacionNavigation { get; set; }
+        public virtual tbUsuarios depa_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios depa_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbMunicipios> tbMunicipios { get; set; }
     }
 }

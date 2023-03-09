@@ -13,27 +13,27 @@ namespace Maquillaje.Entities.Entities
             tbUsuarios = new HashSet<tbUsuarios>();
         }
 
-        public int emp_Id { get; set; }
-        public string emp_Nombres { get; set; }
-        public string emp_Apellidos { get; set; }
-        public string emp_Identidad { get; set; }
-        public DateTime emp_FechaNacimiento { get; set; }
-        public string emp_Sexo { get; set; }
-        public int estciv_Id { get; set; }
-        public string mun_Id { get; set; }
-        public string emp_Direccion { get; set; }
-        public string emp_Telefono { get; set; }
-        public string emp_CorreoElectronico { get; set; }
-        public int emp_UsuCreacion { get; set; }
-        public DateTime emp_FechaCreacion { get; set; }
-        public int? emp_UsuModificacion { get; set; }
-        public DateTime? emp_FechaModificacion { get; set; }
-        public bool? emp_Estado { get; set; }
+        public int empe_Id { get; set; }
+        public string empe_Nombres { get; set; }
+        public string empe_Apellidos { get; set; }
+        public string empe_Identidad { get; set; }
+        public DateTime empe_FechaNacimiento { get; set; }
+        public string empe_Sexo { get; set; }
+        public int estacivi_Id { get; set; }
+        public string muni_Id { get; set; }
+        public string empe_Direccion { get; set; }
+        public string empe_Telefono { get; set; }
+        public string empe_CorreoElectronico { get; set; }
+        public int empe_UsuCreacion { get; set; }
+        public DateTime empe_FechaCreacion { get; set; }
+        public int? empe_UsuModificacion { get; set; }
+        public DateTime? empe_FechaModificacion { get; set; }
+        public bool? empe_Estado { get; set; }
 
-        public virtual tbUsuarios emp_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios emp_UsuModificacionNavigation { get; set; }
-        public virtual tbEstadosCiviles estciv { get; set; }
-        public virtual tbMunicipios mun { get; set; }
+        public virtual tbUsuarios empe_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios empe_UsuModificacionNavigation { get; set; }
+        public virtual tbEstadosCiviles estacivi { get; set; }
+        public virtual tbMunicipios muni { get; set; }
         public virtual ICollection<tbUsuarios> tbUsuarios { get; set; }
     }
 }

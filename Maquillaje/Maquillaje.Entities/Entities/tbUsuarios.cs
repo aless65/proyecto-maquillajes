@@ -10,75 +10,79 @@ namespace Maquillaje.Entities.Entities
     {
         public tbUsuarios()
         {
-            Inverseusu_UsuCreacionNavigation = new HashSet<tbUsuarios>();
-            Inverseusu_UsuModificacionNavigation = new HashSet<tbUsuarios>();
-            tbCategoriascat_UsuCreacionNavigation = new HashSet<tbCategorias>();
-            tbCategoriascat_UsuModificacionNavigation = new HashSet<tbCategorias>();
-            tbClientescli_UsuCreacionNavigation = new HashSet<tbClientes>();
-            tbClientescli_UsuModificacionNavigation = new HashSet<tbClientes>();
-            tbDepartamentosdep_UsuCreacionNavigation = new HashSet<tbDepartamentos>();
-            tbDepartamentosdep_UsuModificacionNavigation = new HashSet<tbDepartamentos>();
-            tbEmpleadosemp_UsuCreacionNavigation = new HashSet<tbEmpleados>();
-            tbEmpleadosemp_UsuModificacionNavigation = new HashSet<tbEmpleados>();
-            tbEstadosCivilesestciv_UsuCreacionNavigation = new HashSet<tbEstadosCiviles>();
-            tbEstadosCivilesestciv_UsuModificacionNavigation = new HashSet<tbEstadosCiviles>();
-            tbFacturasDetallesfacdet_UsuCreacionNavigation = new HashSet<tbFacturasDetalles>();
-            tbFacturasDetallesfacdet_UsuModificacionNavigation = new HashSet<tbFacturasDetalles>();
-            tbFacturasfac_UsuCreacionNavigation = new HashSet<tbFacturas>();
-            tbFacturasfac_UsuModificacionNavigation = new HashSet<tbFacturas>();
-            tbMetodosPagomet_UsuCreacionNavigation = new HashSet<tbMetodosPago>();
-            tbMetodosPagomet_UsuModificacionNavigation = new HashSet<tbMetodosPago>();
-            tbMunicipiosmun_UsuCreacionNavigation = new HashSet<tbMunicipios>();
-            tbMunicipiosmun_UsuModificacionNavigation = new HashSet<tbMunicipios>();
-            tbProductospro_UsuCreacionNavigation = new HashSet<tbProductos>();
-            tbProductospro_UsuModificacionNavigation = new HashSet<tbProductos>();
+            Inverseuser_UsuCreacionNavigation = new HashSet<tbUsuarios>();
+            Inverseuser_UsuModificacionNavigation = new HashSet<tbUsuarios>();
+            tbCategoriascate_UsuCreacionNavigation = new HashSet<tbCategorias>();
+            tbCategoriascate_UsuModificacionNavigation = new HashSet<tbCategorias>();
+            tbClientesclie_UsuCreacionNavigation = new HashSet<tbClientes>();
+            tbClientesclie_UsuModificacionNavigation = new HashSet<tbClientes>();
+            tbDepartamentosdepa_UsuCreacionNavigation = new HashSet<tbDepartamentos>();
+            tbDepartamentosdepa_UsuModificacionNavigation = new HashSet<tbDepartamentos>();
+            tbEmpleadosempe_UsuCreacionNavigation = new HashSet<tbEmpleados>();
+            tbEmpleadosempe_UsuModificacionNavigation = new HashSet<tbEmpleados>();
+            tbEstadosCivilesestacivi_UsuCreacionNavigation = new HashSet<tbEstadosCiviles>();
+            tbEstadosCivilesestacivi_UsuModificacionNavigation = new HashSet<tbEstadosCiviles>();
+            tbFacturasDetallesfactdeta_UsuCreacionNavigation = new HashSet<tbFacturasDetalles>();
+            tbFacturasDetallesfactdeta_UsuModificacionNavigation = new HashSet<tbFacturasDetalles>();
+            tbFacturasfact_UsuCreacionNavigation = new HashSet<tbFacturas>();
+            tbFacturasfact_UsuModificacionNavigation = new HashSet<tbFacturas>();
+            tbMetodosPagometo_UsuCreacionNavigation = new HashSet<tbMetodosPago>();
+            tbMetodosPagometo_UsuModificacionNavigation = new HashSet<tbMetodosPago>();
+            tbMunicipiosmuni_UsuCreacionNavigation = new HashSet<tbMunicipios>();
+            tbMunicipiosmuni_UsuModificacionNavigation = new HashSet<tbMunicipios>();
+            tbPantallasPorRolespantrole_UsuCreacionNavigation = new HashSet<tbPantallasPorRoles>();
+            tbPantallasPorRolespantrole_UsuModificacionNavigation = new HashSet<tbPantallasPorRoles>();
+            tbProductosprod_UsuCreacionNavigation = new HashSet<tbProductos>();
+            tbProductosprod_UsuModificacionNavigation = new HashSet<tbProductos>();
             tbProveedoresprov_UsuCreacionNavigation = new HashSet<tbProveedores>();
             tbProveedoresprov_UsuModificacionNavigation = new HashSet<tbProveedores>();
-            tbRolesrol_UsuCreacionNavigation = new HashSet<tbRoles>();
-            tbRolesrol_UsuModificacionNavigation = new HashSet<tbRoles>();
+            tbRolesrole_UsuCreacionNavigation = new HashSet<tbRoles>();
+            tbRolesrole_UsuModificacionNavigation = new HashSet<tbRoles>();
         }
 
-        public int usu_id { get; set; }
-        public string usu_NombreUsuario { get; set; }
-        public string usu_Contrasena { get; set; }
-        public bool? usu_EsAdmin { get; set; }
-        public int? rol_Id { get; set; }
-        public int? emp_Id { get; set; }
-        public int? usu_UsuCreacion { get; set; }
-        public DateTime usu_FechaCreacion { get; set; }
-        public int? usu_UsuModificacion { get; set; }
-        public DateTime? usu_FechaModificacion { get; set; }
-        public bool usu_Estado { get; set; }
+        public int user_Id { get; set; }
+        public string user_NombreUsuario { get; set; }
+        public string user_Contrasena { get; set; }
+        public bool? user_EsAdmin { get; set; }
+        public int? role_Id { get; set; }
+        public int? empe_Id { get; set; }
+        public int? user_UsuCreacion { get; set; }
+        public DateTime user_FechaCreacion { get; set; }
+        public int? user_UsuModificacion { get; set; }
+        public DateTime? user_FechaModificacion { get; set; }
+        public bool? user_Estado { get; set; }
 
-        public virtual tbEmpleados emp { get; set; }
-        public virtual tbRoles rol { get; set; }
-        public virtual tbUsuarios usu_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios usu_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbUsuarios> Inverseusu_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbUsuarios> Inverseusu_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbCategorias> tbCategoriascat_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbCategorias> tbCategoriascat_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbClientes> tbClientescli_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbClientes> tbClientescli_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbDepartamentos> tbDepartamentosdep_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbDepartamentos> tbDepartamentosdep_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbEmpleados> tbEmpleadosemp_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbEmpleados> tbEmpleadosemp_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesestciv_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesestciv_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbFacturasDetalles> tbFacturasDetallesfacdet_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbFacturasDetalles> tbFacturasDetallesfacdet_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbFacturas> tbFacturasfac_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbFacturas> tbFacturasfac_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbMetodosPago> tbMetodosPagomet_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbMetodosPago> tbMetodosPagomet_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbMunicipios> tbMunicipiosmun_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbMunicipios> tbMunicipiosmun_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbProductos> tbProductospro_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbProductos> tbProductospro_UsuModificacionNavigation { get; set; }
+        public virtual tbEmpleados empe { get; set; }
+        public virtual tbRoles role { get; set; }
+        public virtual tbUsuarios user_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios user_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbUsuarios> Inverseuser_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbUsuarios> Inverseuser_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbCategorias> tbCategoriascate_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbCategorias> tbCategoriascate_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbClientes> tbClientesclie_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbClientes> tbClientesclie_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbDepartamentos> tbDepartamentosdepa_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbDepartamentos> tbDepartamentosdepa_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbEmpleados> tbEmpleadosempe_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbEmpleados> tbEmpleadosempe_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesestacivi_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesestacivi_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbFacturasDetalles> tbFacturasDetallesfactdeta_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbFacturasDetalles> tbFacturasDetallesfactdeta_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbFacturas> tbFacturasfact_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbFacturas> tbFacturasfact_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbMetodosPago> tbMetodosPagometo_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbMetodosPago> tbMetodosPagometo_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbMunicipios> tbMunicipiosmuni_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbMunicipios> tbMunicipiosmuni_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRolespantrole_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRolespantrole_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbProductos> tbProductosprod_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbProductos> tbProductosprod_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbProveedores> tbProveedoresprov_UsuCreacionNavigation { get; set; }
         public virtual ICollection<tbProveedores> tbProveedoresprov_UsuModificacionNavigation { get; set; }
-        public virtual ICollection<tbRoles> tbRolesrol_UsuCreacionNavigation { get; set; }
-        public virtual ICollection<tbRoles> tbRolesrol_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbRoles> tbRolesrole_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbRoles> tbRolesrole_UsuModificacionNavigation { get; set; }
     }
 }

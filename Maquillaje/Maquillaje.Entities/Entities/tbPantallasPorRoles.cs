@@ -8,17 +8,19 @@ namespace Maquillaje.Entities.Entities
 {
     public partial class tbPantallasPorRoles
     {
-        public int pantrol_Id { get; set; }
-        public string pantrol_Identificador { get; set; }
-        public int rol_Id { get; set; }
+        public int pantrole_Id { get; set; }
+        public string pantrole_Identificador { get; set; }
+        public int role_Id { get; set; }
         public int pant_Id { get; set; }
-        public int pantrol_UsuCreacion { get; set; }
-        public DateTime pantrol_FechaCreacion { get; set; }
-        public int? pantrol_UsuModificacion { get; set; }
-        public DateTime? pantrol_FechaModificacion { get; set; }
-        public bool pantrol_Estado { get; set; }
+        public int pantrole_UsuCreacion { get; set; }
+        public DateTime pantrole_FechaCreacion { get; set; }
+        public int? pantrole_UsuModificacion { get; set; }
+        public DateTime? pantrole_FechaModificacion { get; set; }
+        public bool? pantrole_Estado { get; set; }
 
         public virtual tbPantallas pant { get; set; }
-        public virtual tbRoles rol { get; set; }
+        public virtual tbUsuarios pantrole_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios pantrole_UsuModificacionNavigation { get; set; }
+        public virtual tbRoles role { get; set; }
     }
 }

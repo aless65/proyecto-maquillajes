@@ -13,16 +13,16 @@ namespace Maquillaje.Entities.Entities
             tbFacturas = new HashSet<tbFacturas>();
         }
 
-        public int met_Id { get; set; }
-        public string met_Nombre { get; set; }
-        public int met_UsuCreacion { get; set; }
-        public DateTime met_FechaCreacion { get; set; }
-        public int? met_UsuModificacion { get; set; }
-        public DateTime? met_FechaModificacion { get; set; }
-        public bool met_Estado { get; set; }
+        public int meto_Id { get; set; }
+        public string meto_Nombre { get; set; }
+        public int meto_UsuCreacion { get; set; }
+        public DateTime meto_FechaCreacion { get; set; }
+        public int? meto_UsuModificacion { get; set; }
+        public DateTime? meto_FechaModificacion { get; set; }
+        public bool? meto_Estado { get; set; }
 
-        public virtual tbUsuarios met_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios met_UsuModificacionNavigation { get; set; }
+        public virtual tbUsuarios meto_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios meto_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbFacturas> tbFacturas { get; set; }
     }
 }

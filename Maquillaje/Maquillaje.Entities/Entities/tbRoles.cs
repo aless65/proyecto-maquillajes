@@ -14,16 +14,16 @@ namespace Maquillaje.Entities.Entities
             tbUsuarios = new HashSet<tbUsuarios>();
         }
 
-        public int rol_Id { get; set; }
-        public string rol_Nombre { get; set; }
-        public int rol_UsuCreacion { get; set; }
-        public DateTime rol_FechaCreacion { get; set; }
-        public int? rol_UsuModificacion { get; set; }
-        public DateTime? rol_FechaModificacion { get; set; }
-        public bool rol_Estado { get; set; }
+        public int role_Id { get; set; }
+        public string role_Nombre { get; set; }
+        public int role_UsuCreacion { get; set; }
+        public DateTime role_FechaCreacion { get; set; }
+        public int? role_UsuModificacion { get; set; }
+        public DateTime? role_FechaModificacion { get; set; }
+        public bool? role_Estado { get; set; }
 
-        public virtual tbUsuarios rol_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios rol_UsuModificacionNavigation { get; set; }
+        public virtual tbUsuarios role_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios role_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }
         public virtual ICollection<tbUsuarios> tbUsuarios { get; set; }
     }

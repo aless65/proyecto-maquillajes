@@ -8,21 +8,21 @@ namespace Maquillaje.Entities.Entities
 {
     public partial class tbProductos
     {
-        public int pro_Id { get; set; }
-        public string pro_Nombre { get; set; }
-        public decimal pro_PrecioUni { get; set; }
-        public int cat_Id { get; set; }
+        public int prod_Id { get; set; }
+        public string prod_Nombre { get; set; }
+        public decimal prod_PrecioUni { get; set; }
+        public int cate_Id { get; set; }
         public int prov_Id { get; set; }
-        public int pro_Stock { get; set; }
-        public int pro_UsuCreacion { get; set; }
-        public DateTime pro_FechaCreacion { get; set; }
-        public DateTime? pro_FechaModificacion { get; set; }
-        public int? pro_UsuModificacion { get; set; }
-        public bool pro_Estado { get; set; }
+        public int prod_Stock { get; set; }
+        public int prod_UsuCreacion { get; set; }
+        public DateTime prod_FechaCreacion { get; set; }
+        public DateTime? prod_FechaModificacion { get; set; }
+        public int? prod_UsuModificacion { get; set; }
+        public bool? prod_Estado { get; set; }
 
-        public virtual tbCategorias cat { get; set; }
-        public virtual tbUsuarios pro_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios pro_UsuModificacionNavigation { get; set; }
+        public virtual tbCategorias cate { get; set; }
+        public virtual tbUsuarios prod_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios prod_UsuModificacionNavigation { get; set; }
         public virtual tbProveedores prov { get; set; }
     }
 }

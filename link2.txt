@@ -1,1 +1,32 @@
 https://prod.liveshare.vsengsaas.visualstudio.com/join?7141BA5D7422F6258FF1ECB9883D6BB4EA1D
+
+"ConnectionStrings": {
+    "AHMLibreriaConn": "data source=LAPTOP-MGDRFP79\\SQLEXPRESS; initial catalog=Libreria; user id=; password="
+  },
+
+public partial class Nombre_Clase: DBContext_Heredar
+    {
+        public static string ConnectionString { get; set; }
+
+        public AMDC_CP_Context()
+        {
+            ChangeTracker.LazyLoadingEnabled = false;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(ConnectionString);
+            }
+
+            base.OnConfiguring(optionsBuilder);
+        }
+
+        public static void BuildConnectionString(string connection)
+        {
+            var connectionStringBuilder = new SqlConnectionStringBuilder { ConnectionString = connection };
+            ConnectionString = connectionStringBuilder.ConnectionString;
+        }
+
+    }

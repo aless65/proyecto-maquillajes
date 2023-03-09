@@ -13,16 +13,16 @@ namespace Maquillaje.Entities.Entities
             tbEmpleados = new HashSet<tbEmpleados>();
         }
 
-        public int estciv_Id { get; set; }
-        public string estciv_Nombre { get; set; }
-        public int estciv_UsuCreacion { get; set; }
-        public DateTime estciv_FechaCreacion { get; set; }
-        public int? estciv_UsuModificacion { get; set; }
-        public DateTime? estciv_FechaModificacion { get; set; }
-        public bool estciv_Estado { get; set; }
+        public int estacivi_Id { get; set; }
+        public string estacivi_Nombre { get; set; }
+        public int estacivi_UsuCreacion { get; set; }
+        public DateTime estacivi_FechaCreacion { get; set; }
+        public int? estacivi_UsuModificacion { get; set; }
+        public DateTime? estacivi_FechaModificacion { get; set; }
+        public bool? estacivi_Estado { get; set; }
 
-        public virtual tbUsuarios estciv_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios estciv_UsuModificacionNavigation { get; set; }
+        public virtual tbUsuarios estacivi_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios estacivi_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
     }
 }

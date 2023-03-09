@@ -19,7 +19,7 @@ namespace Maquillaje.Entities.Entities
         public DateTime pant_FechaCreacion { get; set; }
         public int? pant_UsuModificacion { get; set; }
         public DateTime? pant_FechaModificacion { get; set; }
-        public bool pant_Estado { get; set; }
+        public bool? pant_Estado { get; set; }
 
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }
     }

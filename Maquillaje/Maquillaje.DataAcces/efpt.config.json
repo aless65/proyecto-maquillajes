@@ -7,11 +7,11 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Entities",
-   "ProjectRootNamespace": "Maquillaje.Entities",
+   "OutputPath": "Context",
+   "ProjectRootNamespace": "Maquillaje.DataAccess",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
-   "SelectedToBeGenerated": 2,
+   "SelectedToBeGenerated": 1,
    "Tables": [
       {
          "Name": "[acce].[tbPantallas]",

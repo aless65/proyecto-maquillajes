@@ -21,7 +21,7 @@ namespace Maquillaje.Entities.Entities
         public DateTime prov_FechaCreacion { get; set; }
         public int? prov_UsuModificacion { get; set; }
         public DateTime? prov_FechaModificacion { get; set; }
-        public bool prov_Estado { get; set; }
+        public bool? prov_Estado { get; set; }
 
         public virtual tbUsuarios prov_UsuCreacionNavigation { get; set; }
         public virtual tbUsuarios prov_UsuModificacionNavigation { get; set; }

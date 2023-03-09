@@ -13,23 +13,23 @@ namespace Maquillaje.Entities.Entities
             tbFacturas = new HashSet<tbFacturas>();
         }
 
-        public int cli_Id { get; set; }
-        public string cli_Nombres { get; set; }
-        public string cli_Apellidos { get; set; }
-        public string cli_Identidad { get; set; }
-        public string cli_Sexo { get; set; }
-        public string mun_Id { get; set; }
-        public string cli_DireccionExacta { get; set; }
-        public string cli_Telefono { get; set; }
-        public string cli_CorreoElectronico { get; set; }
-        public int cli_UsuCreacion { get; set; }
-        public DateTime cli_FechaCreacion { get; set; }
-        public int? cli_UsuModificacion { get; set; }
-        public DateTime? cli_FechaModificacion { get; set; }
-        public bool? cli_Estado { get; set; }
+        public int clie_Id { get; set; }
+        public string clie_Nombres { get; set; }
+        public string clie_Apellidos { get; set; }
+        public string clie_Identidad { get; set; }
+        public string clie_Sexo { get; set; }
+        public string muni_Id { get; set; }
+        public string clie_DireccionExacta { get; set; }
+        public string clie_Telefono { get; set; }
+        public string clie_CorreoElectronico { get; set; }
+        public int clie_UsuCreacion { get; set; }
+        public DateTime clie_FechaCreacion { get; set; }
+        public int? clie_UsuModificacion { get; set; }
+        public DateTime? clie_FechaModificacion { get; set; }
+        public bool? clie_Estado { get; set; }
 
-        public virtual tbUsuarios cli_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios cli_UsuModificacionNavigation { get; set; }
+        public virtual tbUsuarios clie_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios clie_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbFacturas> tbFacturas { get; set; }
     }
 }

@@ -13,16 +13,16 @@ namespace Maquillaje.Entities.Entities
             tbProductos = new HashSet<tbProductos>();
         }
 
-        public int cat_Id { get; set; }
-        public string cat_Nombre { get; set; }
-        public int cat_UsuCreacion { get; set; }
-        public DateTime cat_FechaCreacion { get; set; }
-        public int? cat_UsuModificacion { get; set; }
-        public DateTime? cat_FechaModificacion { get; set; }
-        public bool cat_Estado { get; set; }
+        public int cate_Id { get; set; }
+        public string cate_Nombre { get; set; }
+        public int cate_UsuCreacion { get; set; }
+        public DateTime cate_FechaCreacion { get; set; }
+        public int? cate_UsuModificacion { get; set; }
+        public DateTime? cate_FechaModificacion { get; set; }
+        public bool? cate_Estado { get; set; }
 
-        public virtual tbUsuarios cat_UsuCreacionNavigation { get; set; }
-        public virtual tbUsuarios cat_UsuModificacionNavigation { get; set; }
+        public virtual tbUsuarios cate_UsuCreacionNavigation { get; set; }
+        public virtual tbUsuarios cate_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbProductos> tbProductos { get; set; }
     }
 }

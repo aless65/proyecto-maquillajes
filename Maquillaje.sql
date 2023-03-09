@@ -835,6 +835,17 @@ BEGIN
 END
 
 EXECUTE UDP_maqu_tbClientes_Insert 'Christopher','Aguilar','0501200414817','M','0501','calle 1','99122657','chris@gmail.com',1
+EXECUTE UDP_maqu_tbClientes_Insert 'Juan', 'Pérez', '0501198012345', 'M', '0101', 'Calle 1', '99999999', 'juan@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'María', 'García', '0501198123456', 'F', '0202', 'Calle 2', '88888888', 'maria@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'Pedro', 'Hernández', '0501198234567', 'M', '0303', 'Calle 3', '77777777', 'pedro@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'Ana', 'Martínez', '0501198345678', 'F', '0404', 'Calle 4', '66666666', 'ana@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'Luis', 'González', '0501198456789', 'M', '0505', 'Calle 5', '55555555', 'luis@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'Lucía', 'Sánchez', '0501198567890', 'F', '0606', 'Calle 6', '44444444', 'lucia@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'Carlos', 'Díaz', '0501198678901', 'M', '0707', 'Calle 7', '33333333', 'carlos@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'Marta', 'Ramírez', '0501198789012', 'F', '0808', 'Calle 8', '22222222', 'marta@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'Jorge', 'López', '0501198901234', 'M', '0909', 'Calle 9', '11111111', 'jorge@mail.com', 1;
+EXECUTE UDP_maqu_tbClientes_Insert 'Laura', 'Gómez', '0501198012345', 'F', '1010', 'Calle 10', '00000000', 'laura@mail.com', 1;
+
 
 --*********Facturas*************-
 /*Insertar Factura*/

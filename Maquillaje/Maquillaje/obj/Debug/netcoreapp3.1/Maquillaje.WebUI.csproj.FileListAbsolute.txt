@@ -195,3 +195,6 @@ C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\D
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.pdb
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\Debug\netcoreapp3.1\Maquillaje.DataAccess.pdb
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\Debug\netcoreapp3.1\Maquillaje.Entities.pdb
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\Debug\netcoreapp3.1\Humanizer.dll
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Categoria\Index.cshtml.g.cs

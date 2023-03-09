@@ -1024,15 +1024,14 @@ BEGIN
 END
 
 GO
-EXEC UDP_maqu_tbCategorias_INSERT 'Prebase de maquillaje', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Base de maquillaje', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Corrector de maquillaje', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Iluminador', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Brochas de maquillaje', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Pintalabios', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Pintalabios mate', 1
-EXEC UDP_maqu_tbCategorias_INSERT 'Brillo de labios', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Pintalabios líquido', 1
+EXEC UDP_maqu_tbCategorias_INSERT 'Brillo de labios', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Perfilador de labios', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Sombra de ojos', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Máscara de pestañas', 1
@@ -1049,4 +1048,38 @@ VALUES ('Inventario', 1),
 INSERT INTO [acce].[tbPantallasPorRoles] ([pantrole_Identificador], [role_Id], [pant_Id], [pantrole_UsuCreacion])
 VALUES ('Vendedor-Facturas', 2, 7, 1),
 	   ('Vendedor-FacturasDetalles', 2, 8, 1),
-	   ('Vendedor-Clientes', 2, 5, 1)
+	   ('Vendedor-Clientes', 2, 5, 1),
+	   ('Inventario-Categorías', 3, 4, 1),
+	   ('Inventario-Productos', 3, 10, 1),
+	   ('Inventario-Proveedores', 3, 11, 1),
+	   ('Recursos Humanos-Empleados', 4, 6, 1)
+
+GO
+EXEC UDP_maqu_tbProveedores_Insert 'L''Oréal Paris', 'contact@loreal.com', '1-800-322-2036', 1
+EXEC UDP_maqu_tbProveedores_Insert 'Kylie Cosmetics', 'customerservice@kyliecosmetics.com', '833-545-9543', 1
+EXEC UDP_maqu_tbProveedores_Insert 'Armani Beauty', 'contact@giorgioarmanibeauty.fr', '0800-5870829', 1
+EXEC UDP_maqu_tbProveedores_Insert 'Hourglass Cosmetics', 'CS@hourglasscosmetics.com', '855-846-3814', 1
+EXEC UDP_maqu_tbProveedores_Insert 'Fenty Beauty', 'customerservice@fentybeauty.com', '1-855-440-7474', 1
+
+GO
+EXEC UDP_maqu_tbProductos_Insert 'Base de maquillaje con acido hialuronico L’Oréal Accord Parfait: 1W ivoire', 299.09, 1, 1, 250, 1
+EXEC UDP_maqu_tbProductos_Insert 'Base en polvo con ácido hialurónico L’Oréal Accord Parfait: 3D Beige Dore', 294.56, 1, 1, 250, 1
+EXEC UDP_maqu_tbProductos_Insert 'Better Than Sex Eyeliner', 728.33, 12, 5, 250, 1
+EXEC UDP_maqu_tbProductos_Insert 'Perfect Strokes', 598.23, 12, 5, 250, 1
+EXEC UDP_maqu_tbProductos_Insert 'forever and always', 390.32, 9, 2, 150, 1
+EXEC UDP_maqu_tbProductos_Insert 'iced latte', 390.32, 9, 2, 150, 1
+EXEC UDP_maqu_tbProductos_Insert 'give me a kiss', 390.32, 9, 2, 150, 1
+EXEC UDP_maqu_tbProductos_Insert 'caramel', 390.32, 9, 2, 150, 1
+EXEC UDP_maqu_tbProductos_Insert 'souffle', 390.32, 9, 2, 150, 1
+EXEC UDP_maqu_tbProductos_Insert 'Glow Mon Amour gotas iluminadoras Loving Peach', 552.32, 3, 1, 50, 1
+EXEC UDP_maqu_tbProductos_Insert 'Lip Maestro', 936.76, 6, 3, 125, 1
+EXEC UDP_maqu_tbProductos_Insert 'Ecstasy Lacquer', 564.66, 8, 3, 125, 1
+EXEC UDP_maqu_tbProductos_Insert 'Powder Brush', 1639.33, 4, 3, 25, 1
+EXEC UDP_maqu_tbProductos_Insert 'Concealer Brush', 1431.16, 4, 3, 35, 1
+EXEC UDP_maqu_tbProductos_Insert 'POWER FABRIC BASE LÍQUIDA DE COBERTURA TOTAL', 702.57, 1, 3, 50, 1
+EXEC UDP_maqu_tbProductos_Insert 'POWER FABRIC HIGH COVERAGE LIQUID CONCEALER', 637.52, 2, 3, 50, 1
+
+GO
+EXEC UDP_maqu_tbMetodosPago_INSERT 'Tarjeta', 1
+EXEC UDP_maqu_tbMetodosPago_INSERT 'Cheque', 1
+EXEC UDP_maqu_tbMetodosPago_INSERT 'Transferencia', 1

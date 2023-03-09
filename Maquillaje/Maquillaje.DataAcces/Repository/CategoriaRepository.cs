@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Maquillaje.DataAccess.Repository
 {
@@ -14,22 +16,30 @@ namespace Maquillaje.DataAccess.Repository
 
         public tbCategorias find(int? id)
         {
-            throw new NotImplementedException();
+            using var db = new AndreasContext();
+            var listado = db.tbCategorias.Find(id);
+            return listado;
         }
 
         public int Insert(tbCategorias item)
         {
-            throw new NotImplementedException();
+            using var db = new AndreasContext();
+            db.tbCategorias.Add(item);
+            return item.cate_Id;
         }
 
         public IEnumerable<tbCategorias> List()
         {
-            throw new NotImplementedException();
+            using var db = new AndreasContext();
+            return db.tbCategorias.ToList();
         }
 
         public int Update(tbCategorias item)
         {
-            throw new NotImplementedException();
+            using var db = new AndreasContext();
+            db.Entry(item).State = EntityState.Modified;
+            db.SaveChanges();
+            return item.cate_Id;
         }
     }
 }

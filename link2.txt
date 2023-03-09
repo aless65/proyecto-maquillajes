@@ -30,3 +30,11 @@ public partial class Nombre_Clase: DBContext_Heredar
         }
 
     }
+
+--------------------------
+[08:27, 9.3.2023] Esdra: MappingProfileExntensions
+[08:27, 9.3.2023] Esdra: services.DataAccess(Configuration.GetConnectionString(""));
+            services.BusinessLogic();
+            services.AddAutoMapper(x=> x.AddProfile<MappingProfileExntensions>(), AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddControllersWithViews();

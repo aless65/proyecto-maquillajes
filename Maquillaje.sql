@@ -835,16 +835,17 @@ BEGIN
 END
 
 EXECUTE UDP_maqu_tbClientes_Insert 'Christopher','Aguilar','0501200414817','M','0501','calle 1','99122657','chris@gmail.com',1
-EXECUTE UDP_maqu_tbClientes_Insert 'Juan', 'Pérez', '0501198012345', 'M', '0101', 'Calle 1', '99999999', 'juan@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'María', 'García', '0501198123456', 'F', '0202', 'Calle 2', '88888888', 'maria@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'Pedro', 'Hernández', '0501198234567', 'M', '0303', 'Calle 3', '77777777', 'pedro@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'Ana', 'Martínez', '0501198345678', 'F', '0404', 'Calle 4', '66666666', 'ana@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'Luis', 'González', '0501198456789', 'M', '0505', 'Calle 5', '55555555', 'luis@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'Lucía', 'Sánchez', '0501198567890', 'F', '0606', 'Calle 6', '44444444', 'lucia@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'Carlos', 'Díaz', '0501198678901', 'M', '0707', 'Calle 7', '33333333', 'carlos@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'Marta', 'Ramírez', '0501198789012', 'F', '0808', 'Calle 8', '22222222', 'marta@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'Jorge', 'López', '0501198901234', 'M', '0909', 'Calle 9', '11111111', 'jorge@mail.com', 1;
-EXECUTE UDP_maqu_tbClientes_Insert 'Laura', 'Gómez', '0501198012345', 'F', '1010', 'Calle 10', '00000000', 'laura@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Hugo', 'Pérez', '0501199409876', '1994-01-01', 'M', 2, '0101', 'Calle de la Montaña 123', '99988877', 'hugo@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Lucía', 'Rodríguez', '0501199901234', '1999-01-01', 'F', 3, '0102', 'Avenida del Sol 456', '88877766', 'lucia@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Max', 'Hernández', '0501188809876', '1988-01-01', 'M', 4, '0203', 'Calle de la Luna 789', '77766655', 'max@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Ana', 'González', '0501198504321', '1985-01-01', 'F', 1, '0304', 'Calle del Mar 1011', '66655544', 'ana@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Javier', 'Gómez', '0501198008765', '1980-01-01', 'M', 2, '0204', 'Calle del Río 1213', '55544433', 'javier@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Mónica', 'Pérez', '0501197912345', '1979-01-01', 'F', 3, '0701', 'Avenida del Bosque 1415', '44433322', 'monica@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Diego', 'Sánchez', '0501197609876', '1976-01-01', 'M', 4, '0506', 'Calle de la Playa 1617', '33322211', 'diego@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Valeria', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001', 'Calle de las Flores 1819', '22211100', 'valeria@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'Carlos', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002', 'Avenida del Aire 2021', '11100099', 'carlos@mail.com', 1;
+EXEC UPD_maqu_tbEmpleados_Insert 'María', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802', 'Calle de la Primavera 2223', '00099988', 'maria@mail.com', 1;
+
 
 
 --*********Facturas*************-

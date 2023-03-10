@@ -636,6 +636,14 @@ END
 
 GO
 
+/*Listar Empleado*/
+CREATE OR ALTER PROCEDURE UDP_maqu_tbEmpleados_List
+AS
+BEGIN
+SELECT empe_Id, empe_Nombres, empe_Apellidos, empe_Identidad, empe_FechaNacimiento, empe_Sexo,muni_Id, empe_Direccion, empe_Telefono, empe_CorreoElectronico FROM [maqu].[tbEmpleados]
+END
+GO
+
 EXEC UPD_maqu_tbEmpleados_Insert 'Alessia', 'Medina', '0501200506728', '2005-05-06', 'F', 1, '0501', 'casa', '99349019', 'aless@hootmail.com', 1
 EXEC UPD_maqu_tbEmpleados_Insert 'Juan', 'García', '0501199201234', '1992-01-05', 'M', 2, '0101', 'Calle 1', '99999999', 'juan@mail.com', 1;
 EXEC UPD_maqu_tbEmpleados_Insert 'María', 'González', '0501199123456', '1991-01-01', 'F', 3, '0102', 'Calle 2', '88888888', 'maria@mail.com', 1;

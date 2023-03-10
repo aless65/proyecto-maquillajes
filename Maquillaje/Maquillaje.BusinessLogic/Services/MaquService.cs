@@ -16,6 +16,12 @@ namespace Maquillaje.BusinessLogic.Services
             _categoriaRepository = categoriaRepository;
         }
 
+        private readonly EmpleadoRepository _empleadoRepository;
+        public MaquService(EmpleadoRepository empleadoRepository)
+        {
+            _empleadoRepository = empleadoRepository;
+        }
+
         #region Categorias
         public IEnumerable<tbCategorias> ListadoCategorias(out string error)
         {
@@ -43,6 +49,11 @@ namespace Maquillaje.BusinessLogic.Services
                 return 0;
             }
         }
+        #endregion
+
+        #region Empleado
+
+
         #endregion
     }
 }

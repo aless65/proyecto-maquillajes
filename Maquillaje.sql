@@ -741,10 +741,10 @@ BEGIN
 	BEGIN TRY
 		INSERT INTO [maqu].[tbCategorias](cate_Nombre, cate_UsuCreacion)
 		VALUES(@cate_Nombre, @cate_UsuCreacion)
-		RETURN 1
+		SELECT 1
 	END TRY
 	BEGIN CATCH
-		RETURN 0
+		SELECT 0
 	END CATCH
 END
 

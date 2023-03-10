@@ -30,6 +30,50 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tblArea]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblComplejos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblDeporte]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblEmpleados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblEquipo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblEventos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblLocalizacion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblMantenimiento]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblParticipantes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblSedes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblTipoComplejos]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[gral].[tbDepartamentos]",
          "ObjectType": 0
       },
@@ -72,6 +116,10 @@
       {
          "Name": "[maqu].[tbProveedores]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UDP_maqu_tbCategorias_List]",
+         "ObjectType": 1
       }
    ],
    "UiHint": "DESKTOP-BPGLHI0\\SQLEXPRESSLOCAL.Maquillaje",

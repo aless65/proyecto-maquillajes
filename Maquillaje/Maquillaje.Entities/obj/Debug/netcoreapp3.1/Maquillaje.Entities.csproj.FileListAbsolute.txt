@@ -1,7 +1,6 @@
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\bin\Debug\netcoreapp3.1\Maquillaje.Entities.deps.json
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\bin\Debug\netcoreapp3.1\Maquillaje.Entities.dll
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\bin\Debug\netcoreapp3.1\Maquillaje.Entities.pdb
-C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\obj\Debug\netcoreapp3.1\Maquillaje.Entities.csproj.AssemblyReference.cache
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\obj\Debug\netcoreapp3.1\Maquillaje.Entities.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\obj\Debug\netcoreapp3.1\Maquillaje.Entities.AssemblyInfoInputs.cache
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\obj\Debug\netcoreapp3.1\Maquillaje.Entities.AssemblyInfo.cs

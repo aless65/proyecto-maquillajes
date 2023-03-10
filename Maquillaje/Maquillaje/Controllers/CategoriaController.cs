@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
+using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,5 +32,32 @@ namespace Maquillaje.WebUI.Controllers
 
             return View(listadoMapeado);
         }
+
+        [HttpGet("Categorias/Create")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost("Categorias/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(CategoriaViewModel item)
+        {
+            var categoria = _mapper.Map<tbCategorias>(item);
+            var insertar = _maquService.InsertCategorias(categoria);
+
+            try
+            {
+                if (insertar == 1)
+                    return RedirectToAction("Index");
+                else
+                    return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }

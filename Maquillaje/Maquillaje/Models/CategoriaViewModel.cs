@@ -12,6 +12,7 @@ namespace Maquillaje.WebUI.Models
         public int cate_Id { get; set; }
 
         [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         public string cate_Nombre { get; set; }
         public int cate_UsuCreacion { get; set; }
         public DateTime cate_FechaCreacion { get; set; }

@@ -14,40 +14,27 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.cate_Id)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.cate_Nombre)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.cate_FechaCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.cate_FechaModificacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.cate_Estado)
-            </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.cate_Id)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.cate_Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.cate_FechaCreacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cate_FechaModificacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cate_Estado)
-            </td>
-            <td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.cate_Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.cate_Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.cate_Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.cate_Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.cate_Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.cate_Id">Borrar</a>
             </td>
         </tr>
 }

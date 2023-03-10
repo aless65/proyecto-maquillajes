@@ -1,3 +1,7 @@
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.AssemblyInfoInputs.cache
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.AssemblyInfo.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.csproj.CoreCompileInputs.cache
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\bin\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.deps.json
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\bin\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.dll
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\bin\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.pdb
@@ -6,10 +10,6 @@ C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Busin
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\bin\Debug\netcoreapp3.1\Maquillaje.DataAccess.pdb
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\bin\Debug\netcoreapp3.1\Maquillaje.Entities.pdb
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.csproj.AssemblyReference.cache
-C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.AssemblyInfoInputs.cache
-C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.AssemblyInfo.cs
-C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.csproj.CoreCompileInputs.cache
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.csproj.CopyComplete
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.dll
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.BusinessLogic\obj\Debug\netcoreapp3.1\Maquillaje.BusinessLogic.pdb

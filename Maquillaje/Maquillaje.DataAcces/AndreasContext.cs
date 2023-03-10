@@ -10,6 +10,7 @@ namespace Maquillaje.DataAccess
 {
     public class AndreasContext: MaquillajeContext
     {
+
         public static string ConnectionString { get; set; }
 
         public AndreasContext()

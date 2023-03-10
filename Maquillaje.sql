@@ -738,9 +738,17 @@ CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_INSERT
 	@cate_UsuCreacion 		INT
 AS
 BEGIN
-	INSERT INTO [maqu].[tbCategorias](cate_Nombre, cate_UsuCreacion)
-	VALUES(@cate_Nombre, @cate_UsuCreacion)
+	BEGIN TRY
+		INSERT INTO [maqu].[tbCategorias](cate_Nombre, cate_UsuCreacion)
+		VALUES(@cate_Nombre, @cate_UsuCreacion)
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN 0
+	END CATCH
 END
+
+EXEC UDP_maqu_tbCategorias_INSERT 'Hoald', 1
 
 /*Editar categoria*/
 GO
@@ -766,6 +774,16 @@ BEGIN
 	UPDATE [maqu].[tbCategorias]
 	SET [cate_Estado] = 0
 	WHERE [cate_Id] = @cate_Id
+END
+
+/*Listado de categorias*/
+GO
+CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_List
+AS
+BEGIN
+	SELECT [cate_Id], [cate_Nombre] 
+	FROM [maqu].[tbCategorias]
+	WHERE [cate_Estado] = 1
 END
 
 --/*Insertar Cliente*/

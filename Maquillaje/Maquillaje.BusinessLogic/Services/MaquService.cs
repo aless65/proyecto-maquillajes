@@ -30,6 +30,19 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<tbCategorias>();
             }
         }
+
+        public int InsertCategorias(tbCategorias tbCategorias)
+        {
+
+            try
+            {
+                return _categoriaRepository.Insert(tbCategorias);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         #endregion
     }
 }

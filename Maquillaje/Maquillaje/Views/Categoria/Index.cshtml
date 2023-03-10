@@ -32,6 +32,7 @@
                 @Html.DisplayFor(modelItem => item.cate_Nombre)
             </td>
             <td>
+                @*<button class="btn btn-primary" onclick="AbrirModal()">Editar ConModal</button>*@
                 <a asp-action="Edit" asp-route-id="@item.cate_Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.cate_Id">Detalles</a> |
                 <a asp-action="Delete" asp-route-id="@item.cate_Id">Borrar</a>
@@ -40,3 +41,5 @@
 }
     </tbody>
 </table>
+
+

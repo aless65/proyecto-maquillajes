@@ -804,30 +804,48 @@ BEGIN
 	WHERE [cate_Estado] = 1
 END
 
---/*Insertar Cliente*/
+--/Insertar Cliente/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbClientes_Insert
-	@clie_Nombres				NVARCHAR(200),
-	@clie_Apellidos				NVARCHAR(200),
-	@clie_Identidad				NVARCHAR(13),
-	@clie_Sexo					CHAR,
-	@mun_Id						CHAR(4),
-	@clie_DireccionExacta		NVARCHAR(100),
-	@clie_Telefono				NVARCHAR(15),
-	@clie_CorreoElectronico		NVARCHAR(200),
-	@clie_UsuCreacion			INT
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
+    @clie_Nombres                NVARCHAR(200),
+    @clie_Apellidos                NVARCHAR(200),
+    @clie_Identidad                NVARCHAR(13),
+    @clie_Sexo                    CHAR,
+    @mun_Id                        CHAR(4),
+    @clie_DireccionExacta        NVARCHAR(100),
+    @clie_Telefono                NVARCHAR(15),
+    @clie_CorreoElectronico        NVARCHAR(200),
+    @clie_UsuCreacion            INT
 AS
 BEGIN
-	INSERT INTO [maqu].[tbClientes](clie_Nombres, 
-									clie_Apellidos, clie_Identidad, 
-									clie_Sexo, muni_Id, 
-									clie_DireccionExacta, clie_Telefono, 
-									clie_CorreoElectronico, clie_UsuCreacion)
-	VALUES(@clie_Nombres,@clie_Apellidos,
-			@clie_Identidad,
-			@clie_Sexo,@mun_Id,
-			@clie_DireccionExacta,@clie_Telefono,
-			@clie_CorreoElectronico,@clie_UsuCreacion)
+    BEGIN TRY
+        INSERT INTO [maqu].[tbClientes](clie_Nombres, 
+                                    clie_Apellidos, clie_Identidad, 
+                                    clie_Sexo, muni_Id, 
+                                    clie_DireccionExacta, clie_Telefono, 
+                                    clie_CorreoElectronico, clie_UsuCreacion)
+        VALUES(@clie_Nombres,@clie_Apellidos,
+                @clie_Identidad,
+                @clie_Sexo,@mun_Id,
+                @clie_DireccionExacta,@clie_Telefono,
+                @clie_CorreoElectronico,@clie_UsuCreacion)
+
+        SELECT 1
+    END TRY
+    BEGIN CATCH
+        INSERT INTO [maqu].[tbClientes](clie_Nombres, 
+                                    clie_Apellidos, clie_Identidad, 
+                                    clie_Sexo, muni_Id, 
+                                    clie_DireccionExacta, clie_Telefono, 
+                                    clie_CorreoElectronico, clie_UsuCreacion)
+        VALUES(@clie_Nombres,@clie_Apellidos,
+                @clie_Identidad,
+                @clie_Sexo,@mun_Id,
+                @clie_DireccionExacta,@clie_Telefono,
+                @clie_CorreoElectronico,@clie_UsuCreacion)
+
+        SELECT 0
+    END CATCH
 END
 
 /*Editar Cliente*/

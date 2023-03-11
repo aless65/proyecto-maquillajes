@@ -103,10 +103,8 @@ namespace Maquillaje.BusinessLogic.Services
         #region Municipios
         public List<tbMunicipios> GetMunicipios()
         {
-            //var municipios = GetMunicipios.Municipios.ToList();
             var municipios = _municipioRepository.GetMunicipios();
-            return municipios;
-
+            return municipios.ToList();
         }
 
         #endregion 

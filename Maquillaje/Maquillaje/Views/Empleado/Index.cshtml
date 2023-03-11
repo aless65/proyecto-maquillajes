@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.tbEmpleados>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_Apellidos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_Identidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_Sexo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_CorreoElectronico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_FechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_FechaModificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_UsuCreacionNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe_UsuModificacionNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estacivi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.muni)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Identidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Sexo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_CorreoElectronico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_FechaModificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_UsuCreacionNavigation.user_Contrasena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_UsuModificacionNavigation.user_Contrasena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estacivi.estacivi_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.muni.muni_id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.empe_Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.empe_Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.empe_Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -10,15 +10,11 @@ namespace Maquillaje.BusinessLogic.Services
     public class MaquService
     {
         private readonly CategoriaRepository _categoriaRepository;
+        private readonly EmpleadoRepository _empleadoRepository;
 
-        public MaquService(CategoriaRepository categoriaRepository)
+        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository)
         {
             _categoriaRepository = categoriaRepository;
-        }
-
-        private readonly EmpleadoRepository _empleadoRepository;
-        public MaquService(EmpleadoRepository empleadoRepository)
-        {
             _empleadoRepository = empleadoRepository;
         }
 

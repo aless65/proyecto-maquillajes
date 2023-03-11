@@ -13,6 +13,7 @@ namespace Maquillaje.BusinessLogic
         public static void DataAccess(this IServiceCollection service, string connectionString)
         {
             service.AddScoped<CategoriaRepository>();
+            service.AddScoped<EmpleadoRepository>();
 
             AndreasContext.BuildConnectionString(connectionString);
         }

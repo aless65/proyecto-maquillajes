@@ -36,7 +36,28 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("Empleados/Create")]
         public IActionResult Create()
         {
+            //ViewBag.muni_Id = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre");
             return View();
+        }
+
+        [HttpPost("Empleados/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(EmpleadoViewModel item)
+        {
+            var empleado = _mapper.Map<tbCategorias>(item);
+            var insertar = _maquService.InsertCategorias(empleado);
+
+            try
+            {
+                if (insertar == 1)
+                    return RedirectToAction("Index");
+                else
+                    return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

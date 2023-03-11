@@ -661,6 +661,15 @@ GO
 ALTER TABLE acce.tbUsuarios
 ADD CONSTRAINT FK_acce_tbUsuarios_maqu_tbEmpleados_empe_Id	FOREIGN KEY(empe_Id) REFERENCES maqu.tbEmpleados(empe_Id)
 
+--********************Municipios****************************--
+/*Listado municipios para DropDownList*/
+GO 
+CREATE OR ALTER PROCEDURE UDP_gral_tbMunicipios_ListDDL
+AS
+BEGIN
+SELECT muni_id,muni_Nombre FROM [gral].[tbMunicipios]
+END
+
 --**************** DEPARTAMENTOS ****************--
 /*Insertar Departamentos*/
 GO

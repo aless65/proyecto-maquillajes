@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Models\NewFile.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\js\app\General\" />
     <Folder Include="wwwroot\js\app\Acceso\" />
     <Folder Include="wwwroot\js\app\Maquillaje\" />

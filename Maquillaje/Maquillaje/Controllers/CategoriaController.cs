@@ -33,13 +33,13 @@ namespace Maquillaje.WebUI.Controllers
             return View(listadoMapeado);
         }
 
-        [HttpGet("Categorias/Create")]
+        [HttpGet("/Categorias/Create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost("Categorias/Create")]
+        [HttpPost("/Categorias/Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(CategoriaViewModel item)
         {

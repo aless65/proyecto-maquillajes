@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Maquillaje.WebUI.Models.ClienteViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.clie_Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clie_Apellidos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clie_Identidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clie_Sexo)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.clie_Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clie_Apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clie_Identidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clie_Sexo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.clie_Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.clie_Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.clie_Id">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

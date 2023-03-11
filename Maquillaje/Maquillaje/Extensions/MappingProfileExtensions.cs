@@ -13,6 +13,7 @@ namespace Maquillaje.WebUI.Extensions
         public MappingProfileExtensions()
         {
             CreateMap<CategoriaViewModel, tbCategorias>().ReverseMap();
+            CreateMap<EmpleadoViewModel, tbEmpleados>().ReverseMap();
         }
     }
 }

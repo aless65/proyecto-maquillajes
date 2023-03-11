@@ -25,10 +25,11 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Index()
         {
             var listado = _maquService.ListadoEmpleados(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<tbEmpleados>>(listado);
+            var listadoMapeado = _mapper.Map<IEnumerable<EmpleadoViewModel>>(listado);
 
             if (String.IsNullOrEmpty(error))
                 ModelState.AddModelError("", error);
+
             return View(listadoMapeado);
         }
     }

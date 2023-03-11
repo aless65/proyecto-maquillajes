@@ -755,8 +755,9 @@ BEGIN
 		SELECT 0
 	END CATCH
 END
+GO
 
-EXEC UDP_maqu_tbCategorias_INSERT 'Hoald', 1
+--EXEC UDP_maqu_tbCategorias_INSERT 'Hoald', 1
 
 /*Editar categoria*/
 GO
@@ -1093,6 +1094,7 @@ EXEC UDP_maqu_tbCategorias_INSERT 'Diseño de cejas', 1
 GO
 EXEC UDP_acce_tbUsuarios_UPDATE 1, 1, 1, 1, 1
 
+GO
 INSERT INTO [acce].[tbRoles]([role_Nombre], [role_UsuCreacion])
 VALUES ('Inventario', 1),
 	   ('Recursos Humanos', 1)

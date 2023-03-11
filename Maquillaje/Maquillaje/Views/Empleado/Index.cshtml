@@ -25,7 +25,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.empe_Sexo)
             </th>
+<<<<<<< Updated upstream
             <th>Acciones</th>
+=======
+            <th>
+                @Html.DisplayNameFor(model => model.empe_Telefono)
+            </th>
+            <th></th>
+>>>>>>> Stashed changes
         </tr>
     </thead>
     <tbody>
@@ -44,6 +51,16 @@
                 @Html.DisplayFor(modelItem => item.empe_Sexo)
             </td>
             <td>
+<<<<<<< Updated upstream
+=======
+                @Html.DisplayFor(modelItem => item.empe_Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Telefono)
+            </td>
+
+            <td>
+>>>>>>> Stashed changes
                 <a asp-action="Edit" asp-route-id="@item.empe_Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.empe_Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.empe_Id">Delete</a>

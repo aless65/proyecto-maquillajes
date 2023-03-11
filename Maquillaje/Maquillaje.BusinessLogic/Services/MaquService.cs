@@ -65,6 +65,18 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public int InsertEmpleado(tbEmpleados tbEmpleados)
+        {
+            try
+            {
+                return _empleadoRepository.Insert(tbEmpleados);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         #endregion
     }
 }

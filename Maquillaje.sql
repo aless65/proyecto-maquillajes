@@ -861,6 +861,21 @@ BEGIN
 	WHERE clie_Id = @clie_Id
 END
 
+/*Listado Clientes*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_List
+AS
+BEGIN
+    SELECT [clie_Nombres], 
+           [clie_Apellidos], 
+           [clie_Identidad],
+           CASE [clie_Sexo] WHEN 'F' THEN 'Femenino'
+                            ELSE 'Masculino'
+           END AS Sexo
+    FROM [maqu].[tbClientes]
+    WHERE [clie_Estado] = 1
+END
+GO
 EXECUTE UDP_maqu_tbClientes_Insert 'Christopher','Aguilar','0501200414817','M','0501','calle 1','99122657','chris@gmail.com',1
 EXEC UPD_maqu_tbEmpleados_Insert 'Hugo', 'Pérez', '0501199409876', '1994-01-01', 'M', 2, '0101', 'Calle de la Montaña 123', '99988877', 'hugo@mail.com', 1;
 EXEC UPD_maqu_tbEmpleados_Insert 'Lucía', 'Rodríguez', '0501199901234', '1999-01-01', 'F', 3, '0102', 'Avenida del Sol 456', '88877766', 'lucia@mail.com', 1;

@@ -32,5 +32,11 @@ namespace Maquillaje.WebUI.Controllers
 
             return View(listadoMapeado);
         }
+
+        [HttpGet("Empleados/Create")]
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

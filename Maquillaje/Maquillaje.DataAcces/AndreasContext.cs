@@ -18,6 +18,7 @@ namespace Maquillaje.DataAccess
             ChangeTracker.LazyLoadingEnabled = false;
         }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

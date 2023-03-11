@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<Maquillaje.WebUI.Models.EmpleadoViewModel>
 
-
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -63,60 +62,59 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_Apellidos)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_Identidad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_FechaNacimiento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_Sexo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_Direccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_CorreoElectronico)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_FechaCreacion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_FechaModificacion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_Estado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_UsuCreacionNavigation.user_Contrasena)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empe_UsuModificacionNavigation.user_Contrasena)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.estacivi.estacivi_Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.muni.muni_id)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.empe_Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.empe_Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.empe_Id">Delete</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Identidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Sexo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_CorreoElectronico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_FechaModificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_UsuCreacionNavigation.user_Contrasena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe_UsuModificacionNavigation.user_Contrasena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estacivi.estacivi_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.muni.muni_id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.empe_Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.empe_Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.empe_Id">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

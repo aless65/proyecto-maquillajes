@@ -52,7 +52,22 @@ namespace Maquillaje.BusinessLogic.Services
         #endregion
 
         #region Empleado
+        
+        public IEnumerable<tbEmpleados> ListadoEmpleados(out string error)
+        {
+            error = string.Empty;
 
+            try
+            {
+                return _empleadoRepository.List();
+            }
+            catch (Exception e)
+            {
+
+                error = e.Message;
+                return Enumerable.Empty<tbEmpleados>();
+            }
+        }
 
         #endregion
     }

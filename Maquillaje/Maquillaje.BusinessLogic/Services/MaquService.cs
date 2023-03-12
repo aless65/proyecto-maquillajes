@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
+
+
 
 namespace Maquillaje.BusinessLogic.Services
 {
@@ -116,6 +119,13 @@ namespace Maquillaje.BusinessLogic.Services
         #endregion
 
         #region Municipios
+        public IEnumerable<tbDepartamentos> GetMunicipiosPorDepartamento(int departamentoId)
+        {
+            //var municipios = _context.Municipios.Where(m => m.DepartamentoId == departamentoId);
+            var municipios = _departamentoRepository.List(); 
+            return Json(municipios);
+        }
+
 
         #endregion
     }

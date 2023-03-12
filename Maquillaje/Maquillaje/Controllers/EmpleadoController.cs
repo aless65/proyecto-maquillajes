@@ -39,7 +39,13 @@ namespace Maquillaje.WebUI.Controllers
         {
             //var prueba = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre"); 
             //ViewBag.muni_Id = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre");
+            var listado = _maquService.ListadoDepartamento(out string error).ToList();
+            var seleccioneUnaOpcion = new tbDepartamentos { depa_Id = "0000", depa_Nombre = "--Seleccioene un Departamento--" };
+            listado.Insert(0, seleccioneUnaOpcion);
+            ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
+            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
             return View();
         }
 
@@ -76,6 +82,10 @@ namespace Maquillaje.WebUI.Controllers
             {
                 return RedirectToAction("Index");
             }
+        public IActionResult CargarMunicipios(string id)
+        {
+            var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);
+            return Json(cargarmunicipios);
         }
     }
 }

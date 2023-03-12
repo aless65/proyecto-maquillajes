@@ -34,5 +34,15 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+        
+        public IEnumerable<tbMunicipios> CargarMunicipios(string id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@depa_Id", id, DbType.String, ParameterDirection.Input);
+
+            return db.Query<tbMunicipios>(ScriptsDataBase.UDP_Listar_Municipios_DDL, parametros, commandType: CommandType.StoredProcedure);
+        }
+
     }
 }

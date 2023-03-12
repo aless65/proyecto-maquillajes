@@ -31,5 +31,9 @@ namespace Maquillaje.DataAccess.Repository
         #region Departamentos
         public static string UDP_Listar_Departamentos = "gral.UPD_gral_tbDepartamentos_List";
         #endregion
+
+        #region EstadosCiviles
+        public static string UDP_Listar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_List";
+        #endregion
     }
 }

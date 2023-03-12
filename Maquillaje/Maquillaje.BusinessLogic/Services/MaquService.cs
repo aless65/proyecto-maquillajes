@@ -5,21 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
+
+
 namespace Maquillaje.BusinessLogic.Services
 {
     public class MaquService
     {
         private readonly CategoriaRepository _categoriaRepository;
         private readonly EmpleadoRepository _empleadoRepository;
-        private readonly ClienteRepository  _clienteRepository;
+        private readonly ClienteRepository _clienteRepository;
         private readonly MunicipioRepository _municipioRepository;
+        private readonly DepartamentoRepository _departamentoRepository;
+        private readonly EstadoCivilRepository _estadoCivilRepository;
 
-        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository,MunicipioRepository municipioRepository)
+        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
             _clienteRepository = clienteRepository;
             _municipioRepository = municipioRepository;
+            _departamentoRepository = departamentoRepository;
+            _estadoCivilRepository = estadoCivilRepository;
         }
 
         #region Categorias
@@ -30,7 +37,7 @@ namespace Maquillaje.BusinessLogic.Services
             {
                 return _categoriaRepository.List();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 error = e.Message;
                 return Enumerable.Empty<tbCategorias>();
@@ -39,12 +46,12 @@ namespace Maquillaje.BusinessLogic.Services
 
         public int InsertCategorias(tbCategorias tbCategorias)
         {
-             return _categoriaRepository.Insert(tbCategorias);
+            return _categoriaRepository.Insert(tbCategorias);
         }
         #endregion
 
         #region Empleado
-        
+
         public IEnumerable<tbEmpleados> ListadoEmpleados(out string error)
         {
             error = string.Empty;
@@ -156,6 +163,48 @@ namespace Maquillaje.BusinessLogic.Services
         #region Municipios
 
 
+        #endregion
+        #region Departamentos
+        public IEnumerable<tbDepartamentos> ListadoDepartamento(out string error)
+        {
+            error = string.Empty;
+            try
+            {
+                return _departamentoRepository.List();
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+                return Enumerable.Empty<tbDepartamentos>();
+            }
+        }
+        #endregion
+
+        #region Municipios
+        public IEnumerable<tbMunicipios> GetMunicipiosPorDepartamento(string departamentoId)
+        {
+            //var municipios = _context.Municipios.Where(m => m.DepartamentoId == departamentoId);
+            var municipios = _municipioRepository.CargarMunicipios(departamentoId); 
+            return (municipios);
+        }
+
+
+        #endregion
+
+        #region EstadosCiviles
+        public IEnumerable<tbEstadosCiviles> ListadoEstadosCiviles(out string error)
+        {
+            error = string.Empty;
+            try
+            {
+                return _estadoCivilRepository.List();
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+                return Enumerable.Empty<tbEstadosCiviles>();
+            }
+        }
         #endregion
     }
 }

@@ -672,11 +672,12 @@ ADD CONSTRAINT FK_acce_tbUsuarios_maqu_tbEmpleados_empe_Id	FOREIGN KEY(empe_Id) 
 /*Listado municipios para DropDownList*/
 GO 
 CREATE OR ALTER PROCEDURE UDP_gral_tbMunicipios_ListDDL
+@depa_Id CHAR(4)
 AS
 BEGIN
-SELECT muni_id,muni_Nombre FROM [gral].[tbMunicipios]
+SELECT muni_id,muni_Nombre FROM [gral].[tbMunicipios] WHERE depa_Id = @depa_Id
 END
-
+EXECUTE UDP_gral_tbMunicipios_ListDDL '05'
 --**************** DEPARTAMENTOS ****************--
 /*Insertar Departamentos*/
 GO

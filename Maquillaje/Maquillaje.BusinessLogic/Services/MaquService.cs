@@ -119,11 +119,11 @@ namespace Maquillaje.BusinessLogic.Services
         #endregion
 
         #region Municipios
-        public IEnumerable<tbDepartamentos> GetMunicipiosPorDepartamento(string departamentoId)
+        public IEnumerable<tbMunicipios> GetMunicipiosPorDepartamento(string departamentoId)
         {
             //var municipios = _context.Municipios.Where(m => m.DepartamentoId == departamentoId);
-            var municipios = _municipioRepository.List(); 
-            return Json(municipios);
+            var municipios = _municipioRepository.List().Where(x => x.depa_Id == departamentoId); 
+            return (municipios);
         }
 
 

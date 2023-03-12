@@ -56,10 +56,28 @@ namespace Maquillaje.WebUI.Controllers
             }
         }
 
-        [HttpGet("/Clientes/Update/{id}")]
+        [HttpGet("/Clientes/Update")]
         public IActionResult Update(int id)
         {
-            return View();
+            var cliente = _maquService.ObtenerIDCliente(id);
+
+            return View(cliente);
+        }
+
+        [HttpPost("/Clientes/Update")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(tbClientes item)
+        {
+            var update = _maquService.UpdateClientes(item);
+
+            if (update)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(item);
+            }
         }
     }
 }

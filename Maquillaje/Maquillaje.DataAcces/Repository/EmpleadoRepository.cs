@@ -65,7 +65,6 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@empe_Direccion", item.empe_Direccion, DbType.String, ParameterDirection.Input);
             parametros.Add("@empe_Telefono", item.empe_Telefono, DbType.String, ParameterDirection.Input);
             parametros.Add("@empe_CorreoElectronico", item.empe_CorreoElectronico, DbType.String, ParameterDirection.Input);
-            parametros.Add("@empe_UsuModificacion", "1", DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Editar_Empleado, parametros, commandType: CommandType.StoredProcedure);
         }

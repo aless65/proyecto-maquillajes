@@ -34,5 +34,7 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+        
+
     }
 }

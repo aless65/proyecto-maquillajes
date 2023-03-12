@@ -60,5 +60,11 @@ namespace Maquillaje.WebUI.Controllers
                 return View();
             }
         }
+
+        public IActionResult CargarMunicipios(string id)
+        {
+            var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);
+            return View();
+        }
     }
 }

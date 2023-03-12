@@ -501,6 +501,18 @@ END
 GO
 
 --**************** ESTADOS CIVILES ****************--
+
+/*Listar Estados Civiles*/
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_List
+AS
+BEGIN 
+SELECT estacivi_Id, estacivi_Nombre, 
+estacivi_UsuCreacion, estacivi_FechaCreacion, 
+estacivi_UsuModificacion, estacivi_FechaModificacion, 
+estacivi_Estado
+FROM [gral].[tbEstadosCiviles]
+END
+GO
 --Insertar estados civiles
 CREATE OR ALTER PROCEDURE UDP_gral_tbEstadosCiviles_INSERT
 	@estacivi_Nombre		NVARCHAR(100),
@@ -828,7 +840,7 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
     @clie_Apellidos                NVARCHAR(200),
     @clie_Identidad                NVARCHAR(13),
     @clie_Sexo                    CHAR,
-    @mun_Id                        CHAR(4),
+    @muni_Id                        CHAR(4),
     @clie_DireccionExacta        NVARCHAR(100),
     @clie_Telefono                NVARCHAR(15),
     @clie_CorreoElectronico        NVARCHAR(200),
@@ -843,7 +855,7 @@ BEGIN
                                     clie_CorreoElectronico, clie_UsuCreacion)
         VALUES(@clie_Nombres,@clie_Apellidos,
                 @clie_Identidad,
-                @clie_Sexo,@mun_Id,
+                @clie_Sexo,@muni_Id,
                 @clie_DireccionExacta,@clie_Telefono,
                 @clie_CorreoElectronico,@clie_UsuCreacion)
 
@@ -857,7 +869,7 @@ BEGIN
                                     clie_CorreoElectronico, clie_UsuCreacion)
         VALUES(@clie_Nombres,@clie_Apellidos,
                 @clie_Identidad,
-                @clie_Sexo,@mun_Id,
+                @clie_Sexo,@muni_Id,
                 @clie_DireccionExacta,@clie_Telefono,
                 @clie_CorreoElectronico,@clie_UsuCreacion)
 

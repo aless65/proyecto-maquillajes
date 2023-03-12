@@ -34,11 +34,6 @@
                 <span asp-validation-for="empe_FechaNacimiento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="empe_Sexo" class="control-label"></label>
-                <input asp-for="empe_Sexo" class="form-control" />
-                <span asp-validation-for="empe_Sexo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="empe_Sexo" class="control-label">Sexo:</label>
                 <div>
                     <input type="radio" asp-for="empe_Sexo" value="M" /> Hombre
@@ -51,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="muni_Id" class="control-label">Municipio Id</label>
-                <select id="ddlMunicipios" class="form-control"></select>
+                <select id="muni_Id" name="muni_Id" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label asp-for="empe_Direccion" class="control-label"></label>
@@ -81,19 +76,13 @@
 
 <script>
     $(document).ready(function () {
-        $("#depa_Id").append($('<option>', {
-            value: '',
-            text: 'Selecciona un departamento'
-        }));
-
+        $("#ddlMunicipios").prop("disabled", true);
         $('#depa_Id').change(function () {
-            var departamentoId = $("#depa_Id").val(); // Obtener el ID del departamento seleccionado
-            console.log(departamentoId);
+            var departamentoId = $("#depa_Id").val();
             $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
                 .done(function (municipios) {
-                    console.log(municipios);
-
-                    var municipiosSelect = $('#ddlMunicipios');
+                    $("#muni_Id").prop("disabled", false);
+                    var municipiosSelect = $('#muni_Id');
                     municipiosSelect.empty(); 
                     municipiosSelect.append($('<option>', {
                         value: '',
@@ -101,9 +90,10 @@
                     }));
                     $.each(municipios, function (index, item) {
                         municipiosSelect.append($('<option>', {
-                            value: item.muni_Id,
+                            value: item.muni_id,
                             text:  item.muni_Nombre
                         }));
+                        console.log(item.muni_Id)
                     });
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {

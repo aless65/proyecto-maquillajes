@@ -253,7 +253,7 @@ CREATE TABLE maqu.tbEmpleados(
 	
 	CONSTRAINT PK_maqu_tbEmpleados_empe_Id 										PRIMARY KEY(empe_Id),
 	CONSTRAINT CK_maqu_tbEmpleados_empe_Sexo									CHECK(empe_sexo IN ('F', 'M')),
-	CONSTRAINT FK_maqu_tbEmpleados_gral_tbEstadosCiviles_estacivi_Id			FOREIGN KEY(estacivi_Id)					REFERENCES gral.tbEstadosCiviles(estacivi_Id),
+	CONSTRAINT FK_maqu_tbEmpleados_gral_tbEstadosCiviles_estacivi_Id			FOREIGN KEY(estacivi_Id)					REFERENCES gral.tbEstadosCiviles(estacivi_Id),			
 	CONSTRAINT FK_maqu_tbEmpleados_gral_tbMunicipios_muni_Id					FOREIGN KEY(muni_Id)						REFERENCES gral.tbMunicipios(muni_Id),
 	CONSTRAINT FK_maqu_tbEmpleados_acce_tbUsuarios_UserCreate					FOREIGN KEY(empe_UsuCreacion)				REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT FK_maqu_tbEmpleados_acce_tbUsuarios_UserUpdate					FOREIGN KEY(empe_UsuModificacion)			REFERENCES acce.tbUsuarios(user_Id),
@@ -806,7 +806,8 @@ END
 
 --/Insertar Cliente/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Update
+    @clie_Id                    INT,
     @clie_Nombres                NVARCHAR(200),
     @clie_Apellidos                NVARCHAR(200),
     @clie_Identidad                NVARCHAR(13),
@@ -815,35 +816,26 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
     @clie_DireccionExacta        NVARCHAR(100),
     @clie_Telefono                NVARCHAR(15),
     @clie_CorreoElectronico        NVARCHAR(200),
-    @clie_UsuCreacion            INT
+    @clie_UsuModificacion        INT
 AS
 BEGIN
     BEGIN TRY
-        INSERT INTO [maqu].[tbClientes](clie_Nombres, 
-                                    clie_Apellidos, clie_Identidad, 
-                                    clie_Sexo, muni_Id, 
-                                    clie_DireccionExacta, clie_Telefono, 
-                                    clie_CorreoElectronico, clie_UsuCreacion)
-        VALUES(@clie_Nombres,@clie_Apellidos,
-                @clie_Identidad,
-                @clie_Sexo,@mun_Id,
-                @clie_DireccionExacta,@clie_Telefono,
-                @clie_CorreoElectronico,@clie_UsuCreacion)
+    UPDATE [maqu].[tbClientes]
+               SET clie_Nombres = @clie_Nombres,
+                clie_Apellidos = @clie_Apellidos,
+                clie_Identidad = @clie_Identidad,
+                clie_Sexo = @clie_Sexo,
+                muni_Id = @mun_Id,
+                clie_DireccionExacta = @clie_DireccionExacta,
+                clie_Telefono = @clie_Telefono,
+                clie_CorreoElectronico = @clie_CorreoElectronico,
+                clie_UsuModificacion = @clie_UsuModificacion,
+                clie_FechaModificacion = GETDATE()
+        WHERE     clie_Id = @clie_Id
 
         SELECT 1
     END TRY
     BEGIN CATCH
-        INSERT INTO [maqu].[tbClientes](clie_Nombres, 
-                                    clie_Apellidos, clie_Identidad, 
-                                    clie_Sexo, muni_Id, 
-                                    clie_DireccionExacta, clie_Telefono, 
-                                    clie_CorreoElectronico, clie_UsuCreacion)
-        VALUES(@clie_Nombres,@clie_Apellidos,
-                @clie_Identidad,
-                @clie_Sexo,@mun_Id,
-                @clie_DireccionExacta,@clie_Telefono,
-                @clie_CorreoElectronico,@clie_UsuCreacion)
-
         SELECT 0
     END CATCH
 END

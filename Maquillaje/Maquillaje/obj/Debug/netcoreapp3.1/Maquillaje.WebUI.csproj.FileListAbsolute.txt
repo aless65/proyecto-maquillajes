@@ -532,3 +532,4 @@ C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debu
 C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.genruntimeconfig.cache
 C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Empleado\Create.cshtml.g.cs
 C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Index.cshtml.g.cs
+C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Create.cshtml.g.cs

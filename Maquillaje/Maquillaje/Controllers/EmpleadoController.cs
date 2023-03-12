@@ -37,7 +37,9 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("Empleados/Create")]
         public IActionResult Create()
         {
+            var prueba = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre"); 
             ViewBag.muni_Id = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre");
+
             return View();
         }
 
@@ -45,8 +47,8 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(EmpleadoViewModel item)
         {
-            var empleado = _mapper.Map<tbCategorias>(item);
-            var insertar = _maquService.InsertCategorias(empleado);
+            var empleado = _mapper.Map<tbEmpleados>(item);
+            var insertar = _maquService.InsertEmpleado(empleado);
 
             try
             {

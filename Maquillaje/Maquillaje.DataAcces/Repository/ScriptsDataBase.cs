@@ -20,6 +20,7 @@ namespace Maquillaje.DataAccess.Repository
         #region Clientes
         public static string UDP_Listar_Clientes = "maqu.UDP_maqu_tbClientes_List";
         public static string UDP_Insertar_Clientes = "maqu.UDP_maqu_tbClientes_Insert";
+        public static string UDP_Editar_Clientes = "maqu.UDP_maqu_tbClientes_Update";
         #endregion
 
         #region Municipios

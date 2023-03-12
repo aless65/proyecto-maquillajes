@@ -39,15 +39,7 @@ namespace Maquillaje.BusinessLogic.Services
 
         public int InsertCategorias(tbCategorias tbCategorias)
         {
-
-            try
-            {
-                return _categoriaRepository.Insert(tbCategorias);
-            }
-            catch
-            {
-                return 0;
-            }
+             return _categoriaRepository.Insert(tbCategorias);
         }
         #endregion
 
@@ -98,13 +90,18 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<tbClientes>();
             }
         }
+
+        public int InsertClientes(tbClientes tbClientes)
+        {
+            return _clienteRepository.Insert(tbClientes);
+        }
         #endregion
 
         #region Municipios
-        public List<tbMunicipios> GetMunicipios()
+        public IEnumerable<tbMunicipios> GetMunicipios()
         {
             var municipios = _municipioRepository.GetMunicipios();
-            return municipios.ToList();
+            return municipios;
         }
 
         #endregion 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
+using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,6 +28,32 @@ namespace Maquillaje.WebUI.Controllers
             var listadoMapeado = _mapper.Map<IEnumerable<ClienteViewModel>>(listado);
 
             return View(listadoMapeado);
+        }
+
+        [HttpGet("/Clientes/Create")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost("/Clientes/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ClienteViewModel item)
+        {
+            var cliente = _mapper.Map<tbClientes>(item);
+            var insertar = _maquService.InsertClientes(cliente);
+
+            try
+            {
+                if (insertar == 1)
+                    return RedirectToAction("Index");
+                else
+                    return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

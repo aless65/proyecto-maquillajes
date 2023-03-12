@@ -31,7 +31,7 @@ namespace Maquillaje.WebUI.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string muni_Id { get; set; }
 
-        [Display(Name = "Dirección exactas")]
+        [Display(Name = "Dirección exacta")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string clie_DireccionExacta { get; set; }
 

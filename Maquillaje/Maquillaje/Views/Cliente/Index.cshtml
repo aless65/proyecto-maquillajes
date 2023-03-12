@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
         <p>
-            <a asp-action="Create" class="btn btn-secondary" >Nuevo</a>
+            <a asp-action="Create" class="btn btn-secondary">Nuevo</a>
         </p>
         <table class="table table-bordered table-hover" id="DataTable">
             <thead>
@@ -37,28 +37,29 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.clie_Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.clie_Nombres)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.clie_Apellidos)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.clie_Identidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.clie_Sexo)
-                    </td>
-                    <td>
-                        <a asp-action="Update" asp-route-id="@item.clie_Id" class="btn btn-warning">Editar</a> |
-                        <a asp-action="Details" asp-route-id="@item.clie_Id" class="btn btn-dark">Detalles</a> |
-                        <a asp-action="Delete" asp-route-id="@item.clie_Id" class="btn btn-danger">Borrar</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.clie_Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.clie_Nombres)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.clie_Apellidos)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.clie_Identidad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.clie_Sexo)
+                        </td>
+                        <td>
+                            <a asp-action="Update" asp-route-id="@item.clie_Id" class="btn btn-warning">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.clie_Id" class="btn btn-dark">Detalles</a> |
+                            @*<a asp-action="Delete" asp-route-id="@item.clie_Id" class="btn btn-danger">Borrar</a>*@
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.clie_Id)">Borrar</button>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -66,3 +67,33 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Cliente" asp-action="Delete">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="id" name="id" hidden />
+                    <span>¿Realmente desea eliminar este cliente?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-success">Sí</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function eliminar(id) {
+
+        $("#id").val(id);
+
+        $("#modalEditar").appendTo("body").modal('show');
+
+    }
+</script>

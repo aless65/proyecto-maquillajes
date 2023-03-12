@@ -40,8 +40,8 @@ namespace Maquillaje.WebUI.Controllers
             //var prueba = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre"); 
             //ViewBag.muni_Id = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre");
             var listado = _maquService.ListadoDepartamento(out string error).ToList();
-            var seleccioneUnaOpcion = new tbDepartamentos { depa_Id = "0000", depa_Nombre = "--Seleccioene un Departamento--" };
-            listado.Insert(0, seleccioneUnaOpcion);
+            //var seleccioneUnaOpcion = new tbDepartamentos { depa_Id = "0000", depa_Nombre = "--Seleccioene un Departamento--" };
+            //listado.Insert(0, seleccioneUnaOpcion);
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
             var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
@@ -53,6 +53,15 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(EmpleadoViewModel item)
         {
+
+            var listado = _maquService.ListadoDepartamento(out string error).ToList();
+            //var seleccioneUnaOpcion = new tbDepartamentos { depa_Id = "0000", depa_Nombre = "--Seleccioene un Departamento--" };
+            //listado.Insert(0, seleccioneUnaOpcion);
+            ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
+
+            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
+
             var empleado = _mapper.Map<tbEmpleados>(item);
             var insertar = _maquService.InsertEmpleado(empleado);
 
@@ -74,7 +83,7 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _maquService.ObtenerIDEmpleado(id);
 
-            if(listado != null)
+            if (listado != null)
             {
                 return View(listado);
             }
@@ -82,6 +91,7 @@ namespace Maquillaje.WebUI.Controllers
             {
                 return RedirectToAction("Index");
             }
+        }
         public IActionResult CargarMunicipios(string id)
         {
             var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);

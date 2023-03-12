@@ -79,5 +79,12 @@ namespace Maquillaje.WebUI.Controllers
                 return View(item);
             }
         }
+
+        public IActionResult Delete(int id)
+        {
+            var delete = _maquService.DeleteCliente(id);
+
+            return RedirectToAction("Index");
+        }
     }
 }

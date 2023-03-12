@@ -13,13 +13,15 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly EmpleadoRepository _empleadoRepository;
         private readonly ClienteRepository  _clienteRepository;
         private readonly MunicipioRepository _municipioRepository;
+        private readonly DepartamentoRepository _departamentoRepository;
 
-        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository,MunicipioRepository municipioRepository)
+        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository,MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
             _clienteRepository = clienteRepository;
             _municipioRepository = municipioRepository;
+            _departamentoRepository = departamentoRepository;
         }
 
         #region Categorias
@@ -97,9 +99,24 @@ namespace Maquillaje.BusinessLogic.Services
         }
         #endregion
 
-        #region Municipios
-    
+        #region Departamentos
 
-        #endregion 
+        #endregion
+
+        #region Municipios
+        public IEnumerable<tbDepartamentos> ListadoDepartamento(out string error)
+        {
+            error = string.Empty;
+            try
+            {
+                return _departamentoRepository.List();
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+                return Enumerable.Empty<tbDepartamentos>();
+            }
+        }
+        #endregion
     }
 }

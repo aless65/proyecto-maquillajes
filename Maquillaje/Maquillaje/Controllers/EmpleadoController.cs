@@ -37,9 +37,7 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("Empleados/Create")]
         public IActionResult Create()
         {
-            var prueba = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre"); 
-            ViewBag.muni_Id = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre");
-
+            ViewBag.depa_Id = new SelectList(_maquService.ListadoDepartamento(out string error), "depa_Id", "depa_Nombre");
             return View();
         }
 
@@ -61,6 +59,12 @@ namespace Maquillaje.WebUI.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet("Empleados/Update/{id}")]
+        public IActionResult Update(int id)
+        {
+            return View();
         }
     }
 }

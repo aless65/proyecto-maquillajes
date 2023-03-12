@@ -69,19 +69,6 @@
                 <span asp-validation-for="empe_CorreoElectronico" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="empe_UsuCreacion" class="control-label"></label>
-                <select asp-for="empe_UsuCreacion" class="form-control" asp-items="ViewBag.empe_UsuCreacion"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="empe_UsuModificacion" class="control-label"></label>
-                <select asp-for="empe_UsuModificacion" class="form-control" asp-items="ViewBag.empe_UsuModificacion"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="empe_FechaModificacion" class="control-label"></label>
-                <input asp-for="empe_FechaModificacion" class="form-control" />
-                <span asp-validation-for="empe_FechaModificacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -94,29 +81,36 @@
 
 <script>
     $(document).ready(function () {
+        $("#depa_Id").append($('<option>', {
+            value: '',
+            text: 'Selecciona un departamento'
+        }));
+
         $('#depa_Id').change(function () {
             var departamentoId = $("#depa_Id").val(); // Obtener el ID del departamento seleccionado
-            $.ajax({
-                url: '/Municipios/GetMunicipiosPorDepartamento',
-                data: { departamentoId: departamentoId },
-                type: 'GET',
-                success: function (municipios) {
-                    // Actualizar el select de municipios con los resultados de la solicitud
-                    var municipiosSelect = $('#municipios');
-                    municipiosSelect.empty(); // Vaciar el select existente
+            console.log(departamentoId);
+            $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
+                .done(function (municipios) {
+                    console.log(municipios);
+
+                    var municipiosSelect = $('#ddlMunicipios');
+                    municipiosSelect.empty(); 
                     municipiosSelect.append($('<option>', {
                         value: '',
                         text: 'Selecciona un municipio'
                     }));
-                    $.each(municipios, function (index, municipio) {
+                    $.each(municipios, function (index, item) {
                         municipiosSelect.append($('<option>', {
-                            value: municipio.Id,
-                            text: municipio.Nombre
+                            value: item.muni_Id,
+                            text:  item.muni_Nombre
                         }));
                     });
-                }
-            });
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                });
         });
     });
+
 
 </script>

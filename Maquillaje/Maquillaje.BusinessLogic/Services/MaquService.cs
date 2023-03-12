@@ -122,7 +122,7 @@ namespace Maquillaje.BusinessLogic.Services
         public IEnumerable<tbMunicipios> GetMunicipiosPorDepartamento(string departamentoId)
         {
             //var municipios = _context.Municipios.Where(m => m.DepartamentoId == departamentoId);
-            var municipios = _municipioRepository.List().Where(x => x.depa_Id == departamentoId); 
+            var municipios = _municipioRepository.CargarMunicipios(departamentoId); 
             return (municipios);
         }
 

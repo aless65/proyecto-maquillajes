@@ -38,9 +38,12 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Create()
         {
             var listado = _maquService.ListadoDepartamento(out string error).ToList();
-            var seleccioneUnaOpcion = new tbDepartamentos { depa_Id = "0000", depa_Nombre = "Seleccioene un Departamento" };
+            var seleccioneUnaOpcion = new tbDepartamentos { depa_Id = "0000", depa_Nombre = "--Seleccioene un Departamento--" };
             listado.Insert(0, seleccioneUnaOpcion);
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
+
+            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
             return View();
         }
 

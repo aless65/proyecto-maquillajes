@@ -32,7 +32,7 @@ namespace Maquillaje.DataAccess.Repository
         #endregion
 
         #region EstadosCiviles
-        public static string UDP_Listar_EstadosCiviles = "UDP_gral_tbMunicipios_ListDDL";
+        public static string UDP_Listar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_List";
         #endregion
     }
 }

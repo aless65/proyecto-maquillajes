@@ -513,6 +513,7 @@ estacivi_Estado
 FROM [gral].[tbEstadosCiviles]
 END
 GO
+
 --Insertar estados civiles
 CREATE OR ALTER PROCEDURE UDP_gral_tbEstadosCiviles_INSERT
 	@estacivi_Nombre		NVARCHAR(100),

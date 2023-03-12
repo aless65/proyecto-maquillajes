@@ -28,7 +28,7 @@ namespace Maquillaje.DataAccess.Repository
         public IEnumerable<tbEstadosCiviles> List()
         {
             using var db = new SqlConnection(AndreasContext.ConnectionString);
-            return db.Query<tbEstadosCiviles>(ScriptsDataBase.UDP_Listar_Municipios_DDL, null, commandType: CommandType.StoredProcedure);
+            return db.Query<tbEstadosCiviles>(ScriptsDataBase.UDP_Listar_EstadosCiviles, null, commandType: CommandType.StoredProcedure);
         }
 
         public int Update(tbEstadosCiviles item)

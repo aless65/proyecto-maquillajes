@@ -26,5 +26,9 @@ namespace Maquillaje.DataAccess.Repository
         #region Municipios
         public static string UDP_Listar_Municipios_DDL = "UDP_gral_tbMunicipios_ListDDL";
         #endregion
+
+        #region Departamentos
+        public static string UDP_Listar_Departamentos = "gral.UPD_gral_tbDepartamentos_List";
+        #endregion
     }
 }

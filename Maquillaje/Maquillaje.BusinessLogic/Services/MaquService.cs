@@ -73,6 +73,18 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public tbEmpleados ObtenerIDEmpleado(int id)
+        {
+            try
+            {
+                return _empleadoRepository.find(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         #endregion
 
         #region Clientes
@@ -95,11 +107,55 @@ namespace Maquillaje.BusinessLogic.Services
         {
             return _clienteRepository.Insert(tbClientes);
         }
+
+        public tbClientes ObtenerIDCliente(int id)
+        {
+            try
+            {
+                return _clienteRepository.find(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool UpdateClientes(tbClientes cliente)
+        {
+            //try
+            //{
+            var clienteExistente = _clienteRepository.find(cliente.clie_Id);
+
+            if (clienteExistente == null)
+            {
+                return false;
+            }
+            else
+            {
+                clienteExistente.clie_Nombres = cliente.clie_Nombres;
+                clienteExistente.clie_Apellidos = cliente.clie_Apellidos;
+                clienteExistente.clie_Identidad = cliente.clie_Identidad;
+                clienteExistente.clie_Sexo = cliente.clie_Sexo;
+                clienteExistente.muni_Id = cliente.muni_Id;
+                clienteExistente.clie_DireccionExacta = cliente.clie_DireccionExacta;
+                clienteExistente.clie_Telefono = cliente.clie_Telefono;
+                clienteExistente.clie_CorreoElectronico = cliente.clie_CorreoElectronico;
+
+                _clienteRepository.Update(clienteExistente);
+
+                return true;
+            }
+            //}
+            //catch
+            //{
+            //    return false;
+            //}
+        }
         #endregion
 
         #region Municipios
-    
 
-        #endregion 
+
+        #endregion
     }
 }

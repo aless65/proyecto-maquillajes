@@ -13,8 +13,9 @@ namespace Maquillaje.DataAccess.Repository
         #endregion
 
         #region Empleados
-        public static string UDP_Listar_Empleado = "UDP_maqu_tbEmpleados_List";
+        public static string UDP_Listar_Empleado = "maqu.UDP_maqu_tbEmpleados_List";
         public static string UDP_Insertar_Empleado = "UPD_maqu_tbEmpleados_Insert";
+        public static string UDP_Editar_Empleado = "maqu.UDP_maqu_tbEmpleados_Update";
         #endregion
 
         #region Clientes

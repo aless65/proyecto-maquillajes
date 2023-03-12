@@ -632,22 +632,41 @@ END
 
 /*Eliminar Empleados*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbEmpleados_Delete
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Delete
 	@empe_Id INT
 AS
 BEGIN
-	UPDATE maqu.tbEmpleados
-	SET 	empe_Estado = 0
-	WHERE 	empe_Id = @empe_Id
+	BEGIN TRY
+		UPDATE maqu.tbEmpleados
+		SET 	empe_Estado = 0
+		WHERE 	empe_Id = @empe_Id
+
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 GO
 
 /*Listar Empleado*/
-CREATE OR ALTER PROCEDURE UDP_maqu_tbEmpleados_List
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_List
 AS
 BEGIN
-SELECT empe_Id, empe_Nombres, empe_Apellidos, empe_Identidad, empe_FechaNacimiento, empe_Sexo,muni_Id, empe_Direccion, empe_Telefono, empe_CorreoElectronico FROM [maqu].[tbEmpleados]
+	SELECT empe_Id, 
+		   empe_Nombres, 
+		   empe_Apellidos, 
+		   empe_Identidad, 
+		   empe_FechaNacimiento, 
+		   CASE empe_Sexo WHEN 'F' THEN 'Femenino'
+						  ELSE 'Masculino'
+		   END AS empe_Sexo,
+		   muni_Id, 
+		   empe_Direccion, 
+		   empe_Telefono, 
+		   empe_CorreoElectronico
+		   FROM [maqu].[tbEmpleados]
 END
 GO
 
@@ -864,7 +883,7 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Update
     @clie_Apellidos                NVARCHAR(200),
     @clie_Identidad                NVARCHAR(13),
     @clie_Sexo                    CHAR,
-    @mun_Id                        CHAR(4),
+    @muni_Id                        CHAR(4),
     @clie_DireccionExacta        NVARCHAR(100),
     @clie_Telefono                NVARCHAR(15),
     @clie_CorreoElectronico        NVARCHAR(200),
@@ -877,7 +896,7 @@ BEGIN
                 clie_Apellidos = @clie_Apellidos,
                 clie_Identidad = @clie_Identidad,
                 clie_Sexo = @clie_Sexo,
-                muni_Id = @mun_Id,
+                muni_Id = @muni_Id,
                 clie_DireccionExacta = @clie_DireccionExacta,
                 clie_Telefono = @clie_Telefono,
                 clie_CorreoElectronico = @clie_CorreoElectronico,
@@ -908,12 +927,13 @@ GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_List
 AS
 BEGIN
-    SELECT [clie_Nombres], 
+    SELECT [clie_Id],
+		   [clie_Nombres], 
            [clie_Apellidos], 
            [clie_Identidad],
            CASE [clie_Sexo] WHEN 'F' THEN 'Femenino'
                             ELSE 'Masculino'
-           END AS Sexo
+           END AS clie_Sexo
     FROM [maqu].[tbClientes]
     WHERE [clie_Estado] = 1
 END

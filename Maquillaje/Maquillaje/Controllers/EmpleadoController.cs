@@ -37,13 +37,13 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("Empleados/Create")]
         public IActionResult Create()
         {
-            var prueba = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre"); 
-            ViewBag.muni_Id = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre");
+            //var prueba = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre"); 
+            //ViewBag.muni_Id = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre");
 
             return View();
         }
 
-        [HttpPost("Empleados/Create")]
+        [HttpPost("/Empleados/Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(EmpleadoViewModel item)
         {
@@ -60,6 +60,21 @@ namespace Maquillaje.WebUI.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        [HttpGet("/Empleados/Update")]
+        public IActionResult Update(int id)
+        {
+            var listado = _maquService.ObtenerIDEmpleado(id);
+
+            if(listado != null)
+            {
+                return View(listado);
+            }
+            else
+            {
+                return RedirectToAction("Index");
             }
         }
     }

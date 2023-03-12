@@ -715,6 +715,14 @@ BEGIN
 	WHERE depa_Id = @depa_Id
 END
 
+/*Listar Departamentos*/
+GO 
+CREATE OR ALTER PROCEDURE gral.UPD_gral_tbDepartamentos_List
+AS
+BEGIN
+SELECT depa_Id,depa_Nombre FROM [gral].[tbDepartamentos]
+END
+
 --**************** MeTODOS DE PAGO ****************--
 /*Insert metodos de pago*/
 GO
@@ -903,7 +911,7 @@ BEGIN
 	WHERE clie_Id = @clie_Id
 END
 
-/*Listado Clientes*/
+/*Listar Clientes*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_List
 AS

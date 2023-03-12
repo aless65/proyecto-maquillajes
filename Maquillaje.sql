@@ -805,6 +805,51 @@ BEGIN
 END
 
 --/Insertar Cliente/
+--/Insertar Cliente/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
+    @clie_Nombres                NVARCHAR(200),
+    @clie_Apellidos                NVARCHAR(200),
+    @clie_Identidad                NVARCHAR(13),
+    @clie_Sexo                    CHAR,
+    @mun_Id                        CHAR(4),
+    @clie_DireccionExacta        NVARCHAR(100),
+    @clie_Telefono                NVARCHAR(15),
+    @clie_CorreoElectronico        NVARCHAR(200),
+    @clie_UsuCreacion            INT
+AS
+BEGIN
+    BEGIN TRY
+        INSERT INTO [maqu].[tbClientes](clie_Nombres, 
+                                    clie_Apellidos, clie_Identidad, 
+                                    clie_Sexo, muni_Id, 
+                                    clie_DireccionExacta, clie_Telefono, 
+                                    clie_CorreoElectronico, clie_UsuCreacion)
+        VALUES(@clie_Nombres,@clie_Apellidos,
+                @clie_Identidad,
+                @clie_Sexo,@mun_Id,
+                @clie_DireccionExacta,@clie_Telefono,
+                @clie_CorreoElectronico,@clie_UsuCreacion)
+
+        SELECT 1
+    END TRY
+    BEGIN CATCH
+        INSERT INTO [maqu].[tbClientes](clie_Nombres, 
+                                    clie_Apellidos, clie_Identidad, 
+                                    clie_Sexo, muni_Id, 
+                                    clie_DireccionExacta, clie_Telefono, 
+                                    clie_CorreoElectronico, clie_UsuCreacion)
+        VALUES(@clie_Nombres,@clie_Apellidos,
+                @clie_Identidad,
+                @clie_Sexo,@mun_Id,
+                @clie_DireccionExacta,@clie_Telefono,
+                @clie_CorreoElectronico,@clie_UsuCreacion)
+
+        SELECT 0
+    END CATCH
+END 
+
+/*Editar Cliente*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Update
     @clie_Id                    INT,
@@ -840,35 +885,6 @@ BEGIN
     END CATCH
 END
 
-/*Editar Cliente*/
-GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbClientes_Update
-	@clie_Id					INT,
-	@clie_Nombres				NVARCHAR(200),
-	@clie_Apellidos				NVARCHAR(200),
-	@clie_Identidad				NVARCHAR(13),
-	@clie_Sexo					CHAR,
-	@mun_Id						CHAR(4),
-	@clie_DireccionExacta		NVARCHAR(100),
-	@clie_Telefono				NVARCHAR(15),
-	@clie_CorreoElectronico		NVARCHAR(200),
-	@clie_UsuModificacion		INT
-AS
-BEGIN
-UPDATE [maqu].[tbClientes]
-   		SET clie_Nombres = @clie_Nombres,
-			clie_Apellidos = @clie_Apellidos,
-			clie_Identidad = @clie_Identidad,
-			clie_Sexo = @clie_Sexo,
-			muni_Id = @mun_Id,
-			clie_DireccionExacta = @clie_DireccionExacta,
-			clie_Telefono = @clie_Telefono,
-			clie_CorreoElectronico = @clie_CorreoElectronico,
-			clie_UsuModificacion = @clie_UsuModificacion,
-			clie_FechaModificacion = GETDATE()
-    WHERE 	clie_Id = @clie_Id
-END
-
 /*Eliminar Cliente*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbClientes_Delete
@@ -895,7 +911,7 @@ BEGIN
     WHERE [clie_Estado] = 1
 END
 GO
-EXECUTE UDP_maqu_tbClientes_Insert 'Christopher','Aguilar','0501200414817','M','0501','calle 1','99122657','chris@gmail.com',1
+EXECUTE maqu.UDP_maqu_tbClientes_Insert 'Christopher','Aguilar','0501200414817','M','0501','calle 1','99122657','chris@gmail.com',1
 EXEC UPD_maqu_tbEmpleados_Insert 'Hugo', 'Pérez', '0501199409876', '1994-01-01', 'M', 2, '0101', 'Calle de la Montaña 123', '99988877', 'hugo@mail.com', 1;
 EXEC UPD_maqu_tbEmpleados_Insert 'Lucía', 'Rodríguez', '0501199901234', '1999-01-01', 'F', 3, '0102', 'Avenida del Sol 456', '88877766', 'lucia@mail.com', 1;
 EXEC UPD_maqu_tbEmpleados_Insert 'Max', 'Hernández', '0501188809876', '1988-01-01', 'M', 4, '0203', 'Calle de la Luna 789', '77766655', 'max@mail.com', 1;

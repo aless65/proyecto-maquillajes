@@ -100,10 +100,6 @@ namespace Maquillaje.BusinessLogic.Services
         #endregion
 
         #region Departamentos
-
-        #endregion
-
-        #region Municipios
         public IEnumerable<tbDepartamentos> ListadoDepartamento(out string error)
         {
             error = string.Empty;
@@ -117,6 +113,10 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<tbDepartamentos>();
             }
         }
+        #endregion
+
+        #region Municipios
+
         #endregion
     }
 }

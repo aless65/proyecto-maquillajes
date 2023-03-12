@@ -45,10 +45,13 @@
                     <input type="radio" asp-for="empe_Sexo" value="M" /> Mujer
                 </div>
             </div>
-            
             <div class="form-group">
-                <label asp-for="muni_Id" class="control-label"></label>
-               <select id="ddlMunicipios" class="form-control"></select>
+                <label class="form-label">Departamento Id</label>
+                @Html.DropDownList("depa_Id", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="muni_Id" class="control-label">Municipio Id</label>
+                <select id="ddlMunicipios" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label asp-for="empe_Direccion" class="control-label"></label>

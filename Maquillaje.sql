@@ -593,34 +593,41 @@ END
 
 /*Editar Empleados*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbEmpleados_Update
-	@empe_Id 				INT,
-	@empe_Nombres 			NVARCHAR(200),
-	@empe_Apellidos 		NVARCHAR(200),
-	@empe_Identidad 		NVARCHAR(13),
-	@empe_FechaNacimiento 	DATE,
-	@empe_Sexo 				CHAR,
-	@estacivi_Id 			INT,
-	@muni_Id 				NVARCHAR(4),
-	@empe_Direccion 		NVARCHAR(200),
-	@empe_Telefono 			NVARCHAR(15),
-	@empe_CorreoElectronico NVARCHAR(200),
-	@empe_usuModificacion 	INT
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Update
+    @empe_Id                 INT,
+    @empe_Nombres             NVARCHAR(200),
+    @empe_Apellidos         NVARCHAR(200),
+    @empe_Identidad         NVARCHAR(13),
+    @empe_FechaNacimiento     DATE,
+    @empe_Sexo                 CHAR,
+    @estacivi_Id             INT,
+    @muni_Id                 NVARCHAR(4),
+    @empe_Direccion         NVARCHAR(200),
+    @empe_Telefono             NVARCHAR(15),
+    @empe_CorreoElectronico NVARCHAR(200),
+    @empe_usuModificacion     INT
 AS
 BEGIN
-	UPDATE maqu.tbEmpleados
-	SET     empe_Nombres = @empe_Nombres,
-			empe_Apellidos = @empe_Apellidos,
-			empe_Identidad = @empe_Identidad,
-			empe_FechaNacimiento = @empe_FechaNacimiento,
-			empe_Sexo = @empe_Sexo,
-			estacivi_Id = @estacivi_Id,
-			muni_Id = @empe_Direccion,
-			empe_Telefono = @empe_Telefono,
-			empe_CorreoElectronico = @empe_CorreoElectronico,
-			empe_UsuModificacion = @empe_usuModificacion,
-			empe_FechaModificacion = GETDATE()
-	WHERE 	empe_Id = @empe_Id
+    BEGIN TRY
+        UPDATE maqu.tbEmpleados
+        SET     empe_Nombres = @empe_Nombres,
+                empe_Apellidos = @empe_Apellidos,
+                empe_Identidad = @empe_Identidad,
+                empe_FechaNacimiento = @empe_FechaNacimiento,
+                empe_Sexo = @empe_Sexo,
+                estacivi_Id = @estacivi_Id,
+                muni_Id = @empe_Direccion,
+                empe_Telefono = @empe_Telefono,
+                empe_CorreoElectronico = @empe_CorreoElectronico,
+                empe_UsuModificacion = @empe_usuModificacion,
+                empe_FechaModificacion = GETDATE()
+        WHERE     empe_Id = @empe_Id
+
+        SELECT 1
+    END TRY
+    BEGIN CATCH
+        SELECT 0
+    END CATCH
 END
 
 /*Eliminar Empleados*/

@@ -98,11 +98,7 @@ namespace Maquillaje.BusinessLogic.Services
         #endregion
 
         #region Municipios
-        public IEnumerable<tbMunicipios> GetMunicipios()
-        {
-            var municipios = _municipioRepository.GetMunicipios();
-            return municipios;
-        }
+    
 
         #endregion 
     }

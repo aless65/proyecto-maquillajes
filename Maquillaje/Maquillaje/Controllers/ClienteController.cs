@@ -55,5 +55,13 @@ namespace Maquillaje.WebUI.Controllers
                 return View();
             }
         }
+
+        [HttpGet("/Clientes/Update{id}")]
+        public IActionResult Update(int id)
+        {
+            return View();
+        }
+
+
     }
 }

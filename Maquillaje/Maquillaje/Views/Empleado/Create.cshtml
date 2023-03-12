@@ -1,4 +1,4 @@
-﻿@model Maquillaje.Entities.Entities.tbEmpleados
+﻿@model Maquillaje.WebUI.Models.EmpleadoViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -42,13 +42,13 @@
                 <label asp-for="empe_Sexo" class="control-label">Sexo:</label>
                 <div>
                     <input type="radio" asp-for="empe_Sexo" value="M" /> Hombre
-                    <input type="radio" asp-for="empe_Sexo" value="F" /> Mujer
+                    <input type="radio" asp-for="empe_Sexo" value="M" /> Mujer
                 </div>
             </div>
-
+            
             <div class="form-group">
                 <label asp-for="muni_Id" class="control-label"></label>
-                @Html.DropDownList("muni_Id", null, htmlAttributes: new { @class = "form-control" })
+               <select id="ddlMunicipios" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label asp-for="empe_Direccion" class="control-label"></label>

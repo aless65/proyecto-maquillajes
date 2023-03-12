@@ -34,11 +34,5 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
-
-        public IEnumerable<tbMunicipios> GetMunicipios()
-        {
-            using var db = new SqlConnection(AndreasContext.ConnectionString);
-            return db.Query<tbMunicipios>(ScriptsDataBase.UDP_Listar_Municipios_DDL, null, commandType: CommandType.StoredProcedure);
-        }
     }
 }

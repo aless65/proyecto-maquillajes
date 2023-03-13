@@ -30,6 +30,7 @@ namespace Maquillaje.Entities.Entities
 
         public virtual tbUsuarios clie_UsuCreacionNavigation { get; set; }
         public virtual tbUsuarios clie_UsuModificacionNavigation { get; set; }
+        public virtual tbMunicipios muni { get; set; }
         public virtual ICollection<tbFacturas> tbFacturas { get; set; }
     }
 }

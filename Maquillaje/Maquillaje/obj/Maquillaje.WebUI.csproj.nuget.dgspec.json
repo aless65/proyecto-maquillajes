@@ -34,6 +34,9 @@
             "projectReferences": {
               "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.DataAcces\\Maquillaje.DataAccess.csproj": {
                 "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.DataAcces\\Maquillaje.DataAccess.csproj"
+              },
+              "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.Entities\\Maquillaje.Entities.csproj": {
+                "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.Entities\\Maquillaje.Entities.csproj"
               }
             }
           }

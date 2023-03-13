@@ -2247,7 +2247,8 @@
       },
       "Maquillaje.BusinessLogic/1.0.0": {
         "dependencies": {
-          "Maquillaje.DataAccess": "1.0.0"
+          "Maquillaje.DataAccess": "1.0.0",
+          "Maquillaje.Entities": "1.0.0"
         },
         "runtime": {
           "Maquillaje.BusinessLogic.dll": {}

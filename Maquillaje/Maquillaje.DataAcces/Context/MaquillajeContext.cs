@@ -249,7 +249,7 @@ namespace Maquillaje.DataAccess.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_maqu_tbEmpleados_gral_tbEstadosCiviles_estacivi_Id");
 
-                entity.HasOne(d => d.muni)
+                entity.HasOne(d => d.depa_Id)
                     .WithMany(p => p.tbEmpleados)
                     .HasForeignKey(d => d.muni_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)

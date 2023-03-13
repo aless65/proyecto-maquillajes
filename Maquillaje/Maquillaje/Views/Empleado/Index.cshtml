@@ -32,14 +32,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.empe_Sexo)
                     </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.empe_Sexo)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.empe_Telefono)
-                    </th>
                     <th>Acciones</th>
 
                 </tr>
@@ -62,13 +54,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.empe_Sexo)
-                        </td>
-                        <td>
-
-                            @Html.DisplayFor(modelItem => item.empe_Direccion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.empe_Telefono)
                         </td>
 
                         <td>
@@ -106,6 +91,12 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        $('#menuMaquillaje').addClass('active');
+        $('#empleadosItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+    });
+
     function eliminar(id) {
 
         $("#id").val(id);

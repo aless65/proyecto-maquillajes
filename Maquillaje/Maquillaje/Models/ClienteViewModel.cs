@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,5 +46,9 @@ namespace Maquillaje.WebUI.Models
         public string clie_CorreoElectronico { get; set; }
 
         public virtual tbMunicipios muni { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Departamento")]
+        public string depa_Id { get; set; }
     }
 }

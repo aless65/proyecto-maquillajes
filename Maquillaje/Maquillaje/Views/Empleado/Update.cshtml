@@ -90,7 +90,23 @@
     $(document).ready(function () {
         $("#muni_Id").prop("disabled", true);
 
+        var empeId = $("#empe_Id").val();
 
+        console.log(empeId);
+
+        $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empeId })
+            .done(function (municipiosSelected) {
+                $("#muni_Id").prop("disabled", false);
+                $.each(municipiosSelected, function (index, item) {
+
+                    $('#muni').val(item.depa_Id);
+
+                    console.log(item.depa_Id);
+                });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+            });
 
         $('#muni').change(function () {
 

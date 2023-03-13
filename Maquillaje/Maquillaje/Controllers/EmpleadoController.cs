@@ -126,9 +126,9 @@ namespace Maquillaje.WebUI.Controllers
             return Json(cargarmunicipios);
         }
 
-        public IActionResult CargarMunicipioseEmpleado(tbEmpleados item)
+        public IActionResult CargarMunicipiosEmpleado(int id)
         {
-            var cargarmunicipioselected = _maquService.UpdateEmpleadosMuniDDL(item);
+            var cargarmunicipioselected = _maquService.UpdateEmpleadosMuniDDL(id);
             return Json(cargarmunicipioselected);
         }
     }

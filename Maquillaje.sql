@@ -24,6 +24,7 @@ CREATE TABLE acce.tbRoles(
 );
 GO
 
+--aaaaaaaaaaamaki
 
 --***********CREACION TABLA PANTALLAS*****************---
 CREATE TABLE acce.tbPantallas(

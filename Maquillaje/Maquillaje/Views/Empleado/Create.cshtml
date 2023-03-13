@@ -88,6 +88,11 @@
 
 <script>
     $(document).ready(function () {
+
+        $('#menuMaquillaje').addClass('active');
+        $('#empleadosItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+
         $("#ddlMunicipios").prop("disabled", true);
         $('#muni').change(function () {
             var departamentoId = $("#muni").val();

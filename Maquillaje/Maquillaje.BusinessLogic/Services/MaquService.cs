@@ -92,10 +92,10 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
-        //public int DeleteEmpleado(int id)
-        //{
-        //    return 
-        //}
+        public int DeleteEmpleado(int id)
+        {
+            return _empleadoRepository.DeleteConfirmed(id);
+        }
 
         #endregion
 

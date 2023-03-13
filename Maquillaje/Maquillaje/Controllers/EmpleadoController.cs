@@ -92,6 +92,21 @@ namespace Maquillaje.WebUI.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public IActionResult Delete(int id)
+        {
+            var delete = _maquService.DeleteEmpleado(id);
+
+            if(delete == 1)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
         public IActionResult CargarMunicipios(string id)
         {
             var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);

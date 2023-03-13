@@ -74,7 +74,7 @@
                         <td>
                             <a asp-action="Update" asp-route-id="@item.empe_Id" class="btn btn-warning">Editar</a> |
                             <a asp-action="Details" asp-route-id="@item.empe_Id" class="btn btn-dark">Detalles</a> |
-                            <a asp-action="Delete" asp-route-id="@item.empe_Id" class="btn btn-danger">Borrar</a>
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.empe_Id)">Borrar</button>
                         </td>
                     </tr>
                 }
@@ -83,4 +83,35 @@
 
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Empleado" asp-action="Delete">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="id" name="id" hidden />
+                    <span>¿Realmente desea eliminar este empleado?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-success">Sí</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function eliminar(id) {
+
+        $("#id").val(id);
+
+        $("#modalEditar").appendTo("body").modal('show');
+
+    }
+</script>
 

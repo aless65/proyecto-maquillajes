@@ -280,7 +280,8 @@ CREATE TABLE maqu.tbClientes
 	CONSTRAINT PK_maqu_tbClientes_clie_Id 								PRIMARY KEY(clie_Id),
 	CONSTRAINT CK_maqu_tbClientes_empe_Sexo 							CHECK(clie_sexo IN ('F', 'M')),
 	CONSTRAINT FK_maqu_tbClientes_acce_tbUsuarios_clie_UsuCreacion_user_Id  	FOREIGN KEY(clie_UsuCreacion) 		REFERENCES acce.tbUsuarios(user_Id),
-	CONSTRAINT FK_maqu_tbClientes_acce_tbUsuarios_clie_UsuModificacion_user_Id  FOREIGN KEY(clie_UsuModificacion) 	REFERENCES acce.tbUsuarios(user_Id)
+	CONSTRAINT FK_maqu_tbClientes_acce_tbUsuarios_clie_UsuModificacion_user_Id  FOREIGN KEY(clie_UsuModificacion) 	REFERENCES acce.tbUsuarios(user_Id),
+	CONSTRAINT FK_maqu_tbClientes_gral_tbMunicipios_muni_Id						FOREIGN KEY(muni_Id)				REFERENCES gral.tbMunicipios(muni_Id)			
 );
 
 --********TABLA Productos****************---
@@ -666,7 +667,6 @@ BEGIN
 		SELECT 0
 	END CATCH
 END
-
 GO
 
 /*Listar Empleado*/
@@ -686,21 +686,22 @@ BEGIN
 		   empe_Telefono, 
 		   empe_CorreoElectronico
 		   FROM [maqu].[tbEmpleados]
+		   WHERE empe_Estado = 1
 END
 GO
 
-EXEC UPD_maqu_tbEmpleados_Insert 'Alessia', 'Medina', '0501200506728', '2005-05-06', 'F', 1, '0501', 'casa', '99349019', 'aless@hootmail.com', 1
-EXEC UPD_maqu_tbEmpleados_Insert 'Juan', 'García', '0501199201234', '1992-01-05', 'M', 2, '0101', 'Calle 1', '99999999', 'juan@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'María', 'González', '0501199123456', '1991-01-01', 'F', 3, '0102', 'Calle 2', '88888888', 'maria@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Pedro', 'Hernández', '0501198809876', '1988-01-01', 'M', 4, '0203', 'Calle 3', '77777777', 'pedro@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Ana', 'Martínez', '0501198504321', '1985-01-01', 'F', 1, '0304', 'Calle 4', '66666666', 'ana@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Luis', 'Guzmán', '0501198008765', '1980-01-01', 'M', 2, '0204', 'Calle 5', '55555555', 'luis@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Lucía', 'Sánchez', '0501197912345', '1979-01-01', 'F', 3, '0701', 'Calle 6', '44444444', 'lucia@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Carlos', 'Pérez', '0501197609876', '1976-01-01', 'M', 4, '0506', 'Calle 7', '33333333', 'carlos@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Marta', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001', 'Calle 8', '22222222', 'marta@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Jorge', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002', 'Calle 9', '11111111', 'jorge@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Laura', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802', 'Calle 10', '00000000', 'laura@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Diego', 'Gómez', '0501196409876', '1964-01-01', 'M', 4, '0803', 'Calle 11', '99999999', 'diego@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Alessia', 'Medina', '0501200506728', '2005-05-06', 'F', 1, '0501', 'casa', '99349019', 'aless@hootmail.com', 1
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Juan', 'García', '0501199201234', '1992-01-05', 'M', 2, '0101', 'Calle 1', '99999999', 'juan@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'María', 'González', '0501199123456', '1991-01-01', 'F', 3, '0102', 'Calle 2', '88888888', 'maria@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Pedro', 'Hernández', '0501198809876', '1988-01-01', 'M', 4, '0203', 'Calle 3', '77777777', 'pedro@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Ana', 'Martínez', '0501198504321', '1985-01-01', 'F', 1, '0304', 'Calle 4', '66666666', 'ana@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Luis', 'Guzmán', '0501198008765', '1980-01-01', 'M', 2, '0204', 'Calle 5', '55555555', 'luis@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Lucía', 'Sánchez', '0501197912345', '1979-01-01', 'F', 3, '0701', 'Calle 6', '44444444', 'lucia@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Carlos', 'Pérez', '0501197609876', '1976-01-01', 'M', 4, '0506', 'Calle 7', '33333333', 'carlos@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Marta', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001', 'Calle 8', '22222222', 'marta@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Jorge', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002', 'Calle 9', '11111111', 'jorge@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Laura', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802', 'Calle 10', '00000000', 'laura@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Diego', 'Gómez', '0501196409876', '1964-01-01', 'M', 4, '0803', 'Calle 11', '99999999', 'diego@mail.com', 1;
 
 GO
 ALTER TABLE acce.tbUsuarios
@@ -869,7 +870,7 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
     @clie_Apellidos                NVARCHAR(200),
     @clie_Identidad                NVARCHAR(13),
     @clie_Sexo                    CHAR,
-    @mun_Id                        CHAR(4),
+    @muni_Id                        CHAR(4),
     @clie_DireccionExacta        NVARCHAR(100),
     @clie_Telefono                NVARCHAR(15),
     @clie_CorreoElectronico        NVARCHAR(200),
@@ -884,24 +885,13 @@ BEGIN
                                     clie_CorreoElectronico, clie_UsuCreacion)
         VALUES(@clie_Nombres,@clie_Apellidos,
                 @clie_Identidad,
-                @clie_Sexo,@mun_Id,
+                @clie_Sexo,@muni_Id,
                 @clie_DireccionExacta,@clie_Telefono,
                 @clie_CorreoElectronico,@clie_UsuCreacion)
 
         SELECT 1
     END TRY
     BEGIN CATCH
-        INSERT INTO [maqu].[tbClientes](clie_Nombres, 
-                                    clie_Apellidos, clie_Identidad, 
-                                    clie_Sexo, muni_Id, 
-                                    clie_DireccionExacta, clie_Telefono, 
-                                    clie_CorreoElectronico, clie_UsuCreacion)
-        VALUES(@clie_Nombres,@clie_Apellidos,
-                @clie_Identidad,
-                @clie_Sexo,@mun_Id,
-                @clie_DireccionExacta,@clie_Telefono,
-                @clie_CorreoElectronico,@clie_UsuCreacion)
-
         SELECT 0
     END CATCH
 END 
@@ -948,9 +938,16 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Delete
 	@clie_Id INT
 AS
 BEGIN
-	UPDATE [maqu].[tbClientes] 
-	SET clie_Estado = 0
-	WHERE clie_Id = @clie_Id
+	BEGIN TRY
+		UPDATE [maqu].[tbClientes] 
+		SET clie_Estado = 0
+		WHERE clie_Id = @clie_Id
+
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
 END
 
 /*Listar Clientes*/
@@ -969,17 +966,18 @@ BEGIN
     WHERE [clie_Estado] = 1
 END
 GO
+
 EXECUTE maqu.UDP_maqu_tbClientes_Insert 'Christopher','Aguilar','0501200414817','M','0501','calle 1','99122657','chris@gmail.com',1
-EXEC UPD_maqu_tbEmpleados_Insert 'Hugo', 'Pérez', '0501199409876', '1994-01-01', 'M', 2, '0101', 'Calle de la Montaña 123', '99988877', 'hugo@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Lucía', 'Rodríguez', '0501199901234', '1999-01-01', 'F', 3, '0102', 'Avenida del Sol 456', '88877766', 'lucia@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Max', 'Hernández', '0501188809876', '1988-01-01', 'M', 4, '0203', 'Calle de la Luna 789', '77766655', 'max@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Ana', 'González', '0501198504321', '1985-01-01', 'F', 1, '0304', 'Calle del Mar 1011', '66655544', 'ana@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Javier', 'Gómez', '0501198008765', '1980-01-01', 'M', 2, '0204', 'Calle del Río 1213', '55544433', 'javier@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Mónica', 'Pérez', '0501197912345', '1979-01-01', 'F', 3, '0701', 'Avenida del Bosque 1415', '44433322', 'monica@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Diego', 'Sánchez', '0501197609876', '1976-01-01', 'M', 4, '0506', 'Calle de la Playa 1617', '33322211', 'diego@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Valeria', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001', 'Calle de las Flores 1819', '22211100', 'valeria@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'Carlos', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002', 'Avenida del Aire 2021', '11100099', 'carlos@mail.com', 1;
-EXEC UPD_maqu_tbEmpleados_Insert 'María', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802', 'Calle de la Primavera 2223', '00099988', 'maria@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Hugo', 'Pérez', '0501199409876', '1994-01-01', 'M', 2, '0101', 'Calle de la Montaña 123', '99988877', 'hugo@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Lucía', 'Rodríguez', '0501199901234', '1999-01-01', 'F', 3, '0102', 'Avenida del Sol 456', '88877766', 'lucia@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Max', 'Hernández', '0501188809876', '1988-01-01', 'M', 4, '0203', 'Calle de la Luna 789', '77766655', 'max@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Ana', 'González', '0501198504321', '1985-01-01', 'F', 1, '0304', 'Calle del Mar 1011', '66655544', 'ana@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Javier', 'Gómez', '0501198008765', '1980-01-01', 'M', 2, '0204', 'Calle del Río 1213', '55544433', 'javier@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Mónica', 'Pérez', '0501197912345', '1979-01-01', 'F', 3, '0701', 'Avenida del Bosque 1415', '44433322', 'monica@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Diego', 'Sánchez', '0501197609876', '1976-01-01', 'M', 4, '0506', 'Calle de la Playa 1617', '33322211', 'diego@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Valeria', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001', 'Calle de las Flores 1819', '22211100', 'valeria@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Carlos', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002', 'Avenida del Aire 2021', '11100099', 'carlos@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'María', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802', 'Calle de la Primavera 2223', '00099988', 'maria@mail.com', 1;
 
 
 

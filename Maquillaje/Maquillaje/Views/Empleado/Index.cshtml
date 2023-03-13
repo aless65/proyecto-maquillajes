@@ -5,65 +5,113 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.empe_Nombres)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.empe_Apellidos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.empe_Identidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.empe_Sexo)
-            </th>
+<div class="card">
+    <div class="card-header">
+        <h2>Empleados</h2>
+    </div>
+    <div class="card-body">
+        <p>
+            <a asp-action="Create" class="btn btn-secondary">Nuevo</a>
+        </p>
+        <table class="table table-bordered table-hover" id="DataTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empe_Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empe_Nombres)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empe_Apellidos)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empe_Identidad)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empe_Sexo)
+                    </th>
 
-            <th>Acciones</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empe_Sexo)
+                    </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.empe_Telefono)
-            </th>
-            <th></th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empe_Telefono)
+                    </th>
+                    <th>Acciones</th>
 
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.empe_Nombres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.empe_Apellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.empe_Identidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.empe_Sexo)
-            </td>
-            <td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empe_Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empe_Nombres)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empe_Apellidos)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empe_Identidad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empe_Sexo)
+                        </td>
+                        <td>
 
-                @Html.DisplayFor(modelItem => item.empe_Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.empe_Telefono)
-            </td>
+                            @Html.DisplayFor(modelItem => item.empe_Direccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empe_Telefono)
+                        </td>
 
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.empe_Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.empe_Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.empe_Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                        <td>
+                            <a asp-action="Update" asp-route-id="@item.empe_Id" class="btn btn-warning">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.empe_Id" class="btn btn-dark">Detalles</a> |
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.empe_Id)">Borrar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Empleado" asp-action="Delete">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="id" name="id" hidden />
+                    <span>¿Realmente desea eliminar este empleado?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-success">Sí</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function eliminar(id) {
+
+        $("#id").val(id);
+
+        $("#modalEditar").appendTo("body").modal('show');
+
+    }
+</script>
+

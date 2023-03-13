@@ -14,7 +14,6 @@ namespace Maquillaje.WebUI.Extensions
         {
             CreateMap<CategoriaViewModel, tbCategorias>().ReverseMap();
             CreateMap<EmpleadoViewModel, tbEmpleados>().ReverseMap();
-            CreateMap<tbMunicipios, tbMunicipios>().ReverseMap();
             CreateMap<ClienteViewModel, tbClientes>().ReverseMap();
         }
     }

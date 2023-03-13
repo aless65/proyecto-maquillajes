@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maquillaje.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Maquillaje.WebUI.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string muni_Id { get; set; }
 
-        [Display(Name = "Dirección exactas")]
+        [Display(Name = "Dirección exacta")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string clie_DireccionExacta { get; set; }
 
@@ -42,5 +43,7 @@ namespace Maquillaje.WebUI.Models
         [Display(Name = "Correo electrónico")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string clie_CorreoElectronico { get; set; }
+
+        public virtual tbMunicipios muni { get; set; }
     }
 }

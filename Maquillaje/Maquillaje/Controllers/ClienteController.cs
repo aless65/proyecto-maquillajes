@@ -3,6 +3,7 @@ using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Clientes/Create")]
         public IActionResult Create()
         {
+            var listado = _maquService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
             return View();
         }
 
@@ -40,6 +43,9 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(ClienteViewModel item)
         {
+            var listado = _maquService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
+
             var cliente = _mapper.Map<tbClientes>(item);
             var insertar = _maquService.InsertClientes(cliente);
 
@@ -56,12 +62,41 @@ namespace Maquillaje.WebUI.Controllers
             }
         }
 
-        [HttpGet("/Clientes/Update{id}")]
+        [HttpGet("/Clientes/Update")]
         public IActionResult Update(int id)
         {
-            return View();
+            var cliente = _maquService.ObtenerIDCliente(id);
+
+            return View(cliente);
         }
 
+        [HttpPost("/Clientes/Update")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(tbClientes item)
+        {
+            var update = _maquService.UpdateClientes(item);
 
+            if (update)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(item);
+            }
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var delete = _maquService.DeleteCliente(id);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult CargarMunicipios(string id)
+        {
+            var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);
+            return Json(cargarmunicipios);
+        }
     }
 }

@@ -16,9 +16,22 @@ namespace Maquillaje.DataAccess.Repository
             throw new NotImplementedException();
         }
 
+        public int DeleteConfirmed(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+
+            parametros.Add("@clie_Id", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirst<int>(ScriptsDataBase.UDP_Eliminar_Clientes, parametros, commandType: CommandType.StoredProcedure);
+        }
+
         public tbClientes find(int? id)
         {
-            throw new NotImplementedException();
+            using var db = new AndreasContext();
+            var listado = db.tbClientes.Find(id);
+            return listado;
         }
 
         public int Insert(tbClientes item)
@@ -52,6 +65,7 @@ namespace Maquillaje.DataAccess.Repository
 
             var parametros = new DynamicParameters();
 
+            parametros.Add("@clie_Id", item.clie_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@clie_Nombres", item.clie_Nombres, DbType.String, ParameterDirection.Input);
             parametros.Add("@clie_Apellidos", item.clie_Apellidos, DbType.String, ParameterDirection.Input);
             parametros.Add("@clie_Identidad", item.clie_Identidad, DbType.String, ParameterDirection.Input);

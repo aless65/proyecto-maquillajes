@@ -1,20 +1,22 @@
-﻿@model Maquillaje.WebUI.Models.EmpleadoViewModel
+﻿@model Maquillaje.Entities.Entities.tbEmpleados
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="card">
     <div class="card-header">
-        <h2>Crear empleado</h2>
+        <h2>Actualizar cliente</h2>
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-end mb-2">
             <a asp-action="Index">Regresar al index</a>
         </div>
-        <form asp-action="Create">
+        <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="empe_Id" />
             <div class="row">
                 <div class="form-group col-6">
                     <label asp-for="empe_Nombres" class="control-label"></label>
@@ -37,11 +39,9 @@
                     <span asp-validation-for="empe_FechaNacimiento" class="text-danger"></span>
                 </div>
                 <div class="form-group col-6 mt-3">
-                    <label asp-for="empe_Sexo" class="control-label">Sexo:</label>
-                    <div>
-                        <input type="radio" asp-for="empe_Sexo" value="M" /> Masculino
-                        <input type="radio" asp-for="empe_Sexo" value="F" /> Femenino
-                    </div>
+                    <label asp-for="empe_Sexo" class="control-label"></label>
+                    <input asp-for="empe_Sexo" class="form-control" />
+                    <span asp-validation-for="empe_Sexo" class="text-danger"></span>
                 </div>
                 <div class="form-group col-6 mt-3">
                     <label asp-for="estacivi_Id" class="control-label"></label>
@@ -59,8 +59,9 @@
                     <span asp-validation-for="muni" class="text-danger" />
                 </div>
                 <div class="form-group col-6 mt-3">
-                    <label asp-for="muni_Id" class="control-label">Municipio Id</label>
-                    <select id="muni_Id" name="muni_Id" class="form-control"></select>
+                    <label asp-for="muni_Id" class="control-label"></label>
+                    <select asp-for="muni_Id" class="form-control" asp-items="ViewBag.muni_Id" ></select>
+                    <span asp-validation-for="muni_Id" class="text-danger"></span>
                 </div>
                 <div class="form-group col-6 mt-3">
                     <label asp-for="empe_Direccion" class="control-label"></label>
@@ -78,24 +79,28 @@
                     <span asp-validation-for="empe_CorreoElectronico" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-3">
-                    <input type="submit" value="Crear" class="btn btn-success" />
+                    <input type="submit" value="Guardar cambios" class="btn btn-secondary" />
                 </div>
             </div>
         </form>
     </div>
  </div>
 
-
 <script>
     $(document).ready(function () {
-        $("#ddlMunicipios").prop("disabled", true);
+        $("#muni_Id").prop("disabled", true);
+
+
+
         $('#muni').change(function () {
+
             var departamentoId = $("#muni").val();
+
             $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
                 .done(function (municipios) {
                     $("#muni_Id").prop("disabled", false);
                     var municipiosSelect = $('#muni_Id');
-                    municipiosSelect.empty(); 
+                    municipiosSelect.empty();
                     municipiosSelect.append($('<option>', {
                         value: '',
                         text: '--Selecciona un municipio--'
@@ -103,8 +108,9 @@
                     $.each(municipios, function (index, item) {
                         municipiosSelect.append($('<option>', {
                             value: item.muni_id,
-                            text:  item.muni_Nombre
+                            text: item.muni_Nombre
                         }));
+
                         console.log(item.muni_Id)
                     });
                 })
@@ -114,3 +120,4 @@
         });
     });
 </script>
+

@@ -127,14 +127,14 @@ namespace Maquillaje.BusinessLogic.Services
 
         public tbClientes ObtenerIDCliente(int id)
         {
-            try
-            {
-                return _clienteRepository.find(id);
-            }
-            catch
-            {
-                return null;
-            }
+            //try
+            //{
+            return _clienteRepository.find(id);
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
         }
 
         public bool UpdateClientes(tbClientes cliente)
@@ -179,6 +179,11 @@ namespace Maquillaje.BusinessLogic.Services
             {
                 return 0;
             }
+        }
+
+        public IEnumerable<VW_maqu_tbClientes_DDLMunicipios> UpdateClientesMuniDDL(int id)
+        {
+            return _clienteRepository.GetMuni_IdByClie_Id(id);
         }
         #endregion
 

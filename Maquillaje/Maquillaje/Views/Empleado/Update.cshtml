@@ -98,7 +98,7 @@
                 var municipiosSelect = $('#muni_Id');
                 municipiosSelect.empty();
                 $.each(municipios, function (index, item) {
-                    $("#muni").val(item.depa_Id);
+                    $("#depa_Id").val(item.depa_Id);
                     var muniId = item.muni_Id;
                     console.log("seleccionar depa");
 
@@ -146,8 +146,8 @@
 <script>
     $(document).ready(function () {
         $("#ddlMunicipios").prop("disabled", true);
-        $('#muni').change(function () {
-            var departamentoId = $("#muni").val();
+        $('#depa_Id').change(function () {
+            var departamentoId = $("#depa_Id").val();
             $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
                 .done(function (municipios) {
                     $("#muni_Id").prop("disabled", false);

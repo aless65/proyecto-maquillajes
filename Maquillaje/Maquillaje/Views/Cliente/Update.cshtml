@@ -38,9 +38,17 @@
                         <input asp-for="clie_Sexo" class="form-control" />
                         <span asp-validation-for="clie_Sexo" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="muni_Id" class="control-label"></label>
-                        <section id="muni_Id" asp-for="muni_Id" class="form-control"></section>
+                    <div class="form-group col-6 mt-3">
+                        <label class="form-label">Departamento Id</label>
+                        <label asp-for="depa_Id" class="control-label"></label>
+                        <select asp-for="depa_Id" class="form-control" asp-items="ViewBag.depa_Id">
+                            <option value="">-- Seleccione un departamento --</option>
+                        </select>
+                        <span asp-validation-for="depa_Id" class="text-danger" />
+                    </div>
+                    <div class="form-group col-6 mt-3">
+                        <label asp-for="muni_Id" name="muni_Id" class="control-label"></label>
+                        <select asp-for="muni_Id" class="form-control"></select>
                         <span asp-validation-for="muni_Id" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -73,6 +81,57 @@
         $('#menuMaquillaje').addClass('active');
         $('#clientesItem').addClass('active');
         $('#subMenuMaquillaje').addClass('show');
+
+        var clie_Id = $("#clie_Id").val();
+
+        $.getJSON('/Cliente/CargarMunicipiosCliente', { id: clie_Id })
+
+            .done(function (municipios) {
+
+                var municipiosSelect = $('#muni_Id');
+                municipiosSelect.empty();
+                $.each(municipios, function (index, item) {
+                    $("#depa_Id").val(item.depa_Id);
+                    console.log("seleccionar depa");
+
+                    $.getJSON('/Cliente/CargarMunicipios', { id: item.depa_Id })
+                        .done(function (municipios) {
+                            $("#muni_Id").prop("disabled", false);
+                            var municipiosSelect = $('#muni_Id');
+                            municipiosSelect.empty();
+                            municipiosSelect.append($('<option>', {
+                                value: '',
+                                text: '--Selecciona un municipio--'
+                            }));
+                            $.each(municipios, function (index, item) {
+                                municipiosSelect.append($('<option>', {
+                                    value: item.muni_id,
+                                    text: item.muni_Nombre
+                                }));
+                            });
+                            console.log("cargar muni");
+
+                            $.getJSON('/Cliente/CargarMunicipiosCliente', { id: clie_Id })
+                                .done(function (municipios) {
+                                    $.each(municipios, function (index, item) {
+                                        $("#muni_Id").val(item.muni_id);
+                                        console.log("seleccionar muni");
+                                        console.log(item.muni_id);
+                                    });
+                                })
+                                .fail(function (jqXHR, textStatus, errorThrown) {
+                                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                                });
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                        });
+                });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+            });
     });
+
 </script>
 

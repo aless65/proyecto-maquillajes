@@ -85,7 +85,6 @@
     </div>
  </div>
 
-
 <script>
     $(document).ready(function () {
         $("#ddlMunicipios").prop("disabled", true);
@@ -100,7 +99,7 @@
                         value: '',
                         text: '--Selecciona un municipio--'
                     }));
-                    $.each(municipios, function (index, item) {
+                    $.each(municipios, function (index, item) {         
                         municipiosSelect.append($('<option>', {
                             value: item.muni_id,
                             text:  item.muni_Nombre

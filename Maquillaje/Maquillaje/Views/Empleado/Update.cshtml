@@ -98,17 +98,76 @@
                 var municipiosSelect = $('#muni_Id');
                 municipiosSelect.empty();
                 $.each(municipios, function (index, item) {
-                    console.log(item.muni_Nombre)
-                    console.log(item.muni_Id)
-                    municipiosSelect.append($('<option>', {
-                        value: item.muni_Id,
-                        text: item.muni_Nombre
-                    }));   
+                    $("#muni").val(item.depa_Id);
+                    var muniId = item.muni_Id;
+                    console.log("seleccionar depa");
+
+                    $.getJSON('/Empleado/CargarMunicipios', { id: item.depa_Id })
+                        .done(function (municipios) {
+                            $("#muni_Id").prop("disabled", false);
+                            var municipiosSelect = $('#muni_Id');
+                            municipiosSelect.empty();
+                            municipiosSelect.append($('<option>', {
+                                value: '',
+                                text: '--Selecciona un municipio--'
+                            }));
+                            $.each(municipios, function (index, item) {
+                                municipiosSelect.append($('<option>', {
+                                    value: item.muni_id,
+                                    text: item.muni_Nombre
+                                }));
+                            });
+                            console.log("cargar muni");
+
+                            $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empe_Id })
+                                .done(function (municipios) {
+                                    $.each(municipios, function (index, item) {
+                                        $("#muni_Id").val(item.muni_id);
+                                        console.log("seleccionar muni");
+                                        console.log(item.muni_id);
+                                    });
+                                })
+                                .fail(function (jqXHR, textStatus, errorThrown) {
+                                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                                });
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                        });
                 });
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);        
             });
+
     });
 </script>
 
+<script>
+    $(document).ready(function () {
+        $("#ddlMunicipios").prop("disabled", true);
+        $('#muni').change(function () {
+            var departamentoId = $("#muni").val();
+            $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
+                .done(function (municipios) {
+                    $("#muni_Id").prop("disabled", false);
+                    var municipiosSelect = $('#muni_Id');
+                    municipiosSelect.empty();
+                    municipiosSelect.append($('<option>', {
+                        value: '',
+                        text: '--Selecciona un municipio--'
+                    }));
+                    $.each(municipios, function (index, item) {
+                        municipiosSelect.append($('<option>', {
+                            value: item.muni_id,
+                            text: item.muni_Nombre
+                        }));
+                        console.log(item.muni_Id)
+                    });
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                });
+        });
+    });
+</script>

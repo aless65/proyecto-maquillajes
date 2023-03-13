@@ -711,12 +711,19 @@ ADD CONSTRAINT FK_acce_tbUsuarios_maqu_tbEmpleados_empe_Id	FOREIGN KEY(empe_Id) 
 /*Obtener muni_Id x empe_Id*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_tbEmpleados_maqu_GetMuni_Id
-@empe_Id INT
+@empe_Id INT	
 AS
 BEGIN
-SELECT t2.muni_Nombre,t1.muni_Id,t2.depa_Id FROM maqu.tbEmpleados t1 INNER JOIN gral.tbMunicipios t2
-ON t2.muni_id = t1.muni_Id WHERE empe_Id = @empe_Id
+SELECT * FROM maqu.VW_maqu_tbEmpleados_DDLMunicipios WHERE empe_Id = @empe_Id
 END 
+
+/*Vista para cargar dll de municipios*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbEmpleados_DDLMunicipios
+AS 
+SELECT t2.muni_Nombre,t2.muni_id,t1.empe_Id,t3.depa_Id,t3.depa_Nombre FROM maqu.tbEmpleados t1 INNER JOIN gral.tbMunicipios t2
+ON t1.muni_Id = t2.muni_id INNER JOIN gral.tbDepartamentos t3
+ON t2.depa_Id = t3.depa_Id
 
 
 --********************Municipios****************************--

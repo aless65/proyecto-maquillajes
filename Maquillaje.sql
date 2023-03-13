@@ -715,9 +715,9 @@ CREATE OR ALTER PROCEDURE maqu.UDP_tbEmpleados_maqu_GetMuni_Id
 AS
 BEGIN
 SELECT t2.muni_Nombre,t1.muni_Id,t2.depa_Id FROM maqu.tbEmpleados t1 INNER JOIN gral.tbMunicipios t2
-ON t2.muni_id = t1.muni_Id WHERE 
-
+ON t2.muni_id = t1.muni_Id WHERE empe_Id = @empe_Id
 END 
+
 
 --********************Municipios****************************--
 /*Listado municipios para DropDownList*/

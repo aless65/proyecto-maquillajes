@@ -205,8 +205,6 @@ namespace Maquillaje.BusinessLogic.Services
             var municipios = _municipioRepository.CargarMunicipios(departamentoId); 
             return (municipios);
         }
-
-
         #endregion
 
         #region EstadosCiviles

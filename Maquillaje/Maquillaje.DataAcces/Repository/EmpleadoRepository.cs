@@ -93,5 +93,13 @@ namespace Maquillaje.DataAccess.Repository
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Editar_Empleado, parametros, commandType: CommandType.StoredProcedure);
         }
+
+        public IEnumerable<VW_maqu_tbEmpleados_DDLMunicipios> GetMuni_IdByEmpe_Id(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@empe_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<VW_maqu_tbEmpleados_DDLMunicipios>(ScriptsDataBase.UDP_Editar_Empleado_Municipios_DDL, parametros, commandType: CommandType.StoredProcedure);
+        }
     }
 }

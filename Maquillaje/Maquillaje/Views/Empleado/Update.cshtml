@@ -1,4 +1,4 @@
-﻿@model Maquillaje.Entities.Entities.tbEmpleados
+@model Maquillaje.Entities.Entities.tbEmpleados
 
 @{
     ViewData["Title"] = "Update";
@@ -38,6 +38,7 @@
                     <input asp-for="empe_FechaNacimiento" class="form-control" type="date" />
                     <span asp-validation-for="empe_FechaNacimiento" class="text-danger"></span>
                 </div>
+            
                 <div class="form-group col-6 mt-3">
                     <label asp-for="empe_Sexo" class="control-label"></label>
                     <input asp-for="empe_Sexo" class="form-control" />
@@ -59,8 +60,8 @@
                     <span asp-validation-for="depa_Id" class="text-danger" />
                 </div>
                 <div class="form-group col-6 mt-3">
-                    <label asp-for="muni_Id" class="control-label"></label>
-                    <select asp-for="muni_Id" class="form-control" asp-items="ViewBag.muni_Id" ></select>
+                    <label asp-for="muni_Id" name="muni_Id" class="control-label"></label>
+                    <select asp-for="muni_Id" class="form-control"></select>
                     <span asp-validation-for="muni_Id" class="text-danger"></span>
                 </div>
                 <div class="form-group col-6 mt-3">
@@ -86,36 +87,67 @@
     </div>
  </div>
 
+
 <script>
     $(document).ready(function () {
-        $('#menuMaquillaje').addClass('active');
-        $('#empleadosItem').addClass('active');
-        $('#subMenuMaquillaje').addClass('show');
+        var empe_Id = $("#empe_Id").val();
+        $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empe_Id })
+   
+            .done(function (municipios) {
+               
+                var municipiosSelect = $('#muni_Id');
+                municipiosSelect.empty();
+                $.each(municipios, function (index, item) {
+                    $("#muni").val(item.depa_Id);
+                    var muniId = item.muni_Id;
+                    console.log("seleccionar depa");
 
-        $("#muni_Id").prop("disabled", true);
+                    $.getJSON('/Empleado/CargarMunicipios', { id: item.depa_Id })
+                        .done(function (municipios) {
+                            $("#muni_Id").prop("disabled", false);
+                            var municipiosSelect = $('#muni_Id');
+                            municipiosSelect.empty();
+                            municipiosSelect.append($('<option>', {
+                                value: '',
+                                text: '--Selecciona un municipio--'
+                            }));
+                            $.each(municipios, function (index, item) {
+                                municipiosSelect.append($('<option>', {
+                                    value: item.muni_id,
+                                    text: item.muni_Nombre
+                                }));
+                            });
+                            console.log("cargar muni");
 
-        var empeId = $("#empe_Id").val();
-
-        console.log(empeId);
-
-        $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empeId })
-            .done(function (municipiosSelected) {
-                $("#muni_Id").prop("disabled", false);
-                $.each(municipiosSelected, function (index, item) {
-                    console.log(item);
-                    $('#muni').val(item.depa_Id);
-
-                    console.log(item.depa_Id);
+                            $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empe_Id })
+                                .done(function (municipios) {
+                                    $.each(municipios, function (index, item) {
+                                        $("#muni_Id").val(item.muni_id);
+                                        console.log("seleccionar muni");
+                                        console.log(item.muni_id);
+                                    });
+                                })
+                                .fail(function (jqXHR, textStatus, errorThrown) {
+                                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                                });
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                        });
                 });
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);        
             });
 
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#ddlMunicipios").prop("disabled", true);
         $('#muni').change(function () {
-
             var departamentoId = $("#muni").val();
-
             $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
                 .done(function (municipios) {
                     $("#muni_Id").prop("disabled", false);
@@ -130,7 +162,6 @@
                             value: item.muni_id,
                             text: item.muni_Nombre
                         }));
-
                         console.log(item.muni_Id)
                     });
                 })
@@ -140,4 +171,3 @@
         });
     });
 </script>
-

@@ -43,6 +43,5 @@ namespace Maquillaje.DataAccess.Repository
 
             return db.Query<tbMunicipios>(ScriptsDataBase.UDP_Listar_Municipios_DDL, parametros, commandType: CommandType.StoredProcedure);
         }
-
     }
 }

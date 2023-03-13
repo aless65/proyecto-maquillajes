@@ -92,9 +92,9 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
-        public IEnumerable<tbEmpleados> UpdateEmpleadosMuniDDL(int id)
+        public IEnumerable<VW_maqu_tbEmpleados_DDLMunicipios> UpdateEmpleadosMuniDDL(int id)
         {
-            return _empleadoRepository.MunicipiosPorEmpleado(id);
+            return _empleadoRepository.GetMuni_IdByEmpe_Id(id);
         }
 
         public int DeleteEmpleado(int id)
@@ -205,8 +205,6 @@ namespace Maquillaje.BusinessLogic.Services
             var municipios = _municipioRepository.CargarMunicipios(departamentoId); 
             return (municipios);
         }
-
-
         #endregion
 
         #region EstadosCiviles

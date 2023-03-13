@@ -8,7 +8,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h2>Actualizar cliente</h2>
+        <h2>Actualizar Empleado</h2>
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-end mb-2">
@@ -38,6 +38,7 @@
                     <input asp-for="empe_FechaNacimiento" class="form-control" type="date" />
                     <span asp-validation-for="empe_FechaNacimiento" class="text-danger"></span>
                 </div>
+            
                 <div class="form-group col-6 mt-3">
                     <label asp-for="empe_Sexo" class="control-label"></label>
                     <input asp-for="empe_Sexo" class="form-control" />
@@ -59,8 +60,8 @@
                     <span asp-validation-for="muni" class="text-danger" />
                 </div>
                 <div class="form-group col-6 mt-3">
-                    <label asp-for="muni_Id" class="control-label"></label>
-                    <select asp-for="muni_Id" class="form-control" asp-items="ViewBag.muni_Id" ></select>
+                    <label asp-for="muni_Id" name="muni_Id" class="control-label"></label>
+                    <select asp-for="muni_Id" class="form-control"></select>
                     <span asp-validation-for="muni_Id" class="text-danger"></span>
                 </div>
                 <div class="form-group col-6 mt-3">
@@ -86,7 +87,30 @@
     </div>
  </div>
 
+
 <script>
+    $(document).ready(function () {
+        var empe_Id = $("#empe_Id").val();
+        $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empe_Id })
+   
+            .done(function (municipios) {
+                console.log(municipios);
+                var municipiosSelect = $('#muni_Id');
+                municipiosSelect.empty();
+                $.each(municipios, function (index, item) {
+                    municipiosSelect.append($('<option>', {
+                        value: item.muni_Id,
+                        text: item.muni_Nombre
+                    }));   
+                });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);        
+            });
+    });
+</script>
+
+@*<script>
     $(document).ready(function () {
         $("#muni_Id").prop("disabled", true);
 
@@ -119,5 +143,5 @@
                 });
         });
     });
-</script>
+</script>*@
 

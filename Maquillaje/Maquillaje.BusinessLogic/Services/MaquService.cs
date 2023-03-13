@@ -92,9 +92,9 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
-        public tbEmpleados UpdateEmpleadosMuniDDL(tbEmpleados item)
+        public IEnumerable<tbEmpleados> UpdateEmpleadosMuniDDL(int id)
         {
-            return _empleadoRepository.MunicipiosPorEmpleado(item);
+            return _empleadoRepository.GetMuni_IdByEmpe_Id(id);
         }
 
         public int DeleteEmpleado(int id)

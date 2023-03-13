@@ -92,6 +92,11 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public tbEmpleados UpdateEmpleadosMuniDDL(tbEmpleados item)
+        {
+            return _empleadoRepository.MunicipiosPorEmpleado(item);
+        }
+
         public int DeleteEmpleado(int id)
         {
             return _empleadoRepository.DeleteConfirmed(id);

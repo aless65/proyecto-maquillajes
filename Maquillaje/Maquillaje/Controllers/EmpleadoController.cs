@@ -83,6 +83,12 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _maquService.ObtenerIDEmpleado(id);
 
+            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
+
+            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
+
             if (listado != null)
             {
                 return View(listado);
@@ -97,7 +103,14 @@ namespace Maquillaje.WebUI.Controllers
         {
             var delete = _maquService.DeleteEmpleado(id);
 
-            if(delete == 1)
+            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
+
+            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
+
+
+            if (delete == 1)
             {
                 return RedirectToAction("Index");
             }
@@ -111,6 +124,12 @@ namespace Maquillaje.WebUI.Controllers
         {
             var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);
             return Json(cargarmunicipios);
+        }
+
+        public IActionResult CargarMunicipioseEmpleado(tbEmpleados item)
+        {
+            var cargarmunicipioselected = _maquService.UpdateEmpleadosMuniDDL(item);
+            return Json(cargarmunicipioselected);
         }
     }
 }

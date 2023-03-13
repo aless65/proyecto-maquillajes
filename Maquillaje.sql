@@ -720,6 +720,19 @@ BEGIN
 	AND [muni_Estado] = 1
 END
 
+/*Departamento y municipio por empleado*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_tbMunicipios_tbEmpleados_ListDDL 
+	@empe_Id	INT
+AS
+BEGIN
+	SELECT depa_Id, T1.muni_Id
+	FROM [maqu].[tbEmpleados] T1 INNER JOIN [gral].[tbMunicipios] T2
+	ON T1.muni_Id = T2.muni_Id
+	WHERE empe_Id = @empe_Id
+END
+
+
 --**************** DEPARTAMENTOS ****************--
 /*Insertar Departamentos*/
 GO

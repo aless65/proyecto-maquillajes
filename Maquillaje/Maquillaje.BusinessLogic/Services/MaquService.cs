@@ -92,6 +92,40 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public bool UpdateEmpelado(tbEmpleados empleado)
+        {
+            try
+            {
+                var empleadoExistente = _empleadoRepository.find(empleado.empe_Id);
+
+                if (empleadoExistente == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    empleadoExistente.empe_Nombres = empleado.empe_Nombres;
+                    empleadoExistente.empe_Apellidos = empleado.empe_Apellidos;
+                    empleadoExistente.empe_Identidad = empleado.empe_Identidad;
+                    empleadoExistente.empe_Sexo = empleado.empe_Sexo;
+                    empleadoExistente.muni_Id = empleado.muni_Id;
+                    empleadoExistente.empe_FechaNacimiento = empleado.empe_FechaNacimiento;
+                    empleadoExistente.empe_Telefono = empleado.empe_Telefono;
+                    empleadoExistente.empe_CorreoElectronico = empleado.empe_CorreoElectronico;
+                    empleadoExistente.estacivi_Id = empleado.estacivi_Id;
+                    empleadoExistente.empe_Direccion = empleado.empe_Direccion;
+
+                    _empleadoRepository.Update(empleadoExistente);
+
+                    return true;
+                }
+            }
+            catch(Exception error)
+            {
+                return false;
+            }
+        }
+
         public IEnumerable<VW_maqu_tbEmpleados_DDLMunicipios> UpdateEmpleadosMuniDDL(int id)
         {
             return _empleadoRepository.GetMuni_IdByEmpe_Id(id);

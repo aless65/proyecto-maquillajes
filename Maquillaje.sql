@@ -629,7 +629,7 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Update
     @empe_usuModificacion     INT
 AS
 BEGIN
-    BEGIN TRY
+--    BEGIN TRY
         UPDATE maqu.tbEmpleados
         SET     empe_Nombres = @empe_Nombres,
                 empe_Apellidos = @empe_Apellidos,
@@ -644,13 +644,14 @@ BEGIN
                 empe_FechaModificacion = GETDATE()
         WHERE     empe_Id = @empe_Id
 
-        SELECT 1
-    END TRY
-    BEGIN CATCH
-        SELECT 0
-    END CATCH
+--        SELECT 1
+--    END TRY
+--    BEGIN CATCH
+--        SELECT 0
+--    END CATCH
 END
-
+SELECT * FROM maqu.tbEmpleados
+EXECUTE maqu.UDP_maqu_tbEmpleados_Update 1,'Alessio','Medino','12412','10-10-2005','M',2,'0501','assa','321412','alessi@gmail.com',1
 /*Eliminar Empleados*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Delete

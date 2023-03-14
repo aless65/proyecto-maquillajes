@@ -25,7 +25,7 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Details(int id)
         {
             var listado = _maquService.CategoriaDetails(id,out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<tbCategorias>>(listado);
+            var listadoMapeado = _mapper.Map<IEnumerable<CategoriaViewModel>>(listado);
 
             if (String.IsNullOrEmpty(error))
                 ModelState.AddModelError("", error);

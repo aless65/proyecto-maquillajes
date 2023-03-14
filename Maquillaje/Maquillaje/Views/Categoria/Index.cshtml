@@ -5,14 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="card">
     <div class="card-header">
         <h2>Categorías</h2>
     </div>
     <div class="card-body">
         <p>
-            <a asp-action="Create" class="btn btn-secondary">Nuevo</a>
+            <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
         </p>
         <table class="table table-bordered table-hover" id="DataTable">
             <thead>
@@ -49,5 +48,12 @@
 
     </div>
 </div>
+
+@Html.Partial("_Modal_Create", new Maquillaje.WebUI.Models.CategoriaViewModel())
+<script>
+    function AbrirModalCreate() {
+        $("#EditarCategorias").appendTo('body').modal('show');
+    };
+</script>
 
 

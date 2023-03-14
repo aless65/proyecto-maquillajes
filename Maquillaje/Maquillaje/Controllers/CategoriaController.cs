@@ -21,6 +21,19 @@ namespace Maquillaje.WebUI.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("/Categoria/Details")]
+        public IActionResult Details(int id)
+        {
+            var listado = _maquService.CategoriaDetails(id,out string error);
+            var listadoMapeado = _mapper.Map<IEnumerable<tbCategorias>>(listado);
+
+            if (String.IsNullOrEmpty(error))
+                ModelState.AddModelError("", error);
+
+            return View(listadoMapeado);
+        }
+
+
         [HttpGet("/Categorias/Listado")]
         public IActionResult Index()
         {

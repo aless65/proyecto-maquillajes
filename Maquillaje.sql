@@ -901,7 +901,14 @@ BEGIN
 	WHERE [cate_Estado] = 1
 END
 
---/Insertar Cliente/
+/*Listado de categoria x Id*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_tbCategorias_maqu_ListById
+@cate_Id INT
+AS
+BEGIN
+SELECT * FROM maqu.tbCategorias WHERE cate_Id = @cate_Id
+END
 --/Insertar Cliente/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert

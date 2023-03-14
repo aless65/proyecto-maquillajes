@@ -51,7 +51,17 @@ namespace Maquillaje.DataAccess.Repository
 
             return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_Categorias, null, commandType: CommandType.StoredProcedure);
         }
-         
+
+        public IEnumerable<tbCategorias> Details(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@cate_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_CategoriaById, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+
         public int Update(tbCategorias item)
         {
             using var db = new SqlConnection(AndreasContext.ConnectionString);

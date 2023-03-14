@@ -76,6 +76,22 @@ namespace Maquillaje.BusinessLogic.Services
                 return 0;
             }
         }
+
+        public IEnumerable<tbCategorias> CategoriaDetails(int id,out string error)
+        {
+            error = string.Empty;
+
+            try
+            {
+                return _categoriaRepository.Details(id);
+            }
+            catch (Exception e)
+            {
+
+                error = e.Message;
+                return Enumerable.Empty<tbCategorias>();
+            }
+        }
         #endregion
 
         #region Empleado

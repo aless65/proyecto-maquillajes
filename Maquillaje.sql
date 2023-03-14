@@ -653,7 +653,7 @@ BEGIN
 END
 
 GO
-EXECUTE maqu.UDP_maqu_tbEmpleados_Update 1,'Alessio','Medino','12412','10-10-2005','M',2,'0501','assa','321412','alessi@gmail.com',1
+EXECUTE maqu.UDP_maqu_tbEmpleados_Update 1,'Alessiaaaaa','Medinaaa','12412','10-10-2005','M',2,'0501','assa','321412','alessi@gmail.com',1
 /*Eliminar Empleados*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Delete

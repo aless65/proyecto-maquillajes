@@ -54,15 +54,11 @@ namespace Maquillaje.WebUI.Controllers
                 if (insertar == 1)
                     return RedirectToAction("Index");
                 else
-                {
-                    ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre", item.depa_Id);
-                    return View(item);
-                }
+                    return View();
             }
             catch
             {
-                ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre", item.depa_Id);
-                return View(item);
+                return View();
             }
         }
 

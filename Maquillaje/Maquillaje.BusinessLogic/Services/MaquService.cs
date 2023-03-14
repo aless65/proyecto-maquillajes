@@ -136,7 +136,7 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
-        public bool UpdateEmpelado(tbEmpleados empleado)
+        public int UpdateEmpelado(tbEmpleados empleado)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace Maquillaje.BusinessLogic.Services
 
                 if (empleadoExistente == null)
                 {
-                    return false;
+                    return 0;
                 }
                 else
                 {
@@ -159,14 +159,12 @@ namespace Maquillaje.BusinessLogic.Services
                     empleadoExistente.estacivi_Id = empleado.estacivi_Id;
                     empleadoExistente.empe_Direccion = empleado.empe_Direccion;
 
-                    _empleadoRepository.Update(empleadoExistente);
-
-                    return true;
+                    return _empleadoRepository.Update(empleadoExistente); ;
                 }
             }
             catch(Exception error)
             {
-                return false;
+                return 0;
             }
         }
 

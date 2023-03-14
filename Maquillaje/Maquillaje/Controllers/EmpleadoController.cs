@@ -102,7 +102,13 @@ namespace Maquillaje.WebUI.Controllers
         {
             var update = _maquService.UpdateEmpelado(item);
 
-            if (update)
+            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
+
+            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
+
+            if (update == 1)
             {
                 return RedirectToAction("Index");
             }

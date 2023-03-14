@@ -39,6 +39,15 @@
           "lib/netstandard2.0/Dapper.dll": {}
         }
       },
+      "EntityFramework/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net45/EntityFramework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.dll": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -2659,6 +2668,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Dapper": "2.0.123",
+          "EntityFramework": "5.0.0",
           "Maquillaje.Entities": "1.0.0",
           "Microsoft.EntityFrameworkCore": "5.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.0"
@@ -2728,6 +2738,35 @@
         "lib/net5.0/Dapper.xml",
         "lib/netstandard2.0/Dapper.dll",
         "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "EntityFramework/5.0.0": {
+      "sha512": "WYfgJWKg/RjwU8pzZkImD9DsV+J1nqDcIGp1S0/bdnElKBmAaUC2nmq/QQAcco32KyQQWnLgJNiDzIOz2xWFbQ==",
+      "type": "package",
+      "path": "entityframework/5.0.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/App.config.transform",
+        "Content/Web.config.transform",
+        "entityframework.5.0.0.nupkg.sha512",
+        "entityframework.nuspec",
+        "lib/net40/EntityFramework.dll",
+        "lib/net40/EntityFramework.xml",
+        "lib/net45/EntityFramework.dll",
+        "lib/net45/EntityFramework.xml",
+        "tools/EntityFramework.PS3.psd1",
+        "tools/EntityFramework.PowerShell.Utility.dll",
+        "tools/EntityFramework.PowerShell.dll",
+        "tools/EntityFramework.psd1",
+        "tools/EntityFramework.psm1",
+        "tools/Redirect.VS11.config",
+        "tools/Redirect.config",
+        "tools/about_EntityFramework.help.txt",
+        "tools/init.ps1",
+        "tools/install.ps1",
+        "tools/migrate.exe"
       ]
     },
     "Humanizer.Core/2.8.26": {
@@ -8732,24 +8771,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LAB02\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\LAB01\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\Maquillaje.WebUI.csproj",
+      "projectUniqueName": "C:\\Users\\LAB01\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\Maquillaje.WebUI.csproj",
       "projectName": "Maquillaje.WebUI",
-      "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\Maquillaje.WebUI.csproj",
-      "packagesPath": "C:\\Users\\LAB02\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\obj\\",
+      "projectPath": "C:\\Users\\LAB01\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\Maquillaje.WebUI.csproj",
+      "packagesPath": "C:\\Users\\LAB01\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LAB01\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\LAB02\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\LAB01\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8763,8 +8797,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.BusinessLogic\\Maquillaje.BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.BusinessLogic\\Maquillaje.BusinessLogic.csproj"
+            "C:\\Users\\LAB01\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.BusinessLogic\\Maquillaje.BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\LAB01\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.BusinessLogic\\Maquillaje.BusinessLogic.csproj"
             }
           }
         }
@@ -8827,5 +8861,23 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema al leer el archivo de caché C:\\Users\\LAB01\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"EntityFramework 5.0.0\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\" en lugar de la plataforma de destino del proyecto \".NETCoreApp,Version=v3.1\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+      "libraryId": "EntityFramework",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

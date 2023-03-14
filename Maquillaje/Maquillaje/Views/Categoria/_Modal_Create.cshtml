@@ -1,16 +1,13 @@
 ﻿@model Maquillaje.WebUI.Models.CategoriaViewModel
 
-
-<div class="modal" id="EditarCategoria" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Crear Categoria</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form asp-action="Edit" id="formEdit">
+<!-- Modal -->
+<div class="modal fade" id="CrearCategorias" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Categoria" asp-action="Create" id="formCreate">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Crear</h5>
+                </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4">
@@ -18,23 +15,46 @@
                             <div class="form-group">
                                 <label asp-for="cate_Nombre" class="control-label"></label>
                                 <input asp-for="cate_Nombre" class="form-control" />
-                                <span asp-validation-for="cate_Nombre" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <label name="lbl_cate_NombreCreateError" id="lbl_cate_NombreCreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="GuardarModalEdit()">Guardar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalCreate()" class="btn btn-success">Crear</button>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+<script>
+    function AbrirModalCreate() {
+        $("#lbl_cate_NombreCreateError").attr('hidden', true);
+        $("#CrearCategorias").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalCreate() {
+        var cate_Nombre = $('#cate_Nombre').val();
+
+        $("#lbl_cate_NombreCreateError").attr('hidden', true);
+
+        if (cate_Nombre != "") {
+            $("#formCreate").submit();
+      
+        } else {
+            $("#lbl_cate_NombreCreateError").attr('hidden', false);
+        }
+
+    }
+</script>
+
 

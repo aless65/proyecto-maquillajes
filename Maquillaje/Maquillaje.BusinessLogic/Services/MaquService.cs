@@ -48,6 +48,34 @@ namespace Maquillaje.BusinessLogic.Services
         {
             return _categoriaRepository.Insert(tbCategorias);
         }
+
+        public int EditCategorias(tbCategorias categoria)
+        {
+
+            try
+            {
+                var resultado = _categoriaRepository.Update(categoria);
+
+                return resultado;
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
+
+        public int DeleteCategoria(int id)
+        {
+            try
+            {
+                return _categoriaRepository.DeleteConfirmed(id);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         #endregion
 
         #region Empleado

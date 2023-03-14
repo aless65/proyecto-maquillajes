@@ -180,9 +180,10 @@ CREATE TABLE maqu.tbCategorias
 	cate_FechaModificacion		DATETIME,
 	cate_Estado					BIT NOT NULL CONSTRAINT DF_cate_Estado DEFAULT(1)
 
-	CONSTRAINT PK_maqu_tbCategorias_cate_Id 												PRIMARY KEY(cate_Id),
+	CONSTRAINT PK_maqu_tbCategorias_cate_Id 										    PRIMARY KEY(cate_Id),
 	CONSTRAINT FK_maqu_tbCategorias_acce_tbUsuarios_cate_UsuCreacion_user_Id  			FOREIGN KEY(cate_UsuCreacion) 			REFERENCES acce.tbUsuarios(user_Id),
-	CONSTRAINT FK_maqu_tbCategorias_acce_tbUsuarios_cate_UsuModificacion_user_Id  		FOREIGN KEY(cate_UsuModificacion) 		REFERENCES acce.tbUsuarios(user_Id)
+	CONSTRAINT FK_maqu_tbCategorias_acce_tbUsuarios_cate_UsuModificacion_user_Id  		FOREIGN KEY(cate_UsuModificacion) 		REFERENCES acce.tbUsuarios(user_Id),
+	CONSTRAINT UQ_maqu_tbCategorias_cate_Nombre UNIQUE(cate_Nombre)
 );
 
 CREATE TABLE maqu.tbMetodosPago
@@ -859,22 +860,29 @@ GO
 
 /*Editar categoria*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_UPDATE
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_UPDATE
 	@cate_Id					INT,
 	@cate_Nombre 				NVARCHAR(100),
 	@cate_UsuModificacion 		INT
 AS
-BEGIN
+BEGIN 
+BEGIN TRY
 	UPDATE [maqu].[tbCategorias]
 	SET 	[cate_Nombre] = @cate_Nombre,
 			[cate_UsuModificacion] = @cate_UsuModificacion,
 			[cate_FechaModificacion] = GETDATE()
 	WHERE 	[cate_Id] = @cate_Id
+	SELECT 1
+	END TRY
+	BEGIN CATCH
+	SELECT 0
+	END CATCH
 END
+
 
 /*Eliminar categoria*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_ELIMINAR
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_Delete
 	@cate_Id	INT
 AS
 BEGIN

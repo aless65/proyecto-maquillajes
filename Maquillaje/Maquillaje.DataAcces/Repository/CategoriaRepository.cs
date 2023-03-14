@@ -54,10 +54,25 @@ namespace Maquillaje.DataAccess.Repository
          
         public int Update(tbCategorias item)
         {
-            using var db = new AndreasContext();
-            db.Entry(item).State = EntityState.Modified;
-            db.SaveChanges();
-            return item.cate_Id;
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@cate_Id", item.cate_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@cate_Nombre", item.cate_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@cate_UsuModificacion",1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Categorias, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public int DeleteConfirmed(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+
+            parametros.Add("@cate_Id", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirst<int>(ScriptsDataBase.UDP_Eliminar_Categorias, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

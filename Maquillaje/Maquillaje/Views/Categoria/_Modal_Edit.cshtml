@@ -1,0 +1,66 @@
+﻿@model Maquillaje.WebUI.Models.CategoriaViewModel
+<!-- Modal -->
+<div class="modal fade" id="EditarCategorias" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Categoria" asp-action="Edit" id="formEdit">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="cate_Id" class="form-control" id="cate_Id_Edit" name="cate_Id" hidden />
+                            <div class="form-group">
+                                <label asp-for="cate_Nombre" class="control-label"></label>
+                                <input asp-for="cate_Nombre" class="form-control" id="cate_Nombre_Edit" name="cate_Nombre" />
+                                <label name="lbl_cate_NombreEditError" id="lbl_cate_NombreEditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalEdit()" class="btn btn-success">Editar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+<script>
+    function AbrirModalEdit(cadena) {
+        var datastring = cadena;
+        console.log(datastring);
+        var data = datastring.split(',');
+        $("#cate_Id_Edit").val(data[0]);
+        $("#cate_Nombre_Edit").val(data[1]);
+        $("#lbl_cate_NombreEditError").attr('hidden', true);
+        $("#EditarCategorias").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalEdit() {
+        var cate_Nombre = $('#cate_Nombre_Edit').val();
+
+        $("#lbl_cate_NombreEditError").attr('hidden', true);
+
+        if (cate_Nombre != "") {
+            $("#formEdit").submit();
+            console.log("Mi loco no esta vacio")
+        } else {
+            $("#lbl_cate_NombreEditError").attr('hidden', false);
+            console.log("Mi loco si esta vacio")
+        }
+
+    }
+
+</script>

@@ -33,12 +33,6 @@ namespace Maquillaje.WebUI.Controllers
             return View(listadoMapeado);
         }
 
-        [HttpGet("/Categorias/Create")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         [HttpPost("/Categorias/Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(CategoriaViewModel item)
@@ -57,6 +51,24 @@ namespace Maquillaje.WebUI.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost("/Categoria/Edit")]
+        public IActionResult Edit(tbCategorias categorias)
+        {
+            var result = 0;
+            var categoria = _mapper.Map<tbCategorias>(categorias);
+            result = _maquService.EditCategorias(categoria);
+
+            return RedirectToAction("Index");
+
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var delete = _maquService.DeleteCategoria(id);
+
+            return RedirectToAction("Index");
         }
     }
 }

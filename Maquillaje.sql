@@ -637,7 +637,7 @@ BEGIN
                 empe_FechaNacimiento = @empe_FechaNacimiento,
                 empe_Sexo = @empe_Sexo,
                 estacivi_Id = @estacivi_Id,
-                muni_Id = @empe_Direccion,
+                muni_Id = @muni_Id,
                 empe_Telefono = @empe_Telefono,
                 empe_CorreoElectronico = @empe_CorreoElectronico,
                 empe_UsuModificacion = @empe_usuModificacion,
@@ -650,7 +650,6 @@ BEGIN
 --        SELECT 0
 --    END CATCH
 END
-SELECT * FROM maqu.tbEmpleados
 EXECUTE maqu.UDP_maqu_tbEmpleados_Update 1,'Alessio','Medino','12412','10-10-2005','M',2,'0501','assa','321412','alessi@gmail.com',1
 /*Eliminar Empleados*/
 GO

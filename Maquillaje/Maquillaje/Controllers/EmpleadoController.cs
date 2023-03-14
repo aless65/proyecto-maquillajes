@@ -37,11 +37,8 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("Empleados/Create")]
         public IActionResult Create()
         {
-            //var prueba = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre"); 
-            //ViewBag.muni_Id = new SelectList(_maquService.GetMunicipios(), "muni_Id", "muni_Nombre");
             var listado = _maquService.ListadoDepartamento(out string error).ToList();
-            //var seleccioneUnaOpcion = new tbDepartamentos { depa_Id = "0000", depa_Nombre = "--Seleccioene un Departamento--" };
-            //listado.Insert(0, seleccioneUnaOpcion);
+
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
             var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
@@ -55,8 +52,7 @@ namespace Maquillaje.WebUI.Controllers
         {
 
             var listado = _maquService.ListadoDepartamento(out string error).ToList();
-            //var seleccioneUnaOpcion = new tbDepartamentos { depa_Id = "0000", depa_Nombre = "--Seleccioene un Departamento--" };
-            //listado.Insert(0, seleccioneUnaOpcion);
+
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
             var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
@@ -96,6 +92,23 @@ namespace Maquillaje.WebUI.Controllers
             else
             {
                 return RedirectToAction("Index");
+            }
+        }
+
+
+        [HttpPost("/Empleados/Update")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(tbEmpleados item)
+        {
+            var update = _maquService.UpdateEmpelado(item);
+
+            if (update)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(item);
             }
         }
 

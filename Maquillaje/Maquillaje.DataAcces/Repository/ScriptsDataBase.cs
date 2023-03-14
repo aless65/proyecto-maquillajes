@@ -8,8 +8,10 @@ namespace Maquillaje.DataAccess.Repository
     {
         #region Categorías
         public static string UDP_Listar_Categorias = "UDP_maqu_tbCategorias_List";
-
+        public static string UDP_Editar_Categorias = "maqu.UDP_maqu_tbCategorias_UPDATE";
         public static string UDP_Insertar_Categorias = "UDP_maqu_tbCategorias_INSERT";
+        public static string UDP_Eliminar_Categorias = "maqu.UDP_maqu_tbCategorias_Delete";
+        public static string UDP_Listar_CategoriaById = "maqu.UDP_tbCategorias_maqu_ListById";
         #endregion
 
         #region Empleados

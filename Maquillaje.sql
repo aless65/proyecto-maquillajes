@@ -180,9 +180,10 @@ CREATE TABLE maqu.tbCategorias
 	cate_FechaModificacion		DATETIME,
 	cate_Estado					BIT NOT NULL CONSTRAINT DF_cate_Estado DEFAULT(1)
 
-	CONSTRAINT PK_maqu_tbCategorias_cate_Id 												PRIMARY KEY(cate_Id),
+	CONSTRAINT PK_maqu_tbCategorias_cate_Id 										    PRIMARY KEY(cate_Id),
 	CONSTRAINT FK_maqu_tbCategorias_acce_tbUsuarios_cate_UsuCreacion_user_Id  			FOREIGN KEY(cate_UsuCreacion) 			REFERENCES acce.tbUsuarios(user_Id),
-	CONSTRAINT FK_maqu_tbCategorias_acce_tbUsuarios_cate_UsuModificacion_user_Id  		FOREIGN KEY(cate_UsuModificacion) 		REFERENCES acce.tbUsuarios(user_Id)
+	CONSTRAINT FK_maqu_tbCategorias_acce_tbUsuarios_cate_UsuModificacion_user_Id  		FOREIGN KEY(cate_UsuModificacion) 		REFERENCES acce.tbUsuarios(user_Id),
+	CONSTRAINT UQ_maqu_tbCategorias_cate_Nombre UNIQUE(cate_Nombre)
 );
 
 CREATE TABLE maqu.tbMetodosPago
@@ -629,7 +630,7 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Update
     @empe_usuModificacion     INT
 AS
 BEGIN
-    BEGIN TRY
+--    BEGIN TRY
         UPDATE maqu.tbEmpleados
         SET     empe_Nombres = @empe_Nombres,
                 empe_Apellidos = @empe_Apellidos,
@@ -637,20 +638,20 @@ BEGIN
                 empe_FechaNacimiento = @empe_FechaNacimiento,
                 empe_Sexo = @empe_Sexo,
                 estacivi_Id = @estacivi_Id,
-                muni_Id = @empe_Direccion,
+                muni_Id = @muni_Id,
                 empe_Telefono = @empe_Telefono,
                 empe_CorreoElectronico = @empe_CorreoElectronico,
                 empe_UsuModificacion = @empe_usuModificacion,
                 empe_FechaModificacion = GETDATE()
         WHERE     empe_Id = @empe_Id
 
-        SELECT 1
-    END TRY
-    BEGIN CATCH
-        SELECT 0
-    END CATCH
+--        SELECT 1
+--    END TRY
+--    BEGIN CATCH
+--        SELECT 0
+--    END CATCH
 END
-
+EXECUTE maqu.UDP_maqu_tbEmpleados_Update 1,'Alessio','Medino','12412','10-10-2005','M',2,'0501','assa','321412','alessi@gmail.com',1
 /*Eliminar Empleados*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Delete
@@ -877,22 +878,29 @@ GO
 
 /*Editar categoria*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_UPDATE
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_UPDATE
 	@cate_Id					INT,
 	@cate_Nombre 				NVARCHAR(100),
 	@cate_UsuModificacion 		INT
 AS
-BEGIN
+BEGIN 
+BEGIN TRY
 	UPDATE [maqu].[tbCategorias]
 	SET 	[cate_Nombre] = @cate_Nombre,
 			[cate_UsuModificacion] = @cate_UsuModificacion,
 			[cate_FechaModificacion] = GETDATE()
 	WHERE 	[cate_Id] = @cate_Id
+	SELECT 1
+	END TRY
+	BEGIN CATCH
+	SELECT 0
+	END CATCH
 END
+
 
 /*Eliminar categoria*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_ELIMINAR
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_Delete
 	@cate_Id	INT
 AS
 BEGIN
@@ -911,7 +919,14 @@ BEGIN
 	WHERE [cate_Estado] = 1
 END
 
---/Insertar Cliente/
+/*Listado de categoria x Id*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_tbCategorias_maqu_ListById
+@cate_Id INT
+AS
+BEGIN
+SELECT * FROM maqu.tbCategorias WHERE cate_Id = @cate_Id
+END
 --/Insertar Cliente/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert

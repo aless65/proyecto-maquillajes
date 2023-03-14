@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Maquillaje.DataAcces\Maquillaje.DataAccess.csproj" />
+    <ProjectReference Include="..\Maquillaje.Entities\Maquillaje.Entities.csproj" />
   </ItemGroup>
 
 </Project>

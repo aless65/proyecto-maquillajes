@@ -16,11 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Maquillaje.Entities\Maquillaje.Entities.csproj" />
+    <Folder Include="Context\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
+    <ProjectReference Include="..\Maquillaje.Entities\Maquillaje.Entities.csproj" />
   </ItemGroup>
 
 </Project>

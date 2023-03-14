@@ -21,6 +21,19 @@ namespace Maquillaje.WebUI.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("/Categoria/Details")]
+        public IActionResult Details(int id)
+        {
+            var listado = _maquService.CategoriaDetails(id,out string error);
+            var listadoMapeado = _mapper.Map<IEnumerable<CategoriaViewModel>>(listado);
+
+            if (String.IsNullOrEmpty(error))
+                ModelState.AddModelError("", error);
+
+            return View(listadoMapeado);
+        }
+
+
         [HttpGet("/Categorias/Listado")]
         public IActionResult Index()
         {
@@ -31,12 +44,6 @@ namespace Maquillaje.WebUI.Controllers
                 ModelState.AddModelError("", error);
 
             return View(listadoMapeado);
-        }
-
-        [HttpGet("/Categorias/Create")]
-        public IActionResult Create()
-        {
-            return View();
         }
 
         [HttpPost("/Categorias/Create")]
@@ -59,5 +66,22 @@ namespace Maquillaje.WebUI.Controllers
             }
         }
 
+        [HttpPost("/Categoria/Edit")]
+        public IActionResult Edit(tbCategorias categorias)
+        {
+            var result = 0;
+            var categoria = _mapper.Map<tbCategorias>(categorias);
+            result = _maquService.EditCategorias(categoria);
+
+            return RedirectToAction("Index");
+
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var delete = _maquService.DeleteCategoria(id);
+
+            return RedirectToAction("Index");
+        }
     }
 }

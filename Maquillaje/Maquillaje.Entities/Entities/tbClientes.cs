@@ -56,6 +56,9 @@ namespace Maquillaje.Entities.Entities
 
         public virtual tbUsuarios clie_UsuCreacionNavigation { get; set; }
         public virtual tbUsuarios clie_UsuModificacionNavigation { get; set; }
+
+        [Display(Name = "Departamento")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public virtual tbMunicipios depa_Id { get; set; }
         public virtual ICollection<tbFacturas> tbFacturas { get; set; }
     }

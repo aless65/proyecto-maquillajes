@@ -19,6 +19,8 @@ namespace Maquillaje.DataAccess.Context
         {
         }
 
+        public virtual DbSet<VW_maqu_tbClientes_DDLMunicipios> VW_maqu_tbClientes_DDLMunicipios { get; set; }
+        public virtual DbSet<VW_maqu_tbEmpleados_DDLMunicipios> VW_maqu_tbEmpleados_DDLMunicipios { get; set; }
         public virtual DbSet<tbCategorias> tbCategorias { get; set; }
         public virtual DbSet<tbClientes> tbClientes { get; set; }
         public virtual DbSet<tbDepartamentos> tbDepartamentos { get; set; }
@@ -38,6 +40,60 @@ namespace Maquillaje.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+
+            modelBuilder.Entity<VW_maqu_tbClientes_DDLMunicipios>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_maqu_tbClientes_DDLMunicipios", "maqu");
+
+                entity.Property(e => e.depa_Id)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.depa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.muni_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(80);
+
+                entity.Property(e => e.muni_id)
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+            });
+
+            modelBuilder.Entity<VW_maqu_tbEmpleados_DDLMunicipios>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_maqu_tbEmpleados_DDLMunicipios", "maqu");
+
+                entity.Property(e => e.depa_Id)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.depa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.muni_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(80);
+
+                entity.Property(e => e.muni_id)
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+            });
 
             modelBuilder.Entity<tbCategorias>(entity =>
             {
@@ -136,6 +192,12 @@ namespace Maquillaje.DataAccess.Context
                     .WithMany(p => p.tbClientesclie_UsuModificacionNavigation)
                     .HasForeignKey(d => d.clie_UsuModificacion)
                     .HasConstraintName("FK_maqu_tbClientes_acce_tbUsuarios_clie_UsuModificacion_user_Id");
+
+                entity.HasOne(d => d.depa_Id)
+                    .WithMany(p => p.tbClientes)
+                    .HasForeignKey(d => d.muni_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_maqu_tbClientes_gral_tbMunicipios_muni_Id");
             });
 
             modelBuilder.Entity<tbDepartamentos>(entity =>

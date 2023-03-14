@@ -127,18 +127,18 @@ namespace Maquillaje.BusinessLogic.Services
 
         public tbClientes ObtenerIDCliente(int id)
         {
-            //try
-            //{
-            var probar = _clienteRepository.find(id);
-            return _clienteRepository.find(id);
-            //}
-            //catch
-            //{
-            //    return null;
-            //}
+            try
+            {
+                var probar = _clienteRepository.find(id);
+                return _clienteRepository.find(id);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        public bool UpdateClientes(tbClientes cliente)
+        public int UpdateClientes(tbClientes cliente)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace Maquillaje.BusinessLogic.Services
 
                 if (clienteExistente == null)
                 {
-                    return false;
+                    return 0;
                 }
                 else
                 {
@@ -159,14 +159,12 @@ namespace Maquillaje.BusinessLogic.Services
                     clienteExistente.clie_Telefono = cliente.clie_Telefono;
                     clienteExistente.clie_CorreoElectronico = cliente.clie_CorreoElectronico;
 
-                    _clienteRepository.Update(clienteExistente);
-
-                    return true;
+                    return _clienteRepository.Update(clienteExistente);
                 }
             }
             catch
             {
-                return false;
+                return 0;
             }
         }
 

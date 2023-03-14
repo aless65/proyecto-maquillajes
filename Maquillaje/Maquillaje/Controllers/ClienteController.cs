@@ -86,12 +86,13 @@ namespace Maquillaje.WebUI.Controllers
             var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
 
-            if (update)
+            if(update == 1)
             {
                 return RedirectToAction("Index");
             }
             else
             {
+                ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre", item.depa_Id);
                 return View(item);
             }
         }

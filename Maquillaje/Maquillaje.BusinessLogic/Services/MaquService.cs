@@ -48,6 +48,50 @@ namespace Maquillaje.BusinessLogic.Services
         {
             return _categoriaRepository.Insert(tbCategorias);
         }
+
+        public int EditCategorias(tbCategorias categoria)
+        {
+
+            try
+            {
+                var resultado = _categoriaRepository.Update(categoria);
+
+                return resultado;
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
+
+        public int DeleteCategoria(int id)
+        {
+            try
+            {
+                return _categoriaRepository.DeleteConfirmed(id);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public IEnumerable<tbCategorias> CategoriaDetails(int id,out string error)
+        {
+            error = string.Empty;
+
+            try
+            {
+                return _categoriaRepository.Details(id);
+            }
+            catch (Exception e)
+            {
+
+                error = e.Message;
+                return Enumerable.Empty<tbCategorias>();
+            }
+        }
         #endregion
 
         #region Empleado
@@ -89,6 +133,40 @@ namespace Maquillaje.BusinessLogic.Services
             catch
             {
                 return null;
+            }
+        }
+
+        public bool UpdateEmpelado(tbEmpleados empleado)
+        {
+            try
+            {
+                var empleadoExistente = _empleadoRepository.find(empleado.empe_Id);
+
+                if (empleadoExistente == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    empleadoExistente.empe_Nombres = empleado.empe_Nombres;
+                    empleadoExistente.empe_Apellidos = empleado.empe_Apellidos;
+                    empleadoExistente.empe_Identidad = empleado.empe_Identidad;
+                    empleadoExistente.empe_Sexo = empleado.empe_Sexo;
+                    empleadoExistente.muni_Id = empleado.muni_Id;
+                    empleadoExistente.empe_FechaNacimiento = empleado.empe_FechaNacimiento;
+                    empleadoExistente.empe_Telefono = empleado.empe_Telefono;
+                    empleadoExistente.empe_CorreoElectronico = empleado.empe_CorreoElectronico;
+                    empleadoExistente.estacivi_Id = empleado.estacivi_Id;
+                    empleadoExistente.empe_Direccion = empleado.empe_Direccion;
+
+                    _empleadoRepository.Update(empleadoExistente);
+
+                    return true;
+                }
+            }
+            catch(Exception error)
+            {
+                return false;
             }
         }
 

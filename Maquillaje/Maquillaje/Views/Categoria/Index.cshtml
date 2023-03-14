@@ -5,14 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="card">
     <div class="card-header">
         <h2>Categorías</h2>
     </div>
     <div class="card-body">
         <p>
-            <a asp-action="Create" class="btn btn-secondary">Nuevo</a>
+            <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
         </p>
         <table class="table table-bordered table-hover" id="DataTable">
             <thead>
@@ -38,9 +37,11 @@
                         </td>
                         <td>
                             @*<button class="btn btn-primary" onclick="AbrirModal()">Editar ConModal</button>*@
-                            <a asp-action="Edit" asp-route-id="@item.cate_Id">Editar</a> |
-                            <a asp-action="Details" asp-route-id="@item.cate_Id">Detalles</a> |
-                            <a asp-action="Delete" asp-route-id="@item.cate_Id">Borrar</a>
+                            @*<a asp-action="Edit" asp-route-id="@item.cate_Id" class="btn btn-warning">Editar</a> |*@
+                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.cate_Id,@item.cate_Nombre')">Editar</button> |
+                            <a asp-action="Details" asp-route-id="@item.cate_Id" class="btn btn-dark">Detalles</a> |
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.cate_Id)">Borrar</button>
+
                         </td>
                     </tr>
                 }
@@ -49,5 +50,13 @@
 
     </div>
 </div>
+
+@Html.Partial("_Modal_Create", new Maquillaje.WebUI.Models.CategoriaViewModel())
+
+@Html.Partial("_Modal_Edit", new Maquillaje.WebUI.Models.CategoriaViewModel())
+
+@Html.Partial("_Modal_Delete", new Maquillaje.WebUI.Models.CategoriaViewModel())
+
+
 
 

@@ -70,7 +70,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <form method="post" asp-controller="Empleado" asp-action="Delete">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -101,7 +101,7 @@
 
         $("#id").val(id);
 
-        $("#modalEditar").appendTo("body").modal('show');
+        $("#modalDelete").appendTo("body").modal('show');
 
     }
 </script>

@@ -2644,7 +2644,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
-          "Maquillaje.DataAccess": "1.0.0"
+          "Maquillaje.DataAccess": "1.0.0",
+          "Maquillaje.Entities": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Maquillaje.BusinessLogic.dll": {}

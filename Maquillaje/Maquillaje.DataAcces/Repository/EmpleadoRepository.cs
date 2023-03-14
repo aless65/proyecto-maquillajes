@@ -25,17 +25,6 @@ namespace Maquillaje.DataAccess.Repository
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Eliminar_Empleado, parametros, commandType: CommandType.StoredProcedure);
         }
 
-        public tbEmpleados MunicipiosPorEmpleado(tbEmpleados item)
-        {
-            using var db = new SqlConnection(AndreasContext.ConnectionString);
-
-            var parametros = new DynamicParameters();
-
-            parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
-
-            return db.QueryFirst<tbEmpleados>(ScriptsDataBase.UDP_Editar_Empleado_Municipios_DDL, parametros, commandType: CommandType.StoredProcedure);
-        }
-
         public tbEmpleados find(int? id)
         {
             using var db = new AndreasContext();

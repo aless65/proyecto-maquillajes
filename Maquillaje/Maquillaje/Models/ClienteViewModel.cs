@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -44,6 +45,10 @@ namespace Maquillaje.WebUI.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string clie_CorreoElectronico { get; set; }
 
-        public virtual tbMunicipios muni { get; set; }
+        public virtual tbMunicipios depa_Id { get; set; }
+
+        //[NotMapped]
+        //[Display(Name = "Departamento")]
+        //public string depa_Id { get; set; }
     }
 }

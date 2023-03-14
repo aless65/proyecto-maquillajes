@@ -9,6 +9,7 @@ using System.Linq;
     {
         public class EmpleadoViewModel
         {
+            [Display(Name = "ID")]
             public int empe_Id { get; set; }
 
             [Display(Name = "Nombres")]

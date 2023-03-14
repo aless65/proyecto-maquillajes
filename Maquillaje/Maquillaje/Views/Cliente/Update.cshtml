@@ -11,60 +11,193 @@
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-end mb-2">
-            <a asp-action="Index">Back to List</a>
+            <a asp-action="Index">Regresar al index</a>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="Update">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="clie_Id" />
-                    <div class="form-group">
-                        <label asp-for="clie_Nombres" class="control-label"></label>
-                        <input asp-for="clie_Nombres" class="form-control" />
-                        <span asp-validation-for="clie_Nombres" class="text-danger"></span>
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="clie_Id" />
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="clie_Nombres" class="control-label"></label>
+                    <input asp-for="clie_Nombres" class="form-control" />
+                    <span asp-validation-for="clie_Nombres" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="clie_Apellidos" class="control-label"></label>
+                    <input asp-for="clie_Apellidos" class="form-control" />
+                    <span asp-validation-for="clie_Apellidos" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6 mt-3">
+                    <label asp-for="clie_Identidad" class="control-label"></label>
+                    <input asp-for="clie_Identidad" class="form-control" />
+                    <span asp-validation-for="clie_Identidad" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6 mt-3">
+                    <label asp-for="clie_Sexo" class="control-label">Sexo:</label>
+                    <div>
+                        <input type="radio" asp-for="clie_Sexo" value="M" /> Masculino
+                        <input type="radio" asp-for="clie_Sexo" value="F" /> Femenino
                     </div>
-                    <div class="form-group">
-                        <label asp-for="clie_Apellidos" class="control-label"></label>
-                        <input asp-for="clie_Apellidos" class="form-control" />
-                        <span asp-validation-for="clie_Apellidos" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="clie_Identidad" class="control-label"></label>
-                        <input asp-for="clie_Identidad" class="form-control" />
-                        <span asp-validation-for="clie_Identidad" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="clie_Sexo" class="control-label"></label>
-                        <input asp-for="clie_Sexo" class="form-control" />
-                        <span asp-validation-for="clie_Sexo" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="muni_Id" class="control-label"></label>
-                        <input asp-for="muni_Id" class="form-control" />
-                        <span asp-validation-for="muni_Id" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="clie_DireccionExacta" class="control-label"></label>
-                        <input asp-for="clie_DireccionExacta" class="form-control" />
-                        <span asp-validation-for="clie_DireccionExacta" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="clie_Telefono" class="control-label"></label>
-                        <input asp-for="clie_Telefono" class="form-control" />
-                        <span asp-validation-for="clie_Telefono" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="clie_CorreoElectronico" class="control-label"></label>
-                        <input asp-for="clie_CorreoElectronico" class="form-control" />
-                        <span asp-validation-for="clie_CorreoElectronico" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                    </div>
-                </form>
+                    <span asp-validation-for="clie_Sexo" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6 mt-3">
+                    <label asp-for="depa_Id" class="control-label"></label>
+                    <select asp-for="depa_Id" class="form-control" asp-items="ViewBag.depa_Id">
+                        <option value="">-- Seleccione un departamento --</option>
+                    </select>
+                    <span asp-validation-for="depa_Id" class="text-danger" />
+                </div>
+                <div class="form-group col-6 mt-3">
+                    <label asp-for="muni_Id" name="muni_Id" class="control-label"></label>
+                    <select asp-for="muni_Id" class="form-control"></select>
+                    <span asp-validation-for="muni_Id" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6 mt-3">
+                    <label asp-for="clie_DireccionExacta" class="control-label"></label>
+                    <input asp-for="clie_DireccionExacta" class="form-control" />
+                    <span asp-validation-for="clie_DireccionExacta" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6 mt-3">
+                    <label asp-for="clie_Telefono" class="control-label"></label>
+                    <input asp-for="clie_Telefono" class="form-control" />
+                    <span asp-validation-for="clie_Telefono" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6 mt-3">
+                    <label asp-for="clie_CorreoElectronico" class="control-label"></label>
+                    <input asp-for="clie_CorreoElectronico" class="form-control" />
+                    <span asp-validation-for="clie_CorreoElectronico" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="submit" value="Guardar cambios" id="btnGuardar" class="btn btn-secondary" />
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
+
+<script>
+
+    $("#btnGuardar").click(function () {
+        sessionStorage.setItem('contarCargas', "hola");
+
+        console.log(sessionStorage.getItem('contarCargas'));
+
+        if (sessionStorage.getItem('contarCargas') != null) {
+            sessionStorage.setItem('depId', $("#depa_Id").val());
+            sessionStorage.setItem('muniId', $("#muni_Id").val());
+        }
+    });
+
+    $(document).ready(function () {
+        $('#menuMaquillaje').addClass('active');
+        $('#clientesItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+
+
+        var clie_Id = $("#clie_Id").val();
+
+        console.log(sessionStorage.getItem('contarCargas'));
+
+        if (sessionStorage.getItem('contarCargas') == null) {
+
+            $.getJSON('/Cliente/CargarMunicipiosCliente', { id: clie_Id })
+
+                .done(function (municipios) {
+
+                    var municipiosSelect = $('#muni_Id');
+                    municipiosSelect.empty();
+                    $.each(municipios, function (index, item) {
+                        $("#depa_Id").val(item.depa_Id);
+                        console.log("seleccionar depa");
+
+                        $.getJSON('/Cliente/CargarMunicipios', { id: item.depa_Id })
+                            .done(function (municipios) {
+                                $("#muni_Id").prop("disabled", false);
+                                var municipiosSelect = $('#muni_Id');
+                                municipiosSelect.empty();
+                                municipiosSelect.append($('<option>', {
+                                    value: '',
+                                    text: '--Selecciona un municipio--'
+                                }));
+                                $.each(municipios, function (index, item) {
+                                    municipiosSelect.append($('<option>', {
+                                        value: item.muni_id,
+                                        text: item.muni_Nombre
+                                    }));
+                                });
+                                console.log("cargar muni");
+
+                                $.getJSON('/Cliente/CargarMunicipiosCliente', { id: clie_Id })
+                                    .done(function (municipios) {
+                                        $.each(municipios, function (index, item) {
+                                            $("#muni_Id").val(item.muni_id);
+                                            console.log("seleccionar muni");
+                                            console.log(item.muni_id);
+                                        });
+                                    })
+                                    .fail(function (jqXHR, textStatus, errorThrown) {
+                                        console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                                    });
+                            })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                            });
+                    });
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                });
+        } else {
+            $("#depa_Id").val(sessionStorage.getItem('depId'));
+            $.getJSON('/Cliente/CargarMunicipios', { id: sessionStorage.getItem('depId') })
+                .done(function (municipios) {
+                    $("#muni_Id").prop("disabled", false);
+                    var municipiosSelect = $('#muni_Id');
+                    municipiosSelect.empty();
+                    municipiosSelect.append($('<option>', {
+                        value: '',
+                        text: '--Selecciona un municipio--'
+                    }));
+                    $.each(municipios, function (index, item) {
+                        municipiosSelect.append($('<option>', {
+                            value: item.muni_id,
+                            text: item.muni_Nombre
+                        }));
+                        console.log(item.muni_Id)
+                    });
+
+                    $("#muni_Id").val(sessionStorage.getItem('muniId'));
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                });
+        }
+        
+    });
+
+    $('#depa_Id').change(function () {
+        var departamentoId = $("#depa_Id").val();
+        $.getJSON('/Cliente/CargarMunicipios', { id: departamentoId })
+            .done(function (municipios) {
+                $("#muni_Id").prop("disabled", false);
+                var municipiosSelect = $('#muni_Id');
+                municipiosSelect.empty();
+                municipiosSelect.append($('<option>', {
+                    value: '',
+                    text: '--Selecciona un municipio--'
+                }));
+                $.each(municipios, function (index, item) {
+                    municipiosSelect.append($('<option>', {
+                        value: item.muni_id,
+                        text: item.muni_Nombre
+                    }));
+                    console.log(item.muni_Id)
+                });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+            });
+    });
+</script>
 

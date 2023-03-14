@@ -118,6 +118,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[maqu].[VW_maqu_tbClientes_DDLMunicipios]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[maqu].[VW_maqu_tbEmpleados_DDLMunicipios]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[UDP_maqu_tbCategorias_List]",
          "ObjectType": 1
       }

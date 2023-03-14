@@ -1,4 +1,4 @@
-﻿@model Maquillaje.Entities.Entities.tbEmpleados
+@model Maquillaje.Entities.Entities.tbEmpleados
 
 @{
     ViewData["Title"] = "Update";
@@ -8,7 +8,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h2>Actualizar Empleado</h2>
+        <h2>Actualizar empleado</h2>
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-end mb-2">
@@ -55,11 +55,11 @@
                 </div>
                 <div class="form-group col-6 mt-3">
                     <label class="form-label">Departamento Id</label>
-                    <label asp-for="muni" class="control-label"></label>
-                    <select asp-for="muni" class="form-control" asp-items="ViewBag.depa_Id">
+                    <label asp-for="depa_Id" class="control-label"></label>
+                    <select asp-for="depa_Id" class="form-control" asp-items="ViewBag.depa_Id">
                         <option value="">-- Seleccione un departamento --</option>
                     </select>
-                    <span asp-validation-for="muni" class="text-danger" />
+                    <span asp-validation-for="depa_Id" class="text-danger" />
                 </div>
                 <div class="form-group col-6 mt-3">
                     <label asp-for="muni_Id" name="muni_Id" class="control-label"></label>
@@ -100,7 +100,7 @@
                 var municipiosSelect = $('#muni_Id');
                 municipiosSelect.empty();
                 $.each(municipios, function (index, item) {
-                    $("#muni").val(item.depa_Id);
+                    $("#depa_Id").val(item.depa_Id);
                     var muniId = item.muni_Id;
                     console.log("seleccionar depa");
 
@@ -148,8 +148,8 @@
 <script>
     $(document).ready(function () {
         $("#ddlMunicipios").prop("disabled", true);
-        $('#muni').change(function () {
-            var departamentoId = $("#muni").val();
+        $('#depa_Id').change(function () {
+            var departamentoId = $("#depa_Id").val();
             $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
                 .done(function (municipios) {
                     $("#muni_Id").prop("disabled", false);

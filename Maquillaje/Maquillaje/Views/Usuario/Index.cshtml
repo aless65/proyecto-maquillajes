@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Maquillaje.WebUI.Models.UsuarioViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.user_NombreUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_Contrasena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_EsAdmin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_FechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_FechaModificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_UsuCreacionNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_UsuModificacionNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_NombreUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_Contrasena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_EsAdmin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_FechaModificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.empe.empe_Apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.role.role_Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_UsuCreacionNavigation.user_Contrasena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_UsuModificacionNavigation.user_Contrasena)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.user_Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.user_Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.user_Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -725,9 +725,10 @@ SELECT t2.muni_Nombre,t2.muni_id,t1.empe_Id,t3.depa_Id,t3.depa_Nombre FROM maqu.
 ON t1.muni_Id = t2.muni_id INNER JOIN gral.tbDepartamentos t3
 ON t2.depa_Id = t3.depa_Id
 
+
 /*Obtener muni_Id x clie_Id*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_tbClientes_maqu_GetMuni_Id
+CREATE OR ALTER PROCEDURE maqu.UDP_tbClientes_maqu_GetMuni_Id 
 	@clie_Id INT	
 AS
 BEGIN

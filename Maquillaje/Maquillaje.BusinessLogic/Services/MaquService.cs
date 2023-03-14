@@ -129,6 +129,7 @@ namespace Maquillaje.BusinessLogic.Services
         {
             //try
             //{
+            var probar = _clienteRepository.find(id);
             return _clienteRepository.find(id);
             //}
             //catch

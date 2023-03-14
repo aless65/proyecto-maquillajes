@@ -546,3 +546,4 @@ C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\D
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Empleado\Index.cshtml.g.cs
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Empleado\Update.cshtml.g.cs
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\Debug\netcoreapp3.1\EntityFramework.dll
+C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\Debug\netcoreapp3.1\EntityFramework.dll

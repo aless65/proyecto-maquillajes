@@ -71,6 +71,9 @@ namespace Maquillaje.WebUI.Controllers
         {
             var cliente = _maquService.ObtenerIDCliente(id);
 
+            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
+
             return View(cliente);
         }
 
@@ -80,12 +83,16 @@ namespace Maquillaje.WebUI.Controllers
         {
             var update = _maquService.UpdateClientes(item);
 
-            if (update)
+            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
+
+            if(update == 1)
             {
                 return RedirectToAction("Index");
             }
             else
             {
+                ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre", item.depa_Id);
                 return View(item);
             }
         }
@@ -101,6 +108,12 @@ namespace Maquillaje.WebUI.Controllers
         {
             var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);
             return Json(cargarmunicipios);
+        }
+
+        public IActionResult CargarMunicipiosCliente(int id)
+        {
+            var cargarmunicipioselected = _maquService.UpdateClientesMuniDDL(id);
+            return Json(cargarmunicipioselected);
         }
     }
 }

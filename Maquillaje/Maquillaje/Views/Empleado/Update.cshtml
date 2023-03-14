@@ -40,9 +40,11 @@
                 </div>
             
                 <div class="form-group col-6 mt-3">
-                    <label asp-for="empe_Sexo" class="control-label"></label>
-                    <input asp-for="empe_Sexo" class="form-control" />
-                    <span asp-validation-for="empe_Sexo" class="text-danger"></span>
+                    <label asp-for="empe_Sexo" class="control-label">Sexo:</label>
+                    <div>
+                        <input type="radio" asp-for="empe_Sexo" value="M" /> Masculino
+                        <input type="radio" asp-for="empe_Sexo" value="F" /> Femenino
+                    </div>
                 </div>
                 <div class="form-group col-6 mt-3">
                     <label asp-for="estacivi_Id" class="control-label"></label>
@@ -98,7 +100,7 @@
                 var municipiosSelect = $('#muni_Id');
                 municipiosSelect.empty();
                 $.each(municipios, function (index, item) {
-                    $("#muni").val(item.depa_Id);
+                    $("#depa_Id").val(item.depa_Id);
                     var muniId = item.muni_Id;
                     console.log("seleccionar depa");
 
@@ -146,8 +148,8 @@
 <script>
     $(document).ready(function () {
         $("#ddlMunicipios").prop("disabled", true);
-        $('#muni').change(function () {
-            var departamentoId = $("#muni").val();
+        $('#depa_Id').change(function () {
+            var departamentoId = $("#depa_Id").val();
             $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
                 .done(function (municipios) {
                     $("#muni_Id").prop("disabled", false);

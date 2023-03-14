@@ -129,6 +129,7 @@ namespace Maquillaje.BusinessLogic.Services
         {
             try
             {
+                var probar = _clienteRepository.find(id);
                 return _clienteRepository.find(id);
             }
             catch
@@ -137,7 +138,7 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
-        public bool UpdateClientes(tbClientes cliente)
+        public int UpdateClientes(tbClientes cliente)
         {
             try
             {
@@ -145,7 +146,7 @@ namespace Maquillaje.BusinessLogic.Services
 
                 if (clienteExistente == null)
                 {
-                    return false;
+                    return 0;
                 }
                 else
                 {
@@ -158,14 +159,12 @@ namespace Maquillaje.BusinessLogic.Services
                     clienteExistente.clie_Telefono = cliente.clie_Telefono;
                     clienteExistente.clie_CorreoElectronico = cliente.clie_CorreoElectronico;
 
-                    _clienteRepository.Update(clienteExistente);
-
-                    return true;
+                    return _clienteRepository.Update(clienteExistente);
                 }
             }
             catch
             {
-                return false;
+                return 0;
             }
         }
 
@@ -179,6 +178,11 @@ namespace Maquillaje.BusinessLogic.Services
             {
                 return 0;
             }
+        }
+
+        public IEnumerable<VW_maqu_tbClientes_DDLMunicipios> UpdateClientesMuniDDL(int id)
+        {
+            return _clienteRepository.GetMuni_IdByClie_Id(id);
         }
         #endregion
 

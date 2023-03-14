@@ -49,7 +49,7 @@ namespace Maquillaje.DataAccess.Repository
             //parametros.Add("@NoHaceNada", item.id, DbType.String, ParameterDirection.Input);
             //return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_Categorias, parametros, commandType: CommandType.StoredProcedure);
 
-            return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_Categorias, null, commandType: CommandType.StoredProcedure);
+            return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_Usuarios, null, commandType: CommandType.StoredProcedure);
         }
 
         public IEnumerable<tbCategorias> Details(int id)

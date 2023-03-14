@@ -1197,6 +1197,13 @@ BEGIN
 END
 
 --************USUARIOS******************--
+/*Listar Usuarios*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_List
+AS
+BEGIN
+SELECT * FROM acce.tbUsuarios
+END
 /*Editar usuarios*/
 GO
 CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_UPDATE

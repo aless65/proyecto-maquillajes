@@ -18,8 +18,9 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly MunicipioRepository _municipioRepository;
         private readonly DepartamentoRepository _departamentoRepository;
         private readonly EstadoCivilRepository _estadoCivilRepository;
+        private readonly UsuarioRepository _usuarioRepository;
 
-        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository)
+        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository, UsuarioRepository usuarioRepository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
@@ -27,6 +28,7 @@ namespace Maquillaje.BusinessLogic.Services
             _municipioRepository = municipioRepository;
             _departamentoRepository = departamentoRepository;
             _estadoCivilRepository = estadoCivilRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
         #region Categorias
@@ -301,6 +303,22 @@ namespace Maquillaje.BusinessLogic.Services
             {
                 error = e.Message;
                 return Enumerable.Empty<tbEstadosCiviles>();
+            }
+        }
+        #endregion
+
+        #region Usuario
+        public IEnumerable<tbUsuarios> ListadoUsuarios(out string error)
+        {
+            error = string.Empty;
+            try
+            {
+                return _usuarioRepository.List();
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+                return Enumerable.Empty<tbUsuarios>();
             }
         }
         #endregion

@@ -10,39 +10,18 @@
         <h1>Details</h1>
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-hover" id="DataTable">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.cate_Id)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.cate_Nombre)
-                    </th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+        @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.cate_Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.cate_Nombre)
-                        </td>
-                        <td>
-                            @*<button class="btn btn-primary" onclick="AbrirModal()">Editar ConModal</button>*@
-                            @*<a asp-action="Edit" asp-route-id="@item.cate_Id" class="btn btn-warning">Editar</a> |*@
-                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.cate_Id,@item.cate_Nombre')">Editar</button>
+                    <div class="row">
+                        <div class="col-6"><h5>ID</h5></div>
+                        <div class=""> @Html.DisplayFor(modelItem => item.cate_Id)</div>
+                    </div>
 
-                        </td>
-                    </tr>
+                    <div class="row">
+                        <div class="col-6"><h5>Nombre de categoria</h5></div>
+                        <div class="">@Html.DisplayFor(modelItem => item.cate_Nombre)</div>
+                    </div>
                 }
-            </tbody>
-        </table>
-
     </div>
 </div>
 

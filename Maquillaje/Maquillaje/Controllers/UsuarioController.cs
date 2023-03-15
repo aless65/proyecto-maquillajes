@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
+using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,6 +31,26 @@ namespace Maquillaje.WebUI.Controllers
                 ModelState.AddModelError("", error);
 
             return View(listadoMapeado);
+        }
+
+        [HttpPost("/Usuario/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(UsuarioViewModel item)
+        {
+            var usuario = _mapper.Map<tbUsuarios>(item);
+            var insertar = _maquService.InsertUsuario(usuario);
+
+            try
+            {
+                if (insertar == 1)
+                    return RedirectToAction("Index");
+                else
+                    return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

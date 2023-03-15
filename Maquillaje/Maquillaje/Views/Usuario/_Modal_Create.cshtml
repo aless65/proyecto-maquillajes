@@ -1,0 +1,69 @@
+﻿@model Maquillaje.WebUI.Models.UsuarioViewModel
+<!-- Modal -->
+<div class="modal fade" id="CrearUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Categoria" asp-action="Create" id="formCreate">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nueva Usuarios</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="user_NombreUsuario" class="control-label"></label>
+                                <input asp-for="user_NombreUsuario" class="form-control" />
+                                <span asp-validation-for="user_NombreUsuario" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="user_Contrasena" class="control-label"></label>
+                                <input asp-for="user_Contrasena" class="form-control" />
+                                <span asp-validation-for="user_Contrasena" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="user_EsAdmin" class="control-label"></label>
+                                <input asp-for="user_EsAdmin" class="form-control" />
+                                <span asp-validation-for="user_EsAdmin" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="role_Id" class="control-label"></label>
+                                <select asp-for="role_Id" class="form-control" asp-items="ViewBag.role_Id"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="empe_Id" class="control-label"></label>
+                                <select asp-for="empe_Id" class="form-control" asp-items="ViewBag.empe_Id"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalCreate()" class="btn btn-success">Crear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function AbrirModalCreate() {
+        $("#lbl_cate_NombreCreateError").attr('hidden', true);
+        $("#CrearUsuario").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalCreate() {
+        var cate_Nombre = $('#cate_Nombre').val();
+        
+        $("#lbl_cate_NombreCreateError").attr('hidden', true);
+
+        if (cate_Nombre != "") {
+            $("#formCreate").submit();
+
+        } else {
+            $("#lbl_cate_NombreCreateError").attr('hidden', false);
+        }
+    }
+</script>

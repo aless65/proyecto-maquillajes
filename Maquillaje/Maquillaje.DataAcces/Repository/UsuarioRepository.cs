@@ -19,12 +19,21 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
-
         public int Insert(tbUsuarios item)
         {
-            throw new NotImplementedException();
-        }
+            //using var db = new AndreasContext();
+            //db.tbCategorias.Add(item);
+            //return item.cate_Id;
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
 
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_NombreUsuario", item.user_NombreUsuario, DbType.String, ParameterDirection.Input);
+            parametros.Add("@user_Contrasena", item.user_Contrasena, DbType.String, ParameterDirection.Input);
+            parametros.Add("@user_EsAdmin", item.user_EsAdmin, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@role_Id", item.role_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
+            return db.QueryFirst<int>(ScriptsDataBase.UDP_Insertar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
+        }
         public IEnumerable<tbUsuarios> List()
         {
             //using var db = new AndreasContext();
@@ -36,7 +45,7 @@ namespace Maquillaje.DataAccess.Repository
             //parametros.Add("@NoHaceNada", item.id, DbType.String, ParameterDirection.Input);
             //return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_Categorias, parametros, commandType: CommandType.StoredProcedure);
 
-            return db.Query<tbUsuarios>(ScriptsDataBase.UDP_Listar_Categorias, null, commandType: CommandType.StoredProcedure);
+            return db.Query<tbUsuarios>(ScriptsDataBase.UDP_Listar_Usuarios, null, commandType: CommandType.StoredProcedure);
         }
 
         public int Update(tbUsuarios item)

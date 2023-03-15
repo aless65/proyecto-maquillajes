@@ -89,7 +89,7 @@ CREATE TABLE acce.tbUsuarios(
 
 --********* PROCEDIMIENTO INSERTAR USUARIOS ADMIN**************--
 GO
-CREATE OR ALTER PROCEDURE UDP_InsertUsuario
+CREATE OR ALTER PROCEDURE acce.UDP_InsertUsuario
 	@user_NombreUsuario NVARCHAR(100),	@user_Contrasena NVARCHAR(200),
 	@user_EsAdmin BIT,					@role_Id INT, 
 	@empe_Id INT										

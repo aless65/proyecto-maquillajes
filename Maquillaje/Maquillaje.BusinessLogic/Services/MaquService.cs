@@ -321,6 +321,12 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<tbUsuarios>();
             }
         }
+
+        public int InsertUsuario(tbUsuarios tbUsuarios)
+        {
+            return _usuarioRepository.Insert(tbUsuarios);
+        }
+
         #endregion
     }
 }

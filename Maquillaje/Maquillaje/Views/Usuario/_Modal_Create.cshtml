@@ -14,24 +14,25 @@
                             <div class="form-group">
                                 <label asp-for="user_NombreUsuario" class="control-label"></label>
                                 <input asp-for="user_NombreUsuario" class="form-control" />
-                                <span asp-validation-for="user_NombreUsuario" class="text-danger"></span>
+                                <label name="lbl_user_NombreUsuario_CreateError" id="lbl_user_NombreUsuario_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                             </div>
                             <div class="form-group">
                                 <label asp-for="user_Contrasena" class="control-label"></label>
                                 <input type="password" asp-for="user_Contrasena" class="form-control" />
-                                <span asp-validation-for="user_Contrasena" class="text-danger"></span>
+                                <label name="lbl_user_Contrasena_CreateError" id="lbl_user_Contrasena_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                             </div>
                             <div class="form-group">
                                 <label asp-for="user_EsAdmin" class="control-label"></label>
                                 <br />
-                                <input type="checkbox" asp-for="user_EsAdmin" class=""/>
-                                <span asp-validation-for="user_EsAdmin" class="text-danger"></span>
+                                <input type="checkbox" asp-for="user_EsAdmin" class="" />
+                                <label name="lbl_user_EsAdmin_CreateError" id="lbl_user_EsAdmin_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                             </div>
                             <div class="form-group">
                                 <label asp-for="role_Id" class="control-label"></label>
                                 <select asp-for="role_Id" class="form-control" asp-items="ViewBag.ddlRoles">
                                     <option value="">-- Seleccione una opcion --</option>
                                 </select>
+                                <label name="lbl_role_Id_CreateError" id="lbl_role_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                             </div>
                             <div class="form-group">
                                 <label asp-for="empe_Id" class="control-label"></label>
@@ -39,6 +40,7 @@
                                     <option value="">-- Seleccione una opcion --</option>
                                 </select>
                             </div>
+                            <label name="lbl_empe_Id_CreateError" id="lbl_empe_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                         </div>
                     </div>
                 </div>
@@ -53,24 +55,55 @@
 
 <script>
     function AbrirModalCreate() {
-        $("#lbl__NombreCreateError").attr('hidden', true);
+        $("#lbl_user_NombreUsuario_CreateError").attr('hidden', true);
+        $("#lbl_user_Contrasena_CreateError").attr('hidden', true);
+        $("#lbl_role_Id_CreateError").attr('hidden', true);
+        $("#lbl_empe_Id_CreateError").attr('hidden', true);
         $("#CrearUsuario").appendTo('body').modal('show');
     };
 </script>
 
 <script>
     function GuardarModalCreate() {
-        var cate_Nombre = $('#cate_Nombre').val();
-        
-        $("#lbl_cate_NombreCreateError").attr('hidden', true);
-
-        $("#formCreate").submit();
-
-        if (cate_Nombre != "") {
-          
-
+        var user_NombreUsuario = $('#user_NombreUsuario').val();
+        var user_Contrasena = $("#user_Contrasena").val();
+        var role_Id = $("#role_Id").val();
+        var empe_Id = $("#empe_Id").val();
+        var x = true;
+      
+        if (user_NombreUsuario == "") {
+            $("#lbl_user_NombreUsuario_CreateError").attr('hidden', false);
+            x = false;
         } else {
-            $("#lbl_cate_NombreCreateError").attr('hidden', false);
+            $("#lbl_user_NombreUsuario_CreateError").attr('hidden', true);
         }
+
+        if (user_Contrasena == "") {
+            $("#lbl_user_Contrasena_CreateError").attr('hidden', false);
+            x = false;
+        } else {
+            $("#lbl_user_Contrasena_CreateError").attr('hidden', true);
+        }
+
+        if (role_Id == "") {
+            $("#lbl_role_Id_CreateError").attr('hidden', false);
+            x = false;
+        } else {
+            $("#lbl_role_Id_CreateError").attr('hidden', true);
+        }
+
+        if (empe_Id == "") {
+            $("#lbl_empe_Id_CreateError").attr('hidden', false);
+            x = false;
+        } else {
+            $("#lbl_empe_Id_CreateError").attr('hidden', true);
+        }
+
+        if (x == true) {
+            $("#formCreate").submit();
+        } else {
+
+        }
+
     }
 </script>

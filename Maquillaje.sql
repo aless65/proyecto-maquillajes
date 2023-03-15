@@ -1231,9 +1231,16 @@ CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_Insert
 @user_usuCreacion INT
 AS 
 BEGIN
+
+BEGIN TRY
 DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @user_Contrasena));
 INSERT INTO acce.tbUsuarios
 VALUES(@user_NombreUsuario,@password,@user_EsAdmin,@role_Id,@empe_Id,@user_usuCreacion,GETDATE(),NULL,NULL,1)
+SELECT 1
+END TRY
+BEGIN CATCH
+SELECT 0
+END CATCH
 END
 
 /*Listar Usuarios*/

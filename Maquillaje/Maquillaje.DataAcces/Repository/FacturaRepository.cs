@@ -22,7 +22,17 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Insert(tbFacturas item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+
+            parametros.Add("@clie_Id", item.clie_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@meto_Id", item.meto_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@fact_usuCreacion", item.fact_UsuCreacion, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirst<int>(ScriptsDataBase.UDP_Insertar_Facturas, parametros, commandType: CommandType.StoredProcedure);
+
         }
 
         public IEnumerable<tbFacturas> List()

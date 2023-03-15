@@ -61,6 +61,7 @@ namespace Maquillaje.DataAccess.Repository
 
         #region Facturas
         public static string UDP_Listar_Facturas = "maqu.UDP_maqu_tbFacturas_Listado";
+        public static string UDP_Insertar_Facturas = "maqu.UDP_maqu_tbFacturas_Insert";
         #endregion
     }
 }

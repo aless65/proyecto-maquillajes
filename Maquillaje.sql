@@ -1126,20 +1126,26 @@ AS
 
 /*Insertar Factura*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbFacturas_Insert
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturas_Insert
 	@clie_Id INT,
-	@fact_Fecha DATETIME,
 	@meto_Id INT,
 	@empe_Id INT,
 	@fact_usuCreacion INT
 AS
 BEGIN
-INSERT INTO [maqu].[tbFacturas](clie_Id, fact_Fecha, 
-			meto_Id, empe_Id, 
-			fact_UsuCreacion)
-VALUES(@clie_Id,@fact_Fecha,
-		@meto_Id,@empe_Id,
-		@fact_usuCreacion)
+	BEGIN TRY
+		INSERT INTO [maqu].[tbFacturas](clie_Id, fact_Fecha, 
+					meto_Id, empe_Id, 
+					fact_UsuCreacion)
+		VALUES(@clie_Id,GETDATE(),
+				@meto_Id,@empe_Id,
+				@fact_usuCreacion)
+
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Editar Factura*/

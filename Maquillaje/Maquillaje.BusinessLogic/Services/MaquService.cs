@@ -318,6 +318,11 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbFacturas_List>();
             }
         }
+
+        public int InsertFacturas(tbFacturas item)
+        {
+            return _facturaRepository.Insert(item);
+        }
         #endregion
     }
 }

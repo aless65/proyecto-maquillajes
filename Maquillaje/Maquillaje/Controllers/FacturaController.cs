@@ -21,13 +21,19 @@ namespace Maquillaje.WebUI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("/Factura/Listado")]
+        [HttpGet("/Facturas/Listado")]
         public IActionResult Index()
         {
             var listado = _maquService.ListadoFacturas();
             //var listadoMapeado = _mapper.Map<IEnumerable<VW_tbFacturas_List>>(listado);
 
             return View(listado);
+        }
+
+        [HttpGet("/Facturas/Create")]
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }

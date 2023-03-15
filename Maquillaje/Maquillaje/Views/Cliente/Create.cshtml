@@ -30,12 +30,12 @@
                     </div>
                     <div class="form-group col-6 mt-3">
                         <label asp-for="clie_Identidad" class="control-label"></label>
-                        <input asp-for="clie_Identidad" class="form-control" />
+                        <input asp-for="clie_Identidad" class="form-control" maxlength="13"/>
                         <span asp-validation-for="clie_Identidad" class="text-danger"></span>
                     </div>
                     <div class="form-group col-6 mt-3">
                         <label asp-for="clie_Sexo" class="control-label">Sexo:</label>
-                        <div>
+                        <div class="mt-3">
                             <input type="radio" asp-for="clie_Sexo" value="M" /> Masculino
                             <input type="radio" asp-for="clie_Sexo" value="F" /> Femenino
                         </div>
@@ -79,6 +79,16 @@
 
 
 <script>
+    $('#clie_Identidad').on('input', function () {
+        var c = this.selectionStart,
+            r = /[^0-9]/gi,
+            v = $(this).val();
+        if (r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
 
     $("#btnGuardar").click(function () {
         sessionStorage.setItem('contarCargas', "hola");

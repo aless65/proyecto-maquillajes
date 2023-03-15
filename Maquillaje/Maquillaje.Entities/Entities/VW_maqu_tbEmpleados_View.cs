@@ -9,21 +9,6 @@ namespace Maquillaje.Entities.Entities
     public partial class VW_maqu_tbEmpleados_View
     {
         public int empe_Id { get; set; }
-        public string empe_Nombres { get; set; }
-        public string empe_Apellidos { get; set; }
         public string NombreCompleto { get; set; }
-        public string empe_Identidad { get; set; }
-        public DateTime empe_FechaNacimiento { get; set; }
-        public string empe_Sexo { get; set; }
-        public int estacivi_Id { get; set; }
-        public string muni_Id { get; set; }
-        public string empe_Direccion { get; set; }
-        public string empe_Telefono { get; set; }
-        public string empe_CorreoElectronico { get; set; }
-        public int empe_UsuCreacion { get; set; }
-        public DateTime empe_FechaCreacion { get; set; }
-        public int? empe_UsuModificacion { get; set; }
-        public DateTime? empe_FechaModificacion { get; set; }
-        public bool empe_Estado { get; set; }
     }
 }

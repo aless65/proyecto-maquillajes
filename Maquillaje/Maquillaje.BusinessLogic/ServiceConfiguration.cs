@@ -26,6 +26,7 @@ namespace Maquillaje.BusinessLogic
         public static void BusinessLogic(this IServiceCollection service)
         {
             service.AddScoped<MaquService>();
+            service.AddScoped<AcceService>();
         }
     }
 }

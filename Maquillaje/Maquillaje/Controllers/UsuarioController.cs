@@ -13,11 +13,13 @@ namespace Maquillaje.WebUI.Controllers
 {
     public class UsuarioController: Controller
     {
+        private readonly AcceService _acceService;
         private readonly MaquService _maquService;
         private readonly IMapper _mapper;
 
-        public UsuarioController(MaquService maquService, IMapper mapper)
+        public UsuarioController(AcceService aceeService,MaquService maquService, IMapper mapper)
         {
+            _acceService = aceeService;
             _maquService = maquService;
             _mapper = mapper;
         }
@@ -25,10 +27,10 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Usuario/Listado")]
         public IActionResult Index()
         {
-            var listado = _maquService.ListadoUsuarios(out string error);
+            var listado = _acceService.ListadoUsuarios(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<UsuarioViewModel>>(listado);
 
-            var ddlRoles = _maquService.ListadoRoles(out string error1).ToList();
+            var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
             ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
 
             var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
@@ -44,7 +46,7 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Create(UsuarioViewModel item)
         {
             var usuario = _mapper.Map<tbUsuarios>(item);
-            var insertar = _maquService.InsertUsuario(usuario);
+            var insertar = _acceService.InsertUsuario(usuario);
 
             try
             {
@@ -58,6 +60,17 @@ namespace Maquillaje.WebUI.Controllers
                 return View();
             }
         }
+
+        //[HttpPost]
+        //public IActionResult Edit(tbUsuarios usuarios)
+        //{
+        //    var result = 0;
+        //    var usuario = _mapper.Map<tbUsuarios>(usuarios);
+        //    result = _maquService.EditCategorias(usuario);
+
+        //    return RedirectToAction("Index");
+
+        //}
 
 
     }

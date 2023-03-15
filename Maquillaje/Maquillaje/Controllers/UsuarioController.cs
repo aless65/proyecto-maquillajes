@@ -32,7 +32,7 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
 
             var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
-            
+            ViewBag.ddlEmpleados = new SelectList(ddlEmpleados, "empe_Id", "NombreCompleto");
             if (String.IsNullOrEmpty(error))
                 ModelState.AddModelError("", error);
 

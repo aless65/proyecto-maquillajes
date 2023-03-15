@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Maquillaje.WebUI.Models.UsuarioViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h2>Usuarios</h2>
+    </div>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.user_NombreUsuario)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.user_EsAdmin)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user_NombreUsuario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user_EsAdmin)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.user_Id" class="btn btn-warning">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.user_Id" class="btn btn-dark">Detalles</a> |
+                            <a asp-action="Delete" asp-route-id="@item.user_Id" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@Html.Partial("_Modal_Create", new Maquillaje.WebUI.Models.UsuarioViewModel())

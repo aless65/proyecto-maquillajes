@@ -1,0 +1,109 @@
+﻿@model Maquillaje.WebUI.Models.UsuarioViewModel
+<!-- Modal -->
+<div class="modal fade" id="CrearUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Usuario" asp-action="Create" id="formCreate">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Usuario</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="user_NombreUsuario" class="control-label"></label>
+                                <input asp-for="user_NombreUsuario" class="form-control" />
+                                <label name="lbl_user_NombreUsuario_CreateError" id="lbl_user_NombreUsuario_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="user_Contrasena" class="control-label"></label>
+                                <input type="password" asp-for="user_Contrasena" class="form-control" />
+                                <label name="lbl_user_Contrasena_CreateError" id="lbl_user_Contrasena_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="user_EsAdmin" class="control-label"></label>
+                                <br />
+                                <input type="checkbox" asp-for="user_EsAdmin" class="" />
+                                <label name="lbl_user_EsAdmin_CreateError" id="lbl_user_EsAdmin_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="role_Id" class="control-label"></label>
+                                <select asp-for="role_Id" class="form-control" asp-items="ViewBag.ddlRoles">
+                                    <option value="">-- Seleccione una opcion --</option>
+                                </select>
+                                <label name="lbl_role_Id_CreateError" id="lbl_role_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="empe_Id" class="control-label"></label>
+                                <select asp-for="empe_Id" class="form-control" asp-items="ViewBag.ddlEmpleados">
+                                    <option value="">-- Seleccione una opcion --</option>
+                                </select>
+                            </div>
+                            <label name="lbl_empe_Id_CreateError" id="lbl_empe_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalCreate()" class="btn btn-success">Crear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function AbrirModalCreate() {
+        $("#lbl_user_NombreUsuario_CreateError").attr('hidden', true);
+        $("#lbl_user_Contrasena_CreateError").attr('hidden', true);
+        $("#lbl_role_Id_CreateError").attr('hidden', true);
+        $("#lbl_empe_Id_CreateError").attr('hidden', true);
+        $("#CrearUsuario").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalCreate() {
+        var user_NombreUsuario = $('#user_NombreUsuario').val();
+        var user_Contrasena = $("#user_Contrasena").val();
+        var role_Id = $("#role_Id").val();
+        var empe_Id = $("#empe_Id").val();
+        var x = true;
+      
+        if (user_NombreUsuario == "") {
+            $("#lbl_user_NombreUsuario_CreateError").attr('hidden', false);
+            x = false;
+        } else {
+            $("#lbl_user_NombreUsuario_CreateError").attr('hidden', true);
+        }
+
+        if (user_Contrasena == "") {
+            $("#lbl_user_Contrasena_CreateError").attr('hidden', false);
+            x = false;
+        } else {
+            $("#lbl_user_Contrasena_CreateError").attr('hidden', true);
+        }
+
+        if (role_Id == "") {
+            $("#lbl_role_Id_CreateError").attr('hidden', false);
+            x = false;
+        } else {
+            $("#lbl_role_Id_CreateError").attr('hidden', true);
+        }
+
+        if (empe_Id == "") {
+            $("#lbl_empe_Id_CreateError").attr('hidden', false);
+            x = false;
+        } else {
+            $("#lbl_empe_Id_CreateError").attr('hidden', true);
+        }
+
+        if (x == true) {
+            $("#formCreate").submit();
+        } else {
+
+        }
+
+    }
+</script>

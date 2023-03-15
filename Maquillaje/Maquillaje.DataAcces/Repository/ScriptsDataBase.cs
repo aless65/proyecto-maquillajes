@@ -20,6 +20,7 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Editar_Empleado = "maqu.UDP_maqu_tbEmpleados_Update";
         public static string UDP_Eliminar_Empleado = "maqu.UDP_maqu_tbEmpleados_Delete";
         public static string UDP_Editar_Empleado_Municipios_DDL = "maqu.UDP_tbEmpleados_maqu_GetMuni_Id";
+        public static string UDP_Listar_Empleado_View = "maqu.UDP_maqu_tbEmpleados_View";
         #endregion
 
         #region Clientes
@@ -47,6 +48,13 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Insertar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_INSERT";
         public static string UDP_Editar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_UPDATE";
         public static string UDP_Eliminar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_DELETE";
+        #region Usuarios
+        public static string UDP_Listar_Usuarios = "acce.UDP_acce_tbUsuarios_List";
+        public static string UDP_Insertar_Usuarios = "acce.UDP_acce_tbUsuarios_Insert";
+        #endregion
+
+        #region
+        public static string UDP_Listar_Roles = "acce.UDP_acce_tbRoles_List";
         #endregion
     }
 }

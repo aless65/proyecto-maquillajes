@@ -39,7 +39,7 @@ namespace Maquillaje.WebUI.Controllers
             return View(listadoMapeado);
         }
 
-        [HttpPost("/Usuario/Create")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(UsuarioViewModel item)
         {

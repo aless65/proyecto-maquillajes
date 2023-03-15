@@ -652,6 +652,7 @@ BEGIN
 --    END CATCH
 END
 EXECUTE maqu.UDP_maqu_tbEmpleados_Update 1,'Alessio','Medino','12412','10-10-2005','M',2,'0501','assa','321412','alessi@gmail.com',1
+
 /*Eliminar Empleados*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Delete
@@ -1217,6 +1218,24 @@ BEGIN
 SELECT * FROM acce.tbRoles
 END
 --************USUARIOS******************--
+SELECT * FROM acce.tbUsuarios
+
+/*Insertar Usuarios*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_Insert	
+@user_NombreUsuario NVARCHAR(150),
+@user_Contrasena NVARCHAR(MAX),
+@user_EsAdmin BIT,
+@role_Id INT, 
+@empe_Id INT,
+@user_usuCreacion INT
+AS 
+BEGIN
+DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @user_Contrasena));
+INSERT INTO acce.tbUsuarios
+VALUES(@user_NombreUsuario,@password,@user_EsAdmin,@role_Id,@empe_Id,@user_usuCreacion,GETDATE(),NULL,NULL,1)
+END
+
 /*Listar Usuarios*/
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_List
@@ -1224,6 +1243,7 @@ AS
 BEGIN
 SELECT * FROM acce.tbUsuarios
 END
+
 /*Editar usuarios*/
 GO
 CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_UPDATE

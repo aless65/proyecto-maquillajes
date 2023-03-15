@@ -49,6 +49,7 @@ using System.Linq;
             public string empe_Telefono { get; set; }
 
             [Display(Name = "Correo electrónico")]
+            [Required(ErrorMessage = "El campo {0} es obligatorio")]
             public string empe_CorreoElectronico { get; set; }
             public int empe_UsuCreacion { get; set; }
             public DateTime empe_FechaCreacion { get; set; }

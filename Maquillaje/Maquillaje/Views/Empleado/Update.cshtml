@@ -54,7 +54,6 @@
                     <span asp-validation-for="estacivi_Id" class="text-danger" />
                 </div>
                 <div class="form-group col-6 mt-3">
-                    <label class="form-label">Departamento Id</label>
                     <label asp-for="depa_Id" class="control-label"></label>
                     <select asp-for="depa_Id" class="form-control" asp-items="ViewBag.depa_Id">
                         <option value="">-- Seleccione un departamento --</option>
@@ -82,7 +81,7 @@
                     <span asp-validation-for="empe_CorreoElectronico" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-3">
-                    <input type="submit" value="Guardar cambios" class="btn btn-secondary" id="btnGuardar" />
+                    <input type="submit" id="btnGuardar" value="Guardar cambios" class="btn btn-secondary" />
                 </div>
             </div>
         </form>
@@ -96,11 +95,11 @@
         sessionStorage.setItem('contarCargas', "hola");
 
         console.log(sessionStorage.getItem('contarCargas'));
+    });
 
-        if (sessionStorage.getItem('contarCargas') != null) {
-            sessionStorage.setItem('depId', $("#depa_Id").val());
-            sessionStorage.setItem('muniId', $("#muni_Id").val());
-        }
+    $(window).bind('beforeunload', function () {
+        sessionStorage.setItem('depId', $("#depa_Id").val());
+        sessionStorage.setItem('muniId', $("#muni_Id").val());
     });
 
     $(document).ready(function () {
@@ -115,7 +114,7 @@
 
         if (sessionStorage.getItem('contarCargas') == null) {
 
-            $.getJSON('/Empleado/CargarMunicipiosEmpleados', { id: empe_Id })
+            $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empe_Id })
 
                 .done(function (municipios) {
 
@@ -164,6 +163,7 @@
                 });
         } else {
             $("#depa_Id").val(sessionStorage.getItem('depId'));
+
             $.getJSON('/Empleado/CargarMunicipios', { id: sessionStorage.getItem('depId') })
                 .done(function (municipios) {
                     $("#muni_Id").prop("disabled", false);
@@ -189,61 +189,32 @@
         }
     });
 
-    $(document).ready(function () {
-        var empe_Id = $("#empe_Id").val();
-        $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empe_Id })
-   
+    $('#depa_Id').change(function () {
+        var departamentoId = $("#depa_Id").val();
+        $.getJSON('/Empleado/CargarMunicipios', { id: departamentoId })
             .done(function (municipios) {
-               
+                $("#muni_Id").prop("disabled", false);
                 var municipiosSelect = $('#muni_Id');
                 municipiosSelect.empty();
+                municipiosSelect.append($('<option>', {
+                    value: '',
+                    text: '--Selecciona un municipio--'
+                }));
                 $.each(municipios, function (index, item) {
-                    $("#depa_Id").val(item.depa_Id);
-                    var muniId = item.muni_Id;
-                    console.log("seleccionar depa");
-
-                    $.getJSON('/Empleado/CargarMunicipios', { id: item.depa_Id })
-                        .done(function (municipios) {
-                            $("#muni_Id").prop("disabled", false);
-                            var municipiosSelect = $('#muni_Id');
-                            municipiosSelect.empty();
-                            municipiosSelect.append($('<option>', {
-                                value: '',
-                                text: '--Selecciona un municipio--'
-                            }));
-                            $.each(municipios, function (index, item) {
-                                municipiosSelect.append($('<option>', {
-                                    value: item.muni_id,
-                                    text: item.muni_Nombre
-                                }));
-                            });
-                            console.log("cargar muni");
-
-                            $.getJSON('/Empleado/CargarMunicipiosEmpleado', { id: empe_Id })
-                                .done(function (municipios) {
-                                    $.each(municipios, function (index, item) {
-                                        $("#muni_Id").val(item.muni_id);
-                                        console.log("seleccionar muni");
-                                        console.log(item.muni_id);
-                                    });
-                                })
-                                .fail(function (jqXHR, textStatus, errorThrown) {
-                                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
-                                });
-                        })
-                        .fail(function (jqXHR, textStatus, errorThrown) {
-                            console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
-                        });
+                    municipiosSelect.append($('<option>', {
+                        value: item.muni_id,
+                        text: item.muni_Nombre
+                    }));
+                    console.log(item.muni_Id)
                 });
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);        
+                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
             });
-
     });
 </script>
 
-<script>
+@*<script>
     $(document).ready(function () {
         $("#ddlMunicipios").prop("disabled", true);
         $('#depa_Id').change(function () {
@@ -270,4 +241,4 @@
                 });
         });
     });
-</script>
+</script>*@

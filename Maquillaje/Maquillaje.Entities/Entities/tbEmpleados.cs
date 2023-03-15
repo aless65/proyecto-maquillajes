@@ -38,9 +38,21 @@ namespace Maquillaje.Entities.Entities
         [Display(Name = "Estado civil")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public int estacivi_Id { get; set; }
+
+        [Display(Name = "Municipio")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string muni_Id { get; set; }
+
+        [Display(Name = "Dirección exacta")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string empe_Direccion { get; set; }
+
+        [Display(Name = "Teléfono")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string empe_Telefono { get; set; }
+
+        [Display(Name = "Correo electrónico")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string empe_CorreoElectronico { get; set; }
         public int empe_UsuCreacion { get; set; }
         public DateTime empe_FechaCreacion { get; set; }
@@ -51,6 +63,9 @@ namespace Maquillaje.Entities.Entities
         public virtual tbUsuarios empe_UsuCreacionNavigation { get; set; }
         public virtual tbUsuarios empe_UsuModificacionNavigation { get; set; }
         public virtual tbEstadosCiviles estacivi { get; set; }
+
+        [Display(Name = "Departamento")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public virtual tbMunicipios depa_Id { get; set; }
         public virtual ICollection<tbUsuarios> tbUsuarios { get; set; }
     }

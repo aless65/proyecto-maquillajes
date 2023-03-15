@@ -58,7 +58,7 @@ namespace Maquillaje.BusinessLogic.Services
 
                 return resultado;
             }
-            catch (Exception error)
+            catch 
             {
                 return 0;
             }
@@ -162,7 +162,7 @@ namespace Maquillaje.BusinessLogic.Services
                     return _empleadoRepository.Update(empleadoExistente); ;
                 }
             }
-            catch(Exception error)
+            catch
             {
                 return 0;
             }

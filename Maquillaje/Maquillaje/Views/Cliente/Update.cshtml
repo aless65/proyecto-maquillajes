@@ -82,11 +82,13 @@
         sessionStorage.setItem('contarCargas', "hola");
 
         console.log(sessionStorage.getItem('contarCargas'));
+    });
 
-        if (sessionStorage.getItem('contarCargas') != null) {
-            sessionStorage.setItem('depId', $("#depa_Id").val());
-            sessionStorage.setItem('muniId', $("#muni_Id").val());
-        }
+    $(window).bind('beforeunload', function () {
+        sessionStorage.setItem('contarCargas', "hola");
+
+        sessionStorage.setItem('depId', $("#depa_Id").val());
+        sessionStorage.setItem('muniId', $("#muni_Id").val());
     });
 
     $(document).ready(function () {

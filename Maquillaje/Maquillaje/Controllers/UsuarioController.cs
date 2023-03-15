@@ -30,6 +30,9 @@ namespace Maquillaje.WebUI.Controllers
 
             var ddlRoles = _maquService.ListadoRoles(out string error1).ToList();
             ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
+
+            var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
+            
             if (String.IsNullOrEmpty(error))
                 ModelState.AddModelError("", error);
 

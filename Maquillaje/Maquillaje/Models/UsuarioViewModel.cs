@@ -15,7 +15,7 @@ namespace Maquillaje.WebUI.Models
         [Display(Name = "Contraseña")]
         public string user_Contrasena { get; set; }
         [Display(Name = "Admin")]
-        public bool? user_EsAdmin { get; set; }
+        public bool user_EsAdmin { get; set; }
         [Display(Name = "Rol")]
         public int? role_Id { get; set; }
         [Display(Name = "Empleado")]

@@ -1,11 +1,11 @@
 ﻿@model Maquillaje.WebUI.Models.UsuarioViewModel
 <!-- Modal -->
 <div class="modal fade" id="CrearUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <form method="post" asp-controller="Categoria" asp-action="Create" id="formCreate">
+    <form method="post" asp-controller="Usuario" asp-action="Create" id="formCreate">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Nueva Usuarios</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Usuario</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -18,12 +18,13 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="user_Contrasena" class="control-label"></label>
-                                <input asp-for="user_Contrasena" class="form-control" />
+                                <input type="password" asp-for="user_Contrasena" class="form-control" />
                                 <span asp-validation-for="user_Contrasena" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="user_EsAdmin" class="control-label"></label>
-                                <input type="checkbox" asp-for="user_EsAdmin" class="form-control" />
+                                <br />
+                                <input type="checkbox" asp-for="user_EsAdmin" class=""/>
                                 <span asp-validation-for="user_EsAdmin" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -52,7 +53,7 @@
 
 <script>
     function AbrirModalCreate() {
-        $("#lbl_cate_NombreCreateError").attr('hidden', true);
+        $("#lbl__NombreCreateError").attr('hidden', true);
         $("#CrearUsuario").appendTo('body').modal('show');
     };
 </script>
@@ -63,8 +64,10 @@
         
         $("#lbl_cate_NombreCreateError").attr('hidden', true);
 
+        $("#formCreate").submit();
+
         if (cate_Nombre != "") {
-            $("#formCreate").submit();
+          
 
         } else {
             $("#lbl_cate_NombreCreateError").attr('hidden', false);

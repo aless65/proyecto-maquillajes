@@ -61,16 +61,16 @@ namespace Maquillaje.WebUI.Controllers
             }
         }
 
-        //[HttpPost]
-        //public IActionResult Edit(tbUsuarios usuarios)
-        //{
-        //    var result = 0;
-        //    var usuario = _mapper.Map<tbUsuarios>(usuarios);
-        //    result = _maquService.EditCategorias(usuario);
+        [HttpPost]
+        public IActionResult Edit(tbUsuarios usuarios)
+        {
+            var result = 0;
+            var usuario = _mapper.Map<tbUsuarios>(usuarios);
+            result = _maquService.EditCategorias(usuario);
 
-        //    return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
-        //}
+        }
 
 
     }

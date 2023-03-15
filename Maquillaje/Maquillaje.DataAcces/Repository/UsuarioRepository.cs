@@ -51,7 +51,16 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Update(tbUsuarios item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_Id", item.user_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@user_EsAdmin", item.user_EsAdmin, DbType.Boolean, ParameterDirection.Input);
+            parametros.Add("@role_Id", item.role_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@user_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Categorias, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

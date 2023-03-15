@@ -1259,7 +1259,7 @@ CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_UPDATE
 	@user_EsAdmin				BIT,
 	@role_Id					INT,
 	@empe_Id					INT,
-	@user_UsuModificacion	INT
+	@user_UsuModificacion		INT
 AS
 BEGIN
 	UPDATE acce.tbUsuarios

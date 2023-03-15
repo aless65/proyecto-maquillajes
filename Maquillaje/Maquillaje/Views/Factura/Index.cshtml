@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_tbFacturas_List>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h2>Facturas</h2>
+    </div>
+    <div class="card-body">
+        <p>
+            <a asp-action="Create" class="btn btn-secondary">Nuevo</a>
+        </p>
+        <table class="table table-bordered table-hover" id="DataTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fact_Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.clie_Nombres)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empe_Nombres)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.meto_Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fact_Fecha)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fact_Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.clie_Nombres)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empe_Nombres)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.meto_Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fact_Fecha)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.fact_Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.fact_Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.fact_Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

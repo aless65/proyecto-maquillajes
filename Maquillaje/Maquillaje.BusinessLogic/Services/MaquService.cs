@@ -16,13 +16,16 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly EmpleadoRepository _empleadoRepository;
         private readonly ClienteRepository _clienteRepository;
         private readonly MetodoPagoRepository _metodoPagoRepository;
+        private readonly FacturaRepository _facturaRepository;
 
-        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MetodoPagoRepository metodoPagoRepository)
+        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MetodoPagoRepository metodoPagoRepository,
+                           FacturaRepository facturaRepository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
             _clienteRepository = clienteRepository;
             _metodoPagoRepository = metodoPagoRepository;
+            _facturaRepository = facturaRepository;
         }
 
         #region Categorias
@@ -300,6 +303,20 @@ namespace Maquillaje.BusinessLogic.Services
         public int DeleteMetodosPago(int id)
         {
             return _metodoPagoRepository.DeleteConfirmed(id);
+        }
+        #endregion
+
+        #region Facturas
+        public IEnumerable<VW_tbFacturas_List> ListadoFacturas()
+        {
+            try
+            {
+                return _facturaRepository.ListView();
+            }
+            catch
+            {
+                return Enumerable.Empty<VW_tbFacturas_List>();
+            }
         }
         #endregion
     }

@@ -48,13 +48,19 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Insertar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_INSERT";
         public static string UDP_Editar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_UPDATE";
         public static string UDP_Eliminar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_DELETE";
+        #endregion
+
         #region Usuarios
         public static string UDP_Listar_Usuarios = "acce.UDP_acce_tbUsuarios_List";
         public static string UDP_Insertar_Usuarios = "acce.UDP_acce_tbUsuarios_Insert";
         #endregion
 
-        #region
+        #region Roles
         public static string UDP_Listar_Roles = "acce.UDP_acce_tbRoles_List";
+        #endregion
+
+        #region Facturas
+        public static string UDP_Listar_Facturas = "maqu.UDP_maqu_tbFacturas_Listado";
         #endregion
     }
 }

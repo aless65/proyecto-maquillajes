@@ -80,6 +80,14 @@
       {
          "Name": "[maqu].[VW_maqu_tbEmpleados_DDLMunicipios]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[maqu].[VW_maqu_tbEmpleados_View]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[maqu].[VW_tbFacturas_List]",
+         "ObjectType": 3
       }
    ],
    "UiHint": "DESKTOP-BPGLHI0\\SQLEXPRESSLOCAL.Maquillaje",

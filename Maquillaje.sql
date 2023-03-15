@@ -103,7 +103,7 @@ END;
 
 
 GO
-EXEC UDP_InsertUsuario 'aless65', 'bonjour', 1, NULL, 1;
+EXEC acce.UDP_InsertUsuario 'aless65', 'bonjour', 1, NULL, 1;
 
 
 --********* ALTERAR TABLA ROLES **************--
@@ -686,6 +686,7 @@ SELECT * FROM maqu.VW_maqu_tbEmpleados_View
 END
 
 /*Listar Empleado*/
+GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_List
 AS
 BEGIN

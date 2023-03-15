@@ -28,7 +28,9 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="role_Id" class="control-label"></label>
-                                <select asp-for="role_Id" class="form-control" asp-items="ViewBag.role_Id"></select>
+                                <select asp-for="role_Id" class="form-control" asp-items="ViewBag.ddlRoles">
+                                    <option value="">-- Seleccione una opcion --</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label asp-for="empe_Id" class="control-label"></label>

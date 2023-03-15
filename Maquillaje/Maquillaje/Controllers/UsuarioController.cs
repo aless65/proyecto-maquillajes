@@ -3,6 +3,7 @@ using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _maquService.ListadoUsuarios(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<UsuarioViewModel>>(listado);
 
+            var ddlRoles = _maquService.ListadoRoles(out string error1).ToList();
+            ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
             if (String.IsNullOrEmpty(error))
                 ModelState.AddModelError("", error);
 

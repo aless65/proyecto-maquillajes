@@ -671,6 +671,19 @@ BEGIN
 END
 GO
 
+/*Vista empleados*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbEmpleados_View
+AS
+SELECT empe_Id,(SELECT empe_Nombres + ' ' + empe_Apellidos ) AS NombreCompleto FROM maqu.tbEmpleados
+
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_View
+AS
+BEGIN
+SELECT * FROM maqu.VW_maqu_tbEmpleados_View
+END
+
 /*Listar Empleado*/
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_List
 AS
@@ -1201,7 +1214,7 @@ GO
 CREATE OR ALTER PROCEDURE acce.UDP_acce_tbRoles_List
 AS
 BEGIN
-
+SELECT * FROM acce.tbRoles
 END
 --************USUARIOS******************--
 /*Listar Usuarios*/

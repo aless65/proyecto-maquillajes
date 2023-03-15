@@ -20,6 +20,7 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Editar_Empleado = "maqu.UDP_maqu_tbEmpleados_Update";
         public static string UDP_Eliminar_Empleado = "maqu.UDP_maqu_tbEmpleados_Delete";
         public static string UDP_Editar_Empleado_Municipios_DDL = "maqu.UDP_tbEmpleados_maqu_GetMuni_Id";
+        public static string UDP_Listar_Empleado_View = "maqu.UDP_maqu_tbEmpleados_View";
         #endregion
 
         #region Clientes

@@ -116,6 +116,22 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public IEnumerable<VW_maqu_tbEmpleados_View> ListadoEmpleadosView(out string error)
+        {
+            error = string.Empty;
+
+            try
+            {
+                return _empleadoRepository.View();
+            }
+            catch (Exception e)
+            {
+
+                error = e.Message;
+                return Enumerable.Empty<VW_maqu_tbEmpleados_View>();
+            }
+        }
+
         public int InsertEmpleado(tbEmpleados tbEmpleados)
         {
             try

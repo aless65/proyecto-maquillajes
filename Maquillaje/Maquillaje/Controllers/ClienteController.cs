@@ -14,11 +14,13 @@ namespace Maquillaje.WebUI.Controllers
     public class ClienteController : Controller
     {
         private readonly MaquService _maquService;
+        private GralService _gralService;
         private readonly IMapper _mapper;
 
-        public ClienteController(MaquService maquService, IMapper mapper)
+        public ClienteController(MaquService maquService, GralService gralService, IMapper mapper)
         {
             _maquService = maquService;
+            _gralService = gralService;
             _mapper = mapper;
         }
 
@@ -34,7 +36,7 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Clientes/Create")]
         public IActionResult Create()
         {
-            var listado = _maquService.ListadoDepartamento(out string error).ToList();
+            var listado = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
             return View();
         }
@@ -43,7 +45,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(ClienteViewModel item)
         {
-            var listado = _maquService.ListadoDepartamento(out string error).ToList();
+            var listado = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
             var cliente = _mapper.Map<tbClientes>(item);
@@ -67,7 +69,7 @@ namespace Maquillaje.WebUI.Controllers
         {
             var cliente = _maquService.ObtenerIDCliente(id);
 
-            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
 
             return View(cliente);
@@ -79,7 +81,7 @@ namespace Maquillaje.WebUI.Controllers
         {
             var update = _maquService.UpdateClientes(item);
 
-            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
 
             if(update == 1)
@@ -102,7 +104,7 @@ namespace Maquillaje.WebUI.Controllers
 
         public IActionResult CargarMunicipios(string id)
         {
-            var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);
+            var cargarmunicipios = _gralService.GetMunicipiosPorDepartamento(id);
             return Json(cargarmunicipios);
         }
 

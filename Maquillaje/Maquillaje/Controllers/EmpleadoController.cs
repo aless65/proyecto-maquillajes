@@ -14,11 +14,13 @@ namespace Maquillaje.WebUI.Controllers
     public class EmpleadoController : Controller
     {
         private readonly MaquService _maquService;
+        private GralService _gralService;
         private readonly IMapper _mapper;
 
-        public EmpleadoController(MaquService maquService, IMapper mapper)
+        public EmpleadoController(MaquService maquService, GralService gralService, IMapper mapper)
         {
             _maquService = maquService;
+            _gralService = gralService;
             _mapper = mapper;
         }
 
@@ -37,11 +39,11 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("Empleados/Create")]
         public IActionResult Create()
         {
-            var listado = _maquService.ListadoDepartamento(out string error).ToList();
+            var listado = _gralService.ListadoDepartamento(out string error).ToList();
 
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
-            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            var listadoEstadosCiviles = _gralService.ListadoEstadosCiviles(out string error1).ToList();
             ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
             return View();
         }
@@ -51,11 +53,11 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Create(EmpleadoViewModel item)
         {
 
-            var listado = _maquService.ListadoDepartamento(out string error).ToList();
+            var listado = _gralService.ListadoDepartamento(out string error).ToList();
 
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
-            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            var listadoEstadosCiviles = _gralService.ListadoEstadosCiviles(out string error1).ToList();
             ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
 
             var empleado = _mapper.Map<tbEmpleados>(item);
@@ -79,10 +81,10 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _maquService.ObtenerIDEmpleado(id);
 
-            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            var listadoEstadosCiviles = _gralService.ListadoEstadosCiviles(out string error1).ToList();
             ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
 
-            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
 
             if (listado != null)
@@ -102,10 +104,10 @@ namespace Maquillaje.WebUI.Controllers
         {
             var update = _maquService.UpdateEmpelado(item);
 
-            var listadoEstadosCiviles = _maquService.ListadoEstadosCiviles(out string error1).ToList();
+            var listadoEstadosCiviles = _gralService.ListadoEstadosCiviles(out string error1).ToList();
             ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
 
-            var listadoDepa = _maquService.ListadoDepartamento(out string error).ToList();
+            var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
 
             if (update == 1)
@@ -134,7 +136,7 @@ namespace Maquillaje.WebUI.Controllers
 
         public IActionResult CargarMunicipios(string id)
         {
-            var cargarmunicipios = _maquService.GetMunicipiosPorDepartamento(id);
+            var cargarmunicipios = _gralService.GetMunicipiosPorDepartamento(id);
             return Json(cargarmunicipios);
         }
 

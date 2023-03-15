@@ -15,20 +15,13 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly CategoriaRepository _categoriaRepository;
         private readonly EmpleadoRepository _empleadoRepository;
         private readonly ClienteRepository _clienteRepository;
-        private readonly MunicipioRepository _municipioRepository;
-        private readonly DepartamentoRepository _departamentoRepository;
-        private readonly EstadoCivilRepository _estadoCivilRepository;
         private readonly MetodoPagoRepository _metodoPagoRepository;
 
-        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository,
-                           MetodoPagoRepository metodoPagoRepository)
+        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MetodoPagoRepository metodoPagoRepository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
             _clienteRepository = clienteRepository;
-            _municipioRepository = municipioRepository;
-            _departamentoRepository = departamentoRepository;
-            _estadoCivilRepository = estadoCivilRepository;
             _metodoPagoRepository = metodoPagoRepository;
         }
 
@@ -265,48 +258,7 @@ namespace Maquillaje.BusinessLogic.Services
         }
         #endregion
 
-        #region Departamentos
-        public IEnumerable<tbDepartamentos> ListadoDepartamento(out string error)
-        {
-            error = string.Empty;
-            try
-            {
-                return _departamentoRepository.List();
-            }
-            catch (Exception e)
-            {
-                error = e.Message;
-                return Enumerable.Empty<tbDepartamentos>();
-            }
-        }
-        #endregion
-
-        #region Municipios
-        public IEnumerable<tbMunicipios> GetMunicipiosPorDepartamento(string departamentoId)
-        {
-            //var municipios = _context.Municipios.Where(m => m.DepartamentoId == departamentoId);
-            var municipios = _municipioRepository.CargarMunicipios(departamentoId); 
-            return (municipios);
-        }
-        #endregion
-
-        #region EstadosCiviles
-        public IEnumerable<tbEstadosCiviles> ListadoEstadosCiviles(out string error)
-        {
-            error = string.Empty;
-            try
-            {
-                return _estadoCivilRepository.List();
-            }
-            catch (Exception e)
-            {
-                error = e.Message;
-                return Enumerable.Empty<tbEstadosCiviles>();
-            }
-        }
-        #endregion
-
-        #region
+        #region Métodos pago
         public IEnumerable<tbMetodosPago> ListadoMetodosPago()
         {
             try

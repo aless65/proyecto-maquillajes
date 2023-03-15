@@ -19,8 +19,9 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly DepartamentoRepository _departamentoRepository;
         private readonly EstadoCivilRepository _estadoCivilRepository;
         private readonly UsuarioRepository _usuarioRepository;
+        private readonly RolRepository _rolRepository;
 
-        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository, UsuarioRepository usuarioRepository)
+        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository, UsuarioRepository usuarioRepository, RolRepository rolRepository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
@@ -29,6 +30,7 @@ namespace Maquillaje.BusinessLogic.Services
             _departamentoRepository = departamentoRepository;
             _estadoCivilRepository = estadoCivilRepository;
             _usuarioRepository = usuarioRepository;
+            _rolRepository = rolRepository;
         }
 
         #region Categorias
@@ -327,6 +329,22 @@ namespace Maquillaje.BusinessLogic.Services
             return _usuarioRepository.Insert(tbUsuarios);
         }
 
+        #endregion
+
+        #region Roles
+        public IEnumerable<tbRoles> ListadoRoles(out string error)
+        {
+            error = string.Empty;
+            try
+            {
+                return _rolRepository.List();
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+                return Enumerable.Empty<tbRoles>();
+            }
+        }
         #endregion
     }
 }

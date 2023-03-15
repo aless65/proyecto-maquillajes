@@ -46,5 +46,9 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Listar_Usuarios = "acce.UDP_acce_tbUsuarios_List";
         public static string UDP_Insertar_Usuarios = "acce.UDP_InsertUsuario";
         #endregion
+
+        #region
+        public static string UDP_Listar_Roles = "acce.UDP_acce_tbRoles_List";
+        #endregion
     }
 }

@@ -1196,6 +1196,13 @@ BEGIN
 	WHERE prov_Id = @prov_Id
 END
 
+--************Roles**************************--
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbRoles_List
+AS
+BEGIN
+
+END
 --************USUARIOS******************--
 /*Listar Usuarios*/
 GO

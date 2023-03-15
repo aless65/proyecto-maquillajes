@@ -94,6 +94,7 @@
     });
 
     $(window).bind('beforeunload', function () {
+        sessionStorage.setItem('contarCargas', "hola");
         sessionStorage.setItem('depId', $("#depa_Id").val());
         sessionStorage.setItem('muniId', $("#muni_Id").val());
     });

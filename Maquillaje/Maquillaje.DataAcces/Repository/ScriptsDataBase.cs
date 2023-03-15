@@ -41,5 +41,12 @@ namespace Maquillaje.DataAccess.Repository
         #region EstadosCiviles
         public static string UDP_Listar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_List";
         #endregion
+
+        #region MetodosPago
+        public static string UDP_Listar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago";
+        public static string UDP_Insertar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_INSERT";
+        public static string UDP_Editar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_UPDATE";
+        public static string UDP_Eliminar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_DELETE";
+        #endregion
     }
 }

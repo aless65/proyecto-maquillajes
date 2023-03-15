@@ -1,0 +1,57 @@
+﻿@model Maquillaje.WebUI.Models.MetodoPagoViewModel
+<!-- Modal -->
+<div class="modal fade" id="EditarMetodos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="MetodoPago" asp-action="Update" id="formEdit">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="meto_Id" class="form-control" id="meto_Id_Edit" name="meto_Id" hidden />
+                            <div class="form-group">
+                                <label asp-for="meto_Nombre" class="control-label"></label>
+                                <input asp-for="meto_Nombre" class="form-control" id="meto_Nombre_Edit" name="meto_Nombre" />
+                                <label name="lbl_meto_NombreEditError" id="lbl_meto_NombreEditError" class="control-label text-danger" hidden>Este campo es requerido</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalEdit()" class="btn btn-success">Editar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function AbrirModalEdit(cadena) {
+        var datastring = cadena;
+        console.log(datastring);
+        var data = datastring.split(',');
+        $("#meto_Id_Edit").val(data[0]);
+        $("#meto_Nombre_Edit").val(data[1]);
+        $("#lbl_meto_NombreEditError").attr('hidden', true);
+        $("#EditarMetodos").appendTo('body').modal('show');
+    };
+
+    function GuardarModalEdit() {
+        var meto_Nombre = $('#meto_Nombre_Edit').val();
+
+        $("#lbl_meto_NombreEditError").attr('hidden', true);
+
+        if (meto_Nombre != "") {
+            $("#formEdit").submit();
+            console.log("Mi loco no esta vacio")
+        } else {
+            $("#lbl_meto_NombreEditError").attr('hidden', false);
+            console.log("Mi loco si esta vacio")
+        }
+
+    }
+</script>

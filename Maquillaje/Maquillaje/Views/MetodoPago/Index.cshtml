@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Maquillaje.WebUI.Models.MetodoPagoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h2>Métodos de pago</h2>
+    </div>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
+        </p>
+        <table class="table table-bordered table-hover" id="DataTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.meto_Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.meto_Nombre)
+                    </th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.meto_Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.meto_Nombre)
+                        </td>
+                        <td>
+                            @*<button class="btn btn-primary" onclick="AbrirModal()">Editar ConModal</button>*@
+                            @*<a asp-action="Edit" asp-route-id="@item.cate_Id" class="btn btn-warning">Editar</a> |*@
+                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.meto_Id,@item.meto_Nombre')">Editar</button> |
+                            <a asp-action="Details" asp-route-id="@item.meto_Id" class="btn btn-dark">Detalles</a> |
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.meto_Id)">Borrar</button>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@Html.Partial("_Modal_Create", new Maquillaje.WebUI.Models.MetodoPagoViewModel())
+@Html.Partial("_Modal_Update", new Maquillaje.WebUI.Models.MetodoPagoViewModel())
+@Html.Partial("_Modal_Delete", new Maquillaje.WebUI.Models.MetodoPagoViewModel())
+
+<script>
+    $(document).ready(function () {
+        $('#menuMaquillaje').addClass('active');
+        $('#metodosItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+    });
+</script>

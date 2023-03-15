@@ -821,39 +821,81 @@ END
 --**************** MeTODOS DE PAGO ****************--
 /*Insert metodos de pago*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbMetodosPago_INSERT
+CREATE OR ALTER PROCEDURE 
 	@meto_Nombre				NVARCHAR(100),
-	@meto_UsuCreacion 		INT
+	@meto_UsuCreacion 			INT
 AS
 BEGIN
-	INSERT INTO [maqu].[tbMetodosPago](meto_Nombre, meto_UsuCreacion)
-	VALUES (@meto_Nombre, @meto_UsuCreacion)
+	BEGIN TRY
+		
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbMetodosPago]
+						WHERE @meto_Nombre = meto_Nombre)
+		BEGIN
+			INSERT INTO [maqu].[tbMetodosPago](meto_Nombre, meto_UsuCreacion)
+			VALUES (@meto_Nombre, @meto_UsuCreacion)
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbMetodosPago]
+						WHERE @meto_Nombre = meto_Nombre
+							  AND meto_Estado = 1)
+			SELECT 0
+		ELSE
+			UPDATE [maqu].[tbMetodosPago]
+			SET [meto_Estado] = 1
+			WHERE meto_Nombre = @meto_Nombre
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
 END
 
 /*Editar metodos de pago*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbMetodosPago_UPDATE
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago_UPDATE
 	@meto_Id 				INT,
 	@meto_Nombre			NVARCHAR(100),
 	@meto_UsuModificacion 	INT
 AS
 BEGIN
-	UPDATE [maqu].[tbMetodosPago]
-	SET     [meto_Nombre] = @meto_Nombre,
-			[meto_UsuModificacion] = @meto_UsuModificacion,
-			[meto_FechaModificacion] = GETDATE()
-	WHERE 	[meto_Id] = @meto_Id
+	BEGIN TRY
+		UPDATE [maqu].[tbMetodosPago]
+		SET     [meto_Nombre] = @meto_Nombre,
+				[meto_UsuModificacion] = @meto_UsuModificacion,
+				[meto_FechaModificacion] = GETDATE()
+		WHERE 	[meto_Id] = @meto_Id
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Eliminar metodos de pago*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbMetodosPago_DELETE
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago_DELETE
 	@meto_Id INT
 AS
 BEGIN
-	UPDATE [maqu].[tbMetodosPago]
-	SET [meto_Estado] = 0
-	WHERE [meto_Id] = @meto_Id
+	BEGIN TRY
+		UPDATE [maqu].[tbMetodosPago]
+		SET [meto_Estado] = 0
+		WHERE [meto_Id] = @meto_Id
+
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+/*Listar métodos de pago*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago
+AS
+BEGIN
+	SELECT [meto_Id], [meto_Nombre]
+	FROM [maqu].[tbMetodosPago]
+	WHERE [meto_Estado] = 1
 END
 
 

@@ -18,8 +18,10 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly MunicipioRepository _municipioRepository;
         private readonly DepartamentoRepository _departamentoRepository;
         private readonly EstadoCivilRepository _estadoCivilRepository;
+        private readonly MetodoPagoRepository _metodoPagoRepository;
 
-        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository)
+        public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository,
+                           MetodoPagoRepository metodoPagoRepository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
@@ -27,6 +29,7 @@ namespace Maquillaje.BusinessLogic.Services
             _municipioRepository = municipioRepository;
             _departamentoRepository = departamentoRepository;
             _estadoCivilRepository = estadoCivilRepository;
+            _metodoPagoRepository = metodoPagoRepository;
         }
 
         #region Categorias
@@ -300,6 +303,35 @@ namespace Maquillaje.BusinessLogic.Services
                 error = e.Message;
                 return Enumerable.Empty<tbEstadosCiviles>();
             }
+        }
+        #endregion
+
+        #region
+        public IEnumerable<tbMetodosPago> ListadoMetodosPago()
+        {
+            try
+            {
+                return _metodoPagoRepository.List();
+            }
+            catch
+            {
+                return Enumerable.Empty<tbMetodosPago>();
+            }
+        }
+
+        public int InsertMetodosPago(tbMetodosPago item)
+        {
+            return _metodoPagoRepository.Insert(item);
+        }
+
+        public int UpdateMetodosPago(tbMetodosPago item)
+        {
+            return _metodoPagoRepository.Update(item);
+        }
+
+        public int DeleteMetodosPago(int id)
+        {
+            return _metodoPagoRepository.DeleteConfirmed(id);
         }
         #endregion
     }

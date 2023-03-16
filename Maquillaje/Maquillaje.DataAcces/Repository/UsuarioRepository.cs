@@ -17,7 +17,9 @@ namespace Maquillaje.DataAccess.Repository
 
         public tbUsuarios find(int? id)
         {
-            throw new NotImplementedException();
+            using var db = new AndreasContext();
+            var listado = db.tbUsuarios.Find(id);
+            return listado;
         }
         public int Insert(tbUsuarios item)
         {
@@ -35,6 +37,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@user_UsuCreacion",1, DbType.Int32, ParameterDirection.Input);
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
         }
+
         public IEnumerable<tbUsuarios> List()
         {
             //using var db = new AndreasContext();

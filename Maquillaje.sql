@@ -1283,7 +1283,22 @@ BEGIN
 END
 
 /*Vista usuarios*/
-
+GO
+CREATE OR ALTER VIEW acce.VW_acce_tbUsuarios_View
+AS
+SELECT t1.user_Id, t1.user_NombreUsuario, 
+t1.user_Contrasena, t1.user_EsAdmin, 
+t1.role_Id,t2.role_Nombre, t1.empe_Id,(SELECT t3.empe_Nombres + ' '+ empe_Apellidos) AS empe_NombreCompleto, 
+t1.user_UsuCreacion, t4.user_NombreUsuario AS user_UsuCreacion_Nombre,t1.user_FechaCreacion, 
+t1.user_UsuModificacion,t5.user_NombreUsuario AS user_UsuModificacion_Nombre, t1.user_FechaModificacion, 
+t1.user_Estado FROM acce.tbUsuarios t1 INNER JOIN acce.tbRoles t2
+ON t1.role_Id = t2.role_Id
+INNER JOIN maqu.tbEmpleados t3
+ON t3.empe_Id = t1.empe_Id 
+INNER JOIN acce.tbUsuarios t4
+ON t1.user_UsuCreacion = T4.user_Id
+LEFT JOIN acce.tbUsuarios t5
+ON t1.user_UsuModificacion = t5.user_Id
 
 --************INICIAR SESIÓN******************--
 

@@ -53,6 +53,12 @@ namespace Maquillaje.BusinessLogic.Services
 
         }
 
+        public tbUsuarios BuscarUsuario(int? id)
+        {
+            var resultado = _usuarioRepository.find(id);
+            return resultado;
+        }
+
         public int DeleteUsuario(int id)
         {
             try

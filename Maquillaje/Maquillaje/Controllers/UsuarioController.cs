@@ -78,5 +78,14 @@ namespace Maquillaje.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet("/Usuario/Details")]
+        public IActionResult Details(int id)
+        {
+            var listado = _acceService.BuscarUsuario(id);
+            var mapeado = _mapper.Map<UsuarioViewModel>(listado);
+
+            return View(mapeado);
+        }
     }
 }

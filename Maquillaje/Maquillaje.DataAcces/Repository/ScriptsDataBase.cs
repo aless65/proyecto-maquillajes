@@ -64,6 +64,17 @@ namespace Maquillaje.DataAccess.Repository
 
         #region Facturas
         public static string UDP_Listar_Facturas = "maqu.UDP_maqu_tbFacturas_Listado";
+        public static string UDP_Insertar_Facturas = "maqu.UDP_maqu_tbFacturas_Insert";
+        #endregion
+
+        #region Facturas detalles
+        public static string UDP_Listar_FacturasDetalles = "maqu.VW_tbFacturasDetalles_List";
+        public static string UDP_Insertar_FacturasDetalles = "maqu.UDP_maqu_tbFacturasDetalles_Insert";
+        #endregion
+
+        #region Productos
+        public static string UDP_Listar_Productos_DDL = "maqu.UDP_maqu_tbProductos_ListDDL";
+        public static string UDP_Precio_Producto = "maqu.UDP_maqu_tbProductos_Precios";
         #endregion
     }
 }

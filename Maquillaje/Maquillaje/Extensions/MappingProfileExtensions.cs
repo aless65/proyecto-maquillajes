@@ -20,6 +20,7 @@ namespace Maquillaje.WebUI.Extensions
             CreateMap<FacturaViewModel, tbFacturas>().ReverseMap();
             CreateMap<VW_acce_tbUsuarios_ViewModel, VW_acce_tbUsuarios_View>().ReverseMap();
             //CreateMap<tbUsuarios, VW_acce_tbUsuarios_View>().ReverseMap();
+            CreateMap<FacturaDetalleViewModel, tbFacturasDetalles>().ReverseMap();
         }
     }
 }

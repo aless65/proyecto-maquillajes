@@ -1,0 +1,91 @@
+﻿@model Maquillaje.WebUI.Models.FacturaDetalleViewModel
+
+
+<div class="card">
+    <div class="card-body">
+        @*<div class="d-flex justify-content-end mb-2">
+                <a asp-action="Index">Regresar al index</a>
+            </div>*@
+        <div>
+            <form asp-controller="Factura" asp-action="CreateDetalles">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="fact_Id" id="fact_Id" asp-items="ViewBag.fact_Id" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="cate" class="control-label"></label>
+                    <select asp-for="cate" class="form-control" asp-items="ViewBag.cate">
+                        <option value="">-- Seleccione un producto --</option>
+                    </select>
+                    <span asp-validation-for="cate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="prod_Id" class="control-label"></label>
+                    <select asp-for="prod_Id" class="form-control" asp-items="ViewBag.prod_Id">
+                        <option value="">-- Seleccione un producto --</option>
+                    </select>
+                    <span asp-validation-for="prod_Id" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <label asp-for="factdeta_Cantidad" class="control-label"></label>
+                    <input asp-for="factdeta_Cantidad" class="form-control" />
+                    <span asp-validation-for="factdeta_Cantidad" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <label asp-for="factdeta_Precio" class="control-label"></label>
+                    <input asp-for="factdeta_Precio" class="form-control" />
+                    <span asp-validation-for="factdeta_Precio" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="submit" value="Continuar" id="btnContinuar" class="btn btn-info" />
+                    <input type="submit" value="Finalizar compra" id="btnFinalizar" class="btn btn-danger" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#fact_Id").prop("hidden", true);
+
+    $("#cate").change(function () {
+        var cate_Id = $("#cate").val();
+
+        $.getJSON('/Factura/CargarProductos', { id: cate_Id })
+            .done(function (productos) {
+                var productosSelect = $('#prod_Id');
+                productosSelect.empty();
+                productosSelect.append($('<option>', {
+                    value: '',
+                    text: '--Selecciona un producto--'
+                }));
+                $.each(productos, function (index, item) {
+                    productosSelect.append($('<option>', {
+                        value: item.prod_Id,
+                        text: item.prod_Nombre
+                    }));
+                });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
+            });
+    })
+
+    
+
+    $("#prod_Id").change(function () {
+        var prod_Id = $("#prod_Id").val();
+
+        $.getJSON('/Factura/PrecioProductos', { id: prod_Id })
+            .done(function (productos) {
+                $.each(productos, function (index, item) {
+                    $("#factdeta_Precio").val(item.prod_PrecioUni);
+                });
+                console.log(productos);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
+            });
+    })
+
+</script>

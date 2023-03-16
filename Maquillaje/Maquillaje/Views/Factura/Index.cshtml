@@ -54,9 +54,7 @@
                             @Html.DisplayFor(modelItem => item.fact_Fecha)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.fact_Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.fact_Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.fact_Id">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.fact_Id" id="btnDetalles">Detalles</a> 
                         </td>
                     </tr>
                 }
@@ -65,3 +63,7 @@
 
     </div>
 </div>
+
+<script>
+    sessionStorage.clear();
+</script>

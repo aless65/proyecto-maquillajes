@@ -14,15 +14,19 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly ClienteRepository _clienteRepository;
         private readonly MetodoPagoRepository _metodoPagoRepository;
         private readonly FacturaRepository _facturaRepository;
+        private readonly FacturaDetalleRepository _facturaDetalleRepository;
+        private readonly ProductoRepository _productoRepository;
 
         public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MetodoPagoRepository metodoPagoRepository,
-                           FacturaRepository facturaRepository)
+                           FacturaRepository facturaRepository, FacturaDetalleRepository facturaDetalleRepository, ProductoRepository productoRepository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
             _clienteRepository = clienteRepository;
             _metodoPagoRepository = metodoPagoRepository;
             _facturaRepository = facturaRepository;
+            _facturaDetalleRepository = facturaDetalleRepository;
+            _productoRepository = productoRepository;
         }
 
         #region Categorias
@@ -314,6 +318,49 @@ namespace Maquillaje.BusinessLogic.Services
             {
                 return Enumerable.Empty<VW_tbFacturas_List>();
             }
+        }
+
+        public int InsertFacturas(tbFacturas item)
+        {
+            return _facturaRepository.Insert(item);
+        }
+        #endregion
+
+        #region Facturas Detalles
+        public IEnumerable<VW_tbFacturasDetalles_List> ListadoFacturasDetalles()
+        {
+            try
+            {
+                return _facturaDetalleRepository.ListView();
+            }
+            catch
+            {
+                return Enumerable.Empty<VW_tbFacturasDetalles_List>();
+            }
+        }
+
+        public int InsertFacturasDetalles(tbFacturasDetalles item)
+        {
+            return _facturaDetalleRepository.Insert(item);
+        }
+        #endregion
+
+        #region Producto
+        public IEnumerable<tbProductos> ListadoProductos(int id)
+        {
+            try
+            {
+                return _productoRepository.ListDDL(id);
+            }
+            catch
+            {
+                return Enumerable.Empty<tbProductos>();
+            }
+        }
+
+        public IEnumerable<tbProductos> PrecioProducto(int id)
+        {
+            return _productoRepository.PrecioProducto(id);
         }
         #endregion
     }

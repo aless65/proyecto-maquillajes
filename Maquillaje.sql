@@ -323,9 +323,10 @@ CREATE TABLE maqu.tbFacturas
 	fact_UsuModificacion					INT,
 	fact_Estado							BIT NOT NULL CONSTRAINT DF_fact_Estado DEFAULT(1),
 
-	CONSTRAINT PK_maqu_tbFacturas_fact_Id 										PRIMARY KEY(fact_Id),
-	CONSTRAINT FK_maqu_tbFacturas_maqu_tbClientes_clie_Id 								FOREIGN KEY(clie_Id) 				REFERENCES maqu.tbClientes(clie_Id),
-	CONSTRAINT FK_maqu_tbFacturas_maqu_tbMetodosPago_meto_Id 							FOREIGN KEY(meto_Id) 				REFERENCES maqu.tbMetodosPago(meto_Id),
+	CONSTRAINT PK_maqu_tbFacturas_fact_Id 											PRIMARY KEY(fact_Id),
+	CONSTRAINT FK_maqu_tbFacturas_maqu_tbClientes_clie_Id 							FOREIGN KEY(clie_Id) 				REFERENCES maqu.tbClientes(clie_Id),
+	CONSTRAINT FK_maqu_tbFacturas_maqu_tbMetodosPago_meto_Id 						FOREIGN KEY(meto_Id) 				REFERENCES maqu.tbMetodosPago(meto_Id),
+	CONSTRAINT FK_maqu_tbFacturas_maqu_tbEmpleados_empe_Id							FOREIGN KEY(empe_Id)				REFERENCES maqu.tbEmpleados(empe_Id),
 	CONSTRAINT FK_maqu_tbFacturas_acce_tbUsuarios_fact_UsuCreacion_user_Id  		FOREIGN KEY(fact_UsuCreacion) 		REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT FK_maqu_tbFacturas_acce_tbUsuarios_fact_UsuModificacion_user_Id  	FOREIGN KEY(fact_UsuModificacion) 	REFERENCES acce.tbUsuarios(user_Id)
 )
@@ -346,6 +347,7 @@ CREATE TABLE maqu.tbFacturasDetalles
 
 	CONSTRAINT PK_maqu_tbFacturasDetalles_factdeta_Id 											PRIMARY KEY(factdeta_Id),
 	CONSTRAINT FK_maqu_tbFacturasDetalles_maqu_tbFacturas_fact_Id 									FOREIGN KEY(fact_Id) 					REFERENCES maqu.tbFacturas(fact_Id),
+	CONSTRAINT FK_maqu_tbFacturasDetalles_maqu_tbProductos_prod_Id								FOREIGN KEY(prod_Id)					REFERENCES maqu.tbProductos(prod_Id),
 	CONSTRAINT FK_maqu_tbFacturasDetalles_acce_tbUsuarios_factdeta_UsuCreacion_user_Id  		FOREIGN KEY(factdeta_UsuCreacion) 		REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT FK_maqu_tbFacturasDetalles_acce_tbUsuarios_factdeta_UsuModificacion_user_Id  	FOREIGN KEY(factdeta_UsuModificacion) 	REFERENCES acce.tbUsuarios(user_Id)
 );
@@ -931,7 +933,6 @@ BEGIN
 END
 GO
 
---EXEC UDP_maqu_tbCategorias_INSERT 'Hoald', 1
 
 /*Editar categoria*/
 GO
@@ -984,6 +985,7 @@ AS
 BEGIN
 SELECT * FROM maqu.tbCategorias WHERE cate_Id = @cate_Id
 END
+
 --/Insertar Cliente/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
@@ -1118,7 +1120,7 @@ AS
 			(T2.clie_Nombres + ' ' + t2.clie_Apellidos) AS clie_Nombres,
 			(T3.empe_Nombres + ' ' + T3.empe_Apellidos) AS empe_Nombres,
 			T4.meto_Nombre,
-			fact_FechaCreacion
+			fact_Fecha
 	FROM [maqu].[tbFacturas] T1 INNER JOIN [maqu].[tbClientes] T2
 	ON T1.clie_Id = T2.clie_Id INNER JOIN [maqu].[tbEmpleados] T3
 	ON T1.empe_Id = T3.empe_Id INNER JOIN [maqu].[tbMetodosPago] T4
@@ -1126,20 +1128,26 @@ AS
 
 /*Insertar Factura*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbFacturas_Insert
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturas_Insert
 	@clie_Id INT,
-	@fact_Fecha DATETIME,
 	@meto_Id INT,
 	@empe_Id INT,
 	@fact_usuCreacion INT
 AS
 BEGIN
-INSERT INTO [maqu].[tbFacturas](clie_Id, fact_Fecha, 
-			meto_Id, empe_Id, 
-			fact_UsuCreacion)
-VALUES(@clie_Id,@fact_Fecha,
-		@meto_Id,@empe_Id,
-		@fact_usuCreacion)
+	BEGIN TRY
+		INSERT INTO [maqu].[tbFacturas](clie_Id, fact_Fecha, 
+					meto_Id, empe_Id, 
+					fact_UsuCreacion)
+		VALUES(@clie_Id,GETDATE(),
+				@meto_Id,@empe_Id,
+				@fact_usuCreacion)
+
+		SELECT SCOPE_IDENTITY()
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Editar Factura*/
@@ -1158,6 +1166,53 @@ UPDATE [maqu].[tbFacturas]
 		fact_FechaModificacion = GETDATE()
 	WHERE fact_Id = fact_Id
 END
+
+/*Listado de factura con sus detalles*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Listado 
+	@fact_Id INT
+AS
+BEGIN
+	SELECT * FROM maqu.VW_tbFacturasDetalles_List WHERE [fact_Id] = @fact_Id
+END
+
+GO
+CREATE OR ALTER VIEW maqu.VW_tbFacturasDetalles_List
+AS
+	SELECT T1.factdeta_Id
+		   [fact_Id], 
+		   T2.prod_Nombre, 
+		   T1.factdeta_Cantidad,
+		   factdeta_Precio
+	FROM [maqu].[tbFacturasDetalles] T1 INNER JOIN [maqu].[tbProductos] T2
+	ON T1.prod_Id = T2.prod_Id
+	WHERE [factdeta_Estado] = 1
+
+/*Insertar factura detalles*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Insert 
+	@fact_Id				INT,
+	@prod_Id				INT,
+	@factdeta_Cantidad		INT,
+	@factdeta_Precio		DECIMAL(18,2),
+	@factdeta_UsuCreacion	INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO [maqu].[tbFacturasDetalles](fact_Id, 
+												prod_Id, 
+												factdeta_Cantidad, 
+												factdeta_Precio, 
+												factdeta_UsuCreacion)
+		VALUES(@fact_Id, @prod_Id, @factdeta_Cantidad, @factdeta_Precio, @factdeta_UsuCreacion)
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+
 
 /*Eliminar Factura con sus Detalles*/
 GO
@@ -1248,6 +1303,28 @@ BEGIN
 	WHERE prod_Id = @prod_Id
 END
 
+/*Listado prod_Id x cate_Id*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_ListDDL
+	@cate_Id	INT
+AS
+BEGIN
+	SELECT [prod_Id], [prod_Nombre], [prod_PrecioUni]
+	FROM [maqu].[tbProductos]
+	WHERE [cate_Id] = @cate_Id
+	AND [prod_Estado] = 1
+END
+
+/*Precio de producto*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Precios 
+	@prod_Id	INT
+AS
+BEGIN
+	SELECT [prod_Id], [prod_Nombre], [prod_PrecioUni]
+	FROM [maqu].[tbProductos]
+	WHERE @prod_Id = [prod_Id]
+END
 
 /*Insertar Proveedores*/
 GO
@@ -1471,4 +1548,7 @@ GO
 EXEC UDP_maqu_tbMetodosPago_INSERT 'Tarjeta', 1
 EXEC UDP_maqu_tbMetodosPago_INSERT 'Cheque', 1
 
-EXEC UDP_maqu_tbFacturas_Insert 1, '2020-02-01', 1, 1, 1
+EXEC maqu.UDP_maqu_tbFacturas_Insert 1, 1, 1, 1
+
+INSERT INTO [maqu].[tbFacturasDetalles]([fact_Id], [prod_Id], [factdeta_Cantidad], [factdeta_Precio], [factdeta_UsuCreacion])
+VALUES (1, 1, 2, 299.09, 1)

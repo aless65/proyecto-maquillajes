@@ -1254,7 +1254,7 @@ END
 
 /*Editar usuarios*/
 GO
-CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_UPDATE
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_UPDATE
 	@user_Id					INT,
 	@user_EsAdmin				BIT,
 	@role_Id					INT,
@@ -1273,7 +1273,7 @@ END
 
 /*Eliminar usuarios*/
 GO
-CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_DELETE
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_DELETE
 	@user_Id	INT
 AS
 BEGIN

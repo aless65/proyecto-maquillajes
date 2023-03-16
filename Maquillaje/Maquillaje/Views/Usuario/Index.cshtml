@@ -38,9 +38,10 @@
                             @Html.DisplayFor(modelItem => item.user_EsAdmin)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.user_Id" class="btn btn-warning">Editar</a> |
+                            @*<a asp-action="Edit" asp-route-id="@item.user_Id" class="btn btn-warning">Editar</a> |*@
+                            <button class="btn btn-warning" onclick="AbrirModalEdit('@item.user_Id,@item.user_EsAdmin,@item.role_Id,@item.empe_Id')">Editar</button>
                             <a asp-action="Details" asp-route-id="@item.user_Id" class="btn btn-dark">Detalles</a> |
-                            <a asp-action="Delete" asp-route-id="@item.user_Id" class="btn btn-danger">Eliminar</a>
+                            <button class="btn btn-danger" onclick="eliminar(@item.user_Id)">Eliminar</button>
                         </td>
                     </tr>
                 }
@@ -50,3 +51,5 @@
 </div>
 
 @Html.Partial("_Modal_Create", new Maquillaje.WebUI.Models.UsuarioViewModel())
+@Html.Partial("_Modal_Edit", new Maquillaje.WebUI.Models.UsuarioViewModel())
+@Html.Partial("_Modal_Delete", new Maquillaje.WebUI.Models.UsuarioViewModel())

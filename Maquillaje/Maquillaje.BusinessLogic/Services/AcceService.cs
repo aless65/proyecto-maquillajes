@@ -38,6 +38,33 @@ namespace Maquillaje.BusinessLogic.Services
             return _usuarioRepository.Insert(tbUsuarios);
         }
 
+        public int EditUsuario(tbUsuarios usuarios)
+        {
+            try
+            {
+                var resultado = _usuarioRepository.Update(usuarios);
+
+                return resultado;
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
+
+        public int DeleteUsuario(int id)
+        {
+            try
+            {
+                return _usuarioRepository.DeleteConfirmed(id);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         #endregion
 
         #region Roles

@@ -1320,7 +1320,7 @@ EXEC UDP_maqu_tbCategorias_INSERT 'Eyeliner', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Diseño de cejas', 1
 
 GO
-EXEC UDP_acce_tbUsuarios_UPDATE 1, 1, 1, 1, 1
+EXEC acce.UDP_acce_tbUsuarios_UPDATE 1, 1, 1, 1, 1
 
 GO
 INSERT INTO [acce].[tbRoles]([role_Nombre], [role_UsuCreacion])

@@ -1174,6 +1174,26 @@ BEGIN
 	DELETE FROM maqu.tbFacturasDetalles WHERE fact_Id = @fact_Id
 END
 
+
+--**********************Listar Productos***************************--
+/*Vista Productos*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbProductos_VW
+AS
+SELECT prod_Id, prod_Nombre, 
+prod_PrecioUni, prod.cate_Id, 
+cate.cate_Nombre,prod.prov_Id,
+prov.prov_Nombre,prod_Stock,
+prod_UsuCreacion,[user1].user_NombreUsuario AS user_UsuCreacion_Nombre,
+prod_FechaCreacion, prod_FechaModificacion, 
+prod_UsuModificacion,[user2].user_NombreUsuario AS user_UsuModificacion_Nombre, prod_Estado
+FROM maqu.tbProductos prod INNER JOIN maqu.tbCategorias cate
+ON prod.cate_Id = cate.cate_Id INNER JOIN maqu.tbProveedores prov
+ON prod.prov_Id = prov.prov_Id INNER JOIN acce.tbUsuarios [user1]
+ON prod.prod_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON prod.prod_UsuModificacion = [user2].user_Id
+WHERE prod.prod_Estado = 1
+
 /*Insertar Productos*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProductos_Insert
@@ -1317,12 +1337,12 @@ END
 
 /*Editar usuarios*/
 GO
-CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_UPDATE
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_UPDATE
 	@user_Id					INT,
 	@user_EsAdmin				BIT,
 	@role_Id					INT,
 	@empe_Id					INT,
-	@user_UsuModificacion	INT
+	@user_UsuModificacion		INT
 AS
 BEGIN
 	UPDATE acce.tbUsuarios
@@ -1336,7 +1356,7 @@ END
 
 /*Eliminar usuarios*/
 GO
-CREATE OR ALTER PROCEDURE UDP_acce_tbUsuarios_DELETE
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_DELETE
 	@user_Id	INT
 AS
 BEGIN
@@ -1344,6 +1364,32 @@ BEGIN
 	SET user_Estado = 0
 	WHERE user_Id = @user_Id
 END
+
+/*UDP para vista de usuarios*/
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_View 
+@user_Id INT
+AS
+BEGIN
+SELECT * FROM acce.VW_acce_tbUsuarios_View WHERE user_Id = @user_Id
+END
+
+/*Vista usuarios*/
+GO
+CREATE OR ALTER VIEW acce.VW_acce_tbUsuarios_View
+AS
+SELECT t1.user_Id, t1.user_NombreUsuario, 
+t1.user_Contrasena, t1.user_EsAdmin, 
+t1.role_Id,t2.role_Nombre, t1.empe_Id,(SELECT t3.empe_Nombres + ' '+ empe_Apellidos) AS empe_NombreCompleto, 
+t1.user_UsuCreacion, t4.user_NombreUsuario AS user_UsuCreacion_Nombre,t1.user_FechaCreacion, 
+t1.user_UsuModificacion,t5.user_NombreUsuario AS user_UsuModificacion_Nombre, t1.user_FechaModificacion, 
+t1.user_Estado FROM acce.tbUsuarios t1 INNER JOIN acce.tbRoles t2
+ON t1.role_Id = t2.role_Id
+INNER JOIN maqu.tbEmpleados t3
+ON t3.empe_Id = t1.empe_Id 
+INNER JOIN acce.tbUsuarios t4
+ON t1.user_UsuCreacion = T4.user_Id
+LEFT JOIN acce.tbUsuarios t5
+ON t1.user_UsuModificacion = t5.user_Id
 
 --************INICIAR SESIÓN******************--
 
@@ -1380,7 +1426,7 @@ EXEC UDP_maqu_tbCategorias_INSERT 'Eyeliner', 1
 EXEC UDP_maqu_tbCategorias_INSERT 'Diseño de cejas', 1
 
 GO
-EXEC UDP_acce_tbUsuarios_UPDATE 1, 1, 1, 1, 1
+EXEC acce.UDP_acce_tbUsuarios_UPDATE 1, 1, 1, 1, 1
 
 GO
 INSERT INTO [acce].[tbRoles]([role_Nombre], [role_UsuCreacion])

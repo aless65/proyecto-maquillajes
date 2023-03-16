@@ -11,11 +11,13 @@ namespace Maquillaje.BusinessLogic.Services
     {
         private readonly UsuarioRepository _usuarioRepository;
         private readonly RolRepository _rolRepository;
+        private readonly VW_acce_tbUsuarios_View_Repository _VW_acce_tbUsuarios_View_Repository;
 
-        public AcceService(UsuarioRepository usuarioRepository, RolRepository rolRepository)
+        public AcceService(UsuarioRepository usuarioRepository, RolRepository rolRepository,VW_acce_tbUsuarios_View_Repository VW_acce_tbUsuarios_View_Repository)
         {
             _usuarioRepository = usuarioRepository;
             _rolRepository = rolRepository;
+            _VW_acce_tbUsuarios_View_Repository = VW_acce_tbUsuarios_View_Repository;
         }
 
         #region Usuario
@@ -36,6 +38,39 @@ namespace Maquillaje.BusinessLogic.Services
         public int InsertUsuario(tbUsuarios tbUsuarios)
         {
             return _usuarioRepository.Insert(tbUsuarios);
+        }
+
+        public int EditUsuario(tbUsuarios usuarios)
+        {
+            try
+            {
+                var resultado = _usuarioRepository.Update(usuarios);
+
+                return resultado;
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
+
+        public IEnumerable<VW_acce_tbUsuarios_View> Details(int id)
+        {
+            var resultado = _VW_acce_tbUsuarios_View_Repository.Details(id);
+            return resultado;
+        }
+
+        public int DeleteUsuario(int id)
+        {
+            try
+            {
+                return _usuarioRepository.DeleteConfirmed(id);
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         #endregion

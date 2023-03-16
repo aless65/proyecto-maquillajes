@@ -1,0 +1,70 @@
+﻿@model Maquillaje.WebUI.Models.UsuarioViewModel
+<!-- Modal -->
+<div class="modal fade" id="EditarCategorias" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Usuario" asp-action="Edit" id="formEdit">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar Usuario</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="text" asp-for="user_Id" id="user_Id_Edit" hidden/>
+                        <div class="form-group col-6 ">
+                            <label asp-for="empe_Id" class="control-label"></label>
+                            <select asp-for="empe_Id" id="ddlempleadosEdit" class="form-control" asp-items="ViewBag.ddlempleados"></select>
+                            <span asp-validation-for="empe_Id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="role_Id" class="control-label"></label>
+                            <select asp-for="role_Id" id="dllrolesEdit" class="form-control" asp-items="ViewBag.ddlroles"></select>
+                            <span asp-validation-for="role_Id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-6 mt-3">
+                            <label asp-for="user_EsAdmin" class="control-label"></label>
+                            <br />
+                            <input asp-for="user_EsAdmin" type="checkbox" id="EsAdminEdit" />
+                            <span asp-validation-for="user_EsAdmin" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" onclick="GuardarModalEdit()" class="btn btn-success">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function AbrirModalEdit(cadena) {
+        var datastring = cadena;
+        var data = datastring.split(',');
+
+        if (data[1] == "True") {
+            $("#EsAdminEdit").prop("checked",true);
+        } else {
+            $("#EsAdminEdit").prop("checked", false);
+        }
+
+        $("#user_Id_Edit").val(data[0]);
+     
+        var ddlroles = $("#dllrolesEdit");
+        ddlroles.val(data[2]);
+
+        var ddlEmpleados = $("#ddlempleadosEdit");
+        ddlEmpleados.val(data[3]);
+
+        $("#EditarCategorias").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalEdit() {
+        $("#formEdit").submit();
+    }
+</script>

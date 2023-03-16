@@ -28,7 +28,7 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Index()
         {
             var listado = _acceService.ListadoUsuarios(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<UsuarioViewModel>>(listado);
+            var listadoMapeado = _mapper.Map<IEnumerable<UsuarioViewModel>>(listado).Where(X => X.user_Estado == true);
 
             var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
             ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
@@ -61,17 +61,36 @@ namespace Maquillaje.WebUI.Controllers
             }
         }
 
-        //[HttpPost]
-        //public IActionResult Edit(tbUsuarios usuarios)
-        //{
-        //    var result = 0;
-        //    var usuario = _mapper.Map<tbUsuarios>(usuarios);
-        //    result = _maquService.EditCategorias(usuario);
+        [HttpPost]
+        public IActionResult Edit(tbUsuarios usuarios)
+        {
+            var result = 0;
+            var usuario = _mapper.Map<tbUsuarios>(usuarios);
+            result = _acceService.EditUsuario(usuario);
 
-        //    return RedirectToAction("Index");
+            return RedirectToAction("Index");
+        }
 
-        //}
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var delete = _acceService.DeleteUsuario(id);
 
+            return RedirectToAction("Index");
+        }
 
+        [HttpGet("/Usuario/Details")]
+        public IActionResult Details(int id)
+        {
+            var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
+            ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
+
+            var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
+            ViewBag.ddlEmpleados = new SelectList(ddlEmpleados, "empe_Id", "NombreCompleto");
+            var listado = _acceService.Details(id);
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_acce_tbUsuarios_View>>(listado);
+
+            return View(listadoMapeado);
+        }
     }
 }

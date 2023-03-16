@@ -14,10 +14,17 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
-
-        public tbUsuarios find(int? id)
+        public tbCategorias find(int? id)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<VW_acce_tbUsuarios_View> Details(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<VW_acce_tbUsuarios_View>(ScriptsDataBase.UDP_View_Usuarios, parametros, commandType: CommandType.StoredProcedure);
         }
         public int Insert(tbUsuarios item)
         {
@@ -35,6 +42,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@user_UsuCreacion",1, DbType.Int32, ParameterDirection.Input);
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
         }
+
         public IEnumerable<tbUsuarios> List()
         {
             //using var db = new AndreasContext();
@@ -50,6 +58,29 @@ namespace Maquillaje.DataAccess.Repository
         }
 
         public int Update(tbUsuarios item)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_Id", item.user_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@user_EsAdmin", item.user_EsAdmin, DbType.Boolean, ParameterDirection.Input);
+            parametros.Add("@role_Id", item.role_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@user_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public int DeleteConfirmed(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_Id",id, DbType.Int32, ParameterDirection.Input);
+            
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        tbUsuarios IRepository<tbUsuarios>.find(int? id)
         {
             throw new NotImplementedException();
         }

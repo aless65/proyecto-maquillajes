@@ -1282,6 +1282,9 @@ BEGIN
 	WHERE user_Id = @user_Id
 END
 
+/*Vista usuarios*/
+
+
 --************INICIAR SESIÓN******************--
 
 

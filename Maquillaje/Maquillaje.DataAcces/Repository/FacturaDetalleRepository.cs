@@ -36,7 +36,7 @@ namespace Maquillaje.DataAccess.Repository
             var parametros = new DynamicParameters();
             parametros.Add("@fact_Id", 1, DbType.Int32, ParameterDirection.Input);
 
-            return db.Query<VW_tbFacturasDetalles_List>(ScriptsDataBase.UDP_Listar_MetodosPago, parametros, commandType: CommandType.StoredProcedure);
+            return db.Query<VW_tbFacturasDetalles_List>(ScriptsDataBase.UDP_Listar_FacturasDetalles, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public int Update(tbFacturasDetalles item)

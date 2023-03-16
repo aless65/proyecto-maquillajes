@@ -29,6 +29,7 @@ namespace Maquillaje.WebUI.Controllers
 
             return View(listado);
         }
+
         public IActionResult GetFacturaDetalles()
         {
             var detalles = _maquService.ListadoFacturasDetalles().ToList();

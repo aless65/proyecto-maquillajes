@@ -20,13 +20,13 @@ namespace Maquillaje.WebUI.Controllers
             _mapper = mapper;
         }
 
-
+        [HttpGet]
         public IActionResult Index()
         {
             var listado = _maquService.ListadoFacturasDetalles();
             //var listadoMapeado = _mapper.Map<IEnumerable<FacturaDetalleViewModel>>(listado);
 
-            return PartialView("_IndexDetalles", listado);
+            return PartialView("Index", listado);
         }
     }
 }

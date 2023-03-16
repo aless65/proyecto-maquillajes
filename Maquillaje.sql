@@ -1113,8 +1113,23 @@ END
 
 
 --**********************Listar Productos***************************--
-/**/
-
+/*Vista Productos*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbProductos_VW
+AS
+SELECT prod_Id, prod_Nombre, 
+prod_PrecioUni, prod.cate_Id, 
+cate.cate_Nombre,prod.prov_Id,
+prov.prov_Nombre,prod_Stock,
+prod_UsuCreacion,[user1].user_NombreUsuario AS user_UsuCreacion_Nombre,
+prod_FechaCreacion, prod_FechaModificacion, 
+prod_UsuModificacion,[user2].user_NombreUsuario AS user_UsuModificacion_Nombre, prod_Estado
+FROM maqu.tbProductos prod INNER JOIN maqu.tbCategorias cate
+ON prod.cate_Id = cate.cate_Id INNER JOIN maqu.tbProveedores prov
+ON prod.prov_Id = prov.prov_Id INNER JOIN acce.tbUsuarios [user1]
+ON prod.prod_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON prod.prod_UsuModificacion = [user2].user_Id
+WHERE prod.prod_Estado = 1
 
 /*Insertar Productos*/
 GO

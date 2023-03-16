@@ -346,6 +346,7 @@ CREATE TABLE maqu.tbFacturasDetalles
 
 	CONSTRAINT PK_maqu_tbFacturasDetalles_factdeta_Id 											PRIMARY KEY(factdeta_Id),
 	CONSTRAINT FK_maqu_tbFacturasDetalles_maqu_tbFacturas_fact_Id 									FOREIGN KEY(fact_Id) 					REFERENCES maqu.tbFacturas(fact_Id),
+	CONSTRAINT FK_maqu_tbFacturasDetalles_maqu_tbProductos_prod_Id								FOREIGN KEY(prod_Id)					REFERENCES maqu.tbProductos(prod_Id),
 	CONSTRAINT FK_maqu_tbFacturasDetalles_acce_tbUsuarios_factdeta_UsuCreacion_user_Id  		FOREIGN KEY(factdeta_UsuCreacion) 		REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT FK_maqu_tbFacturasDetalles_acce_tbUsuarios_factdeta_UsuModificacion_user_Id  	FOREIGN KEY(factdeta_UsuModificacion) 	REFERENCES acce.tbUsuarios(user_Id)
 );
@@ -1118,7 +1119,7 @@ AS
 			(T2.clie_Nombres + ' ' + t2.clie_Apellidos) AS clie_Nombres,
 			(T3.empe_Nombres + ' ' + T3.empe_Apellidos) AS empe_Nombres,
 			T4.meto_Nombre,
-			fact_FechaCreacion
+			fact_Fecha
 	FROM [maqu].[tbFacturas] T1 INNER JOIN [maqu].[tbClientes] T2
 	ON T1.clie_Id = T2.clie_Id INNER JOIN [maqu].[tbEmpleados] T3
 	ON T1.empe_Id = T3.empe_Id INNER JOIN [maqu].[tbMetodosPago] T4
@@ -1164,6 +1165,27 @@ UPDATE [maqu].[tbFacturas]
 		fact_FechaModificacion = GETDATE()
 	WHERE fact_Id = fact_Id
 END
+
+/*Listado de factura con sus detalles*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Listado 
+	@fact_Id INT
+AS
+BEGIN
+	SELECT * FROM maqu.VW_tbFacturasDetalles_List WHERE [fact_Id] = @fact_Id
+END
+
+GO
+CREATE OR ALTER VIEW maqu.VW_tbFacturasDetalles_List
+AS
+	SELECT T1.factdeta_Id
+		   [fact_Id], 
+		   T2.prod_Nombre, 
+		   T1.factdeta_Cantidad,
+		   factdeta_Precio
+	FROM [maqu].[tbFacturasDetalles] T1 INNER JOIN [maqu].[tbProductos] T2
+	ON T1.prod_Id = T2.prod_Id
+	WHERE [factdeta_Estado] = 1
 
 /*Eliminar Factura con sus Detalles*/
 GO
@@ -1431,4 +1453,7 @@ GO
 EXEC UDP_maqu_tbMetodosPago_INSERT 'Tarjeta', 1
 EXEC UDP_maqu_tbMetodosPago_INSERT 'Cheque', 1
 
-EXEC UDP_maqu_tbFacturas_Insert 1, '2020-02-01', 1, 1, 1
+EXEC maqu.UDP_maqu_tbFacturas_Insert 1, 1, 1, 1
+
+INSERT INTO [maqu].[tbFacturasDetalles]([fact_Id], [prod_Id], [factdeta_Cantidad], [factdeta_Precio], [factdeta_UsuCreacion])
+VALUES (1, 1, 2, 299.09, 1)

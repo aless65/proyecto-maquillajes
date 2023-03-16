@@ -14,7 +14,7 @@ namespace Maquillaje.WebUI.Models
         [Display(Name = "Factura")]
         public int fact_Id { get; set; }
 
-        [Display(Name = "Factura")]
+        [Display(Name = "Producto")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public int prod_Id { get; set; }
 

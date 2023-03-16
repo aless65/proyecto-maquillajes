@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_tbFacturasDetalles_List>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fact_Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.prod_Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.factdeta_Cantidad)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.factdeta_Precio)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detalle in ViewBag["FacturaDetalles"] as IEnumerable<Maquillaje.Entities.Entities.VW_tbFacturasDetalles_List>)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.fact_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => detalle.prod_Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => detalle.factdeta_Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => detalle.factdeta_Precio)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@detalle.factdeta_Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@detalle.factdeta_Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@detalle.factdeta_Id">Delete</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

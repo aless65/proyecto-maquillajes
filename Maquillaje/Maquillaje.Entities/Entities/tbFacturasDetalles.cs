@@ -22,5 +22,6 @@ namespace Maquillaje.Entities.Entities
         public virtual tbFacturas fact { get; set; }
         public virtual tbUsuarios factdeta_UsuCreacionNavigation { get; set; }
         public virtual tbUsuarios factdeta_UsuModificacionNavigation { get; set; }
+        public virtual tbProductos prod { get; set; }
     }
 }

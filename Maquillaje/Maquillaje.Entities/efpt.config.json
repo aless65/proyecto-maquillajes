@@ -88,9 +88,13 @@
       {
          "Name": "[maqu].[VW_tbFacturas_List]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[maqu].[VW_tbFacturasDetalles_List]",
+         "ObjectType": 3
       }
    ],
-   "UiHint": "DESKTOP-BPGLHI0\\SQLEXPRESSLOCAL.Maquillaje",
+   "UiHint": "DESKTOP-EEOQVVU\\SQLEXPRESS.Maquillaje",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

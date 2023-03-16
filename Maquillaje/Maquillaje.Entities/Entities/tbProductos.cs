@@ -8,6 +8,11 @@ namespace Maquillaje.Entities.Entities
 {
     public partial class tbProductos
     {
+        public tbProductos()
+        {
+            tbFacturasDetalles = new HashSet<tbFacturasDetalles>();
+        }
+
         public int prod_Id { get; set; }
         public string prod_Nombre { get; set; }
         public decimal prod_PrecioUni { get; set; }
@@ -24,5 +29,6 @@ namespace Maquillaje.Entities.Entities
         public virtual tbUsuarios prod_UsuCreacionNavigation { get; set; }
         public virtual tbUsuarios prod_UsuModificacionNavigation { get; set; }
         public virtual tbProveedores prov { get; set; }
+        public virtual ICollection<tbFacturasDetalles> tbFacturasDetalles { get; set; }
     }
 }

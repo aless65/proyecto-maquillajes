@@ -22,6 +22,7 @@ namespace Maquillaje.BusinessLogic
             service.AddScoped<FacturaRepository>();
             service.AddScoped<UsuarioRepository>();
             service.AddScoped<RolRepository>();
+            service.AddScoped<FacturaDetalleRepository>();
             AndreasContext.BuildConnectionString(connectionString);
         }
 

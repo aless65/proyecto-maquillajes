@@ -1111,6 +1111,11 @@ BEGIN
 	DELETE FROM maqu.tbFacturasDetalles WHERE fact_Id = @fact_Id
 END
 
+
+--**********************Listar Productos***************************--
+/**/
+
+
 /*Insertar Productos*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbProductos_Insert
@@ -1280,6 +1285,14 @@ BEGIN
 	UPDATE acce.tbUsuarios
 	SET user_Estado = 0
 	WHERE user_Id = @user_Id
+END
+
+/*UDP para vista de usuarios*/
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_View 
+@user_Id INT
+AS
+BEGIN
+SELECT * FROM acce.VW_acce_tbUsuarios_View WHERE user_Id = @user_Id
 END
 
 /*Vista usuarios*/

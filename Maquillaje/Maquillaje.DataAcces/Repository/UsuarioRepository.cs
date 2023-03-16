@@ -14,12 +14,17 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
-
-        public tbUsuarios find(int? id)
+        public tbCategorias find(int? id)
         {
-            using var db = new AndreasContext();
-            var listado = db.tbUsuarios.Find(id);
-            return listado;
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<VW_acce_tbUsuarios_View> Details(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<VW_acce_tbUsuarios_View>(ScriptsDataBase.UDP_View_Usuarios, parametros, commandType: CommandType.StoredProcedure);
         }
         public int Insert(tbUsuarios item)
         {
@@ -73,6 +78,11 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@user_Id",id, DbType.Int32, ParameterDirection.Input);
             
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        tbUsuarios IRepository<tbUsuarios>.find(int? id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

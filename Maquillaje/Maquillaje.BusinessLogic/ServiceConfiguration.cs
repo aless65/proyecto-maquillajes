@@ -20,6 +20,7 @@ namespace Maquillaje.BusinessLogic
             service.AddScoped<EstadoCivilRepository>();
             service.AddScoped<UsuarioRepository>();
             service.AddScoped<RolRepository>();
+            service.AddScoped<VW_acce_tbUsuarios_View_Repository>();
             AndreasContext.BuildConnectionString(connectionString);
         }
 

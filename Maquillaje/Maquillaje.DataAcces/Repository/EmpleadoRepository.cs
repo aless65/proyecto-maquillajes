@@ -94,6 +94,7 @@ namespace Maquillaje.DataAccess.Repository
             using var db = new SqlConnection(AndreasContext.ConnectionString);
             return db.Query<VW_maqu_tbEmpleados_View>(ScriptsDataBase.UDP_Listar_Empleado_View, null, commandType: CommandType.StoredProcedure);
         }
+
         //public int Update(tbEmpleados item)
         //{
         //    using var db = new SqlConnection(AndreasContext.ConnectionString);

@@ -11,11 +11,13 @@ namespace Maquillaje.BusinessLogic.Services
     {
         private readonly UsuarioRepository _usuarioRepository;
         private readonly RolRepository _rolRepository;
+        private readonly VW_acce_tbUsuarios_View_Repository _VW_acce_tbUsuarios_View_Repository;
 
-        public AcceService(UsuarioRepository usuarioRepository, RolRepository rolRepository)
+        public AcceService(UsuarioRepository usuarioRepository, RolRepository rolRepository,VW_acce_tbUsuarios_View_Repository VW_acce_tbUsuarios_View_Repository)
         {
             _usuarioRepository = usuarioRepository;
             _rolRepository = rolRepository;
+            _VW_acce_tbUsuarios_View_Repository = VW_acce_tbUsuarios_View_Repository;
         }
 
         #region Usuario
@@ -53,9 +55,9 @@ namespace Maquillaje.BusinessLogic.Services
 
         }
 
-        public tbUsuarios BuscarUsuario(int? id)
+        public IEnumerable<VW_acce_tbUsuarios_View> Details(int id)
         {
-            var resultado = _usuarioRepository.find(id);
+            var resultado = _VW_acce_tbUsuarios_View_Repository.Details(id);
             return resultado;
         }
 

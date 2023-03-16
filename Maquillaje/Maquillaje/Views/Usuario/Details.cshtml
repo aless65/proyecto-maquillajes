@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_acce_tbUsuarios_View>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header"><h2>Detalles</h2></div>
+    <div class="card-body">
+        <div>
+
+            <dl class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="form-group col-6">
+                        <h5>ID</h5>
+                        @Html.DisplayFor(modelItem => item.user_Id)
+                    </div>
+
+                    <div class="form-group col-6">
+                        <h5>Nombre de Usuario</h5>
+                        @Html.DisplayFor(modelItem => item.user_NombreUsuario)
+                    </div>
+
+                    <div class="form-group col-6 mt-2">
+                        <h5>Nombre de Usuario</h5>
+                        @Html.DisplayFor(modelItem => item.user_NombreUsuario)
+                    </div>
+
+                    <div class="form-group col-6 mt-2">
+                        <h5>Rol</h5>
+                        @Html.DisplayFor(modelItem => item.role_Nombre)
+                    </div>
+
+                    <div class="form-group col-6 mt-2">
+                        <h5>Empleado</h5>
+                        @Html.DisplayFor(modelItem => item.empe_NombreCompleto)
+                    </div>
+
+                    <div class="form-group col-6 mt-2">
+                        <h5>Admin</h5>
+                        @Html.DisplayFor(modelItem => item.user_EsAdmin)
+                    </div>
+                    <div class="form-group col-6 mt-3 mb-3">
+                        <button class="btn btn-warning" onclick="AbrirModalEdit('@item.user_Id,@item.user_EsAdmin,@item.role_Id,@item.empe_Id')">Editar</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header"><h2>Auditoria</h2></div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <td><h5>Accion</h5></td>
+                                        <td><h5>Usuario</h5></td>
+                                        <td><h5>Fecha</h5></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><h5>Creacion</h5></td>
+                                        <td>@Html.DisplayFor(modelItem => item.user_UsuCreacion_Nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.user_FechaCreacion)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><h5>Modificacion</h5></td>
+                                        <td>@Html.DisplayFor(modelItem => item.user_UsuModificacion_Nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.user_FechaModificacion)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </dl>
+        </div>
+        <div>
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-dark">Regresar</a>
+</div>
+
+@Html.Partial("_Modal_Edit", new Maquillaje.WebUI.Models.UsuarioViewModel())

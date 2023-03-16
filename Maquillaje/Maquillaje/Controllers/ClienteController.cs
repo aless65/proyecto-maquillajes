@@ -88,7 +88,7 @@ namespace Maquillaje.WebUI.Controllers
             }
             else
             {
-                ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre", item.depa_Id);
+                //ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre", item.depa_Id);
                 return View(item);
             }
         }

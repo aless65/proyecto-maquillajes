@@ -82,10 +82,15 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Usuario/Details")]
         public IActionResult Details(int id)
         {
-            var listado = _acceService.BuscarUsuario(id);
-            var mapeado = _mapper.Map<UsuarioViewModel>(listado);
+            var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
+            ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
 
-            return View(mapeado);
+            var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
+            ViewBag.ddlEmpleados = new SelectList(ddlEmpleados, "empe_Id", "NombreCompleto");
+            var listado = _acceService.Details(id);
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_acce_tbUsuarios_View>>(listado);
+
+            return View(listadoMapeado);
         }
     }
 }

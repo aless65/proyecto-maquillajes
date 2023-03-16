@@ -16,6 +16,8 @@ namespace Maquillaje.WebUI.Extensions
             CreateMap<EmpleadoViewModel, tbEmpleados>().ReverseMap();
             CreateMap<ClienteViewModel, tbClientes>().ReverseMap();
             CreateMap<UsuarioViewModel, tbUsuarios>().ReverseMap();
+            CreateMap<VW_acce_tbUsuarios_ViewModel, VW_acce_tbUsuarios_View>().ReverseMap();
+            //CreateMap<tbUsuarios, VW_acce_tbUsuarios_View>().ReverseMap();
         }
     }
 }

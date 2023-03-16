@@ -524,7 +524,6 @@ C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\D
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.TagHelpers.input.cache
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.TagHelpers.output.cache
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.RazorCoreGenerate.cache
-C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Categoria\Create.cshtml.g.cs
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Categoria\Index.cshtml.g.cs
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Create.cshtml.g.cs
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Index.cshtml.g.cs
@@ -735,3 +734,12 @@ C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\D
 C:\Users\LAB02\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\_Modal_Delete.cshtml.g.cs
 C:\Users\LAB02\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\_Modal_Edit.cshtml.g.cs
 C:\Users\LAB02\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Details.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Categoria\Details.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Categoria\_Modal_Create.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Categoria\_Modal_Delete.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Categoria\_Modal_Edit.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Index.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\_Modal_Create.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\_Modal_Delete.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\_Modal_Edit.cshtml.g.cs
+C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Details.cshtml.g.cs

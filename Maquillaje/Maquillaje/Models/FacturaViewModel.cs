@@ -38,5 +38,6 @@ namespace Maquillaje.WebUI.Models
         public virtual tbEmpleados empe { get; set; }
 
         public virtual tbMetodosPago meto { get; set; }
+        public virtual tbCategorias cate { get; set; }
     }
 }

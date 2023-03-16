@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
+using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +22,23 @@ namespace Maquillaje.WebUI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var listado = _maquService.ListadoFacturasDetalles();
-            //var listadoMapeado = _mapper.Map<IEnumerable<FacturaDetalleViewModel>>(listado);
+        //[HttpGet]
+        //public IActionResult Index()
+        //{
+        //    var listado = _maquService.ListadoFacturasDetalles();
+        //    //var listadoMapeado = _mapper.Map<IEnumerable<FacturaDetalleViewModel>>(listado);
 
-            return PartialView("Index", listado);
-        }
+        //    return PartialView("Index", listado);
+        //}
+
+        //[HttpPost]
+        //public IActionResult Create()
+        //{
+        //    var ddlCategoria = _maquService.ListadoCategorias(out string error).ToList();
+
+        //    ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
+
+        //    return PartialView();
+        //}
     }
 }

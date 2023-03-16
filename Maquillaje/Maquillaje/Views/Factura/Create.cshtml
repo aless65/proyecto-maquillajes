@@ -18,16 +18,20 @@
                         <a asp-action="Index">Regresar al index</a>
                     </div>*@
                 <div>
-                    <form asp-action="Create">
+                    <form asp-action="Create" id="formCreate">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="row">
                             <div class="form-group">
                                 <label asp-for="clie_Id" class="control-label"></label>
-                                <select asp-for="clie_Id" class="form-control" asp-items="ViewBag.clie_Id"></select>
+                                <select asp-for="clie_Id" class="form-control" asp-items="ViewBag.ddlCliente">
+                                    <option>--Seleccione un cliente--</option>
+                                </select>
                             </div>
                             <div class="form-group mt-2">
                                 <label asp-for="meto_Id" class="control-label"></label>
-                                <select asp-for="meto_Id" class="form-control" asp-items="ViewBag.meto_Id"></select>
+                                <select asp-for="meto_Id" class="form-control" asp-items="ViewBag.ddlMetodo">
+                                    <option>--Seleccione un método de pago--</option>
+                                </select>
                             </div>
                             <div class="form-group mt-3">
                                 <input type="button" value="Siguiente" id="btnSiguiente" class="btn btn-info" />
@@ -44,7 +48,7 @@
     </div>
 
     <div class="row mt-4">
-        @{ Html.RenderPartial("../FacturaDetalle/Index"); }
+        @Html.Partial("_IndexDetalles", new List<Maquillaje.Entities.Entities.VW_tbFacturasDetalles_List>())
     </div>
 </div>
 
@@ -52,22 +56,35 @@
     $("#prod_Id").prop("disabled", true);
     $("#factdeta_Cantidad").prop("disabled", true);
     $("#factdeta_Precio").prop("disabled", true);
+    $("#cate").prop("disabled", true);
     $("#btnContinuar").prop("disabled", true);
     $("#btnFinalizar").prop("disabled", true);
 
     $("#btnSiguiente").click(function () {
-        $("#clie_Id").prop("disabled", true);
-        $("#meto_Id").prop("disabled", true);
-        $("#empe_Id").prop("disabled", true);
-        $("#btnSiguiente").prop("disabled", true);
 
+        if ($("#meto_Id") != "" && $("#clie_Id") != "") {
 
-        $("#prod_Id").prop("disabled", false);
-        $("#factdeta_Cantidad").prop("disabled", false);
-        $("#factdeta_Precio").prop("disabled", false);
-        $("#btnContinuar").prop("disabled", false);
-        $("#btnFinalizar").prop("disabled", false);
+            sessionStorage.setItem("inserta", "jaja");
+
+            $("#formCreate").submit();
+        }
     });
+
+    $(document).ready(function () {
+        if (sessionStorage.getItem("inserta") != null) {
+            $("#clie_Id").prop("disabled", true);
+            $("#meto_Id").prop("disabled", true);
+            $("#empe_Id").prop("disabled", true);
+            $("#btnSiguiente").prop("disabled", true);
+
+            $("#prod_Id").prop("disabled", false);
+            $("#factdeta_Cantidad").prop("disabled", false);
+            $("#cate").prop("disabled", false);
+            $("#btnContinuar").prop("disabled", false);
+            $("#btnFinalizar").prop("disabled", false);
+        }
+        
+    })
 </script>
 
 

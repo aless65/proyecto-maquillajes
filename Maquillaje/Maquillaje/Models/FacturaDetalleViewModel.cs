@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maquillaje.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,5 +31,8 @@ namespace Maquillaje.WebUI.Models
         public DateTime? factdeta_FechaModificacion { get; set; }
         public int? factdeta_UsuModificacion { get; set; }
         public bool? factdeta_Estado { get; set; }
+
+        [Display(Name = "Categoría")]
+        public virtual tbCategorias cate { get; set; }
     }
 }

@@ -42,18 +42,21 @@ namespace Maquillaje.WebUI.Controllers
         //}
 
         [HttpGet("/Facturas/Create")]
-        public IActionResult Create()
+        public IActionResult Create(FacturaDetalleViewModel item, FacturaViewModel item2)
         {
             var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
             var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
             var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
+            var detalles = _maquService.ListadoFacturasDetalles(item.fact_Id);
 
             ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
 
-            ViewBag.ddlCliente = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
-            ViewBag.ddlMetodo = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+            ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
+            ViewBag.meto_Id = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+            ViewBag.detalles = detalles;
+            ViewBag.fact_Id = item.fact_Id;
 
-            return View();
+            return View(item2);
         }
 
 
@@ -67,11 +70,13 @@ namespace Maquillaje.WebUI.Controllers
             var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
             var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
             var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
-            
+            var detalles = _maquService.ListadoFacturasDetalles(item.fact_Id);
+
 
             ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
-            ViewBag.ddlCliente = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
-            ViewBag.ddlMetodo = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+            ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
+            ViewBag.meto_Id = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+            ViewBag.detalles = detalles;
 
 
             if (insertar != 0)
@@ -79,7 +84,7 @@ namespace Maquillaje.WebUI.Controllers
                 ViewBag.fact_Id = insertar;
             }
 
-            return View();
+            return View(item);
         }
 
         [HttpPost]
@@ -88,15 +93,62 @@ namespace Maquillaje.WebUI.Controllers
         {
             var facturaDetalle = _mapper.Map<tbFacturasDetalles>(item);
             var create = _maquService.InsertFacturasDetalles(facturaDetalle);
+            var detalles = _maquService.ListadoFacturasDetalles(item.fact_Id);
+            var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
+            var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
+            var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
 
-            if(create == 1)
+            ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
+            ViewBag.fact_Id = item.fact_Id;
+            ViewBag.detalles = detalles;
+            ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
+            ViewBag.meto_Id = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+
+            if (create == 1)
             {
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", item);
+            }
+            else
+            {
+                return RedirectToAction("Create", item);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id, int idFactura, FacturaDetalleViewModel item, FacturaViewModel item2)
+        {
+            var delete = _maquService.DeleteFacturasDetalles(id);
+            var detalles = _maquService.ListadoFacturasDetalles(idFactura);
+
+            ViewBag.detalles = detalles; 
+            ViewBag.fact_Id = idFactura;
+            item2.fact_Id = idFactura;
+
+            if (delete == 1)
+            {
+                return RedirectToAction("Create", item2);
             }
             else
             {
                 return RedirectToAction("Create");
             }
+        }
+
+        [HttpPost]
+        public IActionResult Update(FacturaDetalleViewModel item)
+        {
+            var facdetalle = _mapper.Map<tbFacturasDetalles>(item);
+            var update = _maquService.UpdateFacturasDetalles(facdetalle);
+            var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
+
+            ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
+
+            if (update == 1)
+            {
+
+            }
+
+            return RedirectToAction("Create");
         }
 
         public IActionResult CargarProductos(int id)

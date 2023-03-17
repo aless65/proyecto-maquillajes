@@ -359,11 +359,11 @@ namespace Maquillaje.BusinessLogic.Services
         #endregion
 
         #region Facturas Detalles
-        public IEnumerable<VW_tbFacturasDetalles_List> ListadoFacturasDetalles()
+        public IEnumerable<VW_tbFacturasDetalles_List> ListadoFacturasDetalles(int id)
         {
             try
             {
-                return _facturaDetalleRepository.ListView();
+                return _facturaDetalleRepository.ListView(id);
             }
             catch
             {
@@ -374,6 +374,16 @@ namespace Maquillaje.BusinessLogic.Services
         public int InsertFacturasDetalles(tbFacturasDetalles item)
         {
             return _facturaDetalleRepository.Insert(item);
+        }
+
+        public int DeleteFacturasDetalles(int id)
+        {
+            return _facturaDetalleRepository.DeleteConfirmed(id);
+        }
+
+        public int UpdateFacturasDetalles(tbFacturasDetalles item)
+        {
+            return _facturaDetalleRepository.Update(item);
         }
         #endregion
 

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_maqu_tbProductos_VW>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header"><h2>Detalles</h2></div>
+    <div class="card-body">
+        <div>
+
+            <dl class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="form-group col-6">
+                        <h5>ID</h5>
+                        @Html.DisplayFor(modelItem => item.prod_Id)
+                    </div>
+
+                    <div class="form-group col-6">
+                        <h5>Producto</h5>
+                        @Html.DisplayFor(modelItem => item.prod_Nombre)
+                    </div>
+
+                    <div class="form-group col-6">
+                        <h5>Categoria</h5>
+                        @Html.DisplayFor(modelItem => item.cate_Nombre)
+                    </div>
+
+                    <div class="form-group col-6 mt-2">
+                        <h5>Proveedor</h5>
+                        @Html.DisplayFor(modelItem => item.prov_Nombre)
+                    </div>
+
+                    <div class="form-group col-6 mt-2">
+                        <h5>Stock</h5>
+                        @Html.DisplayFor(modelItem => item.prod_Stock)
+                    </div>
+
+                    <div class="form-group col-6 mt-2">
+   
+                    </div>
+                    <div class="form-group col-6 mt-3 mb-3">
+                        <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.prod_Id,@item.prod_Nombre,@item.prod_PrecioUni,@item.cate_Id,@item.prov_Id,@item.prod_Stock')">Editar</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header"><h2>Auditoria</h2></div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <td><h5>Accion</h5></td>
+                                        <td><h5>Usuario</h5></td>
+                                        <td><h5>Fecha</h5></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><h5>Creacion</h5></td>
+                                        <td>@Html.DisplayFor(modelItem => item.user_UsuCreacion_Nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.prod_FechaCreacion)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><h5>Modificacion</h5></td>
+                                        <td>@Html.DisplayFor(modelItem => item.user_UsuModificacion_Nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.prod_FechaModificacion)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </dl>
+        </div>
+        <div>
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-dark">Regresar</a>
+</div>
+
+@Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_maqu_tbProductos_VW())

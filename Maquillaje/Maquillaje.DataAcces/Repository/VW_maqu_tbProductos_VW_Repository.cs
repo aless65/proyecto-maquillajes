@@ -14,6 +14,16 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+        public int DeleteConfirmed(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            var parametros = new DynamicParameters();
+
+            parametros.Add("@prod_Id", id, DbType.String, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Producto, parametros, commandType: CommandType.StoredProcedure);
+            
+        }
 
         public VW_maqu_tbProductos_VW find(int? id)
         {

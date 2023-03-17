@@ -1232,15 +1232,6 @@ END
 
 --**********************Listar Productos***************************--
 
-
-/*Listar Producos View*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_List_View
-AS
-BEGIN
-SELECT *FROM VW_maqu_tbProductos_VW
-END
-
 /*Vista Productos*/
 GO
 CREATE OR ALTER VIEW maqu.VW_maqu_tbProductos_VW
@@ -1259,6 +1250,13 @@ ON prod.prod_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
 ON prod.prod_UsuModificacion = [user2].user_Id
 WHERE prod.prod_Estado = 1
 
+/*Listar Producos View*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_List_View
+AS
+BEGIN
+SELECT *FROM VW_maqu_tbProductos_VW
+END
 /*Insertar Productos*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Insert
@@ -1304,7 +1302,7 @@ END
 
 /*Eliminar Producto*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbProductos_Delete
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Delete
 	@prod_Id INT
 AS
 BEGIN

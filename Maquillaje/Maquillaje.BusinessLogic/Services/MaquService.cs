@@ -404,6 +404,22 @@ namespace Maquillaje.BusinessLogic.Services
 
         }
 
+        public int DeleteProducto(int id)
+        {
+
+            try
+            {
+                var resultado = _vw_maqu_tbProductos_VW_Repository.DeleteConfirmed(id);
+
+                return resultado;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+
         public IEnumerable<tbProductos> PrecioProducto(int id)
         {
             return _productoRepository.PrecioProducto(id);

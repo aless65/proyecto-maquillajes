@@ -12,29 +12,29 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="prod_Id" id="prod_Id_Edit" />
                         <label name="lbl_prod_Id_EditError" id="lbl_prod_Id_EditError" class="control-label" hidden style="color: red;">ID de Producto Invalido</label>
-                        <div class="form-group">
+                        <div class="form-group col-6">
                             <label asp-for="prod_Nombre" class="control-label"></label>
                             <input asp-for="prod_Nombre" id="prod_Nombre_Edit" class="form-control" />
                             <label name="lbl_prod_Nombre_EditError" id="lbl_prod_Nombre_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-6">
                             <label asp-for="prod_PrecioUni" class="control-label"></label>
-                            <input asp-for="prod_PrecioUni" id="prod_PrecioUni_Edit" class="form-control" />
+                            <input type="number" asp-for="prod_PrecioUni" id="prod_PrecioUni_Edit" class="form-control" />
                             <label name="lbl_prod_PrecioUni_EditError" id="lbl_prod_PrecioUni_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-6 mt-3">
                             <label asp-for="cate_Id" class="control-label"></label>
                             <select asp-for="cate_Id" id="cate_Id_Edit" class="form-control" asp-items="ViewBag.cate_Id"></select>
                             <label name="lbl_cate_Id_EditError" id="lbl_cate_Id_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-6 mt-3">
                             <label asp-for="prov_Id" class="control-label"></label>
                             <select asp-for="prov_Id" id="prov_Id_Edit" class="form-control" asp-items="ViewBag.prov_Id"></select>
                             <label name="lbl_prov_Id_EditError" id="lbl_prov_Id_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-6 mt-3">
                             <label asp-for="prod_Stock" class="control-label"></label>
-                            <input asp-for="prod_Stock" id="prod_Stock_Edit" class="form-control" />
+                            <input type="number" asp-for="prod_Stock" id="prod_Stock_Edit" class="form-control" />
                             <label name="lbl_prod_Stock_EditError" id="lbl_prod_Stock_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                         </div>
                     </div>
@@ -61,7 +61,6 @@
         var datastring = cadena;
      
         var data = datastring.split(',');
-        console.log(data);
         $("#prod_Id_Edit").val(data[0]);
         $("#prod_Nombre_Edit").val(data[1]);
         $("#prod_PrecioUni_Edit").val(data[2]);
@@ -77,13 +76,13 @@
       
 
         var prod_Id = $("#prod_Id_Edit").val();
-        var prod_Nombre = $("#prod_Nombre").val();
-        var prod_PrecioUni = $("#prod_PrecioUni").val();
-        var cate_Id = $("#cate_Id").val();
-        var prov_Id = $("#prov_Id").val();
-        var prod_Stock = $("#prod_Stock").val();
-        var x = true;
+        var prod_Nombre = $("#prod_Nombre_Edit").val();
+        var prod_PrecioUni = $("#prod_PrecioUni_Edit").val();
+        var cate_Id = $("#cate_Id_Edit").val();
+        var prov_Id = $("#prov_Id_Edit").val();
+        var prod_Stock = $("#prod_Stock_Edit").val();
 
+        var x = true;
         if (prod_Id == "" || prod_Id == null) {
             x = false;
             $("#lbl_prod_Id_EditError").attr('hidden', false);
@@ -98,7 +97,7 @@
             $("#lbl_prod_Nombre_EditError").attr('hidden', true);
         }
 
-        if (prod_PrecioUni < 1) {
+        if (prod_PrecioUni < 1|| prod_PrecioUni == "") {
             x = false;
             $("#lbl_prod_PrecioUni_EditError").attr('hidden', false);
         } else {
@@ -107,23 +106,23 @@
 
         if (cate_Id == "") {
             x = false;
-            $("#lbl_prod_cate_Id_EditError").attr('hidden', false);
+            $("#lbl_cate_Id_EditError").attr('hidden', false);
         } else {
-            $("#lbl_prod_cate_Id_EditError").attr('hidden', true);
+            $("#lbl_cate_Id_EditError").attr('hidden', true);
         }
 
         if (prov_Id == "") {
             x = false;
-            $("#lbl_prod_prov_Id_EditError").attr('hidden', false);
+            $("#lbl_prov_Id_EditError").attr('hidden', false);
         } else {
-            $("#lbl_prod_prov_Id_EditError").attr('hidden', true);
+            $("#lbl_prov_Id_EditError").attr('hidden', true);
         }
 
         if (prod_Stock == "") {
             x = false;
-            $("#lbl_prod_prod_Stock_EditError").attr('hidden', false);
+            $("#lbl_prod_Stock_EditError").attr('hidden', false);
         } else {
-            $("#lbl_prod_prod_Stock_EditError").attr('hidden', true);
+            $("#lbl_prod_Stock_EditError").attr('hidden', true);
         }
 
         if (x == true) {

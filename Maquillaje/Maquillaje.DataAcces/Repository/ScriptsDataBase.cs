@@ -78,6 +78,7 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Listar_Productos = "maqu.UDP_maqu_tbProductos_List_View";
         public static string UDP_Insertar_Productos = "maqu.UDP_maqu_tbProductos_Insert";
         public static string UDP_Editar_Producto = "maqu.UDP_maqu_tbProducto_Update";
+        public static string UDP_Eliminar_Producto = "maqu.UDP_maqu_tbProductos_Delete";
         #endregion
 
         #region Proveedores

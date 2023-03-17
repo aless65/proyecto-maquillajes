@@ -8,7 +8,6 @@ namespace Maquillaje.Entities.Entities
 {
     public partial class VW_tbFacturasDetalles_List
     {
-        public int factdeta_Id { get; set; }
         public int fact_Id { get; set; }
         public string prod_Nombre { get; set; }
         public int factdeta_Cantidad { get; set; }

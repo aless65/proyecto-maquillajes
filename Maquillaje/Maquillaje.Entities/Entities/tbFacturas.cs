@@ -25,6 +25,7 @@ namespace Maquillaje.Entities.Entities
         public bool? fact_Estado { get; set; }
 
         public virtual tbClientes clie { get; set; }
+        public virtual tbEmpleados empe { get; set; }
         public virtual tbUsuarios fact_UsuCreacionNavigation { get; set; }
         public virtual tbUsuarios fact_UsuModificacionNavigation { get; set; }
         public virtual tbMetodosPago meto { get; set; }

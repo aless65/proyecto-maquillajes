@@ -2,6 +2,7 @@
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,20 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _maquService.ListadoProductosView();
             var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProductos_VW>>(listado);
+            var ddlcategorias = _maquService.ListadoCategorias(out string error);
+            var ddlproveedores = _maquService.ListadoProveedores();
+
+            ViewBag.cate_Id = new SelectList(ddlcategorias, "cate_Id", "cate_Nombre");
+            ViewBag.prov_Id = new SelectList(ddlproveedores,"prov_Id","prov_Nombre");
             return View(listadoMapeado);
+        }
+
+        [HttpPost("/Producto/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(VW_maqu_tbProductos_VW item)
+        {
+            var insertar = _maquService.InsertProducto(item);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -22,7 +22,17 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Insert(VW_maqu_tbProductos_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@prod_Nombre", item.prod_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prod_PrecioUni", item.prod_PrecioUni, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@cate_Id", item.cate_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prov_Id", item.prov_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_Stock", item.prod_Stock, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Productos, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public IEnumerable<VW_maqu_tbProductos_VW> List()

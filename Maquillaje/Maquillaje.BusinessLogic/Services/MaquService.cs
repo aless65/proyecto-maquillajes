@@ -17,10 +17,11 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly FacturaDetalleRepository _facturaDetalleRepository;
         private readonly ProductoRepository _productoRepository;
         private readonly VW_maqu_tbProductos_VW_Repository _vw_maqu_tbProductos_VW_Repository;
+        private readonly VW_maqu_tbProveedores_VW_Repository _vw_maqu_tbProveedores_VW_Repository;
 
         public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MetodoPagoRepository metodoPagoRepository,
                            FacturaRepository facturaRepository, FacturaDetalleRepository facturaDetalleRepository, ProductoRepository productoRepository,
-                           VW_maqu_tbProductos_VW_Repository vw_maqu_tbProductos_VW_Repository)
+                           VW_maqu_tbProductos_VW_Repository vw_maqu_tbProductos_VW_Repository, VW_maqu_tbProveedores_VW_Repository vw_maqu_tbProveedores_VW_Repository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
@@ -30,6 +31,7 @@ namespace Maquillaje.BusinessLogic.Services
             _facturaDetalleRepository = facturaDetalleRepository;
             _productoRepository = productoRepository;
             _vw_maqu_tbProductos_VW_Repository = vw_maqu_tbProductos_VW_Repository;
+            _vw_maqu_tbProveedores_VW_Repository = vw_maqu_tbProveedores_VW_Repository;
         }
 
         #region Categorias
@@ -373,10 +375,38 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public int InsertProducto(VW_maqu_tbProductos_VW tbProducto)
+        {
+            try
+            {
+                return _vw_maqu_tbProductos_VW_Repository.Insert(tbProducto);
+            }
+            catch(Exception error)
+            {
+                return 0;
+            }
+  
+        }
+
         public IEnumerable<tbProductos> PrecioProducto(int id)
         {
             return _productoRepository.PrecioProducto(id);
         }
         #endregion
+
+        #region Proveedores
+        public IEnumerable<VW_maqu_tbProveedores_VW> ListadoProveedores()
+        {
+            try
+            {
+                return _vw_maqu_tbProveedores_VW_Repository.List();
+            }
+            catch
+            {
+                return Enumerable.Empty<VW_maqu_tbProveedores_VW>();
+            }
+        }
+        #endregion
+
     }
 }

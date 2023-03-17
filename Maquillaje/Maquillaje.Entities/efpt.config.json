@@ -74,6 +74,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[acce].[VW_acce_tbUsuarios_View]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[maqu].[VW_maqu_tbClientes_DDLMunicipios]",
          "ObjectType": 3
       },
@@ -86,6 +90,14 @@
          "ObjectType": 3
       },
       {
+         "Name": "[maqu].[VW_maqu_tbProductos_VW]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[maqu].[VW_maqu_tbProveedores_VW]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[maqu].[VW_tbFacturas_List]",
          "ObjectType": 3
       },
@@ -94,7 +106,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "DESKTOP-EEOQVVU\\SQLEXPRESS.Maquillaje",
+   "UiHint": "DESKTOP-7ECKOKU\\SQLEXPRESS.Maquillaje",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

@@ -76,6 +76,11 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Listar_Productos_DDL = "maqu.UDP_maqu_tbProductos_ListDDL";
         public static string UDP_Precio_Producto = "maqu.UDP_maqu_tbProductos_Precios";
         public static string UDP_Listar_Productos = "maqu.UDP_maqu_tbProductos_List_View";
+        public static string UDP_Insertar_Productos = "maqu.UDP_maqu_tbProductos_Insert";
+        #endregion
+
+        #region Proveedores
+        public static string UDP_Listar_Proveedores = "maqu.UDP_maqu_tbProveedores_VW";
         #endregion
     }
 }

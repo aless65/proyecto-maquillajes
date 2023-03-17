@@ -1,0 +1,60 @@
+﻿@model Maquillaje.Entities.Entities.VW_maqu_tbProductos_VW
+<div class="modal fade" id="CrearCategorias" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Producto" asp-action="Create" id="formCreate">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Producto</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group col-6">
+                                    <label asp-for="prod_Nombre" class="control-label"></label>
+                                    <input asp-for="prod_Nombre" class="form-control" />
+                                    <span asp-validation-for="prod_Nombre" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label asp-for="prod_PrecioUni" class="control-label"></label>
+                                    <input asp-for="prod_PrecioUni" class="form-control" />
+                                    <span asp-validation-for="prod_PrecioUni" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-6 mt-3">
+                                    <label asp-for="cate_Id" class="control-label"></label>
+                                    <select asp-for="cate_Id" class="form-control" asp-items="ViewBag.cate_Id"></select>
+                                </div>
+                                <div class="form-group col-6 mt-3">
+                                    <label asp-for="prov_Id" class="control-label"></label>
+                                    <select asp-for="prov_Id" class="form-control" asp-items="ViewBag.prov_Id"></select>
+                                </div>
+                                <div class="form-group col-6 mt-3">
+                                    <label asp-for="prod_Stock" class="control-label"></label>
+                                    <input asp-for="prod_Stock" class="form-control" />
+                                    <span asp-validation-for="prod_Stock" class="text-danger"></span>
+                                </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalCreate()" class="btn btn-success">Crear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--Fin Modal-->
+
+
+<script>
+    function AbrirModalCreate() {
+        $("#lbl_cate_NombreCreateError").attr('hidden', true);
+        $("#CrearCategorias").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalCreate() {
+            $("#formCreate").submit();
+    }
+</script>
+

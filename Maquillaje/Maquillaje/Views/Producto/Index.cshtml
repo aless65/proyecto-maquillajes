@@ -10,7 +10,7 @@
     <div class="card-header"><h2>Productos</h2></div>
     <div class="card-body">
         <p>
-            <a asp-action="Create">Nuevo</a>
+            <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
         </p>
         <table class="table">
             <thead>
@@ -53,9 +53,9 @@
                             @Html.DisplayFor(modelItem => item.prov_Nombre)
                         </td>
                         <td>
-                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.cate_Id,@item.cate_Nombre')">Editar</button> |
-                            <a asp-action="Details" asp-route-id="@item.cate_Id" class="btn btn-dark">Detalles</a> |
-                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.cate_Id)">Borrar</button>
+                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.prod_Id,@item.prod_Nombre,@item.prod_PrecioUni,@item.cate_Id,@item.prov_Id,@item.prod_Stock')">Editar</button> |
+                            <a asp-action="Details" asp-route-id="@item.prod_Id" class="btn btn-dark">Detalles</a> |
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.prod_Id)">Borrar</button>
                         </td>
                     </tr>
                 }
@@ -63,3 +63,5 @@
         </table>
     </div>
 </div>
+
+@Html.Partial("_Modal_Create", new Maquillaje.Entities.Entities.VW_maqu_tbProductos_VW())

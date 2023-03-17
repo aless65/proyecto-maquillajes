@@ -1231,6 +1231,16 @@ END
 
 
 --**********************Listar Productos***************************--
+
+
+/*Listar Producos View*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_List_View
+AS
+BEGIN
+SELECT *FROM VW_maqu_tbProductos_VW
+END
+
 /*Vista Productos*/
 GO
 CREATE OR ALTER VIEW maqu.VW_maqu_tbProductos_VW
@@ -1251,7 +1261,7 @@ WHERE prod.prod_Estado = 1
 
 /*Insertar Productos*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbProductos_Insert
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Insert
 	@prod_Nombre			NVARCHAR(100),
 	@prod_PrecioUni			DECIMAL (18,2),
 	@cate_Id				INT,
@@ -1324,6 +1334,28 @@ BEGIN
 	SELECT [prod_Id], [prod_Nombre], [prod_PrecioUni]
 	FROM [maqu].[tbProductos]
 	WHERE @prod_Id = [prod_Id]
+END
+
+--**************Proveedores************************--
+/*Vista Proveedores*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbProveedores_VW
+AS
+SELECT prov_Id, prov_Nombre, 
+prov_CorreoElectronico, prov_Telefono, 
+prov_UsuCreacion,[user1].user_NombreUsuario AS prov_UsuCreacion_Nombre,prov_FechaCreacion, 
+prov_UsuModificacion,[user2].user_NombreUsuario AS prov_UsuModificacion_Nombre, prov_FechaModificacion, 
+prov_Estado
+FROM maqu.tbProveedores prov INNER JOIN acce.tbUsuarios [user1]
+ON prov.prov_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON prov.prov_UsuModificacion = [user2].user_Id
+
+/**/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProveedores_VW
+AS
+BEGIN
+SELECT * FROM VW_maqu_tbProveedores_VW
 END
 
 /*Insertar Proveedores*/

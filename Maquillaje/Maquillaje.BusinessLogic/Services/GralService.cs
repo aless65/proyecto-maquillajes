@@ -12,12 +12,15 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly MunicipioRepository _municipioRepository;
         private readonly DepartamentoRepository _departamentoRepository;
         private readonly EstadoCivilRepository _estadoCivilRepository;
+        private readonly VW_gral_tbDepartamentos_VW_Repository _vw_gral_tbDepartamentos_vw_Repository;    
 
-        public GralService(MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository)
+        public GralService(MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, 
+            EstadoCivilRepository estadoCivilRepository,VW_gral_tbDepartamentos_VW_Repository vW_Gral_TbDepartamentos_VW_Repository)
         {
             _municipioRepository = municipioRepository;
             _departamentoRepository = departamentoRepository;
             _estadoCivilRepository = estadoCivilRepository;
+            _vw_gral_tbDepartamentos_vw_Repository = vW_Gral_TbDepartamentos_VW_Repository;
         }
 
         #region Departamentos
@@ -32,6 +35,20 @@ namespace Maquillaje.BusinessLogic.Services
             {
                 error = e.Message;
                 return Enumerable.Empty<tbDepartamentos>();
+            }
+        }
+
+        public IEnumerable<VW_gral_tbDepartamentos_VW> ListadoDepartamentosView(out string error)
+        {
+            error = string.Empty;
+            try
+            {
+                return _vw_gral_tbDepartamentos_vw_Repository.List();
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+                return Enumerable.Empty<VW_gral_tbDepartamentos_VW>();
             }
         }
         #endregion

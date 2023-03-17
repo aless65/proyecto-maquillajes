@@ -816,7 +816,7 @@ ON depa_UsuModificacion = [user2].user_Id
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_VW
 AS
-SELECT * FROM 
+SELECT * FROM gral.VW_gral_tbDepartamentos_VW
 
 /*Insertar Departamentos*/
 GO
@@ -1627,11 +1627,11 @@ VALUES ('Vendedor-Facturas', 2, 7, 1),
 	   ('Recursos Humanos-Empleados', 4, 6, 1)
 
 GO
-EXEC UDP_maqu_tbProveedores_Insert 'LOréal Paris', 'contact@loreal.com', '1-800-322-2036', 1
-EXEC UDP_maqu_tbProveedores_Insert 'Kylie Cosmetics', 'customerservice@kyliecosmetics.com', '833-545-9543', 1
-EXEC UDP_maqu_tbProveedores_Insert 'Armani Beauty', 'contact@giorgioarmanibeauty.fr', '0800-5870829', 1
-EXEC UDP_maqu_tbProveedores_Insert 'Hourglass Cosmetics', 'CS@hourglasscosmetics.com', '855-846-3814', 1
-EXEC UDP_maqu_tbProveedores_Insert 'Fenty Beauty', 'customerservice@fentybeauty.com', '1-855-440-7474', 1
+EXEC maqu.UDP_maqu_tbProveedores_Insert 'LOréal Paris', 'contact@loreal.com', '1-800-322-2036', 1
+EXEC maqu.UDP_maqu_tbProveedores_Insert 'Kylie Cosmetics', 'customerservice@kyliecosmetics.com', '833-545-9543', 1
+EXEC maqu.UDP_maqu_tbProveedores_Insert 'Armani Beauty', 'contact@giorgioarmanibeauty.fr', '0800-5870829', 1
+EXEC maqu.UDP_maqu_tbProveedores_Insert 'Hourglass Cosmetics', 'CS@hourglasscosmetics.com', '855-846-3814', 1
+EXEC maqu.UDP_maqu_tbProveedores_Insert 'Fenty Beauty', 'customerservice@fentybeauty.com', '1-855-440-7474', 1
 
 GO
 EXEC maqu.UDP_maqu_tbProductos_Insert 'Base de maquillaje con acido hialuronico L’Oréal Accord Parfait: 1W ivoire', 299.09, 1, 1, 250, 1

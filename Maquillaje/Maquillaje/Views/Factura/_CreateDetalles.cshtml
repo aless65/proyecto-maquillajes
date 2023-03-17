@@ -50,6 +50,10 @@
     $("#fact_Id").prop("hidden", true);
     $("#factdeta_Precio").prop("hidden", true);
 
+    $(document).ready(function () {
+        $("#factdeta_Precio").val("");
+    })
+
     $("#cate").change(function () {
         var cate_Id = $("#cate").val();
 

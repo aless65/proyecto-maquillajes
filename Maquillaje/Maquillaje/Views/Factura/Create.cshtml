@@ -23,17 +23,17 @@
                         <div class="row">
                             <div class="form-group">
                                 <label asp-for="clie_Id" class="control-label"></label>
-                                <select asp-for="clie_Id" class="form-control" asp-items="ViewBag.ddlCliente">
+                                <select asp-for="clie_Id" class="form-control" asp-items="ViewBag.clie_Id">
                                     <option>--Seleccione un cliente--</option>
                                 </select>
-                                <label id="clie_IdValidation" class="text-danger" hidden>El campo Cliente es obligatorio</label>
+                                <label id="clie_IdValidation" name="clie_IdValidation" class="text-danger control-label" hidden>El campo Cliente es obligatorio</label>
                             </div>
-                            <div class="form-group mt-2">
+                            <div class="form-group mt-3">
                                 <label asp-for="meto_Id" class="control-label"></label>
-                                <select asp-for="meto_Id" class="form-control" asp-items="ViewBag.ddlMetodo">
+                                <select asp-for="meto_Id" class="form-control" asp-items="ViewBag.meto_Id">
                                     <option>--Seleccione un método de pago--</option>
                                 </select>
-                                <label id="meto_IdValidation" class="text-danger" hidden>El campo Método de Pago es obligatorio</label>
+                                <label id="meto_IdValidation" name="meto_IdValidation" class="text-danger control-label" hidden>El campo Método de Pago es obligatorio</label>
                             </div>
                             <div class="form-group mt-3">
                                 <input type="button" value="Siguiente" id="btnSiguiente" class="btn btn-info" />
@@ -55,7 +55,7 @@
                 <table class="table table-bordered table-hover" id="DataTable">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>N° Factura</th>
                             <th>Nombre</th>
                             <th>Cantidad</th>
                         </tr>
@@ -90,12 +90,12 @@
         var cliente = $("#clie_Id").val();
         var metodo = $("#meto_Id").val();
 
-        if (cliente == "") {
+        if ($("#clie_Id").val() < 1) {
             $("#clie_IdValidation").prop("hidden", false);
             console.log("cliente");
         }
 
-        if (metodo == "") {
+        if ($("#meto_Id").val() < 1) {
             $("#meto_IdValidation").prop("hidden", false);
             console.log("metodo");
         }
@@ -103,6 +103,9 @@
         if ($("#meto_Id").val() > 0 && $("#clie_Id").val() > 0) {
 
             sessionStorage.setItem("inserta", "jaja");
+            sessionStorage.setItem("metodo", $("#meto_Id").val());
+            sessionStorage.setItem("cliente", $("#clie_Id").val());
+
 
             $("#formCreate").submit();
         }
@@ -111,12 +114,11 @@
     $(document).ready(function () {
         console.log(sessionStorage.getItem("inserta"));
 
-        $("#clie_IdValidation").prop("hidden", true);
-        $("#meto_IdValidation").prop("hidden", true);
-
         if (sessionStorage.getItem("inserta") != null) {
             $("#clie_Id").prop("disabled", true);
+            $("#clie_Id").val(sessionStorage.getItem("cliente"));
             $("#meto_Id").prop("disabled", true);
+            $("#meto_Id").val(sessionStorage.getItem("metodo"));
             $("#empe_Id").prop("disabled", true);
             $("#btnSiguiente").prop("disabled", true);
 

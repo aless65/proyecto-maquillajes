@@ -375,17 +375,33 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
-        public int InsertProducto(VW_maqu_tbProductos_VW tbProducto)
+        public int InsertProducto(VW_maqu_tbProductos_VW item)
         {
             try
             {
-                return _vw_maqu_tbProductos_VW_Repository.Insert(tbProducto);
+                return _vw_maqu_tbProductos_VW_Repository.Insert(item);
             }
             catch(Exception error)
             {
                 return 0;
             }
   
+        }
+
+        public int EditProducto(VW_maqu_tbProductos_VW item)
+        {
+
+            try
+            {
+                var resultado = _vw_maqu_tbProductos_VW_Repository.Update(item);
+
+                return resultado;
+            }
+            catch
+            {
+                return 0;
+            }
+
         }
 
         public IEnumerable<tbProductos> PrecioProducto(int id)

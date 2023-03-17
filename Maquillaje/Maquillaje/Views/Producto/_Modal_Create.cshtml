@@ -11,26 +11,32 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group col-6">
                                     <label asp-for="prod_Nombre" class="control-label"></label>
-                                    <input asp-for="prod_Nombre" class="form-control" />
-                                    <span asp-validation-for="prod_Nombre" class="text-danger"></span>
+                                    <input asp-for="prod_Nombre" id="prod_Nombre" class="form-control" placeholder="Nombre de producto"/>
+                                    <label name="lbl_prod_Nombre_CreateError" id="lbl_prod_Nombre_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                                 </div>
                                 <div class="form-group col-6">
                                     <label asp-for="prod_PrecioUni" class="control-label"></label>
-                                    <input asp-for="prod_PrecioUni" class="form-control" />
-                                    <span asp-validation-for="prod_PrecioUni" class="text-danger"></span>
+                                    <input asp-for="prod_PrecioUni" id="prod_PrecioUni" class="form-control" />
+                                    <label name="lbl_prod_PrecioUni_CreateError" id="lbl_prod_PrecioUni_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                                 </div>
                                 <div class="form-group col-6 mt-3">
                                     <label asp-for="cate_Id" class="control-label"></label>
-                                    <select asp-for="cate_Id" class="form-control" asp-items="ViewBag.cate_Id"></select>
+                                    <select asp-for="cate_Id" id="cate_Id" class="form-control" asp-items="ViewBag.cate_Id">
+                                        <option value="">-- Seleccione una opcion --</option>
+                                    </select>
+                                    <label name="lbl_prod_cate_Id_CreateError" id="lbl_prod_cate_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                                 </div>
                                 <div class="form-group col-6 mt-3">
                                     <label asp-for="prov_Id" class="control-label"></label>
-                                    <select asp-for="prov_Id" class="form-control" asp-items="ViewBag.prov_Id"></select>
+                                    <select asp-for="prov_Id" id="prov_Id" class="form-control" asp-items="ViewBag.prov_Id">
+                                        <option value="">-- Seleccione una opcion --</option>
+                                    </select>
+                                    <label name="lbl_prov_Id_CreateError" id="lbl_prov_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                                 </div>
                                 <div class="form-group col-6 mt-3">
                                     <label asp-for="prod_Stock" class="control-label"></label>
-                                    <input asp-for="prod_Stock" class="form-control" />
-                                    <span asp-validation-for="prod_Stock" class="text-danger"></span>
+                                    <input asp-for="prod_Stock" id="prod_Stock" class="form-control" />
+                                    <label name="lbl_prod_Stock_CreateError" id="lbl_prod_Stock_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                                 </div>
                     </div>
                 </div>
@@ -47,14 +53,65 @@
 
 <script>
     function AbrirModalCreate() {
-        $("#lbl_cate_NombreCreateError").attr('hidden', true);
+        $("#lbl_prod_Nombre_CreateError").attr('hidden', true);
+        $("#lbl_prod_PrecioUni_CreateError").attr('hidden', true);
+        $("#lbl_prod_cate_Id_CreateError").attr('hidden', true);
+        $("#lbl_prod_prov_Id_CreateError").attr('hidden', true);
+        $("#lbl_prod_prod_Stock_CreateError").attr('hidden', true);
+        
         $("#CrearCategorias").appendTo('body').modal('show');
     };
 </script>
 
 <script>
     function GuardarModalCreate() {
-            $("#formCreate").submit();
+        var prod_Nombre = $("#prod_Nombre").val();
+        var prod_PrecioUni = $("#prod_PrecioUni").val();
+        var cate_Id = $("#cate_Id").val();
+        var prov_Id = $("#prov_Id").val();
+        var prod_Stock = $("#prod_Stock").val();
+        var x = true;
+
+        console.log(prov_Id);
+        if (prod_Nombre == "") {
+            x = false;
+            $("#lbl_prod_Nombre_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_prod_Nombre_CreateError").attr('hidden', true);
+        }
+
+        if (prod_PrecioUni < 1) {
+            x = false;
+            $("#lbl_prod_PrecioUni_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_prod_PrecioUni_CreateError").attr('hidden', true);
+        }
+
+        if (cate_Id == "") {
+            x = false;
+            $("#lbl_prod_cate_Id_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_prod_cate_Id_CreateError").attr('hidden', true);
+        }
+
+        if (prov_Id == "") {
+            x = false;
+            $("#lbl_prov_Id_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_prov_Id_CreateError").attr('hidden', true);
+        }
+
+        if (prod_Stock == 0) {
+            x = false;
+            $("#lbl_prod_Stock_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_prod_Stock_CreateError").attr('hidden', true);
+        }
+
+        if (x == true) {
+              $("#formCreate").submit();
+        }
+
     }
 </script>
 

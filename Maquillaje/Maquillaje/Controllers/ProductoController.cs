@@ -38,8 +38,35 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_maqu_tbProductos_VW item)
         {
-            var insertar = _maquService.InsertProducto(item);
+            try
+            {
+                var insertar = _maquService.InsertProducto(item);
+                return RedirectToAction("Index");
+            }
+            catch(Exception error)
+            {
+
+            }
+            
             return RedirectToAction("Index");
         }
+
+        [HttpPost("/Producto/Edit")]
+        public IActionResult Edit(VW_maqu_tbProductos_VW item)
+        {
+            try
+            {
+                var editar = _maquService.EditProducto(item);
+                return RedirectToAction("Index");
+            }
+            catch(Exception error)
+            {
+
+            }
+           
+            return RedirectToAction("Index");
+
+        }
+
     }
 }

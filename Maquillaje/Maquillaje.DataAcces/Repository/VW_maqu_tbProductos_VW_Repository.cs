@@ -43,7 +43,18 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Update(VW_maqu_tbProductos_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@prod_Id", item.prod_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_Nombre", item.prod_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prod_PrecioUni", item.prod_PrecioUni, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@cate_Id", item.cate_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prov_Id", item.prov_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_Stock", item.prod_Stock, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Producto, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

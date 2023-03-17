@@ -1281,7 +1281,7 @@ END
 
 /*Editar Producto*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbProducto_Update
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProducto_Update
 	@prod_Id				INT,
 	@prod_Nombre			NVARCHAR(100),
 	@prod_PrecioUni			DECIMAL(18,2),

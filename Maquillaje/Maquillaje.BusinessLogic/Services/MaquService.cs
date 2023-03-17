@@ -311,6 +311,18 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public IEnumerable<VW_maqu_tbMetodosPago_View> MetodosPagoDetails()
+        {
+            try
+            {
+                return _metodoPagoRepository.Details();
+            }
+            catch
+            {
+                return Enumerable.Empty<VW_maqu_tbMetodosPago_View>();
+            }
+        }
+
         public int InsertMetodosPago(tbMetodosPago item)
         {
             return _metodoPagoRepository.Insert(item);

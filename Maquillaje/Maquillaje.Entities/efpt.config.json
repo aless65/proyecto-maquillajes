@@ -94,6 +94,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[maqu].[VW_maqu_tbMetodosPago_View]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[maqu].[VW_maqu_tbProductos_VW]",
          "ObjectType": 3
       },
@@ -110,7 +114,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "DESKTOP-7ECKOKU\\SQLEXPRESS.Maquillaje",
+   "UiHint": "DESKTOP-6FS11M8\\MSSQLSERVER1.Maquillaje",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

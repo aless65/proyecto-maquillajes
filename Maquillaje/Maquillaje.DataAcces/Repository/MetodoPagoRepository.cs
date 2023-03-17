@@ -30,6 +30,12 @@ namespace Maquillaje.DataAccess.Repository
             throw new NotImplementedException();
         }
 
+        public IEnumerable<VW_maqu_tbMetodosPago_View> Details()
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            return db.Query<VW_maqu_tbMetodosPago_View>(ScriptsDataBase.UDP_Vista_MetodosPago, null, commandType: CommandType.StoredProcedure);
+        }
+
         public int Insert(tbMetodosPago item)
         {
             using var db = new SqlConnection(AndreasContext.ConnectionString);

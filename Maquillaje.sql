@@ -844,7 +844,25 @@ BEGIN
 SELECT depa_Id,depa_Nombre FROM [gral].[tbDepartamentos]
 END
 
---**************** MeTODOS DE PAGO ****************--
+--**************** METODOS DE PAGO ****************--
+/*Vista metodos de pago*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbMetodosPago_View
+AS
+SELECT meto_Id, meto_Nombre, 
+meto_UsuCreacion,[user1].user_NombreUsuario AS meto_UsuCreacion_Nombre, meto_FechaCreacion, 
+meto_UsuModificacion,[user2].user_NombreUsuario AS meto_UsuModificacion_Nombre, meto_FechaModificacion, 
+meto_Estado 
+FROM maqu.tbMetodosPago meto INNER JOIN acce.tbUsuarios [user1]
+ON meto.meto_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON meto.meto_UsuModificacion = [user2].user_Id
+
+/*Vista metodos de pago UDP*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago_VW
+AS
+SELECT * FROM VW_maqu_tbMetodosPago_View
+
 /*Insert metodos de pago*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago_INSERT
@@ -1386,7 +1404,7 @@ FROM maqu.tbProveedores prov INNER JOIN acce.tbUsuarios [user1]
 ON prov.prov_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
 ON prov.prov_UsuModificacion = [user2].user_Id
 
-/**/
+/*Vista proveedores UDP*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProveedores_VW
 AS
@@ -1596,22 +1614,22 @@ EXEC UDP_maqu_tbProveedores_Insert 'Hourglass Cosmetics', 'CS@hourglasscosmetics
 EXEC UDP_maqu_tbProveedores_Insert 'Fenty Beauty', 'customerservice@fentybeauty.com', '1-855-440-7474', 1
 
 GO
-EXEC UDP_maqu_tbProductos_Insert 'Base de maquillaje con acido hialuronico L’Oréal Accord Parfait: 1W ivoire', 299.09, 1, 1, 250, 1
-EXEC UDP_maqu_tbProductos_Insert 'Base en polvo con ácido hialurónico L’Oréal Accord Parfait: 3D Beige Dore', 294.56, 1, 1, 250, 1
-EXEC UDP_maqu_tbProductos_Insert 'Better Than Sex Eyeliner', 728.33, 12, 5, 250, 1
-EXEC UDP_maqu_tbProductos_Insert 'Perfect Strokes', 598.23, 12, 5, 250, 1
-EXEC UDP_maqu_tbProductos_Insert 'forever and always', 390.32, 9, 2, 150, 1
-EXEC UDP_maqu_tbProductos_Insert 'iced latte', 390.32, 9, 2, 150, 1
-EXEC UDP_maqu_tbProductos_Insert 'give me a kiss', 390.32, 9, 2, 150, 1
-EXEC UDP_maqu_tbProductos_Insert 'caramel', 390.32, 9, 2, 150, 1
-EXEC UDP_maqu_tbProductos_Insert 'souffle', 390.32, 9, 2, 150, 1
-EXEC UDP_maqu_tbProductos_Insert 'Glow Mon Amour gotas iluminadoras Loving Peach', 552.32, 3, 1, 50, 1
-EXEC UDP_maqu_tbProductos_Insert 'Lip Maestro', 936.76, 6, 3, 125, 1
-EXEC UDP_maqu_tbProductos_Insert 'Ecstasy Lacquer', 564.66, 8, 3, 125, 1
-EXEC UDP_maqu_tbProductos_Insert 'Powder Brush', 1639.33, 4, 3, 25, 1
-EXEC UDP_maqu_tbProductos_Insert 'Concealer Brush', 1431.16, 4, 3, 35, 1
-EXEC UDP_maqu_tbProductos_Insert 'POWER FABRIC BASE LÍQUIDA DE COBERTURA TOTAL', 702.57, 1, 3, 50, 1
-EXEC UDP_maqu_tbProductos_Insert 'POWER FABRIC HIGH COVERAGE LIQUID CONCEALER', 637.52, 2, 3, 50, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Base de maquillaje con acido hialuronico L’Oréal Accord Parfait: 1W ivoire', 299.09, 1, 1, 250, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Base en polvo con ácido hialurónico L’Oréal Accord Parfait: 3D Beige Dore', 294.56, 1, 1, 250, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Better Than Sex Eyeliner', 728.33, 12, 5, 250, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Perfect Strokes', 598.23, 12, 5, 250, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'forever and always', 390.32, 9, 2, 150, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'iced latte', 390.32, 9, 2, 150, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'give me a kiss', 390.32, 9, 2, 150, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'caramel', 390.32, 9, 2, 150, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'souffle', 390.32, 9, 2, 150, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Glow Mon Amour gotas iluminadoras Loving Peach', 552.32, 3, 1, 50, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Lip Maestro', 936.76, 6, 3, 125, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Ecstasy Lacquer', 564.66, 8, 3, 125, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Powder Brush', 1639.33, 4, 3, 25, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'Concealer Brush', 1431.16, 4, 3, 35, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'POWER FABRIC BASE LÍQUIDA DE COBERTURA TOTAL', 702.57, 1, 3, 50, 1
+EXEC maqu.UDP_maqu_tbProductos_Insert 'POWER FABRIC HIGH COVERAGE LIQUID CONCEALER', 637.52, 2, 3, 50, 1
 
 GO
 EXEC UDP_maqu_tbMetodosPago_INSERT 'Tarjeta', 1

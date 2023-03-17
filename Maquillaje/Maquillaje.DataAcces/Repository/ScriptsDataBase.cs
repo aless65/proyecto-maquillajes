@@ -49,6 +49,7 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Insertar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_INSERT";
         public static string UDP_Editar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_UPDATE";
         public static string UDP_Eliminar_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_DELETE";
+        public static string UDP_Vista_MetodosPago = "maqu.UDP_maqu_tbMetodosPago_VW";
         #endregion
 
         #region Usuarios

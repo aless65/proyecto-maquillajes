@@ -61,5 +61,14 @@ namespace Maquillaje.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet("/MetodosPago/Details")]
+        public IActionResult Details(int id)
+        {
+            var listado = _maquService.MetodosPagoDetails();
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbMetodosPago_View>>(listado).Where(X => X.meto_Id == id);
+
+            return View(listadoMapeado);
+        }
     }
 }

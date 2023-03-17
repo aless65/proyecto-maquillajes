@@ -1,0 +1,23 @@
+﻿@model Maquillaje.Entities.Entities.tbProveedores
+
+
+
+
+<div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group col-6">
+                <label asp-for="prov_Nombre" class="control-label"></label>
+                <input asp-for="prov_Nombre" class="form-control" />
+                <span asp-validation-for="prov_Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="prov_CorreoElectronico" class="control-label"></label>
+                <input asp-for="prov_CorreoElectronico" class="form-control" />
+                <span asp-validation-for="prov_CorreoElectronico" class="text-danger"></span>
+            </div>
+            <div class="form-group col-6 mt-3">
+                <label asp-for="prov_Telefono" class="control-label"></label>
+                <input asp-for="prov_Telefono" class="form-control" />
+                <span asp-validation-for="prov_Telefono" class="text-danger"></span>
+            </div>
+</div>

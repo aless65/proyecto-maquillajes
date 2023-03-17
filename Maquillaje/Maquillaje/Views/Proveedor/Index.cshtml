@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_maqu_tbProveedores_VW>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header"><h1>Proveedores</h1></div>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.prov_Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.prov_CorreoElectronico)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.prov_Telefono)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.prov_Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.prov_CorreoElectronico)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.prov_Telefono)
+                        </td>
+                        <td>
+                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.prov_Id,@item.prov_Nombre,@item.prov_CorreoElectronico,@item.prov_Telefono')">Editar</button> |
+                            <a asp-action="Details" asp-route-id="@item.prov_Id" class="btn btn-dark">Detalles</a> |
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.prov_Id)">Borrar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

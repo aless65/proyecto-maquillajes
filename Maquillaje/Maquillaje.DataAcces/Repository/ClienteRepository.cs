@@ -59,6 +59,12 @@ namespace Maquillaje.DataAccess.Repository
             return db.Query<tbClientes>(ScriptsDataBase.UDP_Listar_Clientes, null, commandType: CommandType.StoredProcedure);
         }
 
+        public IEnumerable<VW_maqu_tbClientes_VW> Details()
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            return db.Query<VW_maqu_tbClientes_VW>(ScriptsDataBase.UDP_Listar_Empleado_Details, null, commandType: CommandType.StoredProcedure);
+        }
+
         public int Update(tbClientes item)
         {
             using var db = new SqlConnection(AndreasContext.ConnectionString);

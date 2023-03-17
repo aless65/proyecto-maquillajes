@@ -997,7 +997,34 @@ BEGIN
 SELECT * FROM maqu.tbCategorias WHERE cate_Id = @cate_Id
 END
 
---/Insertar Cliente/
+
+--***************Clientes************************--
+
+/*Vista Cliente*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbClientes_VW
+AS
+SELECT clie_Id,(SELECT clie_Nombres + ' ' + clie_Apellidos) AS clie_NombreCompleto,
+clie_Identidad,clie_Sexo,muni.depa_Id,depa.depa_Nombre,clie.muni_Id,muni.muni_Nombre,clie_DireccionExacta,clie_Telefono,
+clie_CorreoElectronico,
+clie_FechaCreacion,clie_UsuCreacion,[user1].user_NombreUsuario AS clie_UsuCreacion_Nombre,
+clie_UsuModificacion, [user2].user_Id AS clie_UsuModificacion_Nombre,clie_FechaModificacion
+FROM maqu.tbClientes clie INNER JOIN gral.tbMunicipios muni
+ON clie.muni_Id = muni.muni_id INNER JOIN gral.tbDepartamentos depa 
+ON muni.depa_Id = depa.depa_Id INNER JOIN acce.tbUsuarios [user1]
+ON clie.clie_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON clie.clie_UsuModificacion = [user2].user_Id
+WHERE clie.clie_Estado = 1
+
+/*Vista Clientes UDP*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_VW
+AS
+BEGIN
+SELECT * FROM maqu.VW_maqu_tbClientes_VW
+END
+
+/*Insertar Cliente*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
     @clie_Nombres                NVARCHAR(200),

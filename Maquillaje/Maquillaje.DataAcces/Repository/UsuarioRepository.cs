@@ -22,9 +22,7 @@ namespace Maquillaje.DataAccess.Repository
         public IEnumerable<VW_acce_tbUsuarios_View> Details(int id)
         {
             using var db = new SqlConnection(AndreasContext.ConnectionString);
-            var parametros = new DynamicParameters();
-            parametros.Add("@user_Id", id, DbType.Int32, ParameterDirection.Input);
-            return db.Query<VW_acce_tbUsuarios_View>(ScriptsDataBase.UDP_View_Usuarios, parametros, commandType: CommandType.StoredProcedure);
+            return db.Query<VW_acce_tbUsuarios_View>(ScriptsDataBase.UDP_View_Usuarios, null, commandType: CommandType.StoredProcedure);
         }
         public int Insert(tbUsuarios item)
         {

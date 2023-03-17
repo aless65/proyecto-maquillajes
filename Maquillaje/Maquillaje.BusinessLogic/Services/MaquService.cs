@@ -217,6 +217,21 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public IEnumerable<VW_maqu_tbClientes_VW> DetailsClientes(out string error)
+        {
+            error = string.Empty;
+
+            try
+            {
+                return _clienteRepository.Details();
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+                return Enumerable.Empty<VW_maqu_tbClientes_VW>();
+            }
+        }
+
         public int InsertClientes(tbClientes tbClientes)
         {
             return _clienteRepository.Insert(tbClientes);

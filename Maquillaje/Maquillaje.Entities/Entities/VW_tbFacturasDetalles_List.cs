@@ -13,5 +13,6 @@ namespace Maquillaje.Entities.Entities
         public string prod_Nombre { get; set; }
         public int factdeta_Cantidad { get; set; }
         public decimal factdeta_Precio { get; set; }
+        public decimal? factdeta_PrecioTotal { get; set; }
     }
 }

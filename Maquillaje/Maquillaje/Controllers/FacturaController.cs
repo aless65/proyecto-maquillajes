@@ -112,6 +112,25 @@ namespace Maquillaje.WebUI.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult Delete(int id, int idFactura, FacturaDetalleViewModel item, FacturaViewModel item2)
+        {
+            var delete = _maquService.DeleteFacturasDetalles(id);
+            var detalles = _maquService.ListadoFacturasDetalles(idFactura);
+
+            ViewBag.detalles = detalles; 
+            ViewBag.fact_Id = idFactura;
+
+            if (delete == 1)
+            {
+                return RedirectToAction("Create", item2);
+            }
+            else
+            {
+                return RedirectToAction("Create");
+            }
+        }
+
         public IActionResult CargarProductos(int id)
         {
             var productos = _maquService.ListadoProductos(id);

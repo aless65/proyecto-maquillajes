@@ -102,7 +102,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "DESKTOP-EEOQVVU\\SQLEXPRESS.Maquillaje",
+   "UiHint": "DESKTOP-BPGLHI0\\SQLEXPRESSLOCAL.Maquillaje",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

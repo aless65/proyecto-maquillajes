@@ -1185,14 +1185,15 @@ AS
 		   [fact_Id], 
 		   T2.prod_Nombre, 
 		   T1.factdeta_Cantidad,
-		   factdeta_Precio
+		   factdeta_Precio,
+		   (T1.factdeta_Cantidad*factdeta_Precio) AS factdeta_PrecioTotal
 	FROM [maqu].[tbFacturasDetalles] T1 INNER JOIN [maqu].[tbProductos] T2
 	ON T1.prod_Id = T2.prod_Id
 	WHERE [factdeta_Estado] = 1
 
 /*Insertar factura detalles*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Insert 
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Insert 2, 6, 2, 299.09, 1
 	@fact_Id				INT,
 	@prod_Id				INT,
 	@factdeta_Cantidad		INT,
@@ -1214,7 +1215,22 @@ BEGIN
 	END CATCH
 END
 
-
+/*Eliminar factura detalles*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Delete 
+	@factdeta_Id	INT
+AS
+BEGIN
+	BEGIN TRY
+		DELETE 
+		FROM [maqu].[tbFacturasDetalles]
+		WHERE factdeta_Id = @factdeta_Id
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
 
 /*Eliminar Factura con sus Detalles*/
 GO

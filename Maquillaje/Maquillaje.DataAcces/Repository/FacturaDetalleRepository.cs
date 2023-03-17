@@ -15,6 +15,16 @@ namespace Maquillaje.DataAccess.Repository
             throw new NotImplementedException();
         }
 
+        public int DeleteConfirmed(int id)
+        {
+            var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@factdeta_Id", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirst<int>(ScriptsDataBase.UDP_Eliminar_FacturasDetalles, parametros, commandType: CommandType.StoredProcedure);
+        }
+
         public tbFacturasDetalles find(int? id)
         {
             throw new NotImplementedException();

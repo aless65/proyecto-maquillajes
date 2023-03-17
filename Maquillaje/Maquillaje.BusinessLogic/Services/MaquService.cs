@@ -343,6 +343,11 @@ namespace Maquillaje.BusinessLogic.Services
         {
             return _facturaDetalleRepository.Insert(item);
         }
+
+        public int DeleteFacturasDetalles(int id)
+        {
+            return _facturaDetalleRepository.DeleteConfirmed(id);
+        }
         #endregion
 
         #region Producto

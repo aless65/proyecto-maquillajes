@@ -16,9 +16,11 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly FacturaRepository _facturaRepository;
         private readonly FacturaDetalleRepository _facturaDetalleRepository;
         private readonly ProductoRepository _productoRepository;
+        private readonly VW_maqu_tbProductos_VW_Repository _vw_maqu_tbProductos_VW_Repository;
 
         public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MetodoPagoRepository metodoPagoRepository,
-                           FacturaRepository facturaRepository, FacturaDetalleRepository facturaDetalleRepository, ProductoRepository productoRepository)
+                           FacturaRepository facturaRepository, FacturaDetalleRepository facturaDetalleRepository, ProductoRepository productoRepository,
+                           VW_maqu_tbProductos_VW_Repository vw_maqu_tbProductos_VW_Repository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
@@ -27,6 +29,7 @@ namespace Maquillaje.BusinessLogic.Services
             _facturaRepository = facturaRepository;
             _facturaDetalleRepository = facturaDetalleRepository;
             _productoRepository = productoRepository;
+            _vw_maqu_tbProductos_VW_Repository = vw_maqu_tbProductos_VW_Repository;
         }
 
         #region Categorias
@@ -355,6 +358,18 @@ namespace Maquillaje.BusinessLogic.Services
             catch
             {
                 return Enumerable.Empty<tbProductos>();
+            }
+        }
+
+        public IEnumerable<VW_maqu_tbProductos_VW> ListadoProductosView()
+        {
+            try
+            {
+                return _vw_maqu_tbProductos_VW_Repository.List();
+            }
+            catch
+            {
+                return Enumerable.Empty<VW_maqu_tbProductos_VW>();
             }
         }
 

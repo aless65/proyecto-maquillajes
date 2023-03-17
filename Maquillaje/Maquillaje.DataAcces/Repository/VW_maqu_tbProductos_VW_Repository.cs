@@ -1,6 +1,9 @@
-﻿using Maquillaje.Entities.Entities;
+﻿using Dapper;
+using Maquillaje.Entities.Entities;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace Maquillaje.DataAccess.Repository
@@ -24,7 +27,8 @@ namespace Maquillaje.DataAccess.Repository
 
         public IEnumerable<VW_maqu_tbProductos_VW> List()
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            return db.Query<VW_maqu_tbProductos_VW>(ScriptsDataBase.UDP_Listar_Productos, null, commandType: CommandType.StoredProcedure);
         }
 
         public int Update(VW_maqu_tbProductos_VW item)

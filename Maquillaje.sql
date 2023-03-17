@@ -1443,6 +1443,7 @@ BEGIN
 END
 
 /*UDP para vista de usuarios*/
+GO
 CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_View 
 @user_Id INT
 AS

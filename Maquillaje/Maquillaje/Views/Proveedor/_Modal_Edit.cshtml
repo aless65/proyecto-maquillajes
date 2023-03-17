@@ -1,0 +1,121 @@
+﻿@model Maquillaje.Entities.Entities.VW_maqu_tbProveedores_VW
+<!-- Modal -->
+<div class="modal fade" id="EditarProveedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Proveedor" asp-action="Edit" id="formEdit">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="prov_Id" id="prov_Id_Edit" />
+                        <div class="form-group col-6">
+                            <label asp-for="prov_Nombre" class="control-label"></label>
+                            <input asp-for="prov_Nombre" id="prov_Nombre_Edit" class="form-control" />
+                            <label name="lbl_prov_Nombre_EditError" id="lbl_prov_Nombre_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="prov_CorreoElectronico" class="control-label"></label>
+                            <input asp-for="prov_CorreoElectronico" id="prov_CorreoElectronico_Edit" class="form-control" />
+                            <label name="lbl_prov_CorreoElectronico_EditError" id="lbl_prov_CorreoElectronico_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                        <div class="form-group col-6 mt-3">
+                            <label asp-for="prov_Telefono" class="control-label"></label>
+                            <input asp-for="prov_Telefono" id="prov_Telefono_Edit" class="form-control" />
+                            <label name="lbl_prov_Telefono_EditError" id="lbl_prov_Telefono_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalEdit()" class="btn btn-success">Editar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function AbrirModalEdit(cadena) {
+        $('#prov_Nombre_Edit').on('input', function () {
+            var c = this.selectionStart,
+                r = /[^a-z0.-9]/gi,
+                v = $(this).val();
+            if (r.test(v)) {
+                $(this).val(v.replace(r, ''));
+                c--;
+            }
+            this.setSelectionRange(c, c);
+        });
+
+        $('#prov_CorreoElectronico_Edit').on('input', function () {
+            var c = this.selectionStart,
+                r = /[^a-z@0.-9]/gi,
+                v = $(this).val();
+            if (r.test(v)) {
+                $(this).val(v.replace(r, ''));
+                c--;
+            }
+            this.setSelectionRange(c, c);
+        });
+
+        $('#prov_Telefono_Edit').on('input', function () {
+            var c = this.selectionStart,
+                r = /[^a-z-0-9]/gi,
+                v = $(this).val();
+            if (r.test(v)) {
+                $(this).val(v.replace(r, ''));
+                c--;
+            }
+            this.setSelectionRange(c, c);
+        });
+
+        var datastring = cadena;
+        console.log(datastring);
+        var data = datastring.split(',');
+
+        $("#prov_Id_Edit").val(data[0]);
+        $("#prov_Nombre_Edit").val(data[1]);
+        $("#prov_CorreoElectronico_Edit").val(data[2]);
+        $("#prov_Telefono_Edit").val(data[3]);
+        $("#EditarProveedor").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalEdit() {
+        var prov_Nombre_Edit = $("#prov_Nombre_Edit").val();
+        var prov_CorreoElectronico_Edit = $("#prov_CorreoElectronico_Edit").val();
+        var prov_Telefono_Edit = $("#prov_Telefono_Edit").val();
+
+        var x = true;
+        if (prov_Nombre_Edit == null || prov_Nombre_Edit == "") {
+            x = false;
+            $("#lbl_prov_Nombre_EditError").attr('hidden', false);
+        } else {
+            $("#lbl_prov_Nombre_EditError").attr('hidden', true);
+        }
+
+        if (prov_CorreoElectronico_Edit == null || prov_CorreoElectronico_Edit == "") {
+            x = false;
+            $("#lbl_prov_CorreoElectronico_EditError").attr('hidden', false);
+        } else {
+            $("#lbl_prov_CorreoElectronico_EditError").attr('hidden', true);
+        }
+
+        if (prov_Telefono_Edit == null || prov_Telefono_Edit == "" || prov_Telefono_Edit == "0") {
+            x = false;
+            $("#lbl_prov_Telefono_EditError").attr('hidden', false);
+        } else {
+            $("#lbl_prov_Telefono_EditError").attr('hidden', true);
+        }
+
+        if (x == true) {
+            $("#formEdit").submit();
+        }
+    };
+
+</script>

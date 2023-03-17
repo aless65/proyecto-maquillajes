@@ -30,5 +30,40 @@ namespace Maquillaje.WebUI.Controllers
             return View(listadoMapeado);
         }
 
+        [HttpPost("/Proveedor/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(VW_maqu_tbProveedores_VW item)
+        {
+            var proveedor = _mapper.Map<VW_maqu_tbProveedores_VW>(item);
+            var insertar = _maquService.InsertarProveedor(proveedor);
+
+            try
+            {
+                if (insertar == 1)
+                    return RedirectToAction("Index");
+            }
+            catch
+            {
+        
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost("/Proveedor/Edit")]
+        public IActionResult Edit(VW_maqu_tbProveedores_VW item)
+        {
+            try
+            {
+                var editar = _maquService.EditarProveedor(item);
+                return RedirectToAction("Index");
+            }
+            catch (Exception error)
+            {
+
+            }
+
+            return RedirectToAction("Index");
+
+        }
     }
 }

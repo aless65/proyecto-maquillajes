@@ -1414,7 +1414,7 @@ END
 
 /*Insertar Proveedores*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_Insert
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProveedores_Insert
 	@prov_Nombre					NVARCHAR(200),
 	@prov_CorreoElectronico			NVARCHAR(150),
 	@prov_Telefono					NVARCHAR(15),
@@ -1607,7 +1607,7 @@ VALUES ('Vendedor-Facturas', 2, 7, 1),
 	   ('Recursos Humanos-Empleados', 4, 6, 1)
 
 GO
-EXEC UDP_maqu_tbProveedores_Insert 'L''Oréal Paris', 'contact@loreal.com', '1-800-322-2036', 1
+EXEC UDP_maqu_tbProveedores_Insert 'LOréal Paris', 'contact@loreal.com', '1-800-322-2036', 1
 EXEC UDP_maqu_tbProveedores_Insert 'Kylie Cosmetics', 'customerservice@kyliecosmetics.com', '833-545-9543', 1
 EXEC UDP_maqu_tbProveedores_Insert 'Armani Beauty', 'contact@giorgioarmanibeauty.fr', '0800-5870829', 1
 EXEC UDP_maqu_tbProveedores_Insert 'Hourglass Cosmetics', 'CS@hourglasscosmetics.com', '855-846-3814', 1

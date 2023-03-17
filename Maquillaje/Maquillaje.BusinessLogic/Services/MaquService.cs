@@ -465,6 +465,33 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<VW_maqu_tbProveedores_VW>();
             }
         }
+
+        public int InsertarProveedor(VW_maqu_tbProveedores_VW item)
+        {
+            try
+            {
+                return _vw_maqu_tbProveedores_VW_Repository.Insert(item);
+            }
+            catch(Exception error)
+            {
+                return 0;
+            }
+          
+        }
+
+        public int EditarProveedor(VW_maqu_tbProveedores_VW item)
+        {
+            try
+            {
+                var resultado = _vw_maqu_tbProveedores_VW_Repository.Update(item);
+                return resultado;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
         #endregion
 
     }

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_maqu_tbProveedores_VW>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h1>Detalles</h1>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model)
+        {
+        <div class="row">
+            <div class="form-group col-3">
+                <h5>ID</h5>
+                @Html.DisplayFor(modelItem => item.prov_Id)
+            </div>
+
+            <div class="form-group col-3">
+                <h5>Proveedor</h5>
+                @Html.DisplayFor(modelItem => item.prov_Nombre)
+            </div>
+
+            <div class="form-group col-3 m-3">
+                <h5>Correo Electronico</h5>
+                @Html.DisplayFor(modelItem => item.prov_CorreoElectronico)
+            </div>
+
+            <div class="form-group col-3 m-3">
+                <h5>Telefono</h5>
+                @Html.DisplayFor(modelItem => item.prov_Telefono)
+            </div>
+
+        </div>
+        <div class="form-group col-3 mt-3">
+            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.prov_Id,@item.prov_Nombre,@item.prov_CorreoElectronico,@item.prov_Telefono')">Editar</button> 
+        </div>
+        }
+        <div style="height:20px"></div>
+        <div class="card">
+            <div class="card-header"><h2>Auditoria</h2></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Accion</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><label>Creacion</label></td>
+                            <td>@Html.DisplayFor(modelItem => item.prov_UsuCreacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.prov_FechaCreacion)</td>
+                        </tr>
+                        <tr>
+                            <td>Modificacion</td>
+                            <td>@Html.DisplayFor(modelItem => item.prov_UsuModificacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.prov_FechaModificacion)</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-dark">Regresar</a>
+
+</div>
+
+@Html.Partial("_Modal_Edit", new Maquillaje.WebUI.Models.CategoriaViewModel())
+

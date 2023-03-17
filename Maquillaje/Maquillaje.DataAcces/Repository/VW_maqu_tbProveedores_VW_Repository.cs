@@ -22,7 +22,15 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Insert(VW_maqu_tbProveedores_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@prov_Nombre", item.prov_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prov_CorreoElectronico", item.prov_CorreoElectronico, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prov_Telefono", item.prov_Telefono, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prov_UsuCreacion", 1, DbType.String, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Proveedores, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public IEnumerable<VW_maqu_tbProveedores_VW> List()
@@ -33,7 +41,16 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Update(VW_maqu_tbProveedores_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@prov_Id", item.prov_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prov_Nombre", item.prov_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prov_CorreoElectronico", item.prov_CorreoElectronico, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prov_Telefono", item.prov_Telefono, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prov_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Proveedor, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

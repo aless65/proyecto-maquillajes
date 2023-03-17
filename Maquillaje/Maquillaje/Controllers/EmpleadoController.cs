@@ -145,5 +145,17 @@ namespace Maquillaje.WebUI.Controllers
             var cargarmunicipioselected = _maquService.UpdateEmpleadosMuniDDL(id);
             return Json(cargarmunicipioselected);
         }
+
+        [HttpGet("/Empleado/Details")]
+        public IActionResult Details(int id)
+        {
+            var listado = _maquService.ListadoEmpleadosView(out string error);
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbEmpleados_View>>(listado);
+
+            if (String.IsNullOrEmpty(error))
+                ModelState.AddModelError("", error);
+
+            return View(listadoMapeado);
+        }
     }
 }

@@ -674,11 +674,21 @@ BEGIN
 END
 GO
 
+SELECT * FROM maqu.tbEmpleados
 /*Vista empleados*/
 GO
 CREATE OR ALTER VIEW maqu.VW_maqu_tbEmpleados_View
 AS
-SELECT empe_Id,(SELECT empe_Nombres + ' ' + empe_Apellidos ) AS NombreCompleto FROM maqu.tbEmpleados
+SELECT empe.empe_Id,(SELECT empe_Nombres + ' ' + empe_Apellidos ) AS NombreCompleto,
+empe_Nombres, empe_Apellidos, empe_Identidad, empe_FechaNacimiento, empe_Sexo,
+estacivi_Id,depa.depa_Id,depa.depa_Nombre,empe.muni_Id,muni.muni_Nombre, 
+empe_Direccion,empe_Telefono, empe_CorreoElectronico,empe_UsuCreacion,[user1].user_NombreUsuario,
+empe_UsuModificacion = [user2].user_NombreUsuario,empe.empe_FechaCreacion,empe.empe_FechaModificacion
+FROM maqu.tbEmpleados empe INNER JOIN gral.tbMunicipios muni 
+ON empe.muni_Id = muni.muni_id INNER JOIN gral.tbDepartamentos depa
+ON muni.depa_Id = depa.depa_Id INNER JOIN acce.tbUsuarios [user1]
+ON empe.empe_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON empe.empe_UsuModificacion = [user2].user_Id
 
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_View

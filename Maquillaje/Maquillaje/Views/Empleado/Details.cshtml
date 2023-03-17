@@ -1,10 +1,9 @@
-﻿@model IEnumerable<Maquillaje.WebUI.Models.CategoriaViewModel>
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_maqu_tbEmpleados_View>
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <div class="card">
     <div class="card-header">
@@ -13,19 +12,25 @@
     <div class="card-body">
         @foreach (var item in Model)
         {
-            <div class="row">
-                <div class="form-group col-3">
-                    <h5>ID</h5>
-                    @Html.DisplayFor(modelItem => item.cate_Id)
-                </div>
-
-                <div class="form-group col-3">
-                    <h5>Nombre de categoria</h5>
-                    @Html.DisplayFor(modelItem => item.cate_Nombre)
-                </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <h5>ID</h5>
+                @Html.DisplayFor(modelItem => item.empe_Id)
             </div>
+
+            <div class="form-group col-6">
+                <h5>Empleado</h5>
+                @Html.DisplayFor(modelItem => item.NombreCompleto)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Nombre de categoria</h5>
+                @Html.DisplayFor(modelItem => item.cate_Nombre)
+            </div>
+
+        </div>
             <div class="form-group col-3 mt-3">
-                <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.cate_Id,@item.cate_Nombre')">Editar</button>
+                @*<button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.cate_Id,@item.cate_Nombre')">Editar</button>*@
             </div>
         }
         <div style="height:20px"></div>
@@ -44,13 +49,13 @@
                     {
                         <tr>
                             <td><label>Creacion</label></td>
-                            <td>@Html.DisplayFor(modelItem => item.cate_UsuCreacion)</td>
-                            <td>@Html.DisplayFor(modelItem => item.cate_FechaCreacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.empe_UsuCreacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.empe_FechaCreacion)</td>
                         </tr>
                         <tr>
                             <td>Modificacion</td>
-                            <td>@Html.DisplayFor(modelItem => item.cate_UsuModificacion)</td>
-                            <td>@Html.DisplayFor(modelItem => item.cate_FechaModificacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.empe_UsuModificacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.empe_FechaModificacion)</td>
                         </tr>
 
                     }
@@ -61,6 +66,3 @@
     <a asp-action="Index" class="btn btn-dark">Regresar</a>
 
 </div>
-
-@Html.Partial("_Modal_Edit", new Maquillaje.WebUI.Models.CategoriaViewModel())
-

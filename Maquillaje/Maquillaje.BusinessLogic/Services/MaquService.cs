@@ -479,6 +479,18 @@ namespace Maquillaje.BusinessLogic.Services
           
         }
 
+        public int DeleteProveedor(int id)
+        {
+            try
+            {
+                return _vw_maqu_tbProveedores_VW_Repository.DeleteConfirmed(id);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+        }
+
         public int EditarProveedor(VW_maqu_tbProveedores_VW item)
         {
             try

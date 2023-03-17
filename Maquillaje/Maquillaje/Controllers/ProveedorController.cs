@@ -30,6 +30,15 @@ namespace Maquillaje.WebUI.Controllers
             return View(listadoMapeado);
         }
 
+        [HttpGet("/Proveedor/Details")]
+        public IActionResult Details(int id)
+        {
+            var listado = _maquService.ListadoProveedores();
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProveedores_VW>>(listado).Where(X => X.prov_Id == id);
+
+            return View(listadoMapeado);
+        }
+
         [HttpPost("/Proveedor/Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_maqu_tbProveedores_VW item)
@@ -63,7 +72,13 @@ namespace Maquillaje.WebUI.Controllers
             }
 
             return RedirectToAction("Index");
+        }
 
+        public IActionResult Delete(int id)
+        {
+            var delete = _maquService.DeleteProveedor(id);
+
+            return RedirectToAction("Index");
         }
     }
 }

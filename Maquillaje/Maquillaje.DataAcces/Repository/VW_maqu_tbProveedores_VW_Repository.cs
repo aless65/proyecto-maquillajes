@@ -52,5 +52,15 @@ namespace Maquillaje.DataAccess.Repository
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Proveedor, parametros, commandType: CommandType.StoredProcedure);
         }
+
+        public int DeleteConfirmed(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@prov_Id", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Proveedores, parametros, commandType: CommandType.StoredProcedure);
+        }
     }
 }

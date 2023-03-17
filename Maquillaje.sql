@@ -799,6 +799,25 @@ BEGIN
 END
 
 --**************** DEPARTAMENTOS ****************--
+/*Vista Departamentos*/
+GO
+CREATE OR ALTER VIEW gral.VW_gral_tbDepartamentos_VW
+AS
+SELECT depa_Id, depa_Nombre, 
+depa_UsuCreacion,[user1].user_NombreUsuario AS depe_UsuCreacion_Nombre, depa_FechaCreacion, 
+depa_UsuModificacion,[user2].user_NombreUsuario AS depa_UsuModificacion_Nombre, depa_FechaModificacion, 
+depa_Estado
+FROM gral.tbDepartamentos depa INNER JOIN acce.tbUsuarios [user1] 
+ON depa_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON depa_UsuModificacion = [user2].user_Id 
+
+
+/*Vista Departamentos UDP*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_VW
+AS
+SELECT * FROM 
+
 /*Insertar Departamentos*/
 GO
 CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_Insert
@@ -1403,6 +1422,7 @@ prov_Estado
 FROM maqu.tbProveedores prov INNER JOIN acce.tbUsuarios [user1]
 ON prov.prov_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
 ON prov.prov_UsuModificacion = [user2].user_Id
+WHERE prov.prov_Estado = 1
 
 /*Vista proveedores UDP*/
 GO

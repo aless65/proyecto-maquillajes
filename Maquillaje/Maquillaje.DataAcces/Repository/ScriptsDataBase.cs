@@ -87,6 +87,7 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Listar_Proveedores = "maqu.UDP_maqu_tbProveedores_VW";
         public static string UDP_Insertar_Proveedores = "maqu.UDP_maqu_tbProveedores_Insert";
         public static string UDP_Editar_Proveedor = "UDP_maqu_tbProveedores_Update";
+        public static string UDP_Eliminar_Proveedores = "UDP_maqu_tbProveedores_DELETE";
         #endregion
     }
 }

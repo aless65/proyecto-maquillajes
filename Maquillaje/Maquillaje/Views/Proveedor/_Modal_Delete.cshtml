@@ -1,0 +1,33 @@
+﻿@model Maquillaje.Entities.Entities.VW_maqu_tbProveedores_VW
+<!-- Modal -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Proveedor" asp-action="Delete">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="id" name="id" hidden />
+                    <span>¿Realmente desea eliminar este proveedor?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-success">Sí</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    function eliminar(id) {
+
+        $("#id").val(id);
+
+        $("#modalDelete").appendTo("body").modal('show');
+
+    }
+</script>
+

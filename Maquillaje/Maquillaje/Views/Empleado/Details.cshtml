@@ -24,14 +24,54 @@
             </div>
 
             <div class="form-group col-6 mt-3">
-                <h5>Nombre de categoria</h5>
-                @Html.DisplayFor(modelItem => item.cate_Nombre)
+                <h5>Identidad</h5>
+                @Html.DisplayFor(modelItem => item.empe_Identidad)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Fecha Nacimiento</h5>
+                @Html.DisplayFor(modelItem => item.empe_FechaNacimiento)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Sexo</h5>
+                @Html.DisplayFor(modelItem => item.empe_Sexo)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Estado Civil</h5>
+                @Html.DisplayFor(modelItem => item.estacivi_Nombre)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Departamento</h5>
+                @Html.DisplayFor(modelItem => item.depa_Nombre)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Municipio</h5>
+                @Html.DisplayFor(modelItem => item.muni_Nombre)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Direccion</h5>
+                @Html.DisplayFor(modelItem => item.empe_Direccion)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Telefono</h5>
+                @Html.DisplayFor(modelItem => item.empe_Telefono)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Correo Electronico</h5>
+                @Html.DisplayFor(modelItem => item.empe_CorreoElectronico)
             </div>
 
         </div>
-            <div class="form-group col-3 mt-3">
-                @*<button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.cate_Id,@item.cate_Nombre')">Editar</button>*@
-            </div>
+        <div class="form-group col-3 mt-3">
+            <a asp-action="Update" asp-route-id="@item.empe_Id" class="btn btn-warning">Editar</a>
+        </div>
         }
         <div style="height:20px"></div>
         <div class="card">
@@ -49,7 +89,7 @@
                     {
                         <tr>
                             <td><label>Creacion</label></td>
-                            <td>@Html.DisplayFor(modelItem => item.empe_UsuCreacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.user_NombreUsuario)</td>
                             <td>@Html.DisplayFor(modelItem => item.empe_FechaCreacion)</td>
                         </tr>
                         <tr>

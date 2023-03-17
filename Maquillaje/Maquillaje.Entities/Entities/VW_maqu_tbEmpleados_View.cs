@@ -16,6 +16,7 @@ namespace Maquillaje.Entities.Entities
         public DateTime empe_FechaNacimiento { get; set; }
         public string empe_Sexo { get; set; }
         public int estacivi_Id { get; set; }
+        public string estacivi_Nombre { get; set; }
         public string depa_Id { get; set; }
         public string depa_Nombre { get; set; }
         public string muni_Id { get; set; }

@@ -150,10 +150,7 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Details(int id)
         {
             var listado = _maquService.ListadoEmpleadosView(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbEmpleados_View>>(listado);
-
-            if (String.IsNullOrEmpty(error))
-                ModelState.AddModelError("", error);
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbEmpleados_View>>(listado).Where(X => X.empe_Id == id);
 
             return View(listadoMapeado);
         }

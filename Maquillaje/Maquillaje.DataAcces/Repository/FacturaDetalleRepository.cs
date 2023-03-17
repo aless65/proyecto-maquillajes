@@ -60,7 +60,16 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Update(tbFacturasDetalles item)
         {
-            throw new NotImplementedException();
+            var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@factdeta_Id", item.factdeta_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_Id", item.prod_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@factdeta_Cantidad", item.factdeta_Cantidad, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@factdeta_Precio", item.factdeta_Precio, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@factdeta_UsuModificacion", item.factdeta_UsuModificacion, DbType.Decimal, ParameterDirection.Input);
+
+            return db.QueryFirst<int>(ScriptsDataBase.UDP_Editar_FacturasDetalles, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

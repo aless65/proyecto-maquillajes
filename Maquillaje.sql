@@ -1183,7 +1183,9 @@ CREATE OR ALTER VIEW maqu.VW_tbFacturasDetalles_List
 AS
 	SELECT T1.factdeta_Id,
 		   [fact_Id], 
-		   T2.prod_Nombre, 
+		   T2.prod_Id,
+		   T2.prod_Nombre,
+		   T2.cate_Id,
 		   T1.factdeta_Cantidad,
 		   factdeta_Precio,
 		   (T1.factdeta_Cantidad*factdeta_Precio) AS factdeta_PrecioTotal
@@ -1193,7 +1195,7 @@ AS
 
 /*Insertar factura detalles*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Insert 2, 6, 2, 299.09, 1
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Insert 
 	@fact_Id				INT,
 	@prod_Id				INT,
 	@factdeta_Cantidad		INT,
@@ -1232,20 +1234,46 @@ BEGIN
 	END CATCH
 END
 
-/*Eliminar Factura con sus Detalles*/
+/*Eliminar factura detalles*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbFacturas_Delete
-@fact_Id INT
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Update 
+	@factdeta_Id				INT,
+	@prod_Id					INT,
+	@factdeta_Cantidad			INT,
+	@factdeta_Precio			DECIMAL(18,2),
+	@factdeta_UsuModificacion	INT
 AS
 BEGIN
-	--Borrado Logico de la factura
-	UPDATE [maqu].[tbFacturas] 
-	SET fact_Estado = 0 
-	WHERE fact_Id = @fact_Id
+	BEGIN TRY
+		UPDATE [maqu].[tbFacturasDetalles]
+		SET [prod_Id] = @prod_Id,
+			[factdeta_Cantidad] = @factdeta_Cantidad,
+			[factdeta_Precio] = @factdeta_Precio,
+			[factdeta_UsuModificacion] = @factdeta_UsuModificacion
+		WHERE [factdeta_Id] = @factdeta_Id
 
-	--Borrado de las facturas detalles por fact_Id
-	DELETE FROM maqu.tbFacturasDetalles WHERE fact_Id = @fact_Id
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
+
+
+/*Eliminar Factura con sus Detalles*/
+--GO
+--CREATE OR ALTER PROCEDURE UDP_maqu_tbFacturas_Delete
+--@fact_Id INT
+--AS
+--BEGIN
+--	--Borrado Logico de la factura
+--	UPDATE [maqu].[tbFacturas] 
+--	SET fact_Estado = 0 
+--	WHERE fact_Id = @fact_Id
+
+--	--Borrado de las facturas detalles por fact_Id
+--	DELETE FROM maqu.tbFacturasDetalles WHERE fact_Id = @fact_Id
+--END
 
 
 --**********************Listar Productos***************************--

@@ -47,6 +47,7 @@
 
     <div class="col-8">
         @Html.Partial("_CreateDetalles", new Maquillaje.WebUI.Models.FacturaDetalleViewModel())
+        @Html.Partial("_Edit", new Maquillaje.WebUI.Models.FacturaDetalleViewModel())
         @Html.Partial("_Delete", new Maquillaje.WebUI.Models.FacturaDetalleViewModel())
     </div>
 
@@ -74,8 +75,8 @@
                             <td>@detalle.factdeta_Precio</td>
                             <td>@detalle.factdeta_PrecioTotal</td>
                             <td>
-                                <a @*asp-route-id="@detalle.fact_Id"*@ id="btnEditarDetalle" class="btn btn-warning">Editar</a>
-                                <a onclick="eliminar(@detalle.factdeta_Id, @detalle.fact_Id)" asp-route-id="@detalle.fact_Id" id="btnEliminarDetalle" class="btn btn-danger">Borrar</a>
+                                <a onclick="AbrirModalEdit('@detalle.factdeta_Id,@detalle.prod_Id,@detalle.factdeta_Cantidad,@detalle.cate_Id')" id="btnEditarDetalle" class="btn btn-warning">Editar</a>
+                                <a onclick="eliminar(@detalle.factdeta_Id, @detalle.fact_Id)" id="btnEliminarDetalle" class="btn btn-danger">Borrar</a>
                             </td>
                         </tr>
                         }
@@ -96,8 +97,6 @@
 
 
     $("#btnSiguiente").click(function () {
-
-        console.log("dio click mi rey");
 
         if (!($("#clie_Id").val() > 0)) {
             $("#clie_IdValidation").prop("hidden", false);

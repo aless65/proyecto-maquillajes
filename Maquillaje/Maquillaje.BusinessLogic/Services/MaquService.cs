@@ -348,6 +348,11 @@ namespace Maquillaje.BusinessLogic.Services
         {
             return _facturaDetalleRepository.DeleteConfirmed(id);
         }
+
+        public int UpdateFacturasDetalles(tbFacturasDetalles item)
+        {
+            return _facturaDetalleRepository.Update(item);
+        }
         #endregion
 
         #region Producto

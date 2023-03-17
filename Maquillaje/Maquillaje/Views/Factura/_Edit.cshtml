@@ -1,0 +1,101 @@
+﻿@model Maquillaje.WebUI.Models.FacturaDetalleViewModel
+<!-- Modal -->
+<div class="modal fade" id="EditarDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Categoria" asp-action="Edit" id="formEdit">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="factdeta_Id" class="form-control" id="factdeta_IdEdit" name="factdeta_Id" hidden />
+                            <div class="form-group">
+                                <label asp-for="cate" class="control-label"></label>
+                                <select class="form-control" id="cateEditar" asp-for="cate" asp-items="ViewBag.cate">
+                                    <option>--Seleccione una categoría--</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="prod_Id" class="control-label"></label>
+                                <select class="form-control" id="prodIdEditar" asp-for="prod_Id" asp-items="ViewBag.prod_Id">
+                                </select>
+                                <label name="prod_IdEditError" id="prod_IdEditError" class="control-label text-danger" hidden">Este campo es requerido</label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="factdeta_Cantidad" class="control-label"></label>
+                                <input class="form-control" id="factdeta_CantidadEditar" asp-for="factdeta_Cantidad" />
+                                <label name="factdeta_CantidadEditError" id="factdeta_CantidadEditError" class="control-label text-danger" hidden">Este campo es requerido</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalEdit()" class="btn btn-success">Editar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function AbrirModalEdit(cadena) {
+        var datastring = cadena;
+        console.log(datastring);
+        var data = datastring.split(',');
+        $("#factdeta_IdEdit").val(data[0]);
+        $("#prodIdEditar").val(data[1]);
+        $("#factdeta_CantidadEditar").val(data[2]);
+        $("cateEditar").val(data[3]);
+        console.log(data[2]);
+        $("#prod_IdEditError").attr('hidden', true);
+        $("#factdeta_CantidadEditError").attr('hidden', true);
+        $("#EditarDetalles").appendTo('body').modal('show');
+    };
+
+    $("#cateEditar").change(function () {
+
+        var cate_Id = $("#cateEditar").val();
+
+        console.log("cambiaste la cate");
+
+        $.getJSON('/Factura/CargarProductos', { id: cate_Id })
+            .done(function (productos) {
+                var productosSelect = $('#prodIdEditar');
+                productosSelect.empty();
+                productosSelect.append($('<option>', {
+                    value: '',
+                    text: '--Selecciona un producto--'
+                }));
+                $.each(productos, function (index, item) {
+                    productosSelect.append($('<option>', {
+                        value: item.prod_Id,
+                        text: item.prod_Nombre
+                    }));
+                });
+                console.log("sí hay productos bro");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
+            });
+    })
+</script>
+
+<script>
+    function GuardarModalEdit() {
+        var cate_Nombre = $('#cate_Nombre_Edit').val();
+
+        $("#lbl_cate_NombreEditError").attr('hidden', true);
+
+        if (cate_Nombre != "") {
+            $("#formEdit").submit();
+        } else {
+            $("#lbl_cate_NombreEditError").attr('hidden', false);
+        }
+
+    }
+
+</script>

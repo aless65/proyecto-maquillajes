@@ -327,11 +327,11 @@ namespace Maquillaje.BusinessLogic.Services
         #endregion
 
         #region Facturas Detalles
-        public IEnumerable<VW_tbFacturasDetalles_List> ListadoFacturasDetalles()
+        public IEnumerable<VW_tbFacturasDetalles_List> ListadoFacturasDetalles(int id)
         {
             try
             {
-                return _facturaDetalleRepository.ListView();
+                return _facturaDetalleRepository.ListView(id);
             }
             catch
             {

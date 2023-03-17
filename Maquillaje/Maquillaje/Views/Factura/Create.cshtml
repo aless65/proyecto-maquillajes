@@ -26,12 +26,14 @@
                                 <select asp-for="clie_Id" class="form-control" asp-items="ViewBag.ddlCliente">
                                     <option>--Seleccione un cliente--</option>
                                 </select>
+                                <label id="clie_IdValidation" class="text-danger" hidden>El campo Cliente es obligatorio</label>
                             </div>
                             <div class="form-group mt-2">
                                 <label asp-for="meto_Id" class="control-label"></label>
                                 <select asp-for="meto_Id" class="form-control" asp-items="ViewBag.ddlMetodo">
                                     <option>--Seleccione un método de pago--</option>
                                 </select>
+                                <label id="meto_IdValidation" class="text-danger" hidden>El campo Método de Pago es obligatorio</label>
                             </div>
                             <div class="form-group mt-3">
                                 <input type="button" value="Siguiente" id="btnSiguiente" class="btn btn-info" />
@@ -48,21 +50,57 @@
     </div>
 
     <div class="row mt-4">
-        @Html.Partial("_IndexDetalles", new List<Maquillaje.Entities.Entities.VW_tbFacturasDetalles_List>())
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="DataTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detalle in ViewBag.detalles)
+                        {
+                            <tr>
+                                <td>@detalle.fact_Id</td>
+                                <td>@detalle.prod_Nombre</td>
+                                <td>@detalle.factdeta_Cantidad</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
     $("#prod_Id").prop("disabled", true);
     $("#factdeta_Cantidad").prop("disabled", true);
-    $("#factdeta_Precio").prop("disabled", true);
+    $("#factdeta_PrecioShow").prop("disabled", true);
     $("#cate").prop("disabled", true);
     $("#btnContinuar").prop("disabled", true);
     $("#btnFinalizar").prop("disabled", true);
 
+
     $("#btnSiguiente").click(function () {
 
-        if ($("#meto_Id") != "" && $("#clie_Id") != "") {
+        var cliente = $("#clie_Id").val();
+        var metodo = $("#meto_Id").val();
+
+        if (cliente == "") {
+            $("#clie_IdValidation").prop("hidden", false);
+            console.log("cliente");
+        }
+
+        if (metodo == "") {
+            $("#meto_IdValidation").prop("hidden", false);
+            console.log("metodo");
+        }
+
+        if ($("#meto_Id").val() > 0 && $("#clie_Id").val() > 0) {
 
             sessionStorage.setItem("inserta", "jaja");
 
@@ -71,6 +109,11 @@
     });
 
     $(document).ready(function () {
+        console.log(sessionStorage.getItem("inserta"));
+
+        $("#clie_IdValidation").prop("hidden", true);
+        $("#meto_IdValidation").prop("hidden", true);
+
         if (sessionStorage.getItem("inserta") != null) {
             $("#clie_Id").prop("disabled", true);
             $("#meto_Id").prop("disabled", true);
@@ -83,7 +126,6 @@
             $("#btnContinuar").prop("disabled", false);
             $("#btnFinalizar").prop("disabled", false);
         }
-        
     })
 </script>
 

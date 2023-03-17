@@ -74,6 +74,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[acce].[VW_acce_tbUsuarios_View]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[maqu].[VW_maqu_tbClientes_DDLMunicipios]",
          "ObjectType": 3
       },
@@ -83,6 +87,10 @@
       },
       {
          "Name": "[maqu].[VW_maqu_tbEmpleados_View]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[maqu].[VW_maqu_tbProductos_VW]",
          "ObjectType": 3
       },
       {

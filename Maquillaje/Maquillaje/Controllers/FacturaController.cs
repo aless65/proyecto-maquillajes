@@ -42,16 +42,20 @@ namespace Maquillaje.WebUI.Controllers
         //}
 
         [HttpGet("/Facturas/Create")]
-        public IActionResult Create()
+        public IActionResult Create(FacturaDetalleViewModel item)
         {
             var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
             var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
             var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
+            var detalles = _maquService.ListadoFacturasDetalles(item.fact_Id);
 
             ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
 
             ViewBag.ddlCliente = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
             ViewBag.ddlMetodo = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+            ViewBag.detalles = detalles;
+
+
 
             return View();
         }
@@ -67,11 +71,13 @@ namespace Maquillaje.WebUI.Controllers
             var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
             var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
             var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
-            
+            var detalles = _maquService.ListadoFacturasDetalles(item.fact_Id);
+
 
             ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
             ViewBag.ddlCliente = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
             ViewBag.ddlMetodo = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+            ViewBag.detalles = detalles;
 
 
             if (insertar != 0)
@@ -88,8 +94,11 @@ namespace Maquillaje.WebUI.Controllers
         {
             var facturaDetalle = _mapper.Map<tbFacturasDetalles>(item);
             var create = _maquService.InsertFacturasDetalles(facturaDetalle);
+            var detalles = _maquService.ListadoFacturasDetalles(item.fact_Id);
 
-            if(create == 1)
+            ViewBag.detalles = detalles;
+
+            if (create == 1)
             {
                 return RedirectToAction("Create");
             }

@@ -858,6 +858,8 @@ BEGIN
 			UPDATE [maqu].[tbMetodosPago]
 			SET [meto_Estado] = 1
 			WHERE meto_Nombre = @meto_Nombre
+
+			SELECT 1
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1179,7 +1181,7 @@ END
 GO
 CREATE OR ALTER VIEW maqu.VW_tbFacturasDetalles_List
 AS
-	SELECT T1.factdeta_Id
+	SELECT T1.factdeta_Id,
 		   [fact_Id], 
 		   T2.prod_Nombre, 
 		   T1.factdeta_Cantidad,
@@ -1442,6 +1444,7 @@ BEGIN
 	WHERE user_Id = @user_Id
 END
 
+GO
 /*UDP para vista de usuarios*/
 CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_View 
 @user_Id INT

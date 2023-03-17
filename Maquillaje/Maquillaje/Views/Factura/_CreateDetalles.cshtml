@@ -10,7 +10,7 @@
             <form asp-controller="Factura" asp-action="CreateDetalles">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <input asp-for="fact_Id" id="fact_Id" asp-items="ViewBag.fact_Id" />
+                    <input asp-for="fact_Id" value="@ViewBag.fact_Id" />
                 </div>
                 <div class="form-group">
                     <label asp-for="cate" class="control-label"></label>
@@ -33,6 +33,7 @@
                 </div>
                 <div class="form-group mt-2">
                     <label asp-for="factdeta_Precio" class="control-label"></label>
+                    <input id="factdeta_PrecioShow" class="form-control"/>
                     <input asp-for="factdeta_Precio" class="form-control" />
                     <span asp-validation-for="factdeta_Precio" class="text-danger"></span>
                 </div>
@@ -47,6 +48,7 @@
 
 <script>
     $("#fact_Id").prop("hidden", true);
+    $("#factdeta_Precio").prop("hidden", true);
 
     $("#cate").change(function () {
         var cate_Id = $("#cate").val();
@@ -80,6 +82,7 @@
             .done(function (productos) {
                 $.each(productos, function (index, item) {
                     $("#factdeta_Precio").val(item.prod_PrecioUni);
+                    $("#factdeta_PrecioShow").val(item.prod_PrecioUni);
                 });
                 console.log(productos);
             })
@@ -87,5 +90,15 @@
                 console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
             });
     })
+
+    $("#btnFinalizar").click(function () {
+
+        //if ($("#meto_Id") != "" && $("#clie_Id") != "") {
+
+        //    sessionStorage.setItem("inserta", "jaja");
+
+        //    $("#formCreate").submit();
+        //}
+    });
 
 </script>

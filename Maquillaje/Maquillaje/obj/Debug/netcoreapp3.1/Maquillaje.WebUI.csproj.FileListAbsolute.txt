@@ -563,7 +563,6 @@ C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debu
 C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.pdb
 C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.genruntimeconfig.cache
 C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Factura\_IndexDetalles.cshtml.g.cs
-C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\FacturaDetalle\_IndexDetalles.cshtml.g.cs
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.csproj.AssemblyReference.cache
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.AssemblyInfoInputs.cache
@@ -749,3 +748,7 @@ C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\D
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.genruntimeconfig.cache
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\FacturaDetalle\Index.cshtml.g.cs
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Factura\_CreateDetalles.cshtml.g.cs
+C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\FacturaDetalle\Index.cshtml.g.cs
+C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Details.cshtml.g.cs
+C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\_Modal_Delete.cshtml.g.cs
+C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\_Modal_Edit.cshtml.g.cs

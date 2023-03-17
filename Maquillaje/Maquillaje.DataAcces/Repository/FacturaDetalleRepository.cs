@@ -38,12 +38,12 @@ namespace Maquillaje.DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<VW_tbFacturasDetalles_List> ListView()
+        public IEnumerable<VW_tbFacturasDetalles_List> ListView(int id)
         {
             var db = new SqlConnection(AndreasContext.ConnectionString);
 
             var parametros = new DynamicParameters();
-            parametros.Add("@fact_Id", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@fact_Id", id, DbType.Int32, ParameterDirection.Input);
 
             return db.Query<VW_tbFacturasDetalles_List>(ScriptsDataBase.UDP_Listar_FacturasDetalles, parametros, commandType: CommandType.StoredProcedure);
         }

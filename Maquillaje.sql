@@ -788,6 +788,19 @@ ON muni.muni_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
 ON muni.muni_UsuModificacion = [user2].user_Id
 WHERE muni_Estado = 1
 
+/*Insertar Municipios*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Insert
+@muni_Id				CHAR(4),
+@muni_Nombre			NVARCHAR(150),
+@depa_Id				CHAR(2),
+@muni_UsuCreacion		INT
+AS
+BEGIN
+INSERT INTO gral.tbMunicipios(muni_id, muni_Nombre, depa_Id, muni_UsuCreacion, muni_FechaCreacion, muni_UsuModificacion, muni_FechaModificacion, muni_Estado)
+VALUES(@muni_Id,@muni_Nombre,@depa_Id,@muni_UsuCreacion,GETDATE(),NULL,NULL,1)
+END
+
 /*Vista Municipios UDP*/
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_VW

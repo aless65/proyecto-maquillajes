@@ -22,7 +22,15 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Insert(VW_gral_tbMunicipios_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@muni_Id", item.muni_id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@muni_Nombre", item.muni_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@depa_Id", item.depa_Id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@muni_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Municipios, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public IEnumerable<VW_gral_tbMunicipios_VW> List()

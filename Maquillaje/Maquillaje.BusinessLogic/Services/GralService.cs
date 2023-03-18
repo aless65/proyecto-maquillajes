@@ -118,6 +118,19 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<VW_gral_tbMunicipios_VW>();
             }
         }
+
+        public int InsertarMunicipio(VW_gral_tbMunicipios_VW item)
+        {
+            try
+            {
+                return _vw_gral_tbMunicipios_vw_Repository.Insert(item);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
         #endregion
 
         #region EstadosCiviles

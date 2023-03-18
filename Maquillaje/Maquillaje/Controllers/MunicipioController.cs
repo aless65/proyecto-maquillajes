@@ -34,5 +34,23 @@ namespace Maquillaje.WebUI.Controllers
             
             return View(listadoMapeado);
         }
+
+
+        [HttpPost("/Municipio/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(VW_gral_tbMunicipios_VW item)
+        {
+            try
+            {
+                var insertar = _gralService.InsertarMunicipio(item);
+                return RedirectToAction("Index");
+            }
+            catch (Exception error)
+            {
+
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

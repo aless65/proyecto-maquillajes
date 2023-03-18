@@ -15,6 +15,15 @@ namespace Maquillaje.DataAccess.Repository
             throw new NotImplementedException();
         }
 
+        public int DeleteConfirmed(string id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@depa_Id",id, DbType.String, ParameterDirection.Input);
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Departamentos, parametros, commandType: CommandType.StoredProcedure);
+        }
+
         public VW_gral_tbDepartamentos_VW find(int? id)
         {
             throw new NotImplementedException();
@@ -22,7 +31,15 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Insert(VW_gral_tbDepartamentos_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@depa_Id", item.depa_Id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@depa_Nombre", item.depa_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@depa_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Departamentos, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public IEnumerable<VW_gral_tbDepartamentos_VW> List()
@@ -34,7 +51,15 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Update(VW_gral_tbDepartamentos_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@depa_Id", item.depa_Id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@depa_Nombre", item.depa_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@depa_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+     
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Departamentos, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

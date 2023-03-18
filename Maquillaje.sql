@@ -816,23 +816,24 @@ ON depa_UsuModificacion = [user2].user_Id
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_VW
 AS
-SELECT * FROM gral.VW_gral_tbDepartamentos_VW
+SELECT * FROM gral.VW_gral_tbDepartamentos_VW WHERE depa_Estado = 1
 
 /*Insertar Departamentos*/
 GO
-CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_Insert
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_Insert
+	@depa_Id			NVARCHAR(2),
 	@depa_Nombre 		NVARCHAR(100),
 	@depa_UsuCreacion 	INT
 AS
 BEGIN
-	INSERT INTO gral.tbDepartamentos(depa_Nombre, depa_UsuCreacion)
-	VALUES(@depa_Nombre,@depa_UsuCreacion)
+	INSERT INTO gral.tbDepartamentos(depa_Id,depa_Nombre, depa_UsuCreacion)
+	VALUES(@depa_Id,@depa_Nombre,@depa_UsuCreacion)
 END
 
 /*Editar Departamentos*/
 GO
-CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_UPDATE
-	@depa_Id					INT,
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_UPDATE
+	@depa_Id					NVARCHAR(2),
 	@depa_Nombre 				NVARCHAR(100),
 	@depa_UsuModificacion 		INT
 AS
@@ -847,7 +848,7 @@ END
 /*Eliminar Departamentos*/
 GO
 CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_DELETE
-	@depa_Id INT
+	@depa_Id CHAR(2)
 AS
 BEGIN
 	UPDATE gral.tbDepartamentos

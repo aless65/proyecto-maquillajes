@@ -39,6 +39,9 @@ namespace Maquillaje.DataAccess.Repository
         #region Departamentos
         public static string UDP_Listar_Departamentos = "gral.UPD_gral_tbDepartamentos_List";
         public static string UDP_Listar_Departamentos_Vista = "gral.UDP_gral_tbDepartamentos_VW";
+        public static string UDP_Insertar_Departamentos = "gral.UDP_gral_tbDepartamentos_Insert";
+        public static string UDP_Editar_Departamentos = "gral.UDP_gral_tbDepartamentos_UPDATE";
+        public static string UDP_Eliminar_Departamentos = "UDP_gral_tbDepartamentos_DELETE";
         #endregion
 
         #region EstadosCiviles

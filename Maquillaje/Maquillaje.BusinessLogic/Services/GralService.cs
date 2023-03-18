@@ -51,6 +51,47 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<VW_gral_tbDepartamentos_VW>();
             }
         }
+
+        public int InsertarDepartamento(VW_gral_tbDepartamentos_VW item)
+        {
+            try
+            {
+                return _vw_gral_tbDepartamentos_vw_Repository.Insert(item);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
+
+        public int EditarDepartamento(VW_gral_tbDepartamentos_VW item)
+        {
+            try
+            {
+                var resultado = _vw_gral_tbDepartamentos_vw_Repository.Update(item);
+                return resultado;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+
+        public int EliminarDepartamento(string id)
+        {
+            try
+            {
+                var resultado = _vw_gral_tbDepartamentos_vw_Repository.DeleteConfirmed(id);
+                return resultado;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
         #endregion
 
         #region Municipios

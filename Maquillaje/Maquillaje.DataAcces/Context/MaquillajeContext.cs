@@ -19,8 +19,17 @@ namespace Maquillaje.DataAccess.Context
         {
         }
 
+        public virtual DbSet<VW_acce_tbUsuarios_View> VW_acce_tbUsuarios_View { get; set; }
+        public virtual DbSet<VW_gral_tbDepartamentos_VW> VW_gral_tbDepartamentos_VW { get; set; }
         public virtual DbSet<VW_maqu_tbClientes_DDLMunicipios> VW_maqu_tbClientes_DDLMunicipios { get; set; }
+        public virtual DbSet<VW_maqu_tbClientes_VW> VW_maqu_tbClientes_VW { get; set; }
         public virtual DbSet<VW_maqu_tbEmpleados_DDLMunicipios> VW_maqu_tbEmpleados_DDLMunicipios { get; set; }
+        public virtual DbSet<VW_maqu_tbEmpleados_View> VW_maqu_tbEmpleados_View { get; set; }
+        public virtual DbSet<VW_maqu_tbMetodosPago_View> VW_maqu_tbMetodosPago_View { get; set; }
+        public virtual DbSet<VW_maqu_tbProductos_VW> VW_maqu_tbProductos_VW { get; set; }
+        public virtual DbSet<VW_maqu_tbProveedores_VW> VW_maqu_tbProveedores_VW { get; set; }
+        public virtual DbSet<VW_tbFacturasDetalles_List> VW_tbFacturasDetalles_List { get; set; }
+        public virtual DbSet<VW_tbFacturas_List> VW_tbFacturas_List { get; set; }
         public virtual DbSet<tbCategorias> tbCategorias { get; set; }
         public virtual DbSet<tbClientes> tbClientes { get; set; }
         public virtual DbSet<tbDepartamentos> tbDepartamentos { get; set; }
@@ -40,6 +49,62 @@ namespace Maquillaje.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+
+            modelBuilder.Entity<VW_acce_tbUsuarios_View>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_acce_tbUsuarios_View", "acce");
+
+                entity.Property(e => e.empe_NombreCompleto).HasMaxLength(201);
+
+                entity.Property(e => e.role_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.user_Contrasena).IsRequired();
+
+                entity.Property(e => e.user_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.user_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.user_NombreUsuario)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.user_UsuCreacion_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.user_UsuModificacion_Nombre).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_gral_tbDepartamentos_VW>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_gral_tbDepartamentos_VW", "gral");
+
+                entity.Property(e => e.depa_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.depa_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.depa_Id)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.depa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.depa_UsuModificacion_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.depe_UsuCreacion_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
 
             modelBuilder.Entity<VW_maqu_tbClientes_DDLMunicipios>(entity =>
             {
@@ -66,6 +131,66 @@ namespace Maquillaje.DataAccess.Context
                     .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+            });
+
+            modelBuilder.Entity<VW_maqu_tbClientes_VW>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_maqu_tbClientes_VW", "maqu");
+
+                entity.Property(e => e.clie_CorreoElectronico)
+                    .IsRequired()
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.clie_DireccionExacta)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.clie_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.clie_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.clie_Identidad)
+                    .IsRequired()
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.clie_NombreCompleto).HasMaxLength(601);
+
+                entity.Property(e => e.clie_Sexo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.clie_Telefono)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.clie_UsuCreacion_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.depa_Id)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.depa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.muni_Id)
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.muni_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(80);
             });
 
             modelBuilder.Entity<VW_maqu_tbEmpleados_DDLMunicipios>(entity =>
@@ -95,12 +220,206 @@ namespace Maquillaje.DataAccess.Context
                     .IsFixedLength(true);
             });
 
+            modelBuilder.Entity<VW_maqu_tbEmpleados_View>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_maqu_tbEmpleados_View", "maqu");
+
+                entity.Property(e => e.NombreCompleto).HasMaxLength(201);
+
+                entity.Property(e => e.depa_Id)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.depa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.empe_Apellidos)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.empe_CorreoElectronico)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.empe_Direccion)
+                    .IsRequired()
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.empe_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.empe_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.empe_FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.empe_Identidad)
+                    .IsRequired()
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.empe_Nombres)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.empe_Sexo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.empe_Telefono)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.empe_UsuModificacion).HasMaxLength(100);
+
+                entity.Property(e => e.estacivi_Nombre).HasMaxLength(50);
+
+                entity.Property(e => e.muni_Id)
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.muni_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(80);
+
+                entity.Property(e => e.user_NombreUsuario)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_maqu_tbMetodosPago_View>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_maqu_tbMetodosPago_View", "maqu");
+
+                entity.Property(e => e.meto_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.meto_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.meto_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.meto_UsuCreacion_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.meto_UsuModificacion_Nombre).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_maqu_tbProductos_VW>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_maqu_tbProductos_VW", "maqu");
+
+                entity.Property(e => e.cate_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.prod_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.prod_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.prod_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.prod_PrecioUni).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.prov_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.user_UsuCreacion_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.user_UsuModificacion_Nombre).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_maqu_tbProveedores_VW>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_maqu_tbProveedores_VW", "maqu");
+
+                entity.Property(e => e.prov_CorreoElectronico)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.prov_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.prov_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.prov_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.prov_Telefono)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.prov_UsuCreacion_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.prov_UsuModificacion_Nombre).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_tbFacturasDetalles_List>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbFacturasDetalles_List", "maqu");
+
+                entity.Property(e => e.factdeta_Precio).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.factdeta_PrecioTotal).HasColumnType("decimal(29, 2)");
+
+                entity.Property(e => e.prod_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<VW_tbFacturas_List>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbFacturas_List", "maqu");
+
+                entity.Property(e => e.clie_Nombres)
+                    .IsRequired()
+                    .HasMaxLength(601);
+
+                entity.Property(e => e.empe_Nombres)
+                    .IsRequired()
+                    .HasMaxLength(201);
+
+                entity.Property(e => e.fact_Fecha).HasColumnType("datetime");
+
+                entity.Property(e => e.meto_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
             modelBuilder.Entity<tbCategorias>(entity =>
             {
                 entity.HasKey(e => e.cate_Id)
                     .HasName("PK_maqu_tbCategorias_cate_Id");
 
                 entity.ToTable("tbCategorias", "maqu");
+
+                entity.HasIndex(e => e.cate_Nombre, "UQ_maqu_tbCategorias_cate_Nombre")
+                    .IsUnique();
 
                 entity.Property(e => e.cate_Estado)
                     .IsRequired()
@@ -374,6 +693,12 @@ namespace Maquillaje.DataAccess.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_maqu_tbFacturas_maqu_tbClientes_clie_Id");
 
+                entity.HasOne(d => d.empe)
+                    .WithMany(p => p.tbFacturas)
+                    .HasForeignKey(d => d.empe_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_maqu_tbFacturas_maqu_tbEmpleados_empe_Id");
+
                 entity.HasOne(d => d.fact_UsuCreacionNavigation)
                     .WithMany(p => p.tbFacturasfact_UsuCreacionNavigation)
                     .HasForeignKey(d => d.fact_UsuCreacion)
@@ -427,6 +752,12 @@ namespace Maquillaje.DataAccess.Context
                     .WithMany(p => p.tbFacturasDetallesfactdeta_UsuModificacionNavigation)
                     .HasForeignKey(d => d.factdeta_UsuModificacion)
                     .HasConstraintName("FK_maqu_tbFacturasDetalles_acce_tbUsuarios_factdeta_UsuModificacion_user_Id");
+
+                entity.HasOne(d => d.prod)
+                    .WithMany(p => p.tbFacturasDetalles)
+                    .HasForeignKey(d => d.prod_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_maqu_tbFacturasDetalles_maqu_tbProductos_prod_Id");
             });
 
             modelBuilder.Entity<tbMetodosPago>(entity =>

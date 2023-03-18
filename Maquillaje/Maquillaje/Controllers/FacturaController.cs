@@ -87,6 +87,20 @@ namespace Maquillaje.WebUI.Controllers
             return View(item);
         }
 
+
+        [HttpGet("/Facturas/Update")]
+        public IActionResult Update(int id)
+        {
+            var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
+            var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
+            var factura = _maquService.ObtenerIDFactura(id);
+
+            ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
+            ViewBag.meto_Id = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+
+            return View(factura);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateDetalles(FacturaDetalleViewModel item)
@@ -135,12 +149,15 @@ namespace Maquillaje.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(FacturaDetalleViewModel item)
+        public IActionResult Edit(FacturaDetalleViewModel item)
         {
             var facdetalle = _mapper.Map<tbFacturasDetalles>(item);
             var update = _maquService.UpdateFacturasDetalles(facdetalle);
             var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
+            var detalles = _maquService.ListadoFacturasDetalles(item.fact_Id);
 
+            ViewBag.fact_Id = item.fact_Id;
+            ViewBag.detalles = detalles;
             ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
 
             if (update == 1)
@@ -148,7 +165,7 @@ namespace Maquillaje.WebUI.Controllers
 
             }
 
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", item);
         }
 
         public IActionResult CargarProductos(int id)

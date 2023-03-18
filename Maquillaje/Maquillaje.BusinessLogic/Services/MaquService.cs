@@ -356,6 +356,11 @@ namespace Maquillaje.BusinessLogic.Services
         {
             return _facturaRepository.Insert(item);
         }
+
+        public tbFacturas ObtenerIDFactura(int id)
+        {
+            return _facturaRepository.find(id);
+        }
         #endregion
 
         #region Facturas Detalles

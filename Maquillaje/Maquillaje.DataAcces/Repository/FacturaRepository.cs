@@ -17,7 +17,9 @@ namespace Maquillaje.DataAccess.Repository
 
         public tbFacturas find(int? id)
         {
-            throw new NotImplementedException();
+            using var db = new AndreasContext();
+            var listado = db.tbFacturas.Find(id);
+            return listado;
         }
 
         public int Insert(tbFacturas item)

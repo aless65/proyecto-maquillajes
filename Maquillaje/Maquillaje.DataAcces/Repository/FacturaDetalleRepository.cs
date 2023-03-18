@@ -38,7 +38,6 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@fact_Id", item.fact_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@prod_Id", item.prod_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@factdeta_Cantidad", item.factdeta_Cantidad, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@factdeta_Precio", item.factdeta_Precio, DbType.Decimal, ParameterDirection.Input);
             parametros.Add("@factdeta_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Insertar_FacturasDetalles, parametros, commandType: CommandType.StoredProcedure);
@@ -66,7 +65,6 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@factdeta_Id", item.factdeta_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@prod_Id", item.prod_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@factdeta_Cantidad", item.factdeta_Cantidad, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@factdeta_Precio", item.factdeta_Precio, DbType.Decimal, ParameterDirection.Input);
             parametros.Add("@factdeta_UsuModificacion", item.factdeta_UsuModificacion, DbType.Decimal, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Editar_FacturasDetalles, parametros, commandType: CommandType.StoredProcedure);

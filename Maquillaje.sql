@@ -1274,11 +1274,12 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Insert
 	@fact_Id				INT,
 	@prod_Id				INT,
 	@factdeta_Cantidad		INT,
-	@factdeta_Precio		DECIMAL(18,2),
 	@factdeta_UsuCreacion	INT
 AS
 BEGIN
 	BEGIN TRY
+		DECLARE @factdeta_Precio DECIMAL(18,2) = (SELECT [prod_PrecioUni] FROM [maqu].[tbProductos] WHERE prod_Id = @prod_Id)
+
 		INSERT INTO [maqu].[tbFacturasDetalles](fact_Id, 
 												prod_Id, 
 												factdeta_Cantidad, 
@@ -1315,11 +1316,12 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturasDetalles_Update
 	@factdeta_Id				INT,
 	@prod_Id					INT,
 	@factdeta_Cantidad			INT,
-	@factdeta_Precio			DECIMAL(18,2),
 	@factdeta_UsuModificacion	INT
 AS
 BEGIN
 	BEGIN TRY
+		DECLARE @factdeta_Precio DECIMAL(18,2) = (SELECT [prod_PrecioUni] FROM [maqu].[tbProductos] WHERE prod_Id = @prod_Id)
+
 		UPDATE [maqu].[tbFacturasDetalles]
 		SET [prod_Id] = @prod_Id,
 			[factdeta_Cantidad] = @factdeta_Cantidad,

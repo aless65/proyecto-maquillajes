@@ -1,7 +1,7 @@
 ﻿@model Maquillaje.WebUI.Models.FacturaDetalleViewModel
 <!-- Modal -->
 <div class="modal fade" id="EditarDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <form method="post" asp-controller="Categoria" asp-action="Edit" id="formEdit">
+    <form method="post" asp-controller="Factura" asp-action="Edit" id="formEdit">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,9 +9,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="factdeta_Id" class="form-control" id="factdeta_IdEdit" name="factdeta_Id" hidden />
+                            <input asp-for="fact_Id" class="form-control" id="fact_IdEdit" name="fact_Id" hidden />
                             <div class="form-group">
                                 <label asp-for="cate" class="control-label"></label>
                                 <select class="form-control" id="cateEditar" asp-for="cate" asp-items="ViewBag.cate">
@@ -49,11 +50,36 @@
         $("#factdeta_IdEdit").val(data[0]);
         $("#prodIdEditar").val(data[1]);
         $("#factdeta_CantidadEditar").val(data[2]);
-        $("cateEditar").val(data[3]);
-        console.log(data[2]);
+        $("#cateEditar").val(data[3]);
+        $("#fact_IdEdit").val(data[4]);
         $("#prod_IdEditError").attr('hidden', true);
         $("#factdeta_CantidadEditError").attr('hidden', true);
         $("#EditarDetalles").appendTo('body').modal('show');
+
+        $.getJSON('/Factura/CargarProductos', { id: data[3] })
+            .done(function (productos) {
+                var productosSelect = $('#prodIdEditar');
+                productosSelect.empty();
+                productosSelect.append($('<option>', {
+                    value: '',
+                    text: '--Selecciona un producto--'
+                }));
+                $.each(productos, function (index, item) {
+                    productosSelect.append($('<option>', {
+                        value: item.prod_Id,
+                        text: item.prod_Nombre
+                    }));
+                });
+
+                $("#prodIdEditar").val(data[1]);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
+            });
+
+        $(document).ajaxComplete(function () {
+
+        });
     };
 
     $("#cateEditar").change(function () {
@@ -76,7 +102,6 @@
                         text: item.prod_Nombre
                     }));
                 });
-                console.log("sí hay productos bro");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
@@ -86,16 +111,28 @@
 
 <script>
     function GuardarModalEdit() {
-        var cate_Nombre = $('#cate_Nombre_Edit').val();
+        var producto = $('#prodIdEditar').val();
+        var cantidad = $('#factdeta_CantidadEditar').val();
 
-        $("#lbl_cate_NombreEditError").attr('hidden', true);
+        $("#prod_IdEditError").attr('hidden', true);
+        $("#factdeta_CantidadEditError").attr('hidden', true);
 
-        if (cate_Nombre != "") {
-            $("#formEdit").submit();
+        if (producto != "") {
+            $("#prod_IdEditError").attr('hidden', true);
         } else {
-            $("#lbl_cate_NombreEditError").attr('hidden', false);
+            $("#prod_IdEditError").attr('hidden', false);
         }
 
+        if (cantidad != "") {
+            $("#factdeta_CantidadEditError").attr('hidden', true);
+        } else {
+            $("#factdeta_CantidadEditError").attr('hidden', false);
+        }
+
+        if (producto != "" && cantidad != "") {
+
+            $("#formEdit").submit();
+        }
     }
 
 </script>

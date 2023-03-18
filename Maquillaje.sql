@@ -774,6 +774,26 @@ ON t2.depa_Id = t3.depa_Id
 
 
 --********************Municipios****************************--
+/*Vista Municipios*/
+GO
+CREATE OR ALTER VIEW gral.VW_gral_tbMunicipios_VW
+AS
+SELECT muni_id, muni_Nombre, 
+muni.depa_Id,depa.depa_Nombre, muni_UsuCreacion,[user1].user_NombreUsuario AS muni_UsuCreacion_Nombre, 
+muni_FechaCreacion, muni_UsuModificacion,[user2].user_NombreUsuario AS muni_UsuModificacion_Nombre, 
+muni_FechaModificacion, muni_Estado
+FROM gral.tbMunicipios muni INNER JOIN gral.tbDepartamentos depa
+ON muni.depa_Id = depa.depa_Id INNER JOIN acce.tbUsuarios [user1]
+ON muni.muni_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON muni.muni_UsuModificacion = [user2].user_Id
+WHERE muni_Estado = 1
+
+/*Vista Municipios UDP*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_VW
+AS
+SELECT * FROM gral.VW_gral_tbMunicipios_VW
+
 /*Listado municipios para DropDownList*/
 GO 
 CREATE OR ALTER PROCEDURE UDP_gral_tbMunicipios_ListDDL

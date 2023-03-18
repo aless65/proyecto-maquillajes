@@ -1,0 +1,116 @@
+﻿@model Maquillaje.Entities.Entities.VW_gral_tbMunicipios_VW;
+
+<!-- Modal -->
+<div class="modal fade" id="CrearDepartamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Municipio" asp-action="Create" id="formCreate">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Departamento</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group col-6">
+                            <label asp-for="muni_id" class="control-label"></label>
+                            <input asp-for="muni_id" id="muni_Id" class="form-control" />
+                            <label name="lbl_muni_Id_CreateError" id="lbl_muni_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                            <label name="lbl_muni_Id_CreateError1" id="lbl_muni_Id_CreateError1" class="control-label" hidden style="color: red;">Ingrese un ID Valido</label>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="muni_Nombre" class="control-label"></label>
+                            <input asp-for="muni_Nombre" id="muni_Nombre" class="form-control" />
+                            <label name="lbl_muni_Nombre_CreateError" id="lbl_muni_Nombre_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                        <div class="form-group col-6 mt-3">
+                            <label asp-for="depa_Id" class="control-label"></label>
+                            <select asp-for="depa_Id" id="depa_Id" class="form-control" asp-items="ViewBag.depa_Id">
+                                <option value="">--Seleccione una opcion--</option>
+                            </select>
+                            <label name="lbl_depa_Id_CreateError" id="lbl_depa_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalCreate()" class="btn btn-success">Crear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('#muni_Id').on('input', function () {
+        var c = this.selectionStart,
+            r = /[^0-9]/gi,
+            v = $(this).val();
+        if (r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+
+    $('#muni_Nombre').on('input', function () {
+        var c = this.selectionStart,
+            r = /[^a-z0-9]/gi,
+            v = $(this).val();
+        if (r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+</script>
+<script>
+    function AbrirModalCreate() {
+        $("#lbl_muni_Id_CreateError").attr('hidden', true);
+        $("#lbl_muni_Id_CreateError1").attr('hidden', true);
+        $("#lbl_muni_Nombre_CreateError").attr('hidden', true);
+        $("#lbl_depa_Id_CreateError").attr('hidden', true);
+        $('#muni_Id').val('');
+        $('#muni_Nombre').val('');
+        $("#CrearDepartamento").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalCreate() {
+        var muni_Id = $("#muni_Id").val();
+        var muni_Nombre = $("#muni_Nombre").val();
+        var depa_Id = $("#depa_Id").val();
+        var x = true;
+
+        if (muni_Id == "" || muni_Id == null) {
+            $("#lbl_muni_Id_CreateError").attr('hidden', false);
+            x = false
+        } else {
+            $("#lbl_muni_Id_CreateError").attr('hidden', true);
+            if (muni_Id.length != 4) {
+                $("#lbl_muni_Id_CreateError1").attr('hidden', false);
+                x = false
+            } else {
+                $("#lbl_muni_Id_CreateError1").attr('hidden', true);
+            }
+        }
+
+        if (muni_Nombre == null || muni_Nombre == "") {
+            x = false
+            $("#lbl_muni_Nombre_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_muni_Nombre_CreateError").attr('hidden', true);
+        }
+
+        if (depa_Id == null || depa_Id == "") {
+            x = false;
+            $("#lbl_depa_Id_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_depa_Id_CreateError").attr('hidden', true);
+        }
+
+        //if (x == true) {
+        //    $("#formCreate").submit();
+        //}
+    }
+</script>

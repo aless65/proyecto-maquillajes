@@ -82,6 +82,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[gral].[VW_gral_tbMunicipios_VW]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[maqu].[VW_maqu_tbClientes_DDLMunicipios]",
          "ObjectType": 3
       },
@@ -118,7 +122,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "DESKTOP-6FS11M8\\MSSQLSERVER1.Maquillaje",
+   "UiHint": "DESKTOP-7ECKOKU\\SQLEXPRESS.Maquillaje",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

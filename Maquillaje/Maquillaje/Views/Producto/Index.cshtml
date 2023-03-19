@@ -16,6 +16,9 @@
             <thead>
                 <tr>
                     <th>
+                        @Html.DisplayNameFor(model => model.prod_Id)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.prod_Nombre)
                     </th>
                     <th>
@@ -27,37 +30,34 @@
                     <th>
                         @Html.DisplayNameFor(model => model.cate_Nombre)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.prov_Nombre)
-                    </th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.prod_Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.prod_PrecioUni)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.prod_Stock)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.cate_Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.prov_Nombre)
-                        </td>
-                        <td>
-                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.prod_Id,@item.prod_Nombre,@item.prod_PrecioUni,@item.cate_Id,@item.prov_Id,@item.prod_Stock')">Editar</button> |
-                            <a asp-action="Details" asp-route-id="@item.prod_Id" class="btn btn-dark">Detalles</a> |
-                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.prod_Id)">Borrar</button>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.prod_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.prod_Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.prod_PrecioUni)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.prod_Stock)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cate_Nombre)
+                    </td>
+                    <td>
+                        <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.prod_Id,@item.prod_Nombre,@item.prod_PrecioUni,@item.cate_Id,@item.prov_Id,@item.prod_Stock')">Editar</button> |
+                        <a asp-action="Details" asp-route-id="@item.prod_Id" class="btn btn-dark">Detalles</a> |
+                        <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.prod_Id)">Borrar</button>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group col-6 mt-3">
                         <label asp-for="clie_Identidad" class="control-label"></label>
-                        <input asp-for="clie_Identidad" class="form-control" maxlength="13"/>
+                        <input asp-for="clie_Identidad" class="form-control" maxlength="13" />
                         <span asp-validation-for="clie_Identidad" class="text-danger"></span>
                     </div>
                     <div class="form-group col-6 mt-3">
@@ -77,6 +77,14 @@
     </div>
 </div>
 
+@if (TempData["Script"] != null)
+{
+<script>
+    $(function () {
+        @Html.Raw(TempData["Script"]);
+    });
+</script>
+}
 
 <script>
     $('#clie_Identidad').on('input', function () {
@@ -109,7 +117,6 @@
 
         var clie_Id = $("#clie_Id").val();
 
-        console.log(sessionStorage.getItem('contarCargas'));
 
         if (sessionStorage.getItem('contarCargas') == null) {
 

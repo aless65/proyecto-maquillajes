@@ -904,11 +904,13 @@ BEGIN
 							  AND meto_Estado = 1)
 			SELECT 2
 		ELSE
-			UPDATE [maqu].[tbMetodosPago]
-			SET [meto_Estado] = 1
-			WHERE meto_Nombre = @meto_Nombre
+			BEGIN
+				UPDATE [maqu].[tbMetodosPago]
+				SET [meto_Estado] = 1
+				WHERE meto_Nombre = @meto_Nombre
 
-			SELECT 1
+				SELECT 1
+			END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -990,7 +992,7 @@ END
 --**************** CATEGORIAS ****************--
 /*Insertar categoria*/
 GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_INSERT
+CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_INSERT 
 	@cate_Nombre 			NVARCHAR(100),
 	@cate_UsuCreacion 		INT
 AS
@@ -1133,35 +1135,60 @@ END
 
 /*Insertar Cliente*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Insert 
     @clie_Nombres                NVARCHAR(200),
-    @clie_Apellidos                NVARCHAR(200),
-    @clie_Identidad                NVARCHAR(13),
+    @clie_Apellidos               NVARCHAR(200),
+    @clie_Identidad               NVARCHAR(13),
     @clie_Sexo                    CHAR,
-    @muni_Id                        CHAR(4),
-    @clie_DireccionExacta        NVARCHAR(100),
+    @muni_Id                      CHAR(4),
+    @clie_DireccionExacta         NVARCHAR(100),
     @clie_Telefono                NVARCHAR(15),
-    @clie_CorreoElectronico        NVARCHAR(200),
-    @clie_UsuCreacion            INT
+    @clie_CorreoElectronico       NVARCHAR(200),
+    @clie_UsuCreacion			  INT
 AS
 BEGIN
-    BEGIN TRY
-        INSERT INTO [maqu].[tbClientes](clie_Nombres, 
+	BEGIN TRY
+		
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbClientes]
+						WHERE @clie_Identidad = clie_Identidad)
+		BEGIN
+			INSERT INTO [maqu].[tbClientes](clie_Nombres, 
                                     clie_Apellidos, clie_Identidad, 
                                     clie_Sexo, muni_Id, 
                                     clie_DireccionExacta, clie_Telefono, 
                                     clie_CorreoElectronico, clie_UsuCreacion)
-        VALUES(@clie_Nombres,@clie_Apellidos,
-                @clie_Identidad,
-                @clie_Sexo,@muni_Id,
-                @clie_DireccionExacta,@clie_Telefono,
-                @clie_CorreoElectronico,@clie_UsuCreacion)
+			VALUES(@clie_Nombres,@clie_Apellidos,
+					@clie_Identidad,
+					@clie_Sexo,@muni_Id,
+					@clie_DireccionExacta,@clie_Telefono,
+					@clie_CorreoElectronico,@clie_UsuCreacion)
 
-        SELECT 1
-    END TRY
-    BEGIN CATCH
-        SELECT 0
-    END CATCH
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbClientes]
+						WHERE @clie_Identidad = clie_Identidad
+							  AND clie_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE [maqu].[tbClientes]
+				SET clie_Estado = 1,
+					clie_Nombres = @clie_Nombres,
+					clie_Apellidos = @clie_Apellidos,
+					clie_Identidad = @clie_Identidad,
+					clie_Sexo = @clie_Sexo,
+					muni_Id = @muni_Id,
+					clie_DireccionExacta = @clie_DireccionExacta,
+					clie_Telefono = @clie_Telefono,
+					clie_CorreoElectronico = @clie_CorreoElectronico
+				WHERE clie_Identidad = @clie_Identidad
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
 END 
 
 /*Editar Cliente*/
@@ -1179,25 +1206,52 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Update
     @clie_UsuModificacion        INT
 AS
 BEGIN
-    BEGIN TRY
-    UPDATE [maqu].[tbClientes]
-               SET clie_Nombres = @clie_Nombres,
-                clie_Apellidos = @clie_Apellidos,
-                clie_Identidad = @clie_Identidad,
-                clie_Sexo = @clie_Sexo,
-                muni_Id = @muni_Id,
-                clie_DireccionExacta = @clie_DireccionExacta,
-                clie_Telefono = @clie_Telefono,
-                clie_CorreoElectronico = @clie_CorreoElectronico,
-                clie_UsuModificacion = @clie_UsuModificacion,
-                clie_FechaModificacion = GETDATE()
-        WHERE     clie_Id = @clie_Id
+	
+	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM [maqu].[tbClientes]
+						WHERE @clie_Identidad = clie_Identidad)
+		BEGIN	
+			UPDATE [maqu].[tbClientes]
+					   SET clie_Nombres = @clie_Nombres,
+						clie_Apellidos = @clie_Apellidos,
+						clie_Identidad = @clie_Identidad,
+						clie_Sexo = @clie_Sexo,
+						muni_Id = @muni_Id,
+						clie_DireccionExacta = @clie_DireccionExacta,
+						clie_Telefono = @clie_Telefono,
+						clie_CorreoElectronico = @clie_CorreoElectronico,
+						clie_UsuModificacion = @clie_UsuModificacion,
+						clie_FechaModificacion = GETDATE()
+				WHERE   clie_Id = @clie_Id	
 
-        SELECT 1
-    END TRY
-    BEGIN CATCH
-        SELECT 0
-    END CATCH
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbClientes]
+						WHERE @clie_Identidad = clie_Identidad
+							  AND clie_Estado = 1
+							  AND clie_Id != @clie_Id)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE [maqu].[tbClientes]
+				SET clie_Estado = 1,
+				    clie_UsuCreacion = @clie_UsuModificacion,
+					clie_Nombres = @clie_Nombres,
+					clie_Apellidos = @clie_Apellidos,
+					clie_Identidad = @clie_Identidad,
+					clie_Sexo = @clie_Sexo,
+					muni_Id = @muni_Id,
+					clie_DireccionExacta = @clie_DireccionExacta,
+					clie_Telefono = @clie_Telefono,
+					clie_CorreoElectronico = @clie_CorreoElectronico
+				WHERE clie_Identidad = @clie_Identidad
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Eliminar Cliente*/
@@ -1206,16 +1260,22 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbClientes_Delete
 	@clie_Id INT
 AS
 BEGIN
+	
 	BEGIN TRY
-		UPDATE [maqu].[tbClientes] 
-		SET clie_Estado = 0
-		WHERE clie_Id = @clie_Id
-
-		SELECT 1
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbFacturas] WHERE clie_Id = @clie_Id AND fact_Estado = 1)
+			BEGIN
+				UPDATE [maqu].[tbClientes] 
+				SET clie_Estado = 0
+				WHERE clie_Id = @clie_Id
+				
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
 	END TRY
 	BEGIN CATCH
 		SELECT 0
-	END CATCH 
+	END CATCH
 END
 
 /*Listar Clientes*/
@@ -1480,11 +1540,17 @@ BEGIN
 						AND prod_Estado = 1)
 			SELECT 2
 		ELSE
-			UPDATE [maqu].[tbProductos]
-			SET prod_Estado = 1
-			WHERE prod_Nombre = @prod_Nombre
+			BEGIN
+				UPDATE [maqu].[tbProductos]
+				SET prod_Estado = 1,
+					prod_PrecioUni = @prod_PrecioUni,
+					cate_Id = @cate_Id,
+					prod_Stock = @prod_Stock,
+					prov_Id = @prov_Id
+				WHERE prod_Nombre = @prod_Nombre
 
-			SELECT 1
+				SELECT 1
+			END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1504,26 +1570,69 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProducto_Update
 	@prod_UsuModificacion   INT
 AS
 BEGIN
-	UPDATE [maqu].[tbProductos]
-	SET prod_Nombre = @prod_Nombre,
-		prod_PrecioUni = @prod_PrecioUni,
-		cate_Id = @cate_Id,
-		prov_Id = @prov_Id,
-		prod_Stock = @prod_Stock,
-		prod_UsuModificacion = @prod_UsuModificacion,
-		prod_FechaModificacion = GETDATE()
-	WHERE prod_Id = @prod_Id
+
+	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM [maqu].[tbProductos]
+						WHERE @prod_Nombre = prod_Nombre)
+		BEGIN			
+			UPDATE [maqu].[tbProductos]
+			SET prod_Nombre = @prod_Nombre,
+				prod_PrecioUni = @prod_PrecioUni,
+				cate_Id = @cate_Id,
+				prov_Id = @prov_Id,
+				prod_Stock = @prod_Stock,
+				prod_UsuModificacion = @prod_UsuModificacion,
+				prod_FechaModificacion = GETDATE()
+			WHERE prod_Id = @prod_Id
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbProductos]
+						WHERE @prod_Nombre = prod_Nombre
+							  AND prod_Estado = 1
+							  AND prod_Id != @prod_Id)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE [maqu].[tbProductos]
+				SET prod_Estado = 1,
+				    prod_UsuModificacion = @prod_UsuModificacion,
+					prod_PrecioUni = @prod_PrecioUni,
+					cate_Id = @cate_Id,
+					prov_Id = @prov_Id,
+					prod_Stock = @prod_Stock,
+					prod_FechaModificacion = GETDATE()
+				WHERE prod_Nombre = @prod_Nombre
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Eliminar Producto*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Delete
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Delete 
 	@prod_Id INT
 AS
 BEGIN
-	UPDATE [maqu].[tbProductos]
-	SET prod_Estado = 0
-	WHERE prod_Id = @prod_Id
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbFacturasDetalles] WHERE prod_Id = @prod_Id)
+			BEGIN
+				UPDATE [maqu].[tbProductos]
+				SET prod_Estado = 0
+				WHERE prod_Id = @prod_Id
+				
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Listado prod_Id x cate_Id*/
@@ -1581,10 +1690,36 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProveedores_Insert
 	@prov_UsuCreacion				INT
 AS
 BEGIN
-	INSERT INTO [maqu].[tbProveedores](prov_Nombre, prov_CorreoElectronico, 
-				prov_Telefono, prov_UsuCreacion)
-	VALUES(@prov_Nombre,@prov_CorreoElectronico,
-			@prov_Telefono,@prov_UsuCreacion)
+	BEGIN TRY
+		
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbProveedores]
+						WHERE @prov_Nombre = prov_Nombre)
+		BEGIN
+			INSERT INTO [maqu].[tbProveedores](prov_Nombre, prov_CorreoElectronico, 
+						prov_Telefono, prov_UsuCreacion)
+			VALUES(@prov_Nombre,@prov_CorreoElectronico,
+					@prov_Telefono,@prov_UsuCreacion)
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbProveedores]
+						WHERE @prov_Nombre = prov_Nombre
+							  AND prov_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE [maqu].[tbProveedores]
+				SET [prov_Estado] = 1,
+					prov_CorreoElectronico = @prov_CorreoElectronico,
+					prov_Telefono = @prov_Telefono
+				WHERE prov_Nombre = @prov_Nombre
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
 END
 
 /*Editar proveedores*/
@@ -1597,13 +1732,38 @@ CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_Update
 	@prov_UsuModificacion		INT
 AS
 BEGIN
-	UPDATE [maqu].[tbProveedores]
-	SET prov_Nombre = @prov_Nombre,
-		prov_CorreoElectronico = @prov_CorreoElectronico,
-		prov_Telefono = @prov_Telefono,
-		prov_UsuModificacion = @prov_UsuModificacion,
-		prov_FechaModificacion = GETDATE()
-	WHERE prov_Id = @prov_Id
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbProveedores]
+							WHERE @prov_Nombre = prov_Nombre)
+			BEGIN			
+				UPDATE [maqu].[tbProveedores]
+				SET prov_Nombre = @prov_Nombre,
+					prov_CorreoElectronico = @prov_CorreoElectronico,
+					prov_Telefono = @prov_Telefono,
+					prov_UsuModificacion = @prov_UsuModificacion,
+					prov_FechaModificacion = GETDATE()
+				WHERE prov_Id = @prov_Id
+			END
+			ELSE IF EXISTS (SELECT * FROM [maqu].[tbProveedores]
+							WHERE @prov_Nombre = prov_Nombre
+								  AND prov_Estado = 1
+								  AND prov_Id != @prov_Id)
+				SELECT 2
+			ELSE
+				BEGIN
+					UPDATE [maqu].[tbProveedores]
+					SET prov_Estado = 1,
+					    prov_UsuModificacion = @prov_UsuModificacion,
+						prov_CorreoElectronico = @prov_CorreoElectronico,
+						prov_Telefono = @prov_Telefono
+					WHERE prov_Nombre = @prov_Nombre
+
+					SELECT 1
+				END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
 END
 
 /*Eliminar Proveedores*/
@@ -1612,9 +1772,22 @@ CREATE OR ALTER PROCEDURE UDP_maqu_tbProveedores_DELETE
 	@prov_Id INT
 AS
 BEGIN
-	UPDATE [maqu].[tbProveedores]
-	SET prov_Estado = 0
-	WHERE prov_Id = @prov_Id
+
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbProductos] WHERE prov_Id = @prov_Id AND prod_Estado = 1)
+			BEGIN
+				UPDATE [maqu].tbProveedores
+				SET prov_Estado = 0
+				WHERE prov_Id = @prov_Id
+				
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 --************Roles**************************--

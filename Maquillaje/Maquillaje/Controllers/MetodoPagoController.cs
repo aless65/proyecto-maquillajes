@@ -99,7 +99,7 @@ namespace Maquillaje.WebUI.Controllers
             }
             else if(delete == 2)
             {
-                string script = $"MostrarMensajeWarning('El registro no puede ser eliminado');";
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
                 TempData["Script"] = script;
             } else
             {

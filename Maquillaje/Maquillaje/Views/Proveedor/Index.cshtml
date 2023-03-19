@@ -11,9 +11,12 @@
         <p>
             <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
         </p>
-        <table class="table">
+        <table class="table table-bordered table-hover" id="DataTable">
             <thead>
                 <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.prov_Id)
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.prov_Nombre)
                     </th>
@@ -30,6 +33,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.prov_Id)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.prov_Nombre)
                         </td>
@@ -57,3 +63,22 @@
 @Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_maqu_tbProveedores_VW())
 
 @Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_maqu_tbProveedores_VW())
+
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
+
+<script>
+    $(document).ready(function () {
+        $('#menuMaquillaje').addClass('active');
+        $('#proveedoresItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+    });
+</script>

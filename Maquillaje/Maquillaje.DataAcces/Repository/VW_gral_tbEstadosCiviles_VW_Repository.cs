@@ -14,6 +14,16 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+        public int DeleteConfirmed(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@estacivi_Id", id, DbType.String, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_EstadosCiviles, parametros, commandType: CommandType.StoredProcedure);
+        }
+
 
         public VW_gral_tbEstadosCiviles_VW find(int? id)
         {
@@ -22,7 +32,14 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Insert(VW_gral_tbEstadosCiviles_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@estacivi_Nombre", item.estacivi_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@estacivi_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_EstadosCiviles, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public IEnumerable<VW_gral_tbEstadosCiviles_VW> List()
@@ -33,7 +50,14 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Update(VW_gral_tbEstadosCiviles_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@estacivi_Id", item.estacivi_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@estacivi_Nombre", item.estacivi_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@estacivi_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_EstadosCiviles, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

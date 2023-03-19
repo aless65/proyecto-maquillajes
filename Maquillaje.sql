@@ -517,6 +517,7 @@ estacivi_Estado
 FROM gral.tbEstadosCiviles estacivi INNER JOIN acce.tbUsuarios [user1]
 ON estacivi.estacivi_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
 ON estacivi.estacivi_UsuModificacion = [user2].user_Id 
+WHERE estacivi_Estado = 1
 
 /*Vista Estados Civiles UDP*/
 GO
@@ -538,18 +539,26 @@ END
 GO
 
 --Insertar estados civiles
-CREATE OR ALTER PROCEDURE UDP_gral_tbEstadosCiviles_INSERT
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_INSERT
 	@estacivi_Nombre		NVARCHAR(100),
 	@estacivi_UsuCreacion INT
 AS
 BEGIN
+IF NOT EXISTS (SELECT estacivi_Nombre FROM gral.tbEstadosCiviles WHERE estacivi_Nombre = @estacivi_Nombre)
+BEGIN
 	INSERT INTO [gral].[tbEstadosCiviles]([estacivi_Nombre], [estacivi_UsuCreacion])
 	VALUES(@estacivi_Nombre, @estacivi_UsuCreacion)
+	SELECT 1
+END
+ELSE
+BEGIN
+SELECT 0
+END
 END
 
 --Editar estados civiles
 GO
-CREATE OR ALTER PROCEDURE UDP_gral_tbEstadosCiviles_UPDATE
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_UPDATE
 	@estacivi_Id 		INT,
 	@estacivi_Nombre	NVARCHAR(100),
 	@estacivi_UsuModificacion INT
@@ -564,13 +573,21 @@ END
 
 --Eliminar estados civiles
 GO
-CREATE OR ALTER PROCEDURE UDP_gral_tbEstadosCiviles_DELETE
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_DELETE
 	@estacivi_Id INT
 AS
 BEGIN
-	UPDATE [gral].[tbEstadosCiviles]
+	IF NOT EXISTS (SELECT estacivi_Id FROM maqu.tbEmpleados WHERE estacivi_Id = @estacivi_Id)
+	BEGIN
+		UPDATE [gral].[tbEstadosCiviles]
 	SET  [estacivi_Estado] = 0
 	WHERE [estacivi_Id] = @estacivi_Id
+	SELECT 1
+	END
+	ELSE
+	BEGIN
+	SELECT 0
+	END
 END
 
 /*Insert estados civiles*/

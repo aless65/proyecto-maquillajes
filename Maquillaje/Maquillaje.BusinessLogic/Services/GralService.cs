@@ -190,6 +190,45 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<VW_gral_tbEstadosCiviles_VW>();
             }
         }
+
+        public int InsertarEstadoCivil(VW_gral_tbEstadosCiviles_VW item)
+        {
+            try
+            {
+                return _VW_gral_tbEstadosCiviles_VW_Repository.Insert(item);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
+
+        public int EditarEstadoCivil(VW_gral_tbEstadosCiviles_VW item)
+        {
+            try
+            {
+                return _VW_gral_tbEstadosCiviles_VW_Repository.Update(item);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
+
+        public int EliminarEstadoCivil(int id)
+        {
+            try
+            {
+                return _VW_gral_tbEstadosCiviles_VW_Repository.DeleteConfirmed(id);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+
+        }
         #endregion
 
     }

@@ -51,6 +51,9 @@ namespace Maquillaje.DataAccess.Repository
         #region EstadosCiviles
         public static string UDP_Listar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_List";
         public static string UDP_Listar_EstadosCivilesView = "gral.UDP_gral_tbEstadosCiviles_VW";
+        public static string UDP_Editar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_UPDATE";
+        public static string UDP_Insertar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_INSERT";
+        public static string UDP_Eliminar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_DELETE";
         #endregion
 
         #region MetodosPago

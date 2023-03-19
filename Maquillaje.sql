@@ -232,6 +232,21 @@ CREATE TABLE maqu.tbProveedores
 	CONSTRAINT FK_maqu_tbProveedores_acce_tbUsuarios_prov_UsuCreacion_user_Id  			FOREIGN KEY(prov_UsuCreacion) 		REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT  FK_maqu_tbProveedores_acce_tbUsuarios_prov_UsuModificacion_user_Id 		FOREIGN KEY(prov_UsuModificacion) 	REFERENCES acce.tbUsuarios(user_Id)
 );
+--***************TABLA SURCURSALES*************************--
+CREATE TABLE maqu.tbSucursales(
+    sucu_Id                             INT IDENTITY(1,1), 
+    sucu_Descripcion                    NVARCHAR(200) NOT NULL,
+    muni_Id                             CHAR(4),
+	sucu_DireccionExacta				NVARCHAR(500) NOT NULL,
+    sucu_FechaCreacion					DATETIME NOT NULL DEFAULT GETDATE(),
+    sucu_UsuCreacion					INT not null,
+    sucu_FechaModificacion				DATETIME,
+    sucu_UsuModificacion				INT,
+    sucu_Estado							BIT NOT NULL DEFAULT 1,
+    CONSTRAINT PK_maqu_tbSucursales_sucu_Id PRIMARY KEY(sucu_Id),
+	CONSTRAINT FK_maqu_gral_tbSurcursales_muni_Id FOREIGN KEY (muni_Id) REFERENCES gral.tbMunicipios (muni_Id),
+	CONSTRAINT FK_maqu_acce_tbSurcursales_user_Id FOREIGN KEY (sucu_UsuCreacion) REFERENCES acce.tbUsuarios (user_id)
+);
 
 --********TABLA EMPLEADOS****************---
 GO
@@ -592,10 +607,10 @@ END
 
 /*Insert estados civiles*/
 GO
-EXECUTE UDP_gral_tbEstadosCiviles_INSERT 'Soltero(a)',1
-EXECUTE UDP_gral_tbEstadosCiviles_INSERT 'Casado(a)',1
-EXECUTE UDP_gral_tbEstadosCiviles_INSERT 'Union Libre',1
-EXECUTE UDP_gral_tbEstadosCiviles_INSERT 'Viudo(a)',1
+EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Soltero(a)',1
+EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Casado(a)',1
+EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Union Libre',1
+EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Viudo(a)',1
 
 --**************** EMPLEADOS ****************--
 /*Empleados*/

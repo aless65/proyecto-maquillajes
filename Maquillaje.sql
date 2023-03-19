@@ -506,8 +506,26 @@ END
 GO
 
 --**************** ESTADOS CIVILES ****************--
+/*Vista Estados Civiles*/
+GO
+CREATE OR ALTER VIEW gral.VW_gral_tbEstadosCiviles_VW
+AS
+SELECT estacivi_Id, estacivi_Nombre, 
+estacivi_UsuCreacion,[user1].user_NombreUsuario AS estacivi_UsuCreacion_Nombre, estacivi_FechaCreacion, 
+estacivi_UsuModificacion,[user2].user_NombreUsuario AS estacivi_UsuModificacion_Nombre, estacivi_FechaModificacion, 
+estacivi_Estado
+FROM gral.tbEstadosCiviles estacivi INNER JOIN acce.tbUsuarios [user1]
+ON estacivi.estacivi_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON estacivi.estacivi_UsuModificacion = [user2].user_Id 
+
+/*Vista Estados Civiles UDP*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_VW
+AS
+SELECT * FROM VW_gral_tbEstadosCiviles_VW
 
 /*Listar Estados Civiles*/
+GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_List
 AS
 BEGIN 

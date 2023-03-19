@@ -82,6 +82,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[gral].[VW_gral_tbEstadosCiviles_VW]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[gral].[VW_gral_tbMunicipios_VW]",
          "ObjectType": 3
       },

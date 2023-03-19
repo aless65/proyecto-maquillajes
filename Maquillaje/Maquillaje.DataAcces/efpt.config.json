@@ -30,50 +30,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tblArea]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblComplejos]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblDeporte]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblEmpleados]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblEquipo]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblEventos]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblLocalizacion]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblMantenimiento]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblParticipantes]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblSedes]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tblTipoComplejos]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[gral].[tbDepartamentos]",
          "ObjectType": 0
       },
@@ -118,6 +74,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[maqu].[tbSucursales]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[maqu].[VW_maqu_tbClientes_DDLMunicipios]",
          "ObjectType": 3
       },
@@ -130,7 +90,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "DESKTOP-BPGLHI0\\SQLEXPRESSLOCAL.Maquillaje",
+   "UiHint": "DESKTOP-7ECKOKU\\SQLEXPRESS.Maquillaje",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

@@ -263,6 +263,7 @@ CREATE TABLE maqu.tbEmpleados(
 	empe_Direccion				NVARCHAR(250)	NOT NULL,
 	empe_Telefono				NVARCHAR(15)	NOT NULL,
 	empe_CorreoElectronico		NVARCHAR(200)	NOT NULL,
+	sucu_Id						INT				NOT NULL,
 	empe_UsuCreacion			INT				NOT NULL,
 	empe_FechaCreacion			DATETIME		NOT NULL CONSTRAINT DF_empe_FechaCreacion DEFAULT(GETDATE()),
 	empe_UsuModificacion		INT,
@@ -275,6 +276,7 @@ CREATE TABLE maqu.tbEmpleados(
 	CONSTRAINT FK_maqu_tbEmpleados_gral_tbMunicipios_muni_Id					FOREIGN KEY(muni_Id)						REFERENCES gral.tbMunicipios(muni_Id),
 	CONSTRAINT FK_maqu_tbEmpleados_acce_tbUsuarios_UserCreate					FOREIGN KEY(empe_UsuCreacion)				REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT FK_maqu_tbEmpleados_acce_tbUsuarios_UserUpdate					FOREIGN KEY(empe_UsuModificacion)			REFERENCES acce.tbUsuarios(user_Id),
+	CONSTRAINT FK_maqu_tbEmpleados_maqu_tbSucursales_sucu_Id					FOREIGN KEY(sucu_Id)						REFERENCES maqu.tbSucursales(sucu_Id)		
 );
 
 --********TABLA Clientes****************---
@@ -612,6 +614,78 @@ EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Casado(a)',1
 EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Union Libre',1
 EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Viudo(a)',1
 
+--*******************Sucursales*************************--
+/*Vista Sucursales*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbSucursales_VW
+AS
+SELECT sucu_Id, sucu_Descripcion, sucu_DireccionExacta, sucu_FechaCreacion, sucu_UsuCreacion, 
+    sucu_FechaModificacion, sucu_UsuModificacion, sucu_Estado, muni.depa_Id, depa.depa_Nombre, sucu.muni_Id, muni.muni_Nombre, 
+    [user1].user_NombreUsuario AS sucu_UsuCreacion_Nombre, [user2].user_NombreUsuario AS sucu_UsuModificacion_Nombre
+FROM maqu.tbSucursales sucu
+INNER JOIN gral.tbMunicipios muni ON sucu.muni_Id = muni.muni_id 
+LEFT JOIN acce.tbUsuarios [user1] ON sucu.sucu_UsuCreacion = [user1].user_Id
+LEFT JOIN acce.tbUsuarios [user2] ON sucu.sucu_UsuModificacion = [user2].user_Id
+INNER JOIN gral.tbDepartamentos depa ON muni.depa_Id = depa.depa_Id
+WHERE sucu.sucu_Estado = 1
+
+/*Vista Sucursales UDP*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_VW
+AS
+BEGIN
+SELECT * FROM maqu.VW_maqu_tbSucursales_VW
+END
+
+/*Insertar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Insert
+    @sucu_Descripcion NVARCHAR(200),
+    @muni_Id CHAR(4),
+    @sucu_DireccionExacta NVARCHAR(500),
+    @sucu_UsuCreacion INT
+AS
+BEGIN
+    INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
+    VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
+END
+
+GO
+
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 1','0501','Calle 5',1
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 2','0501','Calle 7',1
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 3','0501','Calle 6',1
+
+/*Editar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
+    @sucu_Id INT,
+    @sucu_Descripcion NVARCHAR(200),
+    @muni_Id CHAR(4),
+    @sucu_DireccionExacta NVARCHAR(500),
+    @sucu_UsuModificacion INT
+AS
+BEGIN
+    UPDATE maqu.tbSucursales
+    SET sucu_Descripcion = @sucu_Descripcion,
+        muni_Id = @muni_Id,
+        sucu_DireccionExacta = @sucu_DireccionExacta,
+        sucu_UsuModificacion = @sucu_UsuModificacion,
+        sucu_FechaModificacion = GETDATE()
+    WHERE sucu_Id = @sucu_Id;
+END
+
+/*Eliminar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
+@sucu_Id INT
+AS
+BEGIN
+UPDATE maqu.tbSucursales 
+SET sucu_Estado = 0
+WHERE sucu_Id = @sucu_Id
+END
+
 --**************** EMPLEADOS ****************--
 /*Empleados*/
 GO
@@ -640,6 +714,7 @@ CREATE OR ALTER PROCEDURE maqu.UPD_maqu_tbEmpleados_Insert
 	@empe_Sexo CHAR,
 	@estacivi_Id INT,
 	@muni_Id NVARCHAR(4),
+	@sucu_Id INT, 
 	@empe_Direccion NVARCHAR(200),
 	@empe_Telefono NVARCHAR(15),
 	@empe_CorreoElectronico NVARCHAR(200),
@@ -649,13 +724,13 @@ BEGIN
 	BEGIN TRY
 		INSERT INTO maqu.tbEmpleados(empe_Nombres, empe_Apellidos, 
 									empe_Identidad, empe_FechaNacimiento, 
-									empe_Sexo, estacivi_Id, muni_Id, 
+									empe_Sexo, estacivi_Id, muni_Id,sucu_Id, 
 									empe_Direccion, empe_Telefono, 
 									empe_CorreoElectronico, empe_UsuCreacion)
 		VALUES(@empe_Nombres,@empe_Apellidos,
 				@empe_Identidad,@empe_FechaNacimiento,
 				@empe_Sexo,@estacivi_Id,
-				@muni_Id,@empe_Direccion,
+				@muni_Id,@sucu_Id,@empe_Direccion,
 				@empe_Telefono,@empe_CorreoElectronico,
 				@empe_UsuCreacion)
 		SELECT 1
@@ -668,18 +743,19 @@ END
 /*Editar Empleados*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Update
-    @empe_Id                 INT,
-    @empe_Nombres             NVARCHAR(200),
-    @empe_Apellidos         NVARCHAR(200),
-    @empe_Identidad         NVARCHAR(13),
-    @empe_FechaNacimiento     DATE,
-    @empe_Sexo                 CHAR,
-    @estacivi_Id             INT,
-    @muni_Id                 NVARCHAR(4),
-    @empe_Direccion         NVARCHAR(200),
-    @empe_Telefono             NVARCHAR(15),
-    @empe_CorreoElectronico NVARCHAR(200),
-    @empe_usuModificacion     INT
+    @empe_Id					INT,
+    @empe_Nombres				NVARCHAR(200),
+    @empe_Apellidos				NVARCHAR(200),
+    @empe_Identidad				NVARCHAR(13),
+    @empe_FechaNacimiento		DATE,
+    @empe_Sexo					CHAR,
+    @estacivi_Id				INT,
+    @muni_Id					NVARCHAR(4),
+	@sucu_Id					INT,
+    @empe_Direccion				NVARCHAR(200),
+    @empe_Telefono				NVARCHAR(15),
+    @empe_CorreoElectronico		NVARCHAR(200),
+    @empe_usuModificacion		INT
 AS
 BEGIN
     BEGIN TRY
@@ -691,11 +767,12 @@ BEGIN
                 empe_Sexo = @empe_Sexo,
                 estacivi_Id = @estacivi_Id,
                 muni_Id = @muni_Id,
+				sucu_Id = @sucu_Id,
                 empe_Telefono = @empe_Telefono,
                 empe_CorreoElectronico = @empe_CorreoElectronico,
                 empe_UsuModificacion = @empe_usuModificacion,
                 empe_FechaModificacion = GETDATE()
-        WHERE     empe_Id = @empe_Id
+        WHERE   empe_Id = @empe_Id
 
         SELECT 1
     END TRY
@@ -703,7 +780,8 @@ BEGIN
         SELECT 0
     END CATCH
 END
-EXECUTE maqu.UDP_maqu_tbEmpleados_Update 1,'Alessio','Medino','12412','10-10-2005','M',2,'0501','assa','321412','alessi@gmail.com',1
+GO
+EXECUTE maqu.UDP_maqu_tbEmpleados_Update 1,'Alessio','Medino','12412','10-10-2005','M',2,'0501',1,'assa','321412','alessi@gmail.com',1
 
 /*Eliminar Empleados*/
 GO
@@ -731,7 +809,7 @@ CREATE OR ALTER VIEW maqu.VW_maqu_tbEmpleados_View
 AS
 SELECT empe.empe_Id,(SELECT empe_Nombres + ' ' + empe_Apellidos ) AS NombreCompleto,
 empe_Nombres, empe_Apellidos, empe_Identidad, empe_FechaNacimiento, empe_Sexo,
-empe.estacivi_Id,estacivi.estacivi_Nombre,depa.depa_Id,depa.depa_Nombre,empe.muni_Id,muni.muni_Nombre, 
+empe.estacivi_Id,estacivi.estacivi_Nombre,depa.depa_Id,depa.depa_Nombre,empe.muni_Id,muni.muni_Nombre,empe.sucu_Id, sucu_Descripcion, 
 empe_Direccion,empe_Telefono, empe_CorreoElectronico,empe_UsuCreacion,[user1].user_NombreUsuario,
 empe_UsuModificacion = [user2].user_NombreUsuario,empe.empe_FechaCreacion,empe.empe_FechaModificacion
 FROM maqu.tbEmpleados empe INNER JOIN gral.tbMunicipios muni 
@@ -739,13 +817,36 @@ ON empe.muni_Id = muni.muni_id INNER JOIN gral.tbDepartamentos depa
 ON muni.depa_Id = depa.depa_Id INNER JOIN acce.tbUsuarios [user1]
 ON empe.empe_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
 ON empe.empe_UsuModificacion = [user2].user_Id INNER JOIN gral.tbEstadosCiviles estacivi
-ON empe.estacivi_Id = estacivi.estacivi_Id
+ON empe.estacivi_Id = estacivi.estacivi_Id INNER JOIN maqu.tbSucursales sucu
+ON empe.sucu_Id = sucu.sucu_Id
 
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_View
 AS
 BEGIN
 SELECT * FROM maqu.VW_maqu_tbEmpleados_View
+END
+
+/*Listar empleado x Id*/
+GO 
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_ListById 
+@empe_Id INT 
+AS
+BEGIN
+SELECT empe_Id, 
+		   empe_Nombres, 
+		   empe_Apellidos, 
+		   empe_Identidad, 
+		   empe_FechaNacimiento, 
+		    empe_Sexo,
+		   muni_Id,
+		   estacivi_Id,
+		   sucu_Id,
+		   empe_Direccion, 
+		   empe_Telefono, 
+		   empe_CorreoElectronico
+		   FROM [maqu].[tbEmpleados]
+		   WHERE empe_Id = @empe_Id
 END
 
 /*Listar Empleado*/
@@ -762,6 +863,7 @@ BEGIN
 						  ELSE 'Masculino'
 		   END AS empe_Sexo,
 		   muni_Id, 
+		   sucu_Id,
 		   empe_Direccion, 
 		   empe_Telefono, 
 		   empe_CorreoElectronico
@@ -770,23 +872,21 @@ BEGIN
 END
 GO
 
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Alessia', 'Medina', '0501200506728', '2005-05-06', 'F', 1, '0501', 'casa', '99349019', 'aless@hootmail.com', 1
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Juan', 'García', '0501199201234', '1992-01-05', 'M', 2, '0101', 'Calle 1', '99999999', 'juan@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'María', 'González', '0501199123456', '1991-01-01', 'F', 3, '0102', 'Calle 2', '88888888', 'maria@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Pedro', 'Hernández', '0501198809876', '1988-01-01', 'M', 4, '0203', 'Calle 3', '77777777', 'pedro@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Ana', 'Martínez', '0501198504321', '1985-01-01', 'F', 1, '0304', 'Calle 4', '66666666', 'ana@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Luis', 'Guzmán', '0501198008765', '1980-01-01', 'M', 2, '0204', 'Calle 5', '55555555', 'luis@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Lucía', 'Sánchez', '0501197912345', '1979-01-01', 'F', 3, '0701', 'Calle 6', '44444444', 'lucia@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Carlos', 'Pérez', '0501197609876', '1976-01-01', 'M', 4, '0506', 'Calle 7', '33333333', 'carlos@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Marta', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001', 'Calle 8', '22222222', 'marta@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Jorge', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002', 'Calle 9', '11111111', 'jorge@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Laura', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802', 'Calle 10', '00000000', 'laura@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Diego', 'Gómez', '0501196409876', '1964-01-01', 'M', 4, '0803', 'Calle 11', '99999999', 'diego@mail.com', 1;
-
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Alessia', 'Medina', '0501200506728', '2005-05-06', 'F', 1, '0501',1, 'casa', '99349019', 'aless@hootmail.com', 1
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Juan', 'García', '0501199201234', '1992-01-05', 'M', 2, '0101',1, 'Calle 1', '99999999', 'juan@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'María', 'González', '0501199123456', '1991-01-01', 'F', 3, '0102',1, 'Calle 2', '88888888', 'maria@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Pedro', 'Hernández', '0501198809876', '1988-01-01', 'M', 4, '0203',1, 'Calle 3', '77777777', 'pedro@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Ana', 'Martínez', '0501198504321', '1985-01-01', 'F', 1, '0304',1, 'Calle 4', '66666666', 'ana@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Luis', 'Guzmán', '0501198008765', '1980-01-01', 'M', 2, '0204',1, 'Calle 5', '55555555', 'luis@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Lucía', 'Sánchez', '0501197912345', '1979-01-01', 'F', 3, '0701',1, 'Calle 6', '44444444', 'lucia@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Carlos', 'Pérez', '0501197609876', '1976-01-01', 'M', 4, '0506',1, 'Calle 7', '33333333', 'carlos@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Marta', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001',1, 'Calle 8', '22222222', 'marta@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Jorge', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002',1, 'Calle 9', '11111111', 'jorge@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Laura', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802',1, 'Calle 10', '00000000', 'laura@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Diego', 'Gómez', '0501196409876', '1964-01-01', 'M', 4, '0803',1, 'Calle 11', '99999999', 'diego@mail.com', 1;
 GO
 ALTER TABLE acce.tbUsuarios
-ADD CONSTRAINT FK_acce_tbUsuarios_maqu_tbEmpleados_empe_Id	FOREIGN KEY(empe_Id) REFERENCES maqu.tbEmpleados(empe_Id)
-
+ADD CONSTRAINT FK_acce_tbUsuarios_maqu_tbEmpleados_empe_Id FOREIGN KEY(empe_Id) REFERENCES maqu.tbEmpleados(empe_Id)
 /*Obtener muni_Id x empe_Id*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_tbEmpleados_maqu_GetMuni_Id
@@ -1115,79 +1215,6 @@ BEGIN
 	WHERE [meto_Estado] = 1
 END
 
---*******************Sucursales*************************--
-/*Vista Sucursales*/
-GO
-CREATE OR ALTER VIEW maqu.VW_maqu_tbSucursales_VW
-AS
-SELECT sucu_Id, sucu_Descripcion, sucu_DireccionExacta, sucu_FechaCreacion, sucu_UsuCreacion, 
-    sucu_FechaModificacion, sucu_UsuModificacion, sucu_Estado, muni.depa_Id, depa.depa_Nombre, sucu.muni_Id, muni.muni_Nombre, 
-    [user1].user_NombreUsuario AS sucu_UsuCreacion_Nombre, [user2].user_NombreUsuario AS sucu_UsuModificacion_Nombre
-FROM maqu.tbSucursales sucu
-INNER JOIN gral.tbMunicipios muni ON sucu.muni_Id = muni.muni_id 
-LEFT JOIN acce.tbUsuarios [user1] ON sucu.sucu_UsuCreacion = [user1].user_Id
-LEFT JOIN acce.tbUsuarios [user2] ON sucu.sucu_UsuModificacion = [user2].user_Id
-INNER JOIN gral.tbDepartamentos depa ON muni.depa_Id = depa.depa_Id
-WHERE sucu.sucu_Estado = 1
-
-/*Vista Sucursales UDP*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_VW
-AS
-BEGIN
-SELECT * FROM maqu.VW_maqu_tbSucursales_VW
-END
-
-/*Insertar Sucursal*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Insert
-    @sucu_Descripcion NVARCHAR(200),
-    @muni_Id CHAR(4),
-    @sucu_DireccionExacta NVARCHAR(500),
-    @sucu_UsuCreacion INT
-AS
-BEGIN
-    INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
-    VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
-END
-
-GO
-
-EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 1','0501','Calle 5',1
-EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 2','0501','Calle 7',1
-EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 3','0501','Calle 6',1
-
-/*Editar Sucursal*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
-    @sucu_Id INT,
-    @sucu_Descripcion NVARCHAR(200),
-    @muni_Id CHAR(4),
-    @sucu_DireccionExacta NVARCHAR(500),
-    @sucu_UsuModificacion INT
-AS
-BEGIN
-    UPDATE maqu.tbSucursales
-    SET sucu_Descripcion = @sucu_Descripcion,
-        muni_Id = @muni_Id,
-        sucu_DireccionExacta = @sucu_DireccionExacta,
-        sucu_UsuModificacion = @sucu_UsuModificacion,
-        sucu_FechaModificacion = GETDATE()
-    WHERE sucu_Id = @sucu_Id;
-END
-
-/*Eliminar Sucursal*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
-@sucu_Id INT
-AS
-BEGIN
-UPDATE maqu.tbSucursales 
-SET sucu_Estado = 0
-WHERE sucu_Id = @sucu_Id
-END
-
-
 --**************** CATEGORIAS ****************--
 /*Insertar categoria*/
 GO
@@ -1494,18 +1521,16 @@ END
 GO
 
 EXECUTE maqu.UDP_maqu_tbClientes_Insert 'Christopher','Aguilar','0501200414817','M','0501','calle 1','99122657','chris@gmail.com',1
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Hugo', 'Pérez', '0501199409876', '1994-01-01', 'M', 2, '0101', 'Calle de la Montaña 123', '99988877', 'hugo@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Lucía', 'Rodríguez', '0501199901234', '1999-01-01', 'F', 3, '0102', 'Avenida del Sol 456', '88877766', 'lucia@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Max', 'Hernández', '0501188809876', '1988-01-01', 'M', 4, '0203', 'Calle de la Luna 789', '77766655', 'max@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Ana', 'González', '0501198504321', '1985-01-01', 'F', 1, '0304', 'Calle del Mar 1011', '66655544', 'ana@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Javier', 'Gómez', '0501198008765', '1980-01-01', 'M', 2, '0204', 'Calle del Río 1213', '55544433', 'javier@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Mónica', 'Pérez', '0501197912345', '1979-01-01', 'F', 3, '0701', 'Avenida del Bosque 1415', '44433322', 'monica@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Diego', 'Sánchez', '0501197609876', '1976-01-01', 'M', 4, '0506', 'Calle de la Playa 1617', '33322211', 'diego@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Valeria', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001', 'Calle de las Flores 1819', '22211100', 'valeria@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Carlos', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002', 'Avenida del Aire 2021', '11100099', 'carlos@mail.com', 1;
-EXEC maqu.UPD_maqu_tbEmpleados_Insert 'María', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802', 'Calle de la Primavera 2223', '00099988', 'maria@mail.com', 1;
-
-
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Hugo', 'Pérez', '0501199409876', '1994-01-01', 'M', 2, '0101',1, 'Calle de la Montaña 123', '99988877', 'hugo@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Lucía', 'Rodríguez', '0501199901234', '1999-01-01', 'F', 3, '0102',1, 'Avenida del Sol 456', '88877766', 'lucia@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Max', 'Hernández', '0501188809876', '1988-01-01', 'M', 4, '0203',1, 'Calle de la Luna 789', '77766655', 'max@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Ana', 'González', '0501198504321', '1985-01-01', 'F', 1, '0304',1, 'Calle del Mar 1011', '66655544', 'ana@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Javier', 'Gómez', '0501198008765', '1980-01-01', 'M', 2, '0204',1, 'Calle del Río 1213', '55544433', 'javier@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Mónica', 'Pérez', '0501197912345', '1979-01-01', 'F', 3, '0701',1, 'Avenida del Bosque 1415', '44433322', 'monica@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Diego', 'Sánchez', '0501197609876', '1976-01-01', 'M', 4, '0506',1, 'Calle de la Playa 1617', '33322211', 'diego@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Valeria', 'López', '0501197304321', '1973-01-01', 'F', 1, '1001',1, 'Calle de las Flores 1819', '22211100', 'valeria@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'Carlos', 'Díaz', '0501197008765', '1970-01-01', 'M', 2, '1002',1, 'Avenida del Aire 2021', '11100099', 'carlos@mail.com', 1;
+EXEC maqu.UPD_maqu_tbEmpleados_Insert 'María', 'Ramírez', '0501196701234', '1967-01-01', 'F', 3, '0802',1, 'Calle de la Primavera 2223', '00099988', 'maria@mail.com', 1;
 
 --*********Facturas*************-
 /*Listado Factura*/

@@ -21,6 +21,8 @@ namespace Maquillaje.Entities.Entities
         public string depa_Nombre { get; set; }
         public string muni_Id { get; set; }
         public string muni_Nombre { get; set; }
+        public int sucu_Id { get; set; }
+        public string sucu_Descripcion { get; set; }
         public string empe_Direccion { get; set; }
         public string empe_Telefono { get; set; }
         public string empe_CorreoElectronico { get; set; }

@@ -25,6 +25,7 @@ namespace Maquillaje.Entities.Entities
         public string empe_Direccion { get; set; }
         public string empe_Telefono { get; set; }
         public string empe_CorreoElectronico { get; set; }
+        public int sucu_Id { get; set; }
         public int empe_UsuCreacion { get; set; }
         public DateTime empe_FechaCreacion { get; set; }
         public int? empe_UsuModificacion { get; set; }
@@ -35,6 +36,8 @@ namespace Maquillaje.Entities.Entities
         public virtual tbUsuarios empe_UsuModificacionNavigation { get; set; }
         public virtual tbEstadosCiviles estacivi { get; set; }
         public virtual tbMunicipios depa_Id { get; set; }
+ 
+        public virtual tbSucursales sucu { get; set; }
         public virtual ICollection<tbFacturas> tbFacturas { get; set; }
         public virtual ICollection<tbUsuarios> tbUsuarios { get; set; }
     }

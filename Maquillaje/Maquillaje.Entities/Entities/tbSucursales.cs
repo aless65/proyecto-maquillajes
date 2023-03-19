@@ -8,6 +8,11 @@ namespace Maquillaje.Entities.Entities
 {
     public partial class tbSucursales
     {
+        public tbSucursales()
+        {
+            tbEmpleados = new HashSet<tbEmpleados>();
+        }
+
         public int sucu_Id { get; set; }
         public string sucu_Descripcion { get; set; }
         public string muni_Id { get; set; }
@@ -20,5 +25,6 @@ namespace Maquillaje.Entities.Entities
 
         public virtual tbMunicipios muni { get; set; }
         public virtual tbUsuarios sucu_UsuCreacionNavigation { get; set; }
+        public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
     }
 }

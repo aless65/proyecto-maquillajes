@@ -34,15 +34,26 @@ namespace Maquillaje.DataAccess.Repository
 
         #region Municipios
         public static string UDP_Listar_Municipios_DDL = "UDP_gral_tbMunicipios_ListDDL";
+        public static string UDP_Listar_Municipios = "gral.UDP_gral_tbMunicipios_VW";
+        public static string UDP_Insertar_Municipios = "gral.UDP_gral_tbMunicipios_Insert";
+        public static string UDP_Editar_Municipios = "gral.UDP_gral_tbMunicipios_Edit";
+        public static string UDP_Elimnar_Municipios = "gral.UDP_gral_tbMunicipios_Delete";
         #endregion
 
         #region Departamentos
         public static string UDP_Listar_Departamentos = "gral.UPD_gral_tbDepartamentos_List";
         public static string UDP_Listar_Departamentos_Vista = "gral.UDP_gral_tbDepartamentos_VW";
+        public static string UDP_Insertar_Departamentos = "gral.UDP_gral_tbDepartamentos_Insert";
+        public static string UDP_Editar_Departamentos = "gral.UDP_gral_tbDepartamentos_UPDATE";
+        public static string UDP_Eliminar_Departamentos = "UDP_gral_tbDepartamentos_DELETE";
         #endregion
 
         #region EstadosCiviles
         public static string UDP_Listar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_List";
+        public static string UDP_Listar_EstadosCivilesView = "gral.UDP_gral_tbEstadosCiviles_VW";
+        public static string UDP_Editar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_UPDATE";
+        public static string UDP_Insertar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_INSERT";
+        public static string UDP_Eliminar_EstadosCiviles = "gral.UDP_gral_tbEstadosCiviles_DELETE";
         #endregion
 
         #region MetodosPago
@@ -91,6 +102,13 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Insertar_Proveedores = "maqu.UDP_maqu_tbProveedores_Insert";
         public static string UDP_Editar_Proveedor = "UDP_maqu_tbProveedores_Update";
         public static string UDP_Eliminar_Proveedores = "UDP_maqu_tbProveedores_DELETE";
+        #endregion
+
+        #region Sucursales
+        public static string UDP_Listar_Sucursales = "maqu.UDP_maqu_tbSucursales_VW";
+        public static string UDP_Insertar_Sucursales = "maqu.UDP_maqu_tbSucursales_Insert";
+        public static string UDP_Editar_Sucursales = "maqu.UDP_maqu_tbSucursales_Edit";
+        public static string UDP_Elimnar_Sucursales = "maqu.UDP_maqu_tbSucursales_Delete";
         #endregion
     }
 }

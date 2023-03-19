@@ -24,9 +24,69 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Index()
         {
             var listado = _gralService.ListadoDepartamentosView(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbDepartamentos_VW>>(listado);
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbDepartamentos_VW>>(listado).Where(X => X.depa_Estado == true);
 
             return View(listadoMapeado);
+        }
+
+        [HttpGet("/Departamento/Details")]
+        public IActionResult Details(string id)
+        {
+            var listado = _gralService.ListadoDepartamentosView(out string error);
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbDepartamentos_VW>>(listado).Where(X => X.depa_Id == id);
+
+            return View(listadoMapeado);
+        }
+
+        [HttpPost("/Departamento/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(VW_gral_tbDepartamentos_VW item)
+        {
+            try
+            {
+                var insertar = _gralService.InsertarDepartamento(item);
+                return RedirectToAction("Index");
+            }
+            catch (Exception error)
+            {
+
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost("/Departamento/Edit")]
+        public IActionResult Edit(VW_gral_tbDepartamentos_VW item)
+        {
+            try
+            {
+                var editar = _gralService.EditarDepartamento(item);
+                return RedirectToAction("Index");
+            }
+            catch (Exception error)
+            {
+
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(string id)
+        {
+            try
+            {
+                var delete = _gralService.EliminarDepartamento(id);
+                if(delete == 0)
+                {
+                   //Validacion pendiente
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception error)
+            {
+
+            }
+            return RedirectToAction("Index");
         }
     }
 }

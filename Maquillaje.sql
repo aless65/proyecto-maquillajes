@@ -232,6 +232,22 @@ CREATE TABLE maqu.tbProveedores
 	CONSTRAINT FK_maqu_tbProveedores_acce_tbUsuarios_prov_UsuCreacion_user_Id  			FOREIGN KEY(prov_UsuCreacion) 		REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT  FK_maqu_tbProveedores_acce_tbUsuarios_prov_UsuModificacion_user_Id 		FOREIGN KEY(prov_UsuModificacion) 	REFERENCES acce.tbUsuarios(user_Id)
 );
+--***************TABLA SucursalES*************************--
+GO
+CREATE TABLE maqu.tbSucursales(
+    sucu_Id                             INT IDENTITY(1,1), 
+    sucu_Descripcion                    NVARCHAR(200) NOT NULL,
+    muni_Id                             CHAR(4),
+	sucu_DireccionExacta				NVARCHAR(500) NOT NULL,
+    sucu_FechaCreacion					DATETIME NOT NULL DEFAULT GETDATE(),
+    sucu_UsuCreacion					INT not null,
+    sucu_FechaModificacion				DATETIME,
+    sucu_UsuModificacion				INT,
+    sucu_Estado							BIT NOT NULL DEFAULT 1,
+    CONSTRAINT PK_maqu_tbSucursales_sucu_Id PRIMARY KEY(sucu_Id),
+	CONSTRAINT FK_maqu_gral_tbSucursales_muni_Id FOREIGN KEY (muni_Id) REFERENCES gral.tbMunicipios (muni_Id),
+	CONSTRAINT FK_maqu_acce_tbSucursales_user_Id FOREIGN KEY (sucu_UsuCreacion) REFERENCES acce.tbUsuarios (user_id)
+);
 
 --********TABLA EMPLEADOS****************---
 GO
@@ -506,8 +522,27 @@ END
 GO
 
 --**************** ESTADOS CIVILES ****************--
+/*Vista Estados Civiles*/
+GO
+CREATE OR ALTER VIEW gral.VW_gral_tbEstadosCiviles_VW
+AS
+SELECT estacivi_Id, estacivi_Nombre, 
+estacivi_UsuCreacion,[user1].user_NombreUsuario AS estacivi_UsuCreacion_Nombre, estacivi_FechaCreacion, 
+estacivi_UsuModificacion,[user2].user_NombreUsuario AS estacivi_UsuModificacion_Nombre, estacivi_FechaModificacion, 
+estacivi_Estado
+FROM gral.tbEstadosCiviles estacivi INNER JOIN acce.tbUsuarios [user1]
+ON estacivi.estacivi_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON estacivi.estacivi_UsuModificacion = [user2].user_Id 
+WHERE estacivi_Estado = 1
+
+/*Vista Estados Civiles UDP*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_VW
+AS
+SELECT * FROM VW_gral_tbEstadosCiviles_VW
 
 /*Listar Estados Civiles*/
+GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_List
 AS
 BEGIN 
@@ -520,18 +555,26 @@ END
 GO
 
 --Insertar estados civiles
-CREATE OR ALTER PROCEDURE UDP_gral_tbEstadosCiviles_INSERT
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_INSERT
 	@estacivi_Nombre		NVARCHAR(100),
 	@estacivi_UsuCreacion INT
 AS
 BEGIN
+IF NOT EXISTS (SELECT estacivi_Nombre FROM gral.tbEstadosCiviles WHERE estacivi_Nombre = @estacivi_Nombre)
+BEGIN
 	INSERT INTO [gral].[tbEstadosCiviles]([estacivi_Nombre], [estacivi_UsuCreacion])
 	VALUES(@estacivi_Nombre, @estacivi_UsuCreacion)
+	SELECT 1
+END
+ELSE
+BEGIN
+SELECT 0
+END
 END
 
 --Editar estados civiles
 GO
-CREATE OR ALTER PROCEDURE UDP_gral_tbEstadosCiviles_UPDATE
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_UPDATE
 	@estacivi_Id 		INT,
 	@estacivi_Nombre	NVARCHAR(100),
 	@estacivi_UsuModificacion INT
@@ -546,21 +589,29 @@ END
 
 --Eliminar estados civiles
 GO
-CREATE OR ALTER PROCEDURE UDP_gral_tbEstadosCiviles_DELETE
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_DELETE
 	@estacivi_Id INT
 AS
 BEGIN
-	UPDATE [gral].[tbEstadosCiviles]
+	IF NOT EXISTS (SELECT estacivi_Id FROM maqu.tbEmpleados WHERE estacivi_Id = @estacivi_Id)
+	BEGIN
+		UPDATE [gral].[tbEstadosCiviles]
 	SET  [estacivi_Estado] = 0
 	WHERE [estacivi_Id] = @estacivi_Id
+	SELECT 1
+	END
+	ELSE
+	BEGIN
+	SELECT 0
+	END
 END
 
 /*Insert estados civiles*/
 GO
-EXECUTE UDP_gral_tbEstadosCiviles_INSERT 'Soltero(a)',1
-EXECUTE UDP_gral_tbEstadosCiviles_INSERT 'Casado(a)',1
-EXECUTE UDP_gral_tbEstadosCiviles_INSERT 'Union Libre',1
-EXECUTE UDP_gral_tbEstadosCiviles_INSERT 'Viudo(a)',1
+EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Soltero(a)',1
+EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Casado(a)',1
+EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Union Libre',1
+EXECUTE gral.UDP_gral_tbEstadosCiviles_INSERT 'Viudo(a)',1
 
 --**************** EMPLEADOS ****************--
 /*Empleados*/
@@ -774,6 +825,72 @@ ON t2.depa_Id = t3.depa_Id
 
 
 --********************Municipios****************************--
+/*Vista Municipios*/
+GO
+CREATE OR ALTER VIEW gral.VW_gral_tbMunicipios_VW
+AS
+SELECT muni_id, muni_Nombre, 
+muni.depa_Id,depa.depa_Nombre, muni_UsuCreacion,[user1].user_NombreUsuario AS muni_UsuCreacion_Nombre, 
+muni_FechaCreacion, muni_UsuModificacion,[user2].user_NombreUsuario AS muni_UsuModificacion_Nombre, 
+muni_FechaModificacion, muni_Estado
+FROM gral.tbMunicipios muni INNER JOIN gral.tbDepartamentos depa
+ON muni.depa_Id = depa.depa_Id INNER JOIN acce.tbUsuarios [user1]
+ON muni.muni_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON muni.muni_UsuModificacion = [user2].user_Id
+WHERE muni_Estado = 1
+
+/*Insertar Municipios*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Insert
+@muni_Id				CHAR(4),
+@muni_Nombre			NVARCHAR(150),
+@depa_Id				CHAR(2),
+@muni_UsuCreacion		INT
+AS
+BEGIN
+INSERT INTO gral.tbMunicipios(muni_id, muni_Nombre, depa_Id, muni_UsuCreacion, muni_FechaCreacion, muni_UsuModificacion, muni_FechaModificacion, muni_Estado)
+VALUES(@muni_Id,@muni_Nombre,@depa_Id,@muni_UsuCreacion,GETDATE(),NULL,NULL,1)
+END
+
+/*Editar Municipios*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Edit
+@muni_Id				CHAR(4),
+@muni_Nombre			NVARCHAR(150),
+@depa_Id				CHAR(2),
+@muni_UsuModificacion   INT
+AS
+BEGIN
+UPDATE gral.tbMunicipios
+SET muni_Nombre = @muni_Nombre,
+depa_Id = @depa_Id,
+muni_UsuModificacion = @muni_UsuModificacion,
+muni_FechaModificacion = GETDATE()
+WHERE muni_Id = @muni_Id
+END
+
+/*Elimar Municipio*/
+GO 
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Delete
+@muni_Id CHAR(4)
+AS
+BEGIN
+		BEGIN TRY
+			UPDATE gral.tbMunicipios
+			SET muni_Estado = 0
+			WHERE muni_id = @muni_Id
+			SELECT 1
+		END TRY
+		BEGIN CATCH 
+			SELECT 0
+END CATCH
+END
+/*Vista Municipios UDP*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_VW
+AS
+SELECT * FROM gral.VW_gral_tbMunicipios_VW
+
 /*Listado municipios para DropDownList*/
 GO 
 CREATE OR ALTER PROCEDURE UDP_gral_tbMunicipios_ListDDL
@@ -816,23 +933,24 @@ ON depa_UsuModificacion = [user2].user_Id
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_VW
 AS
-SELECT * FROM gral.VW_gral_tbDepartamentos_VW
+SELECT * FROM gral.VW_gral_tbDepartamentos_VW WHERE depa_Estado = 1
 
 /*Insertar Departamentos*/
 GO
-CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_Insert
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_Insert
+	@depa_Id			NVARCHAR(2),
 	@depa_Nombre 		NVARCHAR(100),
 	@depa_UsuCreacion 	INT
 AS
 BEGIN
-	INSERT INTO gral.tbDepartamentos(depa_Nombre, depa_UsuCreacion)
-	VALUES(@depa_Nombre,@depa_UsuCreacion)
+	INSERT INTO gral.tbDepartamentos(depa_Id,depa_Nombre, depa_UsuCreacion)
+	VALUES(@depa_Id,@depa_Nombre,@depa_UsuCreacion)
 END
 
 /*Editar Departamentos*/
 GO
-CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_UPDATE
-	@depa_Id					INT,
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_UPDATE
+	@depa_Id					NVARCHAR(2),
 	@depa_Nombre 				NVARCHAR(100),
 	@depa_UsuModificacion 		INT
 AS
@@ -847,12 +965,20 @@ END
 /*Eliminar Departamentos*/
 GO
 CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_DELETE
-	@depa_Id INT
+	@depa_Id CHAR(2)
 AS
 BEGIN
-	UPDATE gral.tbDepartamentos
+IF NOT EXISTS (SELECT * FROM gral.tbMunicipios WHERE depa_Id = @depa_Id)
+  BEGIN
+   	UPDATE gral.tbDepartamentos
 	SET   depa_Estado = 0
 	WHERE depa_Id = @depa_Id
+	SELECT 1
+  END
+  ELSE
+  BEGIN
+  SELECT 0
+  END
 END
 
 /*Listar Departamentos*/
@@ -986,6 +1112,78 @@ BEGIN
 	WHERE [meto_Estado] = 1
 END
 
+--*******************Sucursales*************************--
+/*Vista Sucursales*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbSucursales_VW
+AS
+SELECT sucu_Id, sucu_Descripcion, sucu_DireccionExacta, sucu_FechaCreacion, sucu_UsuCreacion, 
+    sucu_FechaModificacion, sucu_UsuModificacion, sucu_Estado, muni.depa_Id, depa.depa_Nombre, sucu.muni_Id, muni.muni_Nombre, 
+    [user1].user_NombreUsuario AS sucu_UsuCreacion_Nombre, [user2].user_NombreUsuario AS sucu_UsuModificacion_Nombre
+FROM maqu.tbSucursales sucu
+INNER JOIN gral.tbMunicipios muni ON sucu.muni_Id = muni.muni_id 
+LEFT JOIN acce.tbUsuarios [user1] ON sucu.sucu_UsuCreacion = [user1].user_Id
+LEFT JOIN acce.tbUsuarios [user2] ON sucu.sucu_UsuModificacion = [user2].user_Id
+INNER JOIN gral.tbDepartamentos depa ON muni.depa_Id = depa.depa_Id
+WHERE sucu.sucu_Estado = 1
+
+/*Vista Sucursales UDP*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_VW
+AS
+BEGIN
+SELECT * FROM maqu.VW_maqu_tbSucursales_VW
+END
+
+/*Insertar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Insert
+    @sucu_Descripcion NVARCHAR(200),
+    @muni_Id CHAR(4),
+    @sucu_DireccionExacta NVARCHAR(500),
+    @sucu_UsuCreacion INT
+AS
+BEGIN
+    INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
+    VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
+END
+
+GO
+
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 1','0501','Calle 5',1
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 2','0501','Calle 7',1
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 3','0501','Calle 6',1
+
+/*Editar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
+    @sucu_Id INT,
+    @sucu_Descripcion NVARCHAR(200),
+    @muni_Id CHAR(4),
+    @sucu_DireccionExacta NVARCHAR(500),
+    @sucu_UsuModificacion INT
+AS
+BEGIN
+    UPDATE maqu.tbSucursales
+    SET sucu_Descripcion = @sucu_Descripcion,
+        muni_Id = @muni_Id,
+        sucu_DireccionExacta = @sucu_DireccionExacta,
+        sucu_UsuModificacion = @sucu_UsuModificacion,
+        sucu_FechaModificacion = GETDATE()
+    WHERE sucu_Id = @sucu_Id;
+END
+
+/*Eliminar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
+@sucu_Id INT
+AS
+BEGIN
+UPDATE maqu.tbSucursales 
+SET sucu_Estado = 0
+WHERE sucu_Id = @sucu_Id
+END
+
 
 --**************** CATEGORIAS ****************--
 /*Insertar categoria*/
@@ -1106,7 +1304,6 @@ END
 
 
 --***************Clientes************************--
-
 /*Vista Cliente*/
 GO
 CREATE OR ALTER VIEW maqu.VW_maqu_tbClientes_VW

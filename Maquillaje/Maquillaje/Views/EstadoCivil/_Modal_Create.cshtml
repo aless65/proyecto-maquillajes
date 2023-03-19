@@ -1,0 +1,63 @@
+﻿@model Maquillaje.Entities.Entities.VW_gral_tbEstadosCiviles_VW
+
+<!-- Modal -->
+<div class="modal fade" id="CrearEstadoCivil" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="EstadoCivil" asp-action="Create" id="formCreate">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Estado Civil</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="estacivi_Nombre" class="control-label"></label>
+                                <input asp-for="estacivi_Nombre" id="estacivi_Nombre" class="form-control" />
+                                <label name="lbl_estacivi_Nombre_CreateError" id="lbl_estacivi_Nombre_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalCreate()" class="btn btn-success">Crear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('#estacivi_Nombre').on('input', function () {
+        var c = this.selectionStart,
+            r = /['^0.-9;"]/gi,
+            v = $(this).val();
+        if (r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+</script>
+<script>
+    function AbrirModalCreate() {
+        $("#lbl_estacivi_Nombre_CreateError").attr('hidden', true);
+        $("#CrearEstadoCivil").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalCreate() {
+        var estacivi_Nombre = $('#estacivi_Nombre').val();
+
+        if (estacivi_Nombre == null || estacivi_Nombre == "") {
+            $("#lbl_estacivi_Nombre_CreateError").attr('hidden', false);
+        } else {
+            $("#formCreate").submit();
+        }
+    }
+</script>
+
+

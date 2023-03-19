@@ -1,0 +1,84 @@
+﻿@model Maquillaje.Entities.Entities.VW_gral_tbEstadosCiviles_VW
+
+<div class="modal fade" id="EditarEstadoCivil" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="EstadoCivil" asp-action="Edit" id="formEdit">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="estacivi_Id" id="estacivi_Id_Edit" />
+                        <label name="lbl_estacivi_Id_EditError" id="lbl_estacivi_Id_EditError" class="control-label" hidden style="color: red;">ID Invalido</label>
+                        <div class="form-group col-6">
+                            <label asp-for="estacivi_Nombre" class="control-label"></label>
+                            <input asp-for="estacivi_Nombre" id="estacivi_Nombre_Edit" class="form-control" asp-items="ViewBag.depa_Id">
+                            <label name="lbl_estacivi_NombreError" id="lbl_estacivi_NombreError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalEdit()" class="btn btn-success">Editar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('#estacivi_Nombre_Edit').on('input', function () {
+        var c = this.selectionStart,
+            r = /[^ a-z()0-9]/gi,
+            v = $(this).val();
+        if (r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+</script>
+
+
+<script>
+    function AbrirModalEdit(cadena) {
+        $("#lbl_estacivi_NombreError").attr('hidden', true);
+        $("#lbl_estacivi_Id_EditError").attr('hidden', true);
+        
+        var datastring = cadena;
+        var data = datastring.split(',');
+        $("#estacivi_Id_Edit").val(data[0]);
+        $("#estacivi_Nombre_Edit").val(data[1]);
+        $("#EditarEstadoCivil").appendTo('body').modal('show');
+    };
+</script>
+
+
+<script>
+    function GuardarModalEdit() {
+
+        var estacivi_Id_Edit = $("#estacivi_Id_Edit").val();
+        var estacivi_Nombre_Edit = $("#estacivi_Nombre_Edit").val();
+        var x = true;
+
+        if (estacivi_Id_Edit == null || estacivi_Id_Edit == "") {
+            x = false
+            $("#lbl_estacivi_Id_EditError").attr('hidden', false);
+        } else {
+            $("#lbl_estacivi_Id_EditError").attr('hidden', true);
+        }
+
+        if (estacivi_Nombre_Edit == null || estacivi_Nombre_Edit == "") {
+            x = false
+            $("#lbl_estacivi_NombreError").attr('hidden', false);
+        } else {
+            $("#lbl_estacivi_NombreError").attr('hidden', true);
+        }
+
+        if (x == true) {
+            $("#formEdit").submit();
+        }
+    };
+</script>

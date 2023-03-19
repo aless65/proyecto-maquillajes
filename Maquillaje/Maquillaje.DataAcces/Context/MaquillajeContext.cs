@@ -44,6 +44,7 @@ namespace Maquillaje.DataAccess.Context
         public virtual DbSet<tbProductos> tbProductos { get; set; }
         public virtual DbSet<tbProveedores> tbProveedores { get; set; }
         public virtual DbSet<tbRoles> tbRoles { get; set; }
+        public virtual DbSet<tbSucursales> tbSucursales { get; set; }
         public virtual DbSet<tbUsuarios> tbUsuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1029,6 +1030,48 @@ namespace Maquillaje.DataAccess.Context
                     .WithMany(p => p.tbRolesrole_UsuModificacionNavigation)
                     .HasForeignKey(d => d.role_UsuModificacion)
                     .HasConstraintName("FK_acce_tbRoles_acce_tbUsuarios_role_UsuModificacion_user_Id");
+            });
+
+            modelBuilder.Entity<tbSucursales>(entity =>
+            {
+                entity.HasKey(e => e.sucu_Id)
+                    .HasName("PK_maqu_tbSucursales_sucu_Id");
+
+                entity.ToTable("tbSucursales", "maqu");
+
+                entity.Property(e => e.muni_Id)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.sucu_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.sucu_DireccionExacta)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.sucu_Estado)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.sucu_FechaCreacion)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.sucu_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.muni)
+                    .WithMany(p => p.tbSucursales)
+                    .HasForeignKey(d => d.muni_Id)
+                    .HasConstraintName("FK_maqu_gral_tbSucursales_muni_Id");
+
+                entity.HasOne(d => d.sucu_UsuCreacionNavigation)
+                    .WithMany(p => p.tbSucursales)
+                    .HasForeignKey(d => d.sucu_UsuCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_maqu_acce_tbSucursales_user_Id");
             });
 
             modelBuilder.Entity<tbUsuarios>(entity =>

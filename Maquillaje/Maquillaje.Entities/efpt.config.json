@@ -1,4 +1,4 @@
-﻿{
+{
    "CodeGenerationMode": 0,
    "ContextClassName": "MaquillajeContext",
    "ContextNamespace": null,
@@ -74,11 +74,23 @@
          "ObjectType": 0
       },
       {
+         "Name": "[maqu].[tbSucursales]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[acce].[VW_acce_tbUsuarios_View]",
          "ObjectType": 3
       },
       {
          "Name": "[gral].[VW_gral_tbDepartamentos_VW]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[gral].[VW_gral_tbEstadosCiviles_VW]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[gral].[VW_gral_tbMunicipios_VW]",
          "ObjectType": 3
       },
       {
@@ -107,6 +119,10 @@
       },
       {
          "Name": "[maqu].[VW_maqu_tbProveedores_VW]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[maqu].[VW_maqu_tbSucursales_VW]",
          "ObjectType": 3
       },
       {

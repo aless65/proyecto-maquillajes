@@ -1,0 +1,83 @@
+﻿@model Maquillaje.Entities.Entities.VW_gral_tbMunicipios_VW
+
+<!-- Modal -->
+<div class="modal fade" id="EditarDepartamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Municipio" asp-action="Edit" id="formEdit">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="muni_id" id="muni_Id_Edit" />
+                        <div class="form-group col-6">
+                            <label asp-for="depa_Id" class="control-label"></label>
+                            <select asp-for="depa_Id" id="depa_Id_Edit" class="form-control" asp-items="ViewBag.depa_Id">
+                            </select>
+                            <span asp-validation-for="depa_Id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="muni_Nombre" class="control-label"></label>
+                            <input asp-for="muni_Nombre" id="muni_Nombre_Edit" class="form-control" />
+                            <label name="lbl_muni_Nombre_EditError" id="lbl_muni_Nombre_EditError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalEdit()" class="btn btn-success">Editar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('#muni_Nombre_Edit').on('input', function () {
+        var c = this.selectionStart,
+            r = /[^ a-z0-9]/gi,
+            v = $(this).val();
+        if (r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+</script>
+
+
+<script>
+    function AbrirModalEdit(cadena) {
+        $("#lbl_muni_Nombre_EditError").attr('hidden', true);
+        var datastring = cadena;
+        var data = datastring.split(',');
+        $("#muni_Id_Edit").val(data[0]);
+        $("#depa_Id_Edit").val(data[1]);
+        console.log($('#depa_Id_Edit').val());
+        $("#muni_Nombre_Edit").val(data[2]);
+        $("#EditarDepartamento").appendTo('body').modal('show');
+    };
+</script>
+
+
+<script>
+    function GuardarModalEdit() {
+
+        var depa_Id_Edit = $("#depa_Id_Edit").val();
+        var muni_Nombre_Edit = $("#muni_Nombre_Edit").val();
+        var x = true;
+
+        if (muni_Nombre_Edit == null || muni_Nombre_Edit == "") {
+            x = false
+            $("#lbl_muni_Nombre_EditError").attr('hidden', false);
+        } else {
+            $("#lbl_muni_Nombre_EditError").attr('hidden', true);
+        }
+
+        if (x == true) {
+            $("#formEdit").submit();
+        }
+    };
+</script>

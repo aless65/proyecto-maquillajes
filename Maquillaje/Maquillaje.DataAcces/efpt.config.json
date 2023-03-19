@@ -1,4 +1,4 @@
-﻿{
+{
    "CodeGenerationMode": 0,
    "ContextClassName": "MaquillajeContext",
    "ContextNamespace": null,
@@ -79,7 +79,9 @@
       },
       {
          "Name": "[gral].[VW_gral_tbDepartamentos_VW]",
-         "ObjectType": 3
+         "ObjectType": 3,
+         "Name": "[maqu].[tbSucursales]",
+         "ObjectType": 0
       },
       {
          "Name": "[maqu].[VW_maqu_tbClientes_DDLMunicipios]",

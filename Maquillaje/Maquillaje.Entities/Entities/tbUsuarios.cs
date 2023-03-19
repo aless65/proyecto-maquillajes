@@ -38,6 +38,7 @@ namespace Maquillaje.Entities.Entities
             tbProveedoresprov_UsuModificacionNavigation = new HashSet<tbProveedores>();
             tbRolesrole_UsuCreacionNavigation = new HashSet<tbRoles>();
             tbRolesrole_UsuModificacionNavigation = new HashSet<tbRoles>();
+            tbSucursales = new HashSet<tbSucursales>();
         }
 
         public int user_Id { get; set; }
@@ -84,5 +85,6 @@ namespace Maquillaje.Entities.Entities
         public virtual ICollection<tbProveedores> tbProveedoresprov_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesrole_UsuCreacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesrole_UsuModificacionNavigation { get; set; }
+        public virtual ICollection<tbSucursales> tbSucursales { get; set; }
     }
 }

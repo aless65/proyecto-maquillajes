@@ -12,6 +12,7 @@ namespace Maquillaje.Entities.Entities
         {
             tbClientes = new HashSet<tbClientes>();
             tbEmpleados = new HashSet<tbEmpleados>();
+            tbSucursales = new HashSet<tbSucursales>();
         }
 
         public string muni_id { get; set; }
@@ -28,5 +29,6 @@ namespace Maquillaje.Entities.Entities
         public virtual tbUsuarios muni_UsuModificacionNavigation { get; set; }
         public virtual ICollection<tbClientes> tbClientes { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
+        public virtual ICollection<tbSucursales> tbSucursales { get; set; }
     }
 }

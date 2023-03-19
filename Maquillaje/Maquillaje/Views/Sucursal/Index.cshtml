@@ -9,7 +9,7 @@
     <div class="card-header"><h1>Sucursales</h1></div>
     <div class="card-body">
         <p>
-            <a asp-action="Create">Create New</a>
+            <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
         </p>
         <table class="table">
             <thead>
@@ -29,7 +29,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.muni_Nombre)
                     </th>
-                    <th></th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,12 +52,9 @@
                             @Html.DisplayFor(modelItem => item.muni_Nombre)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.sucu_Estado)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.sucu_Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.sucu_Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.sucu_Id">Delete</a>
+                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.sucu_Id,@item.sucu_Descripcion,@item.muni_Id,@item.sucu_DireccionExacta')">Editar</button> |
+                            <a asp-action="Details" asp-route-id="@item.sucu_Id" class="btn btn-dark">Detalles</a> |
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.sucu_Id)">Borrar</button>
                         </td>
                     </tr>
                 }
@@ -67,3 +64,8 @@
     </div>
 </div>
 
+@Html.Partial("_Modal_Create", new Maquillaje.Entities.Entities.VW_maqu_tbSucursales_VW())
+
+@Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_maqu_tbSucursales_VW())
+
+@Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_maqu_tbSucursales_VW())

@@ -106,6 +106,9 @@ namespace Maquillaje.DataAccess.Repository
 
         #region Sucursales
         public static string UDP_Listar_Sucursales = "maqu.UDP_maqu_tbSucursales_VW";
+        public static string UDP_Insertar_Sucursales = "maqu.UDP_maqu_tbSucursales_Insert";
+        public static string UDP_Editar_Sucursales = "maqu.UDP_maqu_tbSucursales_Edit";
+        public static string UDP_Elimnar_Sucursales = "maqu.UDP_maqu_tbSucursales_Delete";
         #endregion
     }
 }

@@ -1,0 +1,107 @@
+﻿@model Maquillaje.Entities.Entities.VW_maqu_tbSucursales_VW
+<!-- Modal -->
+<div class="modal fade" id="CrearSucursal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="post" asp-controller="Sucursal" asp-action="Create" id="formCreate">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Estado Civil</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group col-6">
+                            <label asp-for="sucu_Descripcion" class="control-label"></label>
+                            <input asp-for="sucu_Descripcion" id="sucu_Descripcion" class="form-control" />
+                            <label name="lbl_sucu_Descripcion_CreateError" id="lbl_sucu_Descripcion_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="muni_Id" class="control-label"></label>
+                            <select asp-for="muni_Id" id="muni_Id" class="form-control" asp-items="ViewBag.muni_Id">
+                                <option value="">--Seleccione un municipio--</option>
+                            </select>
+                            <label name="lbl_muni_Id_CreateError" id="lbl_muni_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                        <div class="form-group col-6 mt-3">
+                            <label asp-for="sucu_DireccionExacta" class="control-label"></label>
+                            <input asp-for="sucu_DireccionExacta" id="sucu_DireccionExacta" class="form-control" />
+                            <label name="lbl_sucu_DireccionExacta_CreateError" id="lbl_sucu_DireccionExacta_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="GuardarModalCreate()" class="btn btn-success">Crear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('#sucu_Descripcion').on('input', function () {
+        var c = this.selectionStart,
+            r = /['^0.-9;"]/gi,
+            v = $(this).val();
+        if (r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+
+    $('#sucu_DireccionExacta').on('input', function () {
+        var c = this.selectionStart,
+            r = /[',^0.-9;"]/gi,
+            v = $(this).val();
+        if (r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+</script>
+<script>
+    function AbrirModalCreate() {
+        $("#lbl_sucu_Descripcion_CreateError").attr('hidden', true);
+        $("#lbl_muni_Id_CreateError").attr('hidden', true);
+        $("#lbl_sucu_DireccionExacta_CreateError").attr('hidden', true);
+        $("#CrearSucursal").appendTo('body').modal('show');
+    };
+</script>
+
+<script>
+    function GuardarModalCreate() {
+        var sucu_Descripcion = $('#sucu_Descripcion').val();
+        var muni_Id = $('#muni_Id').val();
+        var sucu_DireccionExacta = $('#sucu_DireccionExacta').val();
+        var x = true;
+
+        if (sucu_Descripcion == null || sucu_Descripcion == "") {
+            x = false
+            $("#lbl_sucu_Descripcion_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_sucu_Descripcion_CreateError").attr('hidden', true);
+        }
+
+        if (muni_Id == null || muni_Id == "") {
+            x = false
+            $("#lbl_muni_Id_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_muni_Id_CreateError").attr('hidden', true);
+
+        }
+        if (sucu_DireccionExacta == null || sucu_DireccionExacta == "") {
+            x = false
+            $("#lbl_sucu_DireccionExacta_CreateError").attr('hidden', false);
+        } else {
+            $("#lbl_sucu_DireccionExacta_CreateError").attr('hidden', true);
+        }
+
+        if (x == true) {
+            $("#formCreate").submit();
+        }
+    }
+</script>
+
+

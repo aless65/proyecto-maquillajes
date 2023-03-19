@@ -530,6 +530,43 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<VW_maqu_tbSucursales_VW>();
             }
         }
+
+        public int InsertarSucursal(VW_maqu_tbSucursales_VW item)
+        {
+            try
+            {
+                return _VW_maqu_tbSucursales_VW_Repository.Insert(item);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+        }
+
+
+        public int EditarSucursal(VW_maqu_tbSucursales_VW item)
+        {
+            try
+            {
+                return _VW_maqu_tbSucursales_VW_Repository.Update(item);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+        }
+
+        public int EliminarSucursal(int id)
+        {
+            try
+            {
+                return _VW_maqu_tbSucursales_VW_Repository.DeleteConfirmed(id);
+            }
+            catch (Exception error)
+            {
+                return 0;
+            }
+        }
         #endregion
     }
 }

@@ -22,7 +22,15 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Insert(VW_maqu_tbSucursales_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@sucu_Descripcion", item.sucu_Descripcion, DbType.String, ParameterDirection.Input);
+            parametros.Add("@muni_Id", item.muni_Id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@sucu_DireccionExacta", item.sucu_DireccionExacta, DbType.String, ParameterDirection.Input);
+            parametros.Add("@sucu_UsuCreacion", 1, DbType.String, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Sucursales, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public IEnumerable<VW_maqu_tbSucursales_VW> List()
@@ -33,7 +41,26 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Update(VW_maqu_tbSucursales_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@sucu_Id", item.sucu_Id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@sucu_Descripcion", item.sucu_Descripcion, DbType.String, ParameterDirection.Input);
+            parametros.Add("@muni_Id", item.muni_Id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@sucu_DireccionExacta", item.sucu_DireccionExacta, DbType.String, ParameterDirection.Input);
+            parametros.Add("@sucu_UsuModificacion", 1, DbType.String, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Sucursales, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public int DeleteConfirmed(int id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@sucu_Id", id, DbType.String, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Elimnar_Sucursales, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

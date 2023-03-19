@@ -232,7 +232,8 @@ CREATE TABLE maqu.tbProveedores
 	CONSTRAINT FK_maqu_tbProveedores_acce_tbUsuarios_prov_UsuCreacion_user_Id  			FOREIGN KEY(prov_UsuCreacion) 		REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT  FK_maqu_tbProveedores_acce_tbUsuarios_prov_UsuModificacion_user_Id 		FOREIGN KEY(prov_UsuModificacion) 	REFERENCES acce.tbUsuarios(user_Id)
 );
---***************TABLA SURCURSALES*************************--
+--***************TABLA SucursalES*************************--
+GO
 CREATE TABLE maqu.tbSucursales(
     sucu_Id                             INT IDENTITY(1,1), 
     sucu_Descripcion                    NVARCHAR(200) NOT NULL,
@@ -244,8 +245,8 @@ CREATE TABLE maqu.tbSucursales(
     sucu_UsuModificacion				INT,
     sucu_Estado							BIT NOT NULL DEFAULT 1,
     CONSTRAINT PK_maqu_tbSucursales_sucu_Id PRIMARY KEY(sucu_Id),
-	CONSTRAINT FK_maqu_gral_tbSurcursales_muni_Id FOREIGN KEY (muni_Id) REFERENCES gral.tbMunicipios (muni_Id),
-	CONSTRAINT FK_maqu_acce_tbSurcursales_user_Id FOREIGN KEY (sucu_UsuCreacion) REFERENCES acce.tbUsuarios (user_id)
+	CONSTRAINT FK_maqu_gral_tbSucursales_muni_Id FOREIGN KEY (muni_Id) REFERENCES gral.tbMunicipios (muni_Id),
+	CONSTRAINT FK_maqu_acce_tbSucursales_user_Id FOREIGN KEY (sucu_UsuCreacion) REFERENCES acce.tbUsuarios (user_id)
 );
 
 --********TABLA EMPLEADOS****************---
@@ -1088,6 +1089,78 @@ BEGIN
 	WHERE [meto_Estado] = 1
 END
 
+--*******************Sucursales*************************--
+/*Vista Sucursales*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbSucursales_VW
+AS
+SELECT sucu_Id, sucu_Descripcion, sucu_DireccionExacta, sucu_FechaCreacion, sucu_UsuCreacion, 
+    sucu_FechaModificacion, sucu_UsuModificacion, sucu_Estado, muni.depa_Id, depa.depa_Nombre, sucu.muni_Id, muni.muni_Nombre, 
+    [user1].user_NombreUsuario AS sucu_UsuCreacion_Nombre, [user2].user_NombreUsuario AS sucu_UsuModificacion_Nombre
+FROM maqu.tbSucursales sucu
+INNER JOIN gral.tbMunicipios muni ON sucu.muni_Id = muni.muni_id 
+LEFT JOIN acce.tbUsuarios [user1] ON sucu.sucu_UsuCreacion = [user1].user_Id
+LEFT JOIN acce.tbUsuarios [user2] ON sucu.sucu_UsuModificacion = [user2].user_Id
+INNER JOIN gral.tbDepartamentos depa ON muni.depa_Id = depa.depa_Id
+WHERE sucu.sucu_Estado = 1
+
+/*Vista Sucursales UDP*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_VW
+AS
+BEGIN
+SELECT * FROM maqu.VW_maqu_tbSucursales_VW
+END
+
+/*Insertar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Insert
+    @sucu_Descripcion NVARCHAR(200),
+    @muni_Id CHAR(4),
+    @sucu_DireccionExacta NVARCHAR(500),
+    @sucu_UsuCreacion INT
+AS
+BEGIN
+    INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
+    VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
+END
+
+GO
+
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 1','0501','Calle 5',1
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 2','0501','Calle 7',1
+EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 3','0501','Calle 6',1
+
+/*Editar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
+    @sucu_Id INT,
+    @sucu_Descripcion NVARCHAR(200),
+    @muni_Id CHAR(4),
+    @sucu_DireccionExacta NVARCHAR(500),
+    @sucu_UsuModificacion INT
+AS
+BEGIN
+    UPDATE maqu.tbSucursales
+    SET sucu_Descripcion = @sucu_Descripcion,
+        muni_Id = @muni_Id,
+        sucu_DireccionExacta = @sucu_DireccionExacta,
+        sucu_UsuModificacion = @sucu_UsuModificacion,
+        sucu_FechaModificacion = GETDATE()
+    WHERE sucu_Id = @sucu_Id;
+END
+
+/*Eliminar Sucursal*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
+@sucu_Id INT
+AS
+BEGIN
+UPDATE maqu.tbSucursales 
+SET sucu_Estado = 0
+WHERE sucu_Id = @sucu_Id
+END
+
 
 --**************** CATEGORIAS ****************--
 /*Insertar categoria*/
@@ -1163,7 +1236,6 @@ END
 
 
 --***************Clientes************************--
-
 /*Vista Cliente*/
 GO
 CREATE OR ALTER VIEW maqu.VW_maqu_tbClientes_VW

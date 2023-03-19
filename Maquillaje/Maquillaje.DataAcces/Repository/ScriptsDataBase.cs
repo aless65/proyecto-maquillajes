@@ -103,5 +103,9 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Editar_Proveedor = "UDP_maqu_tbProveedores_Update";
         public static string UDP_Eliminar_Proveedores = "UDP_maqu_tbProveedores_DELETE";
         #endregion
+
+        #region Sucursales
+        public static string UDP_Listar_Sucursales = "maqu.UDP_maqu_tbSucursales_VW";
+        #endregion
     }
 }

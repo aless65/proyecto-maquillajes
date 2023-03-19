@@ -16,9 +16,11 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly VW_gral_tbMunicipios_VW_Repository _vw_gral_tbMunicipios_vw_Repository;
         private readonly VW_gral_tbEstadosCiviles_VW_Repository _VW_gral_tbEstadosCiviles_VW_Repository;
 
+
         public GralService(MunicipioRepository municipioRepository, DepartamentoRepository departamentoRepository, 
             EstadoCivilRepository estadoCivilRepository,VW_gral_tbDepartamentos_VW_Repository vW_Gral_TbDepartamentos_VW_Repository,
-            VW_gral_tbMunicipios_VW_Repository vW_Gral_TbMunicipios_VW_Repository, VW_gral_tbEstadosCiviles_VW_Repository vW_Gral_TbEstadosCiviles_VW_Repository)
+            VW_gral_tbMunicipios_VW_Repository vW_Gral_TbMunicipios_VW_Repository, VW_gral_tbEstadosCiviles_VW_Repository vW_Gral_TbEstadosCiviles_VW_Repository
+            )
         {
             _municipioRepository = municipioRepository;
             _departamentoRepository = departamentoRepository;
@@ -26,6 +28,7 @@ namespace Maquillaje.BusinessLogic.Services
             _vw_gral_tbDepartamentos_vw_Repository = vW_Gral_TbDepartamentos_VW_Repository;
             _vw_gral_tbMunicipios_vw_Repository = vW_Gral_TbMunicipios_VW_Repository;
             _VW_gral_tbEstadosCiviles_VW_Repository = vW_Gral_TbEstadosCiviles_VW_Repository;
+
         }
 
         #region Departamentos

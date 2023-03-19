@@ -18,10 +18,11 @@ namespace Maquillaje.BusinessLogic.Services
         private readonly ProductoRepository _productoRepository;
         private readonly VW_maqu_tbProductos_VW_Repository _vw_maqu_tbProductos_VW_Repository;
         private readonly VW_maqu_tbProveedores_VW_Repository _vw_maqu_tbProveedores_VW_Repository;
-
+        private readonly VW_maqu_tbSucursales_VW_Repository _VW_maqu_tbSucursales_VW_Repository;
         public MaquService(CategoriaRepository categoriaRepository, EmpleadoRepository empleadoRepository, ClienteRepository clienteRepository, MetodoPagoRepository metodoPagoRepository,
                            FacturaRepository facturaRepository, FacturaDetalleRepository facturaDetalleRepository, ProductoRepository productoRepository,
-                           VW_maqu_tbProductos_VW_Repository vw_maqu_tbProductos_VW_Repository, VW_maqu_tbProveedores_VW_Repository vw_maqu_tbProveedores_VW_Repository)
+                           VW_maqu_tbProductos_VW_Repository vw_maqu_tbProductos_VW_Repository, VW_maqu_tbProveedores_VW_Repository vw_maqu_tbProveedores_VW_Repository,
+                           VW_maqu_tbSucursales_VW_Repository vW_Maqu_TbSucursales_VW_Repository)
         {
             _categoriaRepository = categoriaRepository;
             _empleadoRepository = empleadoRepository;
@@ -32,6 +33,7 @@ namespace Maquillaje.BusinessLogic.Services
             _productoRepository = productoRepository;
             _vw_maqu_tbProductos_VW_Repository = vw_maqu_tbProductos_VW_Repository;
             _vw_maqu_tbProveedores_VW_Repository = vw_maqu_tbProveedores_VW_Repository;
+            _VW_maqu_tbSucursales_VW_Repository = vW_Maqu_TbSucursales_VW_Repository;
         }
 
         #region Categorias
@@ -516,5 +518,18 @@ namespace Maquillaje.BusinessLogic.Services
         }
         #endregion
 
+        #region Sucursal
+        public IEnumerable<VW_maqu_tbSucursales_VW> ListadoSucursales()
+        {
+            try
+            {
+                return _VW_maqu_tbSucursales_VW_Repository.List();
+            }
+            catch
+            {
+                return Enumerable.Empty<VW_maqu_tbSucursales_VW>();
+            }
+        }
+        #endregion
     }
 }

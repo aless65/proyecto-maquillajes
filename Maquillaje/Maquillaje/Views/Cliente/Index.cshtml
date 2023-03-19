@@ -88,6 +88,17 @@
     </form>
 </div>
 
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
+
 <script>
 
     sessionStorage.clear();

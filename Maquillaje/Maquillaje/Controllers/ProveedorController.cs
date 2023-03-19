@@ -27,6 +27,12 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _maquService.ListadoProveedores();
             var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProveedores_VW>>(listado);
 
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             return View(listadoMapeado);
         }
 
@@ -46,29 +52,47 @@ namespace Maquillaje.WebUI.Controllers
             var proveedor = _mapper.Map<VW_maqu_tbProveedores_VW>(item);
             var insertar = _maquService.InsertarProveedor(proveedor);
 
-            try
+            if (insertar == 1)
             {
-                if (insertar == 1)
-                    return RedirectToAction("Index");
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                TempData["Script"] = script;
             }
-            catch
+            else if(insertar == 2)
             {
-        
+                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                TempData["Script"] = script;
             }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
             return RedirectToAction("Index");
+
         }
 
         [HttpPost("/Proveedor/Edit")]
         public IActionResult Edit(VW_maqu_tbProveedores_VW item)
         {
-            try
-            {
-                var editar = _maquService.EditarProveedor(item);
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
 
+            var editar = _maquService.EditarProveedor(item);
+
+            if (editar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (editar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.prov_Id},{item.prov_Nombre},{item.prov_CorreoElectronico},{item.prov_Telefono}," +
+                                $"{item.prov_Telefono}') ";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
@@ -77,6 +101,22 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Delete(int id)
         {
             var delete = _maquService.DeleteProveedor(id);
+
+            if (delete == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (delete == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
 
             return RedirectToAction("Index");
         }

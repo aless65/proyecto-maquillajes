@@ -31,6 +31,13 @@ namespace Maquillaje.WebUI.Controllers
 
             ViewBag.cate_Id = new SelectList(ddlcategorias, "cate_Id", "cate_Nombre");
             ViewBag.prov_Id = new SelectList(ddlproveedores, "prov_Id", "prov_Nombre");
+
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             return View(listadoMapeado);
         }
 
@@ -105,7 +112,6 @@ namespace Maquillaje.WebUI.Controllers
         {
 
             var eliminar = _maquService.DeleteProducto(id);
-            return RedirectToAction("Index");
 
             if (eliminar == 1)
             {
@@ -114,7 +120,7 @@ namespace Maquillaje.WebUI.Controllers
             }
             else if (eliminar == 2)
             {
-                string script = $"MostrarMensajeWarning('El registro no puede ser eliminado');";
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
                 TempData["Script"] = script;
             }
             else

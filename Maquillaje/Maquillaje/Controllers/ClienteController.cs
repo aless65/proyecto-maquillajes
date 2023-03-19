@@ -30,6 +30,12 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _maquService.ListadoClientes(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<ClienteViewModel>>(listado);
 
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             return View(listadoMapeado);
         }
 
@@ -38,6 +44,8 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
+
+
             return View();
         }
 
@@ -51,15 +59,23 @@ namespace Maquillaje.WebUI.Controllers
             var cliente = _mapper.Map<tbClientes>(item);
             var insertar = _maquService.InsertClientes(cliente);
 
-            try
+
+            if (insertar == 1)
             {
-                if (insertar == 1)
-                    return RedirectToAction("Index");
-                else
-                    return View();
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                TempData["Script"] = script;
+                return RedirectToAction("Index");
             }
-            catch
+            else if (insertar == 2)
             {
+                string script = "MostrarMensajeWarning('Un registro con este número de identidad ya existe'); console.log('se repite')";
+                TempData["Script"] = script;
+                return View();
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
                 return View();
             }
         }
@@ -84,13 +100,22 @@ namespace Maquillaje.WebUI.Controllers
             var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
 
-            if(update == 1)
+            if (update == 1)
             {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
                 return RedirectToAction("Index");
+            }
+            else if (update == 2)
+            {
+                string script = $"MostrarMensajeWarning('Un registro con este número de identidad ya existe');";
+                TempData["Script"] = script;
+                return View(item);
             }
             else
             {
-                //ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre", item.depa_Id);
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
                 return View(item);
             }
         }
@@ -98,6 +123,22 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Delete(int id)
         {
             var delete = _maquService.DeleteCliente(id);
+
+            if (delete == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (delete == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
 
             return RedirectToAction("Index");
         }

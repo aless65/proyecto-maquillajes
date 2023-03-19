@@ -75,6 +75,14 @@
     </div>
 </div>
 
+@if (TempData["Script"] != null)
+{
+    <script>
+    $(function () {
+        @Html.Raw(TempData["Script"]);
+    });
+    </script>
+}
 
 <script>
     $('#clie_Identidad').on('input', function () {
@@ -185,7 +193,7 @@
                     console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
                 });
         }
-        
+
     });
 
     $('#depa_Id').change(function () {

@@ -9,7 +9,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="meto_Id" class="form-control" id="meto_Id_Edit" name="meto_Id" hidden />
                             <div class="form-group">
@@ -38,6 +38,7 @@
         $("#meto_Nombre_Edit").val(data[1]);
         $("#lbl_meto_NombreEditError").attr('hidden', true);
         $("#EditarMetodos").appendTo('body').modal('show');
+
     };
 
     function GuardarModalEdit() {
@@ -54,4 +55,15 @@
         }
 
     }
+
+    //$.ajax({
+    //    type: "POST",
+    //    url: "/MetodoPago/Create",
+    //    success: function (result) {
+    //        console.log(result);
+    //    },
+    //    error: function (xhr, status, error) {
+    //        console.log(error);
+    //    }
+    //});
 </script>

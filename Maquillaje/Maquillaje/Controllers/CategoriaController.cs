@@ -40,8 +40,14 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _maquService.ListadoCategorias(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<CategoriaViewModel>>(listado);
 
-            if (String.IsNullOrEmpty(error))
-                ModelState.AddModelError("", error);
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
+            //if (String.IsNullOrEmpty(error))
+            //    ModelState.AddModelError("", error);
 
             return View(listadoMapeado);
         }
@@ -56,13 +62,26 @@ namespace Maquillaje.WebUI.Controllers
             try
             {
                 if (insertar == 1)
-                    return RedirectToAction("Index");
+                {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                    TempData["Script"] = script;
+                }
+                else if (insertar == 2)
+                {
+                    string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                    TempData["Script"] = script;
+                }
                 else
-                    return View();
+                {
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
+                }
+
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 

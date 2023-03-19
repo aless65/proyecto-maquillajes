@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
 <div class="card">
     <div class="card-header">
         <h2>Métodos de pago</h2>
@@ -54,6 +56,17 @@
 @Html.Partial("_Modal_Create", new Maquillaje.WebUI.Models.MetodoPagoViewModel())
 @Html.Partial("_Modal_Update", new Maquillaje.WebUI.Models.MetodoPagoViewModel())
 @Html.Partial("_Modal_Delete", new Maquillaje.WebUI.Models.MetodoPagoViewModel())
+
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
 
 <script>
     $(document).ready(function () {

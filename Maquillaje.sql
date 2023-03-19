@@ -473,15 +473,15 @@ VALUES('0101','La Ceiba ','01', 1),
 
 
 --********PROCEDIMIENTOS****************---
-GO
-CREATE OR ALTER PROCEDURE UDP_maqu_tbMetodosPago_INSERT
-	@meto_Nombre			NVARCHAR(100),
-	@meto_UsuCreacion	INT
-AS
-BEGIN
-	INSERT INTO maqu.tbMetodosPago(meto_Nombre, meto_UsuCreacion)
-	VALUES (@meto_Nombre, @meto_UsuCreacion)
-END
+--GO
+--CREATE OR ALTER PROCEDURE UDP_maqu_tbMetodosPago_INSERT
+--	@meto_Nombre			NVARCHAR(100),
+--	@meto_UsuCreacion	INT
+--AS
+--BEGIN
+--	INSERT INTO maqu.tbMetodosPago(meto_Nombre, meto_UsuCreacion)
+--	VALUES (@meto_Nombre, @meto_UsuCreacion)
+--END
 
 GO
 EXEC UDP_maqu_tbMetodosPago_INSERT 'Efectivo', 1
@@ -896,12 +896,13 @@ BEGIN
 		BEGIN
 			INSERT INTO [maqu].[tbMetodosPago](meto_Nombre, meto_UsuCreacion)
 			VALUES (@meto_Nombre, @meto_UsuCreacion)
+
 			SELECT 1
 		END
 		ELSE IF EXISTS (SELECT * FROM [maqu].[tbMetodosPago]
 						WHERE @meto_Nombre = meto_Nombre
 							  AND meto_Estado = 1)
-			SELECT 0
+			SELECT 2
 		ELSE
 			UPDATE [maqu].[tbMetodosPago]
 			SET [meto_Estado] = 1
@@ -923,12 +924,29 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago_UPDATE
 AS
 BEGIN
 	BEGIN TRY
-		UPDATE [maqu].[tbMetodosPago]
-		SET     [meto_Nombre] = @meto_Nombre,
-				[meto_UsuModificacion] = @meto_UsuModificacion,
-				[meto_FechaModificacion] = GETDATE()
-		WHERE 	[meto_Id] = @meto_Id
-		SELECT 1
+	IF NOT EXISTS (SELECT * FROM [maqu].[tbMetodosPago]
+						WHERE @meto_Nombre = meto_Nombre)
+		BEGIN			
+			UPDATE [maqu].[tbMetodosPago]
+			SET     [meto_Nombre] = @meto_Nombre,
+					[meto_UsuModificacion] = @meto_UsuModificacion,
+					[meto_FechaModificacion] = GETDATE()
+			WHERE 	[meto_Id] = @meto_Id
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbMetodosPago]
+						WHERE @meto_Nombre = meto_Nombre
+							  AND meto_Estado = 1
+							  AND meto_Id != @meto_Id)
+			SELECT 2
+		ELSE
+			UPDATE [maqu].[tbMetodosPago]
+			SET [meto_Estado] = 1,
+			   meto_UsuModificacion = @meto_UsuModificacion
+			WHERE meto_Nombre = @meto_Nombre
+
+			SELECT 1
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -942,10 +960,14 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago_DELETE
 AS
 BEGIN
 	BEGIN TRY
-		UPDATE [maqu].[tbMetodosPago]
-		SET [meto_Estado] = 0
-		WHERE [meto_Id] = @meto_Id
-
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbFacturas] WHERE meto_Id = @meto_Id)
+			BEGIN
+				UPDATE [maqu].[tbMetodosPago]
+				SET [meto_Estado] = 0
+				WHERE [meto_Id] = @meto_Id
+			END
+		ELSE
+			SELECT 2
 		SELECT 1
 	END TRY
 	BEGIN CATCH
@@ -973,9 +995,26 @@ CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_INSERT
 AS
 BEGIN
 	BEGIN TRY
-		INSERT INTO [maqu].[tbCategorias](cate_Nombre, cate_UsuCreacion)
-		VALUES(@cate_Nombre, @cate_UsuCreacion)
-		SELECT 1
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbCategorias] 
+						WHERE cate_Nombre = @cate_Nombre)
+			BEGIN
+			INSERT INTO [maqu].[tbCategorias](cate_Nombre, cate_UsuCreacion)
+			VALUES(@cate_Nombre, @cate_UsuCreacion)
+			
+			SELECT 1
+			END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbCategorias] 
+						WHERE cate_Nombre = @cate_Nombre
+						AND cate_Estado = 0)
+			BEGIN
+				UPDATE [maqu].[tbCategorias]
+				SET cate_Estado = 1
+				WHERE cate_Nombre = @cate_Nombre
+
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1708,3 +1747,47 @@ EXEC maqu.UDP_maqu_tbFacturas_Insert 1, 1, 1, 1
 
 INSERT INTO [maqu].[tbFacturasDetalles]([fact_Id], [prod_Id], [factdeta_Cantidad], [factdeta_Precio], [factdeta_UsuCreacion])
 VALUES (1, 1, 2, 299.09, 1)
+
+
+----------------------------------------------------------------------------------------
+GO
+CREATE OR ALTER TRIGGER maqu.trg_AumentarStockluegoBorrar
+   ON  [maqu].[tbFacturasDetalles]
+   AFTER Delete
+AS 
+BEGIN
+	DECLARE @NuevoStock int = (SELECT t1.prod_Stock 
+								FROM [maqu].[tbProductos] AS t1 
+								WHERE t1.prod_Id = (SELECT t1.prod_Id 
+													FROM deleted AS t1)) + (SELECT t1.[factdeta_Cantidad] 
+																			FROM deleted AS t1 WHERE t1.prod_Id = (SELECT t1.prod_Id FROM deleted AS t1))
+
+	UPDATE [maqu].[tbProductos]
+	   SET [prod_Stock] = @NuevoStock
+	 WHERE prod_Id = (SELECT t1.prod_Id FROM deleted AS t1)
+END
+GO
+
+-------------------------------------------------------------------------------------------
+
+GO
+CREATE OR ALTER TRIGGER maqu.trg_DisminuirStock
+   ON  [maqu].[tbFacturasDetalles]
+   AFTER INSERT
+AS 
+BEGIN
+
+	DECLARE @NuevoStock INT = (SELECT t1.prod_Stock 
+								FROM [maqu].[tbProductos] AS t1 
+								WHERE t1.prod_Id = (SELECT t1.prod_Id 
+													FROM inserted AS t1)) - (SELECT t1.factdeta_Cantidad 
+																			 FROM inserted AS t1 
+																			 WHERE t1.prod_Id = (SELECT t1.prod_Id 
+																								FROM inserted AS t1))
+
+	UPDATE [maqu].[tbProductos]
+	   SET [prod_Stock] = @NuevoStock
+	 WHERE prod_Id = (SELECT t1.prod_Id FROM inserted AS t1)
+
+END
+GO

@@ -1,42 +1,102 @@
 ﻿@model Maquillaje.Entities.Entities.tbFacturas
 
 @{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = "Actualizar factura";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Update</h1>
-
-<h4>tbFacturas</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Update">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="fact_Id" />
-            <div class="form-group">
-                <label asp-for="clie_Id" class="control-label"></label>
-                <select asp-for="clie_Id" class="form-control" asp-items="ViewBag.clie_Id"></select>
-                <span asp-validation-for="clie_Id" class="text-danger"></span>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Actualizar factura</h2>
             </div>
-            <div class="form-group">
-                <label asp-for="fact_Fecha" class="control-label"></label>
-                <input asp-for="fact_Fecha" class="form-control" />
-                <span asp-validation-for="fact_Fecha" class="text-danger"></span>
+            <div class="card-body">
+                <div>
+                    <form asp-action="Update">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" id="fact_IdEditarEn" asp-for="fact_Id" />
+                        <div class="form-group">
+                            <label asp-for="clie_Id" class="control-label"></label>
+                            <select asp-for="clie_Id" class="form-control" asp-items="ViewBag.clie_Id" disabled></select>
+                            <span asp-validation-for="clie_Id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="fact_Fecha" class="control-label"></label>
+                            <input asp-for="fact_Fecha" class="form-control" disabled />
+                            <span asp-validation-for="fact_Fecha" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label asp-for="meto_Id" class="control-label"></label>
+                            <select asp-for="meto_Id" class="form-control" asp-items="ViewBag.meto_Id" disabled></select>
+                            <span asp-validation-for="meto_Id" class="text-danger"></span>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="meto_Id" class="control-label"></label>
-                <select asp-for="meto_Id" class="form-control" asp-items="ViewBag.meto_Id"></select>
-                <span asp-validation-for="meto_Id" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-8">
+        @Html.Partial("_CreateDetalles", new Maquillaje.WebUI.Models.FacturaDetalleViewModel())
+        @Html.Partial("_Edit", new Maquillaje.WebUI.Models.FacturaDetalleViewModel())
+        @Html.Partial("_Delete", new Maquillaje.WebUI.Models.FacturaDetalleViewModel())
+    </div>
+
+    <div class="row mt-4">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered table-hover" id="DataTable">
+                    <thead>
+                        <tr>
+                            <th>N° Factura</th>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Precio total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detalle in ViewBag.detalles)
+                        {
+                            <tr>
+                                <td>@detalle.fact_Id</td>
+                                <td>@detalle.prod_Nombre</td>
+                                <td>@detalle.factdeta_Cantidad</td>
+                                <td>@detalle.factdeta_Precio</td>
+                                <td>@detalle.factdeta_PrecioTotal</td>
+                                <td>
+                                    <a onclick="AbrirModalEdit('@detalle.factdeta_Id,@detalle.prod_Id,@detalle.factdeta_Cantidad,@detalle.cate_Id,@detalle.fact_Id')" id="btnEditarDetalle" class="btn btn-warning">Editar</a> |
+                                    <a onclick="eliminar(@detalle.factdeta_Id, @detalle.fact_Id)" id="btnEliminarDetalle" class="btn btn-danger">Borrar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<script>
 
+    $(window).on('beforeunload', function () {
+        sessionStorage.setItem("fecha", $("#fact_Fecha").val());
+        sessionStorage.setItem("idEditar", $("#fact_IdEditarEn").val())
+    });
+
+
+    $(document).ready(function () {
+        $('#menuMaquillaje').addClass('active');
+        $('#facturasItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+
+        if (sessionStorage.getItem("fecha") != null) {
+            $("#fact_Fecha").val(sessionStorage.getItem("fecha"));
+            $("#fact_Id").val(sessionStorage.getItem("idEditar"));
+
+            $("#esEditar").val("si");
+        }
+    })
+</script>

@@ -14,9 +14,6 @@
 
             </div>
             <div class="card-body">
-                @*<div class="d-flex justify-content-end mb-2">
-                        <a asp-action="Index">Regresar al index</a>
-                    </div>*@
                 <div>
                     <form asp-action="Create" id="formCreate">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -75,7 +72,7 @@
                             <td>@detalle.factdeta_Precio</td>
                             <td>@detalle.factdeta_PrecioTotal</td>
                             <td>
-                                <a onclick="AbrirModalEdit('@detalle.factdeta_Id,@detalle.prod_Id,@detalle.factdeta_Cantidad,@detalle.cate_Id,@detalle.fact_Id')" id="btnEditarDetalle" class="btn btn-warning">Editar</a>
+                                <a onclick="AbrirModalEdit('@detalle.factdeta_Id,@detalle.prod_Id,@detalle.factdeta_Cantidad,@detalle.cate_Id,@detalle.fact_Id')" id="btnEditarDetalle" class="btn btn-warning">Editar</a> |
                                 <a onclick="eliminar(@detalle.factdeta_Id, @detalle.fact_Id)" id="btnEliminarDetalle" class="btn btn-danger">Borrar</a>
                             </td>
                         </tr>
@@ -94,7 +91,6 @@
     $("#cate").prop("disabled", true);
     $("#btnContinuar").prop("disabled", true);
     $("#btnFinalizar").prop("disabled", true);
-
 
     $("#btnSiguiente").click(function () {
 
@@ -123,6 +119,11 @@
     });
 
     $(document).ready(function () {
+
+        $('#menuMaquillaje').addClass('active');
+        $('#facturasItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+
         console.log(sessionStorage.getItem("inserta"));
 
         if (sessionStorage.getItem("inserta") != null) {
@@ -139,6 +140,9 @@
             $("#btnContinuar").prop("disabled", false);
             $("#btnFinalizar").prop("disabled", false);
         }
+
+        $("#esEditar").val("no");
+        $("#esEditar2").val("no");
     })
 </script>
 

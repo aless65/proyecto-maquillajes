@@ -54,7 +54,7 @@
                             @Html.DisplayFor(modelItem => item.fact_Fecha)
                         </td>
                         <td>
-                            <a asp-action="Update" asp-route-id="@item.fact_Id" id="btnEditar" class="btn btn-warning">Editar</a>
+                            <a asp-action="Update" asp-route-id="@item.fact_Id" id="btnEditar" class="btn btn-warning">Editar</a> |
                             <a asp-action="Details" asp-route-id="@item.fact_Id" id="btnDetalles" class="btn btn-dark">Detalles</a>
                         </td>
                     </tr>
@@ -67,4 +67,12 @@
 
 <script>
     sessionStorage.clear();
+
+    $(document).ready(function () {
+
+        $('#menuMaquillaje').addClass('active');
+        $('#facturasItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+    })
+
 </script>

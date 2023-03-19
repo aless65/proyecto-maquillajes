@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_gral_tbEstadosCiviles_VW>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header"><h1>Estados Civiles</h1></div>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.estacivi_Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.estacivi_Nombre)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estacivi_Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estacivi_Nombre)
+                        </td>
+                        <td>
+                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.estacivi_Id,@item.estacivi_Nombre')">Editar</button> |
+                            <a asp-action="Details" asp-route-id="@item.estacivi_Id" class="btn btn-dark">Detalles</a> |
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.estacivi_Id)">Borrar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@Html.Partial("_Modal_Create", new Maquillaje.Entities.Entities.VW_gral_tbEstadosCiviles_VW())
+
+@*@Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_gral_tbEstadosCiviles_VW())
+
+@Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_gral_tbEstadosCiviles_VW())*@

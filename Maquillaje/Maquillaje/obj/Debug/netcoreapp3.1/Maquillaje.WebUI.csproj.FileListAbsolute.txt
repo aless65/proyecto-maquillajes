@@ -811,3 +811,5 @@ C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\D
 C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Municipio\_Modal_Edit.cshtml.g.cs
 C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Municipio\_Modal_Delete.cshtml.g.cs
 C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Municipio\Details.cshtml.g.cs
+C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\EstadoCivil\Index.cshtml.g.cs
+C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\EstadoCivil\_Modal_Create.cshtml.g.cs

@@ -29,6 +29,7 @@ namespace Maquillaje.BusinessLogic
             service.AddScoped<VW_maqu_tbProductos_VW_Repository>();
             service.AddScoped<VW_gral_tbDepartamentos_VW_Repository>();
             service.AddScoped<VW_gral_tbMunicipios_VW_Repository>();
+            service.AddScoped<VW_gral_tbEstadosCiviles_VW_Repository>();
             AndreasContext.BuildConnectionString(connectionString);
         }
 

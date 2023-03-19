@@ -499,8 +499,7 @@ VALUES('0101','La Ceiba ','01', 1),
 --	VALUES (@meto_Nombre, @meto_UsuCreacion)
 --END
 
-GO
-EXEC UDP_maqu_tbMetodosPago_INSERT 'Efectivo', 1
+
 
 
 --Iniciar sesion
@@ -1104,6 +1103,8 @@ BEGIN
 	END CATCH
 END
 
+GO
+EXEC maqu.UDP_maqu_tbMetodosPago_INSERT 'Efectivo', 1
 /*Listar métodos de pago*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago
@@ -2163,8 +2164,8 @@ EXEC maqu.UDP_maqu_tbProductos_Insert 'POWER FABRIC BASE LÍQUIDA DE COBERTURA T
 EXEC maqu.UDP_maqu_tbProductos_Insert 'POWER FABRIC HIGH COVERAGE LIQUID CONCEALER', 637.52, 2, 3, 50, 1
 
 GO
-EXEC UDP_maqu_tbMetodosPago_INSERT 'Tarjeta', 1
-EXEC UDP_maqu_tbMetodosPago_INSERT 'Cheque', 1
+EXEC maqu.UDP_maqu_tbMetodosPago_INSERT 'Tarjeta', 1
+EXEC maqu.UDP_maqu_tbMetodosPago_INSERT 'Cheque', 1
 
 EXEC maqu.UDP_maqu_tbFacturas_Insert 1, 1, 1, 1
 

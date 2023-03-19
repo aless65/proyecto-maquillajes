@@ -131,6 +131,33 @@ namespace Maquillaje.BusinessLogic.Services
             }
 
         }
+
+        public int EditarMunicipio(VW_gral_tbMunicipios_VW item)
+        {
+            try
+            {
+                var resultado = _vw_gral_tbMunicipios_vw_Repository.Update(item);
+                return resultado;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public int EliminarMunicipio(string id)
+        {
+            try
+            {
+                var resultado = _vw_gral_tbMunicipios_vw_Repository.DeleteConfirmed(id);
+                return resultado;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
         #endregion
 
         #region EstadosCiviles

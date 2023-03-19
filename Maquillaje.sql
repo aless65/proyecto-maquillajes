@@ -801,6 +801,39 @@ INSERT INTO gral.tbMunicipios(muni_id, muni_Nombre, depa_Id, muni_UsuCreacion, m
 VALUES(@muni_Id,@muni_Nombre,@depa_Id,@muni_UsuCreacion,GETDATE(),NULL,NULL,1)
 END
 
+/*Editar Municipios*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Edit
+@muni_Id				CHAR(4),
+@muni_Nombre			NVARCHAR(150),
+@depa_Id				CHAR(2),
+@muni_UsuModificacion   INT
+AS
+BEGIN
+UPDATE gral.tbMunicipios
+SET muni_Nombre = @muni_Nombre,
+depa_Id = @depa_Id,
+muni_UsuModificacion = @muni_UsuModificacion,
+muni_FechaModificacion = GETDATE()
+WHERE muni_Id = @muni_Id
+END
+
+/*Elimar Municipio*/
+GO 
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Delete
+@muni_Id CHAR(4)
+AS
+BEGIN
+		BEGIN TRY
+			UPDATE gral.tbMunicipios
+			SET muni_Estado = 0
+			WHERE muni_id = @muni_Id
+			SELECT 1
+		END TRY
+		BEGIN CATCH 
+			SELECT 0
+END CATCH
+END
 /*Vista Municipios UDP*/
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_VW
@@ -884,9 +917,17 @@ CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_DELETE
 	@depa_Id CHAR(2)
 AS
 BEGIN
-	UPDATE gral.tbDepartamentos
+IF NOT EXISTS (SELECT * FROM gral.tbMunicipios WHERE depa_Id = @depa_Id)
+  BEGIN
+   	UPDATE gral.tbDepartamentos
 	SET   depa_Estado = 0
 	WHERE depa_Id = @depa_Id
+	SELECT 1
+  END
+  ELSE
+  BEGIN
+  SELECT 0
+  END
 END
 
 /*Listar Departamentos*/

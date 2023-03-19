@@ -46,9 +46,9 @@
                             @Html.DisplayFor(modelItem => item.depa_Nombre)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.muni_id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.muni_id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.muni_id">Delete</a>
+                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.muni_id,@item.depa_Id,@item.muni_Nombre')">Editar</button> |
+                            <a asp-action="Details" asp-route-id="@item.muni_id" class="btn btn-dark">Detalles</a> |
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.muni_id)">Borrar</button>
                         </td>
                     </tr>
                 }
@@ -61,6 +61,6 @@
 
 @Html.Partial("_Modal_Create", new Maquillaje.Entities.Entities.VW_gral_tbMunicipios_VW())
 
-@*@Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_gral_tbDepartamentos_VW())
+@Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_gral_tbMunicipios_VW())
 
-@Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_gral_tbDepartamentos_VW())*@
+@Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_gral_tbMunicipios_VW())

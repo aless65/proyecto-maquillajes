@@ -41,7 +41,25 @@ namespace Maquillaje.DataAccess.Repository
 
         public int Update(VW_gral_tbMunicipios_VW item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@muni_Id", item.muni_id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@muni_Nombre", item.muni_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@depa_Id", item.depa_Id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@muni_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Municipios, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public int DeleteConfirmed(string id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@muni_Id", id, DbType.String, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Departamentos, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

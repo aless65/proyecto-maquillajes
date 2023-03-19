@@ -76,6 +76,10 @@ namespace Maquillaje.WebUI.Controllers
             try
             {
                 var delete = _gralService.EliminarDepartamento(id);
+                if(delete == 0)
+                {
+                   //Validacion pendiente
+                }
                 return RedirectToAction("Index");
             }
             catch (Exception error)

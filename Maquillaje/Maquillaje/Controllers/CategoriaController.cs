@@ -63,7 +63,7 @@ namespace Maquillaje.WebUI.Controllers
             {
                 if (insertar == 1)
                 {
-                    string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                    string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
                     TempData["Script"] = script;
                 }
                 else if (insertar == 2)
@@ -92,6 +92,22 @@ namespace Maquillaje.WebUI.Controllers
             var categoria = _mapper.Map<tbCategorias>(categorias);
             result = _maquService.EditCategorias(categoria);
 
+            if (result == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (result == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{categoria.cate_Id},{categoria.cate_Nombre}');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
             return RedirectToAction("Index");
 
         }
@@ -100,6 +116,21 @@ namespace Maquillaje.WebUI.Controllers
         {
             var delete = _maquService.DeleteCategoria(id);
 
+            if(delete == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (delete == 2)
+            {
+                string script = $"MostrarMensajeWarning('No se permite eliminar este registro');";
+                TempData["Script"] = script;
+
+            } else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
             return RedirectToAction("Index");
         }
     }

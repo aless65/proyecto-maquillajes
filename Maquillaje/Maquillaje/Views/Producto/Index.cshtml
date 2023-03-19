@@ -12,7 +12,7 @@
         <p>
             <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
         </p>
-        <table class="table">
+        <table class="table table-bordered table-hover" id="DataTable">
             <thead>
                 <tr>
                     <th>
@@ -30,7 +30,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.prov_Nombre)
                     </th>
-                    <th></th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,3 +69,22 @@
 @Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_maqu_tbProductos_VW())
 
 @Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_maqu_tbProductos_VW())
+
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
+
+<script>
+    $(document).ready(function () {
+        $('#menuMaquillaje').addClass('active');
+        $('#productosItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+    });
+</script>

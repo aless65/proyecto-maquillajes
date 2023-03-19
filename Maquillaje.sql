@@ -965,10 +965,11 @@ BEGIN
 				UPDATE [maqu].[tbMetodosPago]
 				SET [meto_Estado] = 0
 				WHERE [meto_Id] = @meto_Id
+				
+				SELECT 1
 			END
 		ELSE
 			SELECT 2
-		SELECT 1
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1031,29 +1032,57 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_UPDATE
 	@cate_UsuModificacion 		INT
 AS
 BEGIN 
-BEGIN TRY
-	UPDATE [maqu].[tbCategorias]
-	SET 	[cate_Nombre] = @cate_Nombre,
-			[cate_UsuModificacion] = @cate_UsuModificacion,
-			[cate_FechaModificacion] = GETDATE()
-	WHERE 	[cate_Id] = @cate_Id
-	SELECT 1
+	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM [maqu].[tbCategorias]
+						WHERE @cate_Nombre = [cate_Nombre])
+		BEGIN			
+			UPDATE [maqu].[tbCategorias]
+			SET 	[cate_Nombre] = @cate_Nombre,
+					[cate_UsuModificacion] = @cate_UsuModificacion,
+					[cate_FechaModificacion] = GETDATE()
+			WHERE 	[cate_Id] = @cate_Id
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbCategorias]
+						WHERE @cate_Nombre = [cate_Nombre]
+							  AND cate_Estado = 1
+							  AND [cate_Id] != @cate_Id)
+			SELECT 2
+		ELSE
+			UPDATE [maqu].[tbCategorias]
+			SET cate_Estado = 1,
+			   cate_UsuModificacion = @cate_UsuModificacion
+			WHERE [cate_Nombre] = @cate_Nombre
+
+			SELECT 1
 	END TRY
 	BEGIN CATCH
-	SELECT 0
+		SELECT 0
 	END CATCH
 END
 
 
 /*Eliminar categoria*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_Delete
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_Delete 
 	@cate_Id	INT
 AS
 BEGIN
-	UPDATE [maqu].[tbCategorias]
-	SET [cate_Estado] = 0
-	WHERE [cate_Id] = @cate_Id
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbProductos] WHERE cate_Id = @cate_Id)
+			BEGIN
+				UPDATE [maqu].[tbCategorias]
+				SET cate_Estado = 0
+				WHERE cate_Id = @cate_Id
+
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Listado de categorias*/
@@ -1421,7 +1450,7 @@ SELECT *FROM VW_maqu_tbProductos_VW
 END
 /*Insertar Productos*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Insert
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Insert 
 	@prod_Nombre			NVARCHAR(100),
 	@prod_PrecioUni			DECIMAL (18,2),
 	@cate_Id				INT,
@@ -1430,13 +1459,37 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_Insert
 	@prod_UsuCreacion		INT
 AS
 BEGIN
-	INSERT INTO [maqu].[tbProductos](prod_Nombre, 
-	prod_PrecioUni, cate_Id, 
-	prov_Id, prod_Stock, 
-	prod_UsuCreacion)
-	VALUES(@prod_Nombre,@prod_PrecioUni,
-	@cate_Id,@prov_Id,
-	@prod_Stock,@prod_UsuCreacion)
+	BEGIN TRY
+		
+		IF NOT EXISTS (SELECT * FROM [maqu].[tbProductos]
+						WHERE prod_Nombre = @prod_Nombre)
+		BEGIN
+			
+			INSERT INTO [maqu].[tbProductos](prod_Nombre, 
+						prod_PrecioUni, cate_Id, 
+						prov_Id, prod_Stock, 
+						prod_UsuCreacion)
+			VALUES(@prod_Nombre,@prod_PrecioUni,
+					@cate_Id,@prov_Id,
+					@prod_Stock,@prod_UsuCreacion)
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].[tbProductos]
+						WHERE prod_Nombre = @prod_Nombre
+						AND prod_Estado = 1)
+			SELECT 2
+		ELSE
+			UPDATE [maqu].[tbProductos]
+			SET prod_Estado = 1
+			WHERE prod_Nombre = @prod_Nombre
+
+			SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
+
 END
 
 /*Editar Producto*/

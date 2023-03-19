@@ -51,14 +51,22 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_maqu_tbProductos_VW item)
         {
-            try
-            {
-                var insertar = _maquService.InsertProducto(item);
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
+            var insertar = _maquService.InsertProducto(item);
 
+            if (insertar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (insertar == 2)
+            {
+                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
@@ -67,32 +75,55 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost("/Producto/Edit")]
         public IActionResult Edit(VW_maqu_tbProductos_VW item)
         {
-            try
-            {
-                var editar = _maquService.EditProducto(item);
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
 
+            var editar = _maquService.EditProducto(item);
+
+            if (editar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (editar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.prod_Id},{item.prod_Nombre},{item.prod_PrecioUni},{item.cate_Id},{item.prov_Id}'," +
+                                $"{item.prod_Stock}) ";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
+
 
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                var eliminar = _maquService.DeleteProducto(id);
-                return RedirectToAction("Index");
-            }
-            catch(Exception error)
-            {
 
+            var eliminar = _maquService.DeleteProducto(id);
+            return RedirectToAction("Index");
+
+            if (eliminar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
             }
+            else if (eliminar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro no puede ser eliminado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
+
             return RedirectToAction("Index");
         }
     }

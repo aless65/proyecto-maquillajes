@@ -7,7 +7,7 @@ function MostrarMensajeWarning(bodymessage) {
 }
 
 function MostrarMensajeDanger(bodymessage) {
-    toastr.warning(bodymessage, "Error")
+    toastr.danger(bodymessage, "Error")
 }
 
 function MostrarMensajeInfo(bodymessage) {

@@ -40,6 +40,7 @@ namespace Maquillaje.WebUI.Controllers
                         HttpContext.Session.SetInt32("user_Id", item.user_Id);
                         HttpContext.Session.SetString("user_NombreUsuario",item.user_NombreUsuario);
                         HttpContext.Session.SetString("user_EsAdmin", item.user_EsAdmin.ToString());
+                        HttpContext.Session.SetInt32("role_Id", item.role_Id);
                     }
                     return RedirectToAction("Index","Home");
                 }
@@ -76,7 +77,7 @@ namespace Maquillaje.WebUI.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Validacion", "El usuario o contrasena son incorrectos");
+                    ModelState.AddModelError("Validacion", "El usuario es incorrectos");
                 }
             }
             else

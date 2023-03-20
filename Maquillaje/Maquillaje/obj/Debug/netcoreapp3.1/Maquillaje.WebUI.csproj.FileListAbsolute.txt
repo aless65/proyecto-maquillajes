@@ -862,3 +862,4 @@ C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debu
 C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Sucursal\_Modal_Delete.cshtml.g.cs
 C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Sucursal\_Modal_Edit.cshtml.g.cs
 C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Factura\Details.cshtml.g.cs
+C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs

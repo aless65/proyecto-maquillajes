@@ -8771,23 +8771,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Chris\\.nuget\\packages\\": {},
+    "C:\\Users\\PC\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Chris\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\Maquillaje.WebUI.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\Maquillaje.WebUI.csproj",
       "projectName": "Maquillaje.WebUI",
-      "projectPath": "C:\\Users\\Chris\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\Maquillaje.WebUI.csproj",
-      "packagesPath": "C:\\Users\\Chris\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Chris\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\obj\\",
+      "projectPath": "C:\\Users\\PC\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\Maquillaje.WebUI.csproj",
+      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\PC\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Chris\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8802,8 +8802,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Chris\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.BusinessLogic\\Maquillaje.BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\Chris\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.BusinessLogic\\Maquillaje.BusinessLogic.csproj"
+            "C:\\Users\\PC\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.BusinessLogic\\Maquillaje.BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\PC\\Documents\\GitHub\\proyecto-maquillajes\\Maquillaje\\Maquillaje.BusinessLogic\\Maquillaje.BusinessLogic.csproj"
             }
           }
         }

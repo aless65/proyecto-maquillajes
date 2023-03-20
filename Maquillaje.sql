@@ -678,14 +678,25 @@ END
 /*Eliminar Sucursal*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
-@sucu_Id INT
+    @sucu_Id INT
 AS
 BEGIN
-UPDATE maqu.tbSucursales 
-SET sucu_Estado = 0
-WHERE sucu_Id = @sucu_Id
-END
+    BEGIN TRY
+        IF NOT EXISTS (SELECT * FROM [maqu].[tbEmpleados] WHERE sucu_Id = @sucu_Id AND empe_Estado = 1)
+            BEGIN
+                UPDATE [maqu].tbSucursales
+                SET sucu_Estado = 0
+                WHERE sucu_Id = @sucu_Id
 
+                SELECT 1
+            END
+        ELSE
+            SELECT 2
+    END TRY
+    BEGIN CATCH
+        SELECT 0
+    END CATCH
+END
 --**************** EMPLEADOS ****************--
 /*Empleados*/
 GO
@@ -1288,7 +1299,7 @@ EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 3','0501','Calle 6',1
 
 /*Editar Sucursal*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit 1, 'Sucursal 1', '0101', 'calle rara', 1
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
     @sucu_Id INT,
     @sucu_Descripcion NVARCHAR(200),
     @muni_Id CHAR(4),
@@ -2187,7 +2198,7 @@ SELECT * FROM acce.tbUsuarios
 
 /*Insertar Usuarios*/
 GO
-CREATE OR ALTER PROCEDURE  
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_Insert
 @user_NombreUsuario NVARCHAR(150),
 @user_Contrasena NVARCHAR(MAX),
 @user_EsAdmin BIT,

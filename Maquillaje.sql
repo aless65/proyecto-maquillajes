@@ -509,7 +509,7 @@ VALUES('0101','La Ceiba ','01', 1),
 
 --Iniciar sesion
 GO
-CREATE OR ALTER PROCEDURE UDP_Login
+CREATE OR ALTER PROCEDURE UDP_Login 
 	@user_Nombre NVARCHAR(100), @user_Contrasena NVARCHAR(200)
 AS
 BEGIN

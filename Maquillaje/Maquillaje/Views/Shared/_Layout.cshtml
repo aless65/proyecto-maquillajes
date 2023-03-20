@@ -5,6 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Maquillaje</title>
+<<<<<<< Updated upstream
+=======
+                                  
+>>>>>>> Stashed changes
 
     <!-- STYLESHEETS -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--- -->
@@ -34,8 +38,8 @@
 <body class="jumping">
     @using Microsoft.AspNetCore.Http
     @{ var session = Context.RequestServices.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-                    string user_Id = ViewBag.user_Id = session?.GetString("user_Id");
-                    if (user_Id == null || user_Id == "")
+                    int user_Id = ViewBag.user_Id = session?.GetInt32("user_Id");
+                    if (user_Id == 0)
                     {
         <script>window.location.href = '/Login/Index';</script> } }
     <!-- PAGE CONTAINER -->

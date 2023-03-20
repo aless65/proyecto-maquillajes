@@ -73,6 +73,7 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Eliminar_Usuarios = "acce.UDP_acce_tbUsuarios_DELETE";
         public static string UDP_View_Usuarios = "acce.UDP_acce_tbUsuarios_View";
         public static string UDP_Login = "UDP_Login";
+        public static string UDP_Recover = "UDP_RecuperarContrasena";
         #endregion
 
         #region Roles

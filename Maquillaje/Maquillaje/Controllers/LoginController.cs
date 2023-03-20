@@ -55,5 +55,36 @@ namespace Maquillaje.WebUI.Controllers
           
             return View();
         }
+
+        [HttpGet("/Login/Recover")]
+        public IActionResult Recover()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Recover(string usuario, string contrasena)
+        {
+            if (usuario != "" && contrasena != "")
+            {
+                var login = _acceService.Recover(usuario, contrasena);
+
+                if (login == 1)
+                {
+                    
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("Validacion", "El usuario o contrasena son incorrectos");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Validacion1", "Rellene los campos");
+            }
+
+            return View();
+        }
     }
 }

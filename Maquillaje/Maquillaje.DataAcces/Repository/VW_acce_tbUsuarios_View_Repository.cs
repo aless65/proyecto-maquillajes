@@ -32,6 +32,14 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+        public int Recover(string usuario,string contrasena)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_NombreUsuario", usuario, DbType.String, ParameterDirection.Input);
+            parametros.Add("@user_Contrasena", contrasena, DbType.String, ParameterDirection.Input);
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Recover, parametros, commandType: CommandType.StoredProcedure);
+        }
 
         public IEnumerable<VW_acce_tbUsuarios_View> List()
         {

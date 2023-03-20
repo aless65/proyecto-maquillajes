@@ -2307,7 +2307,26 @@ LEFT JOIN acce.tbUsuarios t5
 ON t1.user_UsuModificacion = t5.user_Id
 
 --************INICIAR SESIÓN******************--
-
+/*Cambiar Contrasena*/
+GO
+CREATE OR ALTER PROCEDURE UDP_RecuperarContrasena
+	@user_NombreUsuario	NVARCHAR(100),
+	@user_Contrasena	NVARCHAR(100)
+AS
+BEGIN
+	DECLARE @user_ContrasenaEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @user_Contrasena)
+	IF EXISTS (SELECT user_NombreUsuario FROM acce.tbUsuarios WHERE user_NombreUsuario = @user_NombreUsuario)
+	BEGIN
+	UPDATE acce.tbUsuarios 
+	SET user_Contrasena = @user_ContrasenaEncript
+	WHERE user_NombreUsuario = @user_NombreUsuario
+	SELECT 1
+	END
+	ELSE
+	BEGIN
+	SELECT 0
+	END
+END
 
 /*Login*/
 GO

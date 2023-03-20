@@ -44,7 +44,8 @@ namespace Maquillaje.WebUI.Models
         [Display(Name = "Correo electrónico")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string clie_CorreoElectronico { get; set; }
-
+        public int clie_UsuCreacion { get; set; }
+        public int? clie_UsuModificacion { get; set; }
         public virtual tbMunicipios depa_Id { get; set; }
 
         //[NotMapped]

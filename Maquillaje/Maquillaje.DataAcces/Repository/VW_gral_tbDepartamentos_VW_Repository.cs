@@ -36,7 +36,7 @@ namespace Maquillaje.DataAccess.Repository
             var parametros = new DynamicParameters();
             parametros.Add("@depa_Id", item.depa_Id, DbType.String, ParameterDirection.Input);
             parametros.Add("@depa_Nombre", item.depa_Nombre, DbType.String, ParameterDirection.Input);
-            parametros.Add("@depa_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@depa_UsuCreacion", item.depa_UsuCreacion, DbType.Int32, ParameterDirection.Input);
 
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Departamentos, parametros, commandType: CommandType.StoredProcedure);
@@ -56,7 +56,7 @@ namespace Maquillaje.DataAccess.Repository
             var parametros = new DynamicParameters();
             parametros.Add("@depa_Id", item.depa_Id, DbType.String, ParameterDirection.Input);
             parametros.Add("@depa_Nombre", item.depa_Nombre, DbType.String, ParameterDirection.Input);
-            parametros.Add("@depa_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@depa_UsuModificacion", item.depa_UsuModificacion, DbType.Int32, ParameterDirection.Input);
      
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Departamentos, parametros, commandType: CommandType.StoredProcedure);

@@ -24,7 +24,7 @@ namespace Maquillaje.DataAccess.Repository
             return listado;
         }
 
-        public int Insert(tbCategorias item)
+        public int Insert(VW_maqu_tbCategorias_VW item)
         {
             //using var db = new AndreasContext();
             //db.tbCategorias.Add(item);
@@ -33,12 +33,12 @@ namespace Maquillaje.DataAccess.Repository
 
             var parametros = new DynamicParameters();
             parametros.Add("@cate_Nombre", item.cate_Nombre, DbType.String, ParameterDirection.Input);
-            parametros.Add("@cate_UsuCreacion", "1", DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@cate_UsuCreacion", item.cate_UsuCreacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Insertar_Categorias, parametros, commandType: CommandType.StoredProcedure);
         }
 
-        public IEnumerable<tbCategorias> List()
+        public IEnumerable<VW_maqu_tbCategorias_VW> List()
         {
             //using var db = new AndreasContext();
             //return db.tbCategorias.ToList();
@@ -49,27 +49,24 @@ namespace Maquillaje.DataAccess.Repository
             //parametros.Add("@NoHaceNada", item.id, DbType.String, ParameterDirection.Input);
             //return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_Categorias, parametros, commandType: CommandType.StoredProcedure);
 
-            return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_Categorias, null, commandType: CommandType.StoredProcedure);
+            return db.Query<VW_maqu_tbCategorias_VW>(ScriptsDataBase.UDP_Listar_Categorias, null, commandType: CommandType.StoredProcedure);
         }
 
-        public IEnumerable<tbCategorias> Details(int id)
+        public IEnumerable<VW_maqu_tbCategorias_VW> Details(int id)
         {
             using var db = new SqlConnection(AndreasContext.ConnectionString);
-
-            var parametros = new DynamicParameters();
-            parametros.Add("@cate_Id", id, DbType.Int32, ParameterDirection.Input);
-            return db.Query<tbCategorias>(ScriptsDataBase.UDP_Listar_CategoriaById, parametros, commandType: CommandType.StoredProcedure);
+            return db.Query<VW_maqu_tbCategorias_VW>(ScriptsDataBase.UDP_Listar_Categoria_View, null, commandType: CommandType.StoredProcedure);
         }
 
 
-        public int Update(tbCategorias item)
+        public int Update(VW_maqu_tbCategorias_VW item)
         {
             using var db = new SqlConnection(AndreasContext.ConnectionString);
 
             var parametros = new DynamicParameters();
             parametros.Add("@cate_Id", item.cate_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@cate_Nombre", item.cate_Nombre, DbType.String, ParameterDirection.Input);
-            parametros.Add("@cate_UsuModificacion",1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@cate_UsuModificacion",item.cate_UsuModificacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Categorias, parametros, commandType: CommandType.StoredProcedure);
         }
@@ -83,6 +80,21 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@cate_Id", id, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Eliminar_Categorias, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public int Insert(tbCategorias item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(tbCategorias item)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<tbCategorias> IRepository<tbCategorias>.List()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Maquillaje.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.SetString("user_Id", "");
+            HttpContext.Session.SetInt32("user_Id", 0);
             HttpContext.Session.SetString("user_NombreUsuario", "");
             HttpContext.Session.SetString("user_EsAdmin", "");
             HttpContext.Session.SetString("role_Id", "");
@@ -49,7 +49,7 @@ namespace Maquillaje.Controllers
             }
             else
             {
-                ViewBag.user_Id = HttpContext.Session.GetString("user_Id");
+                ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
                 ViewBag.role_Id = HttpContext.Session.GetString("role_Id");
                 HttpContext.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");

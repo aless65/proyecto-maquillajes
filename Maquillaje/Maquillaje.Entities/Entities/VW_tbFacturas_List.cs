@@ -16,6 +16,6 @@ namespace Maquillaje.Entities.Entities
         public string user_UsuCreacion { get; set; }
         public string user_UsuModificacion { get; set; }
         public DateTime fact_FechaCreacion { get; set; }
-        public DateTime fact_FechaModificacion { get; set; }
+        public DateTime? fact_FechaModificacion { get; set; }
     }
 }

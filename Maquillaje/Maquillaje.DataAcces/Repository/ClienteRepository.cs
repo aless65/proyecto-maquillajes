@@ -48,7 +48,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@clie_DireccionExacta", item.clie_DireccionExacta, DbType.String, ParameterDirection.Input);
             parametros.Add("@clie_Telefono", item.clie_Telefono, DbType.String, ParameterDirection.Input);
             parametros.Add("@clie_CorreoElectronico", item.clie_CorreoElectronico, DbType.String, ParameterDirection.Input);
-            parametros.Add("@clie_UsuCreacion", "1", DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@clie_UsuCreacion", item.clie_UsuCreacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Insertar_Clientes, parametros, commandType: CommandType.StoredProcedure);
         }
@@ -80,7 +80,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@clie_DireccionExacta", item.clie_DireccionExacta, DbType.String, ParameterDirection.Input);
             parametros.Add("@clie_Telefono", item.clie_Telefono, DbType.String, ParameterDirection.Input);
             parametros.Add("@clie_CorreoElectronico", item.clie_CorreoElectronico, DbType.String, ParameterDirection.Input);
-            parametros.Add("@clie_UsuModificacion", "1", DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@clie_UsuModificacion",item.clie_UsuModificacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Editar_Clientes, parametros, commandType: CommandType.StoredProcedure);
         }

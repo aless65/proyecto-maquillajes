@@ -1383,6 +1383,27 @@ END
 --END
 
 --**************** CATEGORIAS ****************--
+SELECT * FROM maqu.tbCategorias
+/*Vista Categoria*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbCategorias_VW
+AS
+SELECT cate_Id, cate_Nombre, 
+cate_UsuCreacion,[user1].user_NombreUsuario AS cate_UsuCreacion_Nombre, cate_FechaCreacion, 
+cate_UsuModificacion,[user2].user_NombreUsuario AS cate_UsuModificacion_Nombre, cate_FechaModificacion, 
+cate_Estado
+FROM maqu.tbCategorias cate INNER JOIN acce.tbUsuarios [user1]
+ON cate.cate_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON cate.cate_UsuModificacion = [user2].user_Id
+WHERE cate.cate_Estado = 1
+
+/*Vista Categorias UDP*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_VW
+AS
+BEGIN
+SELECT * FROM maqu.VW_maqu_tbCategorias_VW
+END
 /*Insertar categoria*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_INSERT 

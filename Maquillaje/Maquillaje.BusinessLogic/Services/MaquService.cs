@@ -37,7 +37,7 @@ namespace Maquillaje.BusinessLogic.Services
         }
 
         #region Categorias
-        public IEnumerable<tbCategorias> ListadoCategorias(out string error)
+        public IEnumerable<VW_maqu_tbCategorias_VW> ListadoCategorias(out string error)
         {
             error = string.Empty;
             try
@@ -47,16 +47,16 @@ namespace Maquillaje.BusinessLogic.Services
             catch (Exception e)
             {
                 error = e.Message;
-                return Enumerable.Empty<tbCategorias>();
+                return Enumerable.Empty<VW_maqu_tbCategorias_VW>();
             }
         }
 
-        public int InsertCategorias(tbCategorias tbCategorias)
+        public int InsertCategorias(VW_maqu_tbCategorias_VW tbCategorias)
         {
             return _categoriaRepository.Insert(tbCategorias);
         }
 
-        public int EditCategorias(tbCategorias categoria)
+        public int EditCategorias(VW_maqu_tbCategorias_VW categoria)
         {
 
             try
@@ -84,7 +84,7 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
-        public IEnumerable<tbCategorias> CategoriaDetails(int id,out string error)
+        public IEnumerable<VW_maqu_tbCategorias_VW> CategoriaDetails(int id,out string error)
         {
             error = string.Empty;
 
@@ -96,7 +96,7 @@ namespace Maquillaje.BusinessLogic.Services
             {
 
                 error = e.Message;
-                return Enumerable.Empty<tbCategorias>();
+                return Enumerable.Empty<VW_maqu_tbCategorias_VW>();
             }
         }
         #endregion
@@ -253,11 +253,12 @@ namespace Maquillaje.BusinessLogic.Services
                     clienteExistente.clie_DireccionExacta = cliente.clie_DireccionExacta;
                     clienteExistente.clie_Telefono = cliente.clie_Telefono;
                     clienteExistente.clie_CorreoElectronico = cliente.clie_CorreoElectronico;
+                    clienteExistente.clie_UsuModificacion = cliente.clie_UsuModificacion;
 
                     return _clienteRepository.Update(clienteExistente);
                 }
             }
-            catch
+            catch(Exception error)
             {
                 return 0;
             }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,7 @@ namespace Maquillaje.WebUI.Controllers
         {
             try
             {
+                item.depa_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 var insertar = _gralService.InsertarDepartamento(item);
                 return RedirectToAction("Index");
             }
@@ -60,6 +62,7 @@ namespace Maquillaje.WebUI.Controllers
         {
             try
             {
+                item.depa_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 var editar = _gralService.EditarDepartamento(item);
                 return RedirectToAction("Index");
             }

@@ -61,7 +61,7 @@
         $("#sucu_DireccionExacta_Edit").val(data[3]);
         $("#EditarSucursal").appendTo('body').modal('show');
 
-        $.getJSON('/Cliente/CargarMunicipios', { id: data[4] })
+        $.getJSON('/Cliente/CargarMunicipios', { id: $("#depa_Id_Edit").val() })
             .done(function (municipios) {
                 $("#muni_Id_Edit").prop("disabled", false);
                 var municipiosSelect = $('#muni_Id_Edit');

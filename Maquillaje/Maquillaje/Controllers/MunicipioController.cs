@@ -31,7 +31,13 @@ namespace Maquillaje.WebUI.Controllers
             var ddldepartamentos = _gralService.ListadoDepartamentosView(out string error1);
 
             ViewBag.depa_Id = new SelectList(ddldepartamentos, "depa_Id", "depa_Nombre");
-            
+
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             return View(listadoMapeado);
         }
 
@@ -52,14 +58,22 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_gral_tbMunicipios_VW item)
         {
-            try
-            {
-                var insertar = _gralService.InsertarMunicipio(item);
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
+            var insertar = _gralService.InsertarMunicipio(item);
 
+            if (insertar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (insertar == 2)
+            {
+                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
@@ -68,33 +82,47 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost("/Municipio/Edit")]
         public IActionResult Edit(VW_gral_tbMunicipios_VW item)
         {
-            try
-            {
-                var editar = _gralService.EditarMunicipio(item);
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
+            var editar = _gralService.EditarMunicipio(item);
 
+            if (editar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (editar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.muni_id},{item.depa_Id},{item.muni_Nombre}') ";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
         }
 
+        [HttpPost("/Municipio/Delete")]
         public IActionResult Delete(string id)
         {
-            try
-            {
-                var editar = _gralService.EliminarMunicipio(id);
-                return RedirectToAction("Index");
-                if(editar == 0)
-                {
-                    //Validacion pendiente
-                }
-            }
-            catch (Exception error)
-            {
 
+            var delete = _gralService.EliminarMunicipio(id);
+
+            if (delete == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (delete == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");

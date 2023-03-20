@@ -13,7 +13,7 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group col-6">
                             <label asp-for="muni_id" class="control-label"></label>
-                            <input asp-for="muni_id" id="muni_Id" class="form-control" />
+                            <input asp-for="muni_id" id="muni_Id" class="form-control" maxlength="4" />
                             <label name="lbl_muni_Id_CreateError" id="lbl_muni_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                             <label name="lbl_muni_Id_CreateError1" id="lbl_muni_Id_CreateError1" class="control-label" hidden style="color: red;">Ingrese un ID Valido</label>
                         </div>
@@ -52,16 +52,6 @@
         this.setSelectionRange(c, c);
     });
 
-    $('#muni_Nombre').on('input', function () {
-        var c = this.selectionStart,
-            r = /[^a-z0-9]/gi,
-            v = $(this).val();
-        if (r.test(v)) {
-            $(this).val(v.replace(r, ''));
-            c--;
-        }
-        this.setSelectionRange(c, c);
-    });
 </script>
 <script>
     function AbrirModalCreate() {

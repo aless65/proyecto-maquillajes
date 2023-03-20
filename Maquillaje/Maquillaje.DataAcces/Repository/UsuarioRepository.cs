@@ -86,6 +86,18 @@ namespace Maquillaje.DataAccess.Repository
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
         }
 
+        public int RolesPantalla(int role_Id, bool esAdmin, int pant_Id)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@role_Id", role_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@esAdmin", esAdmin, DbType.Boolean, ParameterDirection.Input);
+            parametros.Add("@pant_Id", pant_Id, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Roles, parametros, commandType: CommandType.StoredProcedure);
+        }
+
         tbUsuarios IRepository<tbUsuarios>.find(int? id)
         {
             throw new NotImplementedException();

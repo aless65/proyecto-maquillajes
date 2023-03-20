@@ -26,6 +26,12 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _gralService.ListadoDepartamentosView(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbDepartamentos_VW>>(listado).Where(X => X.depa_Estado == true);
 
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             return View(listadoMapeado);
         }
 
@@ -42,14 +48,22 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_gral_tbDepartamentos_VW item)
         {
-            try
-            {
-                var insertar = _gralService.InsertarDepartamento(item);
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
+            var insertar = _gralService.InsertarDepartamento(item);
 
+            if (insertar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (insertar == 2)
+            {
+                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
@@ -58,14 +72,22 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost("/Departamento/Edit")]
         public IActionResult Edit(VW_gral_tbDepartamentos_VW item)
         {
-            try
-            {
-                var editar = _gralService.EditarDepartamento(item);
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
+            var editar = _gralService.EditarDepartamento(item);
 
+            if (editar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (editar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.depa_Id},{item.depa_Id},{item.depa_Nombre}') ";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
@@ -73,19 +95,25 @@ namespace Maquillaje.WebUI.Controllers
 
         public IActionResult Delete(string id)
         {
-            try
-            {
-                var delete = _gralService.EliminarDepartamento(id);
-                if(delete == 0)
-                {
-                   //Validacion pendiente
-                }
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
 
+            var delete = _gralService.EliminarDepartamento(id);
+
+            if (delete == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
             }
+            else if (delete == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
             return RedirectToAction("Index");
         }
     }

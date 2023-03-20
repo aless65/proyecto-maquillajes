@@ -152,15 +152,15 @@ namespace Maquillaje.BusinessLogic.Services
 
         public int EliminarMunicipio(string id)
         {
-            try
-            {
-                var resultado = _vw_gral_tbMunicipios_vw_Repository.DeleteConfirmed(id);
-                return resultado;
-            }
-            catch
-            {
-                return 0;
-            }
+            //try
+            //{
+            var resultado = _vw_gral_tbMunicipios_vw_Repository.DeleteConfirmed(id);
+            return resultado;
+            //}
+            //catch
+            //{
+            //    return 0;
+            //}
 
         }
         #endregion

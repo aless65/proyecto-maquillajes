@@ -102,6 +102,11 @@ namespace Maquillaje.BusinessLogic.Services
                 return Enumerable.Empty<tbRoles>();
             }
         }
+
+        public int RolesPantalla(int role_Id, bool esAdmin, int pant_Id)
+        {
+            return _usuarioRepository.RolesPantalla(role_Id, esAdmin, pant_Id);
+        }
         #endregion
     }
 

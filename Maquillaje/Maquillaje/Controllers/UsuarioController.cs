@@ -36,8 +36,12 @@ namespace Maquillaje.WebUI.Controllers
 
             var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
             ViewBag.ddlEmpleados = new SelectList(ddlEmpleados, "empe_Id", "NombreCompleto");
-            if (String.IsNullOrEmpty(error))
-                ModelState.AddModelError("", error);
+
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
 
             return View(listadoMapeado);
         }
@@ -49,17 +53,23 @@ namespace Maquillaje.WebUI.Controllers
             var usuario = _mapper.Map<tbUsuarios>(item);
             var insertar = _acceService.InsertUsuario(usuario);
 
-            try
+            if (insertar == 1)
             {
-                if (insertar == 1)
-                    return RedirectToAction("Index");
-                else
-                    return View();
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                TempData["Script"] = script;
             }
-            catch
+            else if (insertar == 2)
             {
-                return View();
+                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                TempData["Script"] = script;
             }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -69,6 +79,22 @@ namespace Maquillaje.WebUI.Controllers
             var usuario = _mapper.Map<tbUsuarios>(usuarios);
             result = _acceService.EditUsuario(usuario);
 
+            if (result == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (result == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{usuarios.user_Id},{usuarios.user_EsAdmin},{usuarios.role_Id},{usuarios.empe_Id}') ";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -76,6 +102,22 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Delete(int id)
         {
             var delete = _acceService.DeleteUsuario(id);
+
+            if (delete == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (delete == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
 
             return RedirectToAction("Index");
         }
@@ -99,6 +141,12 @@ namespace Maquillaje.WebUI.Controllers
             var listadoMapeado = _mapper.Map<IEnumerable<VW_acce_tbUsuarios_View>>(listado);
 
             return View(listadoMapeado);
+        }
+
+        public IActionResult RolesPantalla(int role_Id, bool esAdmin, int pant_Id)
+        {
+            var accesopantalla = _acceService.RolesPantalla(role_Id, esAdmin, pant_Id);
+            return Json(accesopantalla);
         }
     }
 }

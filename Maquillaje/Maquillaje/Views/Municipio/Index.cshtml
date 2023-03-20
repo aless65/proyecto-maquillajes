@@ -11,7 +11,7 @@
         <p>
             <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
         </p>
-        <table class="table">
+        <table class="table table-bordered table-hover" id="DataTable">
             <thead>
                 <tr>
                     <th>
@@ -48,7 +48,7 @@
                         <td>
                             <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.muni_id,@item.depa_Id,@item.muni_Nombre')">Editar</button> |
                             <a asp-action="Details" asp-route-id="@item.muni_id" class="btn btn-dark">Detalles</a> |
-                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.muni_id)">Borrar</button>
+                            <button class="btn btn-danger" id="btnEliminar" onclick="eliminar('@item.muni_id')">Borrar</button>
                         </td>
                     </tr>
                 }
@@ -58,6 +58,16 @@
     </div>
 </div>
 
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
 
 @Html.Partial("_Modal_Create", new Maquillaje.Entities.Entities.VW_gral_tbMunicipios_VW())
 

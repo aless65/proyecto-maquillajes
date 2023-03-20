@@ -561,16 +561,30 @@ CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_INSERT
 	@estacivi_UsuCreacion INT
 AS
 BEGIN
-IF NOT EXISTS (SELECT estacivi_Nombre FROM gral.tbEstadosCiviles WHERE estacivi_Nombre = @estacivi_Nombre)
-BEGIN
-	INSERT INTO [gral].[tbEstadosCiviles]([estacivi_Nombre], [estacivi_UsuCreacion])
-	VALUES(@estacivi_Nombre, @estacivi_UsuCreacion)
-	SELECT 1
-END
-ELSE
-BEGIN
-SELECT 0
-END
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM gral.tbEstadosCiviles WHERE estacivi_Nombre = @estacivi_Nombre)
+			BEGIN
+				INSERT INTO [gral].[tbEstadosCiviles]([estacivi_Nombre], [estacivi_UsuCreacion])
+				VALUES(@estacivi_Nombre, @estacivi_UsuCreacion)
+
+				SELECT 1
+			END
+		ELSE IF EXISTS (SELECT * FROM gral.tbEstadosCiviles
+						WHERE estacivi_Nombre = @estacivi_Nombre
+							  AND estacivi_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE gral.tbEstadosCiviles
+				SET estacivi_Estado = 1
+				WHERE estacivi_Nombre = @estacivi_Nombre
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 --Editar estados civiles
@@ -581,11 +595,33 @@ CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_UPDATE
 	@estacivi_UsuModificacion INT
 AS
 BEGIN
-	UPDATE [gral].[tbEstadosCiviles]
-	SET [estacivi_Nombre] = @estacivi_Nombre,
-		[estacivi_UsuModificacion] = @estacivi_UsuModificacion,
-		[estacivi_FechaModificacion] = GETDATE()
-	WHERE [estacivi_Id] = @estacivi_Id
+	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM gral.tbEstadosCiviles WHERE estacivi_Nombre = @estacivi_Nombre)
+		BEGIN			
+			UPDATE [gral].[tbEstadosCiviles]
+			SET [estacivi_Nombre] = @estacivi_Nombre,
+				[estacivi_UsuModificacion] = @estacivi_UsuModificacion,
+				[estacivi_FechaModificacion] = GETDATE()
+			WHERE [estacivi_Id] = @estacivi_Id
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM gral.tbEstadosCiviles
+						WHERE @estacivi_Nombre = estacivi_Nombre
+							  AND estacivi_Estado = 1
+							  AND estacivi_Id != @estacivi_Id)
+			SELECT 2
+		ELSE
+			UPDATE gral.tbEstadosCiviles
+			SET estacivi_Estado = 1,
+			    estacivi_UsuModificacion = @estacivi_UsuModificacion
+			WHERE estacivi_Nombre = @estacivi_Nombre
+
+			SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 --Eliminar estados civiles
@@ -594,17 +630,21 @@ CREATE OR ALTER PROCEDURE gral.UDP_gral_tbEstadosCiviles_DELETE
 	@estacivi_Id INT
 AS
 BEGIN
-	IF NOT EXISTS (SELECT estacivi_Id FROM maqu.tbEmpleados WHERE estacivi_Id = @estacivi_Id)
-	BEGIN
-		UPDATE [gral].[tbEstadosCiviles]
-	SET  [estacivi_Estado] = 0
-	WHERE [estacivi_Id] = @estacivi_Id
-	SELECT 1
-	END
-	ELSE
-	BEGIN
-	SELECT 0
-	END
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM maqu.tbEmpleados WHERE estacivi_Id = @estacivi_Id)
+			BEGIN
+				UPDATE [gral].[tbEstadosCiviles]
+				SET  [estacivi_Estado] = 0
+				WHERE [estacivi_Id] = @estacivi_Id
+				
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Insert estados civiles*/
@@ -677,7 +717,7 @@ END
 
 /*Eliminar Sucursal*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete 
     @sucu_Id INT
 AS
 BEGIN
@@ -952,49 +992,118 @@ WHERE muni_Estado = 1
 /*Insertar Municipios*/
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Insert
-@muni_Id				CHAR(4),
-@muni_Nombre			NVARCHAR(150),
-@depa_Id				CHAR(2),
-@muni_UsuCreacion		INT
+	@muni_Id				CHAR(4),
+	@muni_Nombre			NVARCHAR(150),
+	@depa_Id				CHAR(2),
+	@muni_UsuCreacion		INT
 AS
 BEGIN
-INSERT INTO gral.tbMunicipios(muni_id, muni_Nombre, depa_Id, muni_UsuCreacion, muni_FechaCreacion, muni_UsuModificacion, muni_FechaModificacion, muni_Estado)
-VALUES(@muni_Id,@muni_Nombre,@depa_Id,@muni_UsuCreacion,GETDATE(),NULL,NULL,1)
+	BEGIN TRY
+		
+		IF NOT EXISTS (SELECT * FROM [gral].[tbMunicipios]
+						WHERE @muni_Id = muni_id)
+		BEGIN
+		INSERT INTO gral.tbMunicipios(muni_id, muni_Nombre, depa_Id, muni_UsuCreacion, muni_FechaCreacion, muni_UsuModificacion, muni_FechaModificacion, muni_Estado)
+		VALUES(@muni_Id,@muni_Nombre,@depa_Id,@muni_UsuCreacion,GETDATE(),NULL,NULL,1)
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [gral].[tbMunicipios]
+						WHERE @muni_Id = muni_id
+							  AND muni_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE [gral].[tbMunicipios]
+				SET muni_Estado = 1,
+					depa_Id = @depa_Id
+				WHERE muni_id = @muni_Id
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
+
 END
 
 /*Editar Municipios*/
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Edit
-@muni_Id				CHAR(4),
-@muni_Nombre			NVARCHAR(150),
-@depa_Id				CHAR(2),
-@muni_UsuModificacion   INT
+	@muni_Id				CHAR(4),
+	@muni_Nombre			NVARCHAR(150),
+	@depa_Id				CHAR(2),
+	@muni_UsuModificacion   INT
 AS
 BEGIN
-UPDATE gral.tbMunicipios
-SET muni_Nombre = @muni_Nombre,
-depa_Id = @depa_Id,
-muni_UsuModificacion = @muni_UsuModificacion,
-muni_FechaModificacion = GETDATE()
-WHERE muni_Id = @muni_Id
+	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM [gral].[tbMunicipios]
+						WHERE @muni_Id = muni_id)
+		BEGIN
+
+			UPDATE gral.tbMunicipios
+			SET muni_Nombre = @muni_Nombre,
+			depa_Id = @depa_Id,
+			muni_UsuModificacion = @muni_UsuModificacion,
+			muni_FechaModificacion = GETDATE()
+			WHERE muni_Id = @muni_Id
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [gral].[tbMunicipios]
+						WHERE @muni_Nombre = muni_Nombre
+							  AND muni_Estado = 1
+							  AND muni_id != @muni_Id)
+			SELECT 2
+		ELSE
+			UPDATE [gral].[tbMunicipios]
+			SET muni_Estado = 1,
+				depa_Id = @depa_Id,
+				muni_UsuModificacion = @muni_UsuModificacion,
+				muni_FechaModificacion = GETDATE()
+			WHERE muni_id = @muni_Id
+
+			SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
-/*Elimar Municipio*/
+/*Eliminar Municipio*/
 GO 
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Delete
 @muni_Id CHAR(4)
 AS
 BEGIN
-		BEGIN TRY
-			UPDATE gral.tbMunicipios
-			SET muni_Estado = 0
-			WHERE muni_id = @muni_Id
-			SELECT 1
-		END TRY
-		BEGIN CATCH 
-			SELECT 0
-END CATCH
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM [maqu].tbEmpleados WHERE muni_Id = @muni_Id)
+			BEGIN
+
+				UPDATE gral.tbMunicipios
+				SET muni_Estado = 0
+				WHERE muni_id = @muni_Id
+
+				SELECT 1
+			END
+		ELSE IF NOT EXISTS (SELECT * FROM [maqu].tbClientes WHERE muni_Id = @muni_Id)
+			BEGIN
+
+				UPDATE gral.tbMunicipios
+				SET muni_Estado = 0
+				WHERE muni_id = @muni_Id
+
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
+
 /*Vista Municipios UDP*/
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_VW
@@ -1053,8 +1162,35 @@ CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_Insert
 	@depa_UsuCreacion 	INT
 AS
 BEGIN
-	INSERT INTO gral.tbDepartamentos(depa_Id,depa_Nombre, depa_UsuCreacion)
-	VALUES(@depa_Id,@depa_Nombre,@depa_UsuCreacion)
+
+	BEGIN TRY
+		
+		IF NOT EXISTS (SELECT * FROM gral.tbDepartamentos
+						WHERE @depa_Id = depa_Id)
+		BEGIN
+
+			INSERT INTO gral.tbDepartamentos(depa_Id,depa_Nombre, depa_UsuCreacion)
+			VALUES(@depa_Id,@depa_Nombre,@depa_UsuCreacion)
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM gral.tbDepartamentos
+						WHERE @depa_Id = depa_Id
+							  AND depa_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE gral.tbDepartamentos
+				SET depa_Estado = 1,
+					depa_Nombre = @depa_Nombre
+				WHERE @depa_Id = depa_Id
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
 END
 
 /*Editar Departamentos*/
@@ -1065,11 +1201,36 @@ CREATE OR ALTER PROCEDURE gral.UDP_gral_tbDepartamentos_UPDATE
 	@depa_UsuModificacion 		INT
 AS
 BEGIN
-UPDATE gral.tbDepartamentos
-	SET     depa_Nombre = @depa_Nombre,
-			depa_UsuModificacion = @depa_UsuModificacion,
-			depa_FechaModificacion = GETDATE()
-	WHERE 	depa_Id = @depa_Id
+	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM gral.tbDepartamentos
+						WHERE @depa_Id = depa_Id)
+		BEGIN			
+			UPDATE gral.tbDepartamentos
+			SET     depa_Nombre = @depa_Nombre,
+					depa_UsuModificacion = @depa_UsuModificacion,
+					depa_FechaModificacion = GETDATE()
+			WHERE 	depa_Id = @depa_Id
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM gral.tbDepartamentos
+						WHERE @depa_Nombre = depa_Nombre
+							  AND depa_Estado = 1
+							  AND depa_Id != @depa_Id)
+			SELECT 2
+		ELSE
+			UPDATE gral.tbDepartamentos
+			SET depa_Estado = 1,
+				depa_Nombre = @depa_Nombre,
+			    depa_UsuModificacion = @depa_UsuModificacion
+			WHERE @depa_Id = depa_Id
+
+			SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+
 END
 
 /*Eliminar Departamentos*/
@@ -1078,17 +1239,22 @@ CREATE OR ALTER PROCEDURE UDP_gral_tbDepartamentos_DELETE
 	@depa_Id CHAR(2)
 AS
 BEGIN
-IF NOT EXISTS (SELECT * FROM gral.tbMunicipios WHERE depa_Id = @depa_Id)
-  BEGIN
-   	UPDATE gral.tbDepartamentos
-	SET   depa_Estado = 0
-	WHERE depa_Id = @depa_Id
-	SELECT 1
-  END
-  ELSE
-  BEGIN
-  SELECT 0
-  END
+
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM gral.tbMunicipios WHERE depa_Id = @depa_Id)
+			BEGIN
+				UPDATE gral.tbDepartamentos
+				SET   depa_Estado = 0
+				WHERE depa_Id = @depa_Id
+
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Listar Departamentos*/
@@ -2199,24 +2365,47 @@ SELECT * FROM acce.tbUsuarios
 /*Insertar Usuarios*/
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_Insert
-@user_NombreUsuario NVARCHAR(150),
-@user_Contrasena NVARCHAR(MAX),
-@user_EsAdmin BIT,
-@role_Id INT, 
-@empe_Id INT,
-@user_usuCreacion INT
+	@user_NombreUsuario NVARCHAR(150),
+	@user_Contrasena NVARCHAR(MAX),
+	@user_EsAdmin BIT,
+	@role_Id INT, 
+	@empe_Id INT,
+	@user_usuCreacion INT
 AS 
 BEGIN
+	
+	BEGIN TRY
+		
+		DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @user_Contrasena));
 
-BEGIN TRY
-DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @user_Contrasena));
-INSERT INTO acce.tbUsuarios
-VALUES(@user_NombreUsuario,@password,@user_EsAdmin,@role_Id,@empe_Id,@user_usuCreacion,GETDATE(),NULL,NULL,1)
-SELECT 1
-END TRY
-BEGIN CATCH
-SELECT 0
-END CATCH
+		IF NOT EXISTS (SELECT * FROM acce.tbUsuarios
+						WHERE @user_NombreUsuario = user_NombreUsuario)
+		BEGIN
+			INSERT INTO acce.tbUsuarios
+			VALUES(@user_NombreUsuario,@password,@user_EsAdmin,@role_Id,@empe_Id,@user_usuCreacion,GETDATE(),NULL,NULL,1)
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM acce.tbUsuarios
+						WHERE @user_NombreUsuario = user_NombreUsuario
+							  AND user_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE acce.tbUsuarios
+				SET user_Estado = 1,
+					user_Contrasena = @password,
+					user_EsAdmin = @user_EsAdmin,
+					role_Id = @role_Id,
+					empe_Id = @empe_Id
+				WHERE user_NombreUsuario = @user_NombreUsuario
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
 END
 
 /*Listar Usuarios*/
@@ -2237,13 +2426,20 @@ CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_UPDATE
 	@user_UsuModificacion		INT
 AS
 BEGIN
-	UPDATE acce.tbUsuarios
-	SET user_EsAdmin = @user_EsAdmin,
-		role_Id = @role_Id,
-		empe_Id = @empe_Id,
-		user_UsuModificacion = @user_UsuModificacion,
-		user_FechaModificacion = GETDATE()
-	WHERE user_Id = @user_Id
+	BEGIN TRY
+		UPDATE acce.tbUsuarios
+		SET user_EsAdmin = @user_EsAdmin,
+			role_Id = @role_Id,
+			empe_Id = @empe_Id,
+			user_UsuModificacion = @user_UsuModificacion,
+			user_FechaModificacion = GETDATE()
+		WHERE user_Id = @user_Id
+
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Eliminar usuarios*/
@@ -2252,9 +2448,16 @@ CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_DELETE
 	@user_Id	INT
 AS
 BEGIN
-	UPDATE acce.tbUsuarios
-	SET user_Estado = 0
-	WHERE user_Id = @user_Id
+	BEGIN TRY
+		UPDATE acce.tbUsuarios
+		SET user_Estado = 0
+		WHERE user_Id = @user_Id
+
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 GO
@@ -2441,4 +2644,19 @@ BEGIN
 		SELECT 0
 	ELSE
 		SELECT 1
+END
+
+GO
+CREATE OR ALTER PROCEDURE acce.tbRolesPorPantalla 
+	@role_Id		INT,
+	@esAdmin	BIT,
+	@pant_Id	INT
+AS
+BEGIN
+	IF @esAdmin = 1
+		SELECT 1
+	ELSE IF EXISTS (SELECT * FROM [acce].[tbPantallasPorRoles] WHERE [role_Id] = @role_Id AND [pant_Id] = @pant_Id)
+		SELECT 1
+	ELSE
+		SELECT 0
 END

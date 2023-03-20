@@ -45,7 +45,7 @@ namespace Maquillaje.WebUI.Controllers
 
             if(insertar == 1)
             {
-                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
                 TempData["Script"] = script;
             }
             else if(insertar == 2)

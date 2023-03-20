@@ -13,7 +13,7 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group col-6">
                             <label asp-for="depa_Id" class="control-label"></label>
-                            <input asp-for="depa_Id" id="depa_Id" class="form-control" />
+                            <input asp-for="depa_Id" id="depa_Id" class="form-control" maxlength="2"/>
                             <label name="lbl_depa_Id_CreateError" id="lbl_depa_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                             <label name="lbl_depa_Id_CreateError1" id="lbl_depa_Id_CreateError1" class="control-label" hidden style="color: red;">Ingrese un ID Valido</label>
                         </div>

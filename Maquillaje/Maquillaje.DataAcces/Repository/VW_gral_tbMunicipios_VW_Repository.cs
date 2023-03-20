@@ -59,7 +59,7 @@ namespace Maquillaje.DataAccess.Repository
             var parametros = new DynamicParameters();
             parametros.Add("@muni_Id", id, DbType.String, ParameterDirection.Input);
 
-            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Departamentos, parametros, commandType: CommandType.StoredProcedure);
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Elimnar_Municipios, parametros, commandType: CommandType.StoredProcedure);
         }
     }
 }

@@ -11,7 +11,7 @@
         <p>
             <a class="btn btn-secondary" onclick="AbrirModalCreate()">Nuevo</a>
         </p>
-        <table class="table">
+        <table class="table table-bordered table-hover" id="DataTable">
             <thead>
                 <tr>
                     <th>
@@ -50,3 +50,14 @@
 @Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_gral_tbEstadosCiviles_VW())
 
 @Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_gral_tbEstadosCiviles_VW())
+
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}

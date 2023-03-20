@@ -46,9 +46,8 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _maquService.ListadoSucursales();
             var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado).Where(X => X.sucu_Id == id);
-            var ddlmunicipios = _gralService.ListadoMunicipios(out string error);
-
-            ViewBag.muni_Id = new SelectList(ddlmunicipios, "muni_id", "muni_Nombre");
+            var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
             return View(listadoMapeado);
         }
 
@@ -65,7 +64,7 @@ namespace Maquillaje.WebUI.Controllers
 
             if (insertar == 1)
             {
-                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
                 TempData["Script"] = script;
             }
             else if (insertar == 2)
@@ -125,7 +124,7 @@ namespace Maquillaje.WebUI.Controllers
             }
             else if (Delete == 2)
             {
-                string script = $"MostrarMensajeWarning('El registro no se puede eliminar porque está siendo utilizado);";
+                string script = $"MostrarMensajeWarning('El registro no se puede eliminar porque está siendo utilizado');";
                 TempData["Script"] = script;
             }
             else

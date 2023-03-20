@@ -113,5 +113,9 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Editar_Sucursales = "maqu.UDP_maqu_tbSucursales_Edit";
         public static string UDP_Elimnar_Sucursales = "maqu.UDP_maqu_tbSucursales_Delete";
         #endregion
+
+        #region
+        public static string UDP_Roles = "acce.tbRolesPorPantalla";
+        #endregion
     }
 }

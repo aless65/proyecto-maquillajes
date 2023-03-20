@@ -50,6 +50,17 @@
     </div>
 </div>
 
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
+
 @Html.Partial("_Modal_Create", new Maquillaje.WebUI.Models.UsuarioViewModel())
 @Html.Partial("_Modal_Edit", new Maquillaje.WebUI.Models.UsuarioViewModel())
 @Html.Partial("_Modal_Delete", new Maquillaje.WebUI.Models.UsuarioViewModel())

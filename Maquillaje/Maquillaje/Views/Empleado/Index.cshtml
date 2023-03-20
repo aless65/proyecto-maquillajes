@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<Maquillaje.WebUI.Models.EmpleadoViewModel>
 
 @{
+
+    using Microsoft.AspNetCore.Http;
+
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int role_Id = int.Parse(ViewBag.Rol = HttpContext.Session.GetString("role_Id"));
 }
 
 
@@ -89,6 +94,24 @@
         </div>
     </form>
 </div>
+
+@{ 
+    <script>
+        $(document).ready(function () {
+            $.getJSON('/Usuario/RolesPantalla', { role_Id: empe_Id })
+                .done(function (municipios) {
+                    $.each(municipios, function (index, item) {
+                        $("#muni_Id").val(item.muni_id);
+                        console.log("seleccionar muni");
+                        console.log(item.muni_id);
+                    });
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                });
+        });
+    </script>
+}
 
 <script>
 

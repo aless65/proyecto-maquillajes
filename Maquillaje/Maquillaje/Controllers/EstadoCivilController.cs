@@ -27,6 +27,13 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _gralService.ListadoEstadosCivilesVista(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbEstadosCiviles_VW>>(listado);
+
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             return View(listadoMapeado);
         }
 
@@ -42,18 +49,23 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_gral_tbEstadosCiviles_VW item)
         {
-            try
-            {
-                var insertar = _gralService.InsertarEstadoCivil(item);
-                if(insertar == 0)
-                {
-                    //Validacion Pendiente
-                }
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
 
+            var insertar = _gralService.InsertarEstadoCivil(item);
+
+            if (insertar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (insertar == 2)
+            {
+                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
@@ -62,18 +74,24 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost("/EstadoCivil/Edit")]
         public IActionResult Edit(VW_gral_tbEstadosCiviles_VW item)
         {
-            try
-            {
-                var Editar = _gralService.EditarEstadoCivil(item);
-                if (Editar == 0)
-                {
-                    //Validacion Pendiente
-                }
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
 
+            var Editar = _gralService.EditarEstadoCivil(item);
+
+
+            if (Editar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (Editar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.estacivi_Id},{item.estacivi_Nombre}') ";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
 
             return RedirectToAction("Index");
@@ -81,19 +99,24 @@ namespace Maquillaje.WebUI.Controllers
 
         public IActionResult Delete(int id)
         {
-            try
-            {
-                var Eliminar = _gralService.EliminarEstadoCivil(id);
-                if (Eliminar == 0)
-                {
-                    //Validacion Pendiente
-                }
-                return RedirectToAction("Index");
-            }
-            catch (Exception error)
-            {
+            var Eliminar = _gralService.EliminarEstadoCivil(id);
 
+            if (Eliminar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
             }
+            else if (Eliminar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
             return RedirectToAction("Index");
         }
     }

@@ -40,6 +40,10 @@ namespace Maquillaje.WebUI.Controllers
                         HttpContext.Session.SetInt32("user_Id", item.user_Id);
                         HttpContext.Session.SetString("user_NombreUsuario",item.user_NombreUsuario);
                         HttpContext.Session.SetString("user_EsAdmin", item.user_EsAdmin.ToString());
+
+                        TempData["user_Id"] = item.user_Id;
+                        TempData["user_NombreUsuario"] = item.user_NombreUsuario;
+                        TempData["user_EsAdmin"] = item.user_EsAdmin;
                     }
                     return RedirectToAction("Index","Home");
                 }

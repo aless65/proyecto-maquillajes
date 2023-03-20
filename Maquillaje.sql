@@ -2025,7 +2025,7 @@ SELECT * FROM acce.tbUsuarios
 
 /*Insertar Usuarios*/
 GO
-CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_Insert	
+CREATE OR ALTER PROCEDURE  
 @user_NombreUsuario NVARCHAR(150),
 @user_Contrasena NVARCHAR(MAX),
 @user_EsAdmin BIT,
@@ -2124,7 +2124,7 @@ AS
 BEGIN
 	DECLARE @user_ContrasenaEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @user_Contrasena)
 
-	SELECT [empe_Nombres], [empe_Apellidos], [role_Id], [user_id]
+	SELECT user_NombreUsuario,[empe_Nombres], [empe_Apellidos], [role_Id], [user_id],user_EsAdmin,t1.empe_Id
 	FROM [acce].[tbUsuarios] T1 INNER JOIN [maqu].[tbEmpleados] T2
 	ON T1.empe_Id = T2.empe_Id
 	WHERE [user_NombreUsuario] = @user_NombreUsuario

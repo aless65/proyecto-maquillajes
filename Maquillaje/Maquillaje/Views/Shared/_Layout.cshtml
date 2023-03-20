@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Maquillaje</title>
-
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <!-- STYLESHEETS -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--- -->
     <!-- Fonts [ OPTIONAL ] -->
@@ -31,7 +33,6 @@
 
 </head>
 <body class="jumping">
-
     <!-- PAGE CONTAINER -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <div id="root" class="root mn--max hd--expanded">
@@ -1121,21 +1122,9 @@
                     <div class="mainnav__bottom-content border-top pb-2">
                         <ul id="mainnav" class="mainnav__menu nav flex-column">
                             <li class="nav-item has-sub">
-                                <a href="#" class="nav-link mininav-toggle collapsed" aria-expanded="false">
-                                    <i class="demo-pli-unlock fs-5 me-2"></i>
-                                    <span class="nav-label ms-1">Logout</span>
-                                </a>
-                                <ul class="mininav-content nav flex-column collapse">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">This device only</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">All Devices</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Lock screen</a>
-                                    </li>
-                                </ul>
+                                <form action="@Url.Action("Logout","Home")" id="cls_ss" method="post">
+                                    <button class="dropdown-item" onclick="cls_ss" id="demo-pli-unlock fs-5 me-2"><i class="demo-pli-unlock fs-5 me-2"></i>Cerrar Sesión</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -1592,7 +1581,8 @@
                     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
                     @RenderBody()
-
+                    <input type="hidden" id="admin" value="@ViewBag.Admin">
+                    <input type="hidden" id="rol" value="@ViewBag.Rol"
                 </div>
             </div>
             <!-- FOOTER -->

@@ -2,6 +2,7 @@
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -27,6 +28,14 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Usuario/Listado")]
         public IActionResult Index()
         {
+            string rol = ViewBag.Rol = HttpContext.Session.GetString("role_Id");
+            string admin = ViewBag.Admin = HttpContext.Session.GetString("user_EsAdmin");
+            if ((rol != "1") && admin != "True")
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
+
             var listado = _acceService.ListadoUsuarios(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<UsuarioViewModel>>(listado).Where(X => X.user_Estado == true);
 
@@ -82,6 +91,13 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Usuario/Details")]
         public IActionResult Details(int id)
         {
+            string rol = ViewBag.Rol = HttpContext.Session.GetString("role_Id");
+            string admin = ViewBag.Admin = HttpContext.Session.GetString("user_EsAdmin");
+            if ((rol != "1") && admin != "True")
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
             var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
             ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
 

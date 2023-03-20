@@ -25,13 +25,6 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Categoria/Details")]
         public IActionResult Details(int id)
         {
-            string rol = ViewBag.Rol = HttpContext.Session.GetString("role_Id");
-            string admin = ViewBag.Admin = HttpContext.Session.GetString("user_EsAdmin");
-            if ((rol != "1" || rol != "2") && admin != "True")
-            {
-                return RedirectToAction("Index", "Home");
-
-            }
             var listado = _maquService.CategoriaDetails(id,out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<CategoriaViewModel>>(listado);
 
@@ -45,13 +38,6 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Categorias/Listado")]
         public IActionResult Index()
         {
-            string rol = ViewBag.Rol = HttpContext.Session.GetString("role_Id");
-            string admin = ViewBag.Admin = HttpContext.Session.GetString("user_EsAdmin");
-            if ((rol != "1" && rol != "2") || admin != "True")
-            {
-                return RedirectToAction("Index", "Home");
-
-            }
             var listado = _maquService.ListadoCategorias(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<CategoriaViewModel>>(listado);
 

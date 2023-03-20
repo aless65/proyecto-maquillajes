@@ -28,14 +28,6 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Usuario/Listado")]
         public IActionResult Index()
         {
-            string rol = ViewBag.Rol = HttpContext.Session.GetString("role_Id");
-            string admin = ViewBag.Admin = HttpContext.Session.GetString("user_EsAdmin");
-            if ((rol != "1") && admin != "True")
-            {
-                return RedirectToAction("Index", "Home");
-
-            }
-
             var listado = _acceService.ListadoUsuarios(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<UsuarioViewModel>>(listado).Where(X => X.user_Estado == true);
 

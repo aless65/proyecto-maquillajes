@@ -29,6 +29,7 @@ namespace Maquillaje
             services.BusinessLogic();
             services.AddAutoMapper(x => x.AddProfile<MappingProfileExtensions>(), AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             services.AddSession(); // habilita el soporte de sesión
         }
 
@@ -50,7 +51,7 @@ namespace Maquillaje
             app.UseStaticFiles();
             app.UseSession(); // configura la aplicación para usar la sesión
             app.UseRouting();
-
+       
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

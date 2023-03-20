@@ -54,34 +54,29 @@ namespace Maquillaje.WebUI.Controllers
             {
                 item.estacivi_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 var insertar = _gralService.InsertarEstadoCivil(item);
-                if(insertar == 0)
+
+                if (insertar == 1)
                 {
-                    //Validacion Pendiente
+                    string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                    TempData["Script"] = script;
                 }
+                else if (insertar == 2)
+                {
+                    string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                    TempData["Script"] = script;
+                }
+                else
+                {
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
+                }
+
                 return RedirectToAction("Index");
             }
             catch (Exception error)
             {
-
-            var insertar = _gralService.InsertarEstadoCivil(item);
-
-            if (insertar == 1)
-            {
-                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
-                TempData["Script"] = script;
+                return RedirectToAction("Index");
             }
-            else if (insertar == 2)
-            {
-                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
-                TempData["Script"] = script;
-            }
-            else
-            {
-                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
-                TempData["Script"] = script;
-            }
-
-            return RedirectToAction("Index");
         }
 
         [HttpPost("/EstadoCivil/Edit")]
@@ -91,54 +86,50 @@ namespace Maquillaje.WebUI.Controllers
             {
                 item.estacivi_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 var Editar = _gralService.EditarEstadoCivil(item);
-
+                if (Editar == 1)
+                {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                    TempData["Script"] = script;
+                }
+                else if (Editar == 2)
+                {
+                    string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.estacivi_Id},{item.estacivi_Nombre}') ";
+                    TempData["Script"] = script;
+                }
+                else
+                {
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
+                }
             }
             catch (Exception error)
-            {
-
-            var Editar = _gralService.EditarEstadoCivil(item);
-
-
-            if (Editar == 1)
-            {
-                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
-                TempData["Script"] = script;
+            {             
             }
-            else if (Editar == 2)
-            {
-                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.estacivi_Id},{item.estacivi_Nombre}') ";
-                TempData["Script"] = script;
-            }
-            else
-            {
-                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
-                TempData["Script"] = script;
-            }
-
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int id)
-        {
-            var Eliminar = _gralService.EliminarEstadoCivil(id);
+                public IActionResult Delete(int id)
+                {
+                    var Eliminar = _gralService.EliminarEstadoCivil(id);
 
-            if (Eliminar == 1)
-            {
-                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
-                TempData["Script"] = script;
-            }
-            else if (Eliminar == 2)
-            {
-                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
-                TempData["Script"] = script;
-            }
-            else
-            {
-                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
-                TempData["Script"] = script;
-            }
+                    if (Eliminar == 1)
+                    {
+                        string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                        TempData["Script"] = script;
+                    }
+                    else if (Eliminar == 2)
+                    {
+                        string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                        TempData["Script"] = script;
+                    }
+                    else
+                    {
+                        string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                        TempData["Script"] = script;
+                    }
 
-            return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+            }
         }
-    }
-}
+    

@@ -53,83 +53,85 @@ namespace Maquillaje.WebUI.Controllers
             {
                 item.depa_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 var insertar = _gralService.InsertarDepartamento(item);
+                if (insertar == 1)
+                {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                    TempData["Script"] = script;
+                }
+                else if (insertar == 2)
+                {
+                    string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                    TempData["Script"] = script;
+                }
+                else
+                {
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
+                }
+
                 return RedirectToAction("Index");
+
             }
             catch (Exception error)
             {
-
-            if (insertar == 1)
-            {
-                string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
-                TempData["Script"] = script;
-            }
-            else if (insertar == 2)
-            {
-                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
-                TempData["Script"] = script;
-            }
-            else
-            {
-                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
-                TempData["Script"] = script;
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost("/Departamento/Edit")]
-        public IActionResult Edit(VW_gral_tbDepartamentos_VW item)
-        {
-            try
-            {
-                item.depa_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
-                var editar = _gralService.EditarDepartamento(item);
                 return RedirectToAction("Index");
             }
-            catch (Exception error)
-            {
 
-            if (editar == 1)
+           }
+            [HttpPost("/Departamento/Edit")]
+            public IActionResult Edit(VW_gral_tbDepartamentos_VW item)
             {
-                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
-                TempData["Script"] = script;
-            }
-            else if (editar == 2)
-            {
-                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.depa_Id},{item.depa_Id},{item.depa_Nombre}') ";
-                TempData["Script"] = script;
-            }
-            else
-            {
-                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
-                TempData["Script"] = script;
-            }
+                try
+                {
+                    item.depa_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+                    var editar = _gralService.EditarDepartamento(item);
+                    if (editar == 1)
+                    {
+                        string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                        TempData["Script"] = script;
+                    }
+                    else if (editar == 2)
+                    {
+                        string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.depa_Id},{item.depa_Id},{item.depa_Nombre}') ";
+                        TempData["Script"] = script;
+                    }
+                    else
+                    {
+                        string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                        TempData["Script"] = script;
+                    }
+                    return RedirectToAction("Index");
+                }
+                catch (Exception error)
+                {
 
-            return RedirectToAction("Index");
-        }
+                }
 
-        public IActionResult Delete(string id)
-        {
-
-            var delete = _gralService.EliminarDepartamento(id);
-
-            if (delete == 1)
-            {
-                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
-                TempData["Script"] = script;
-            }
-            else if (delete == 2)
-            {
-                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
-                TempData["Script"] = script;
-            }
-            else
-            {
-                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
-                TempData["Script"] = script;
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            public IActionResult Delete(string id)
+            {
+
+                var delete = _gralService.EliminarDepartamento(id);
+
+                if (delete == 1)
+                {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                    TempData["Script"] = script;
+                }
+                else if (delete == 2)
+                {
+                    string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                    TempData["Script"] = script;
+                }
+                else
+                {
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
+                }
+
+                return RedirectToAction("Index");
+            }
         }
     }
-}

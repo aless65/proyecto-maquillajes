@@ -29,7 +29,7 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost]
         public IActionResult Index(string usuario, string contrasena)
         {
-            if(usuario != "" && contrasena != "")
+            if (usuario != "" && contrasena != "")
             {
                 var login = _acceService.Login(usuario, contrasena);
 
@@ -76,7 +76,7 @@ namespace Maquillaje.WebUI.Controllers
                 if (login == 1)
                 {
                     
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Loginvbn");
                 }
                 else
                 {

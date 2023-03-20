@@ -42,9 +42,10 @@ namespace Maquillaje.Controllers
             string user_Id = HttpContext.Session.GetString("user_Id");
             if (user_Id == null || user_Id == "")
             {
-                HttpContext.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
-                HttpContext.Response.Headers.Add("Pragma", "no-cache");
-                HttpContext.Response.Headers.Add("Expires", "0");
+                HttpContext.Session.SetInt32("user_Id", 0);
+                HttpContext.Session.SetString("user_NombreUsuario", "");
+                HttpContext.Session.SetString("user_EsAdmin", "");
+                HttpContext.Session.SetString("role_Id", "");
                 return RedirectToAction("Index", "Login");
             }
             else

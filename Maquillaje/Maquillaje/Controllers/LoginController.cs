@@ -76,7 +76,7 @@ namespace Maquillaje.WebUI.Controllers
                 if (login == 1)
                 {
                     
-                    return RedirectToAction("Index", "Loginvbn");
+                    return RedirectToAction("Index", "Login");
                 }
                 else
                 {

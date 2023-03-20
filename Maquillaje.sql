@@ -30,6 +30,8 @@ GO
 CREATE TABLE acce.tbPantallas(
 	pant_Id					INT IDENTITY,
 	pant_Nombre				NVARCHAR(100) NOT NULL,
+	pant_Url				NVARCHAR(300) NOT NULL,
+	pant_Menu				NVARCHAR(300) NOT NULL,
 	pant_UsuCreacion		INT NOT NULL,
 	pant_FechaCreacion		DATETIME NOT NULL CONSTRAINT DF_pant_FechaCreacion DEFAULT(GETDATE()),
 	pant_UsuModificacion	INT,
@@ -39,24 +41,25 @@ CREATE TABLE acce.tbPantallas(
 );
 GO
 
-INSERT INTO acce.tbPantallas(pant_Nombre, pant_UsuCreacion)
-VALUES ('Usuarios', 1),
-       ('Departamentos', 1),
-	   ('Municipios', 1),
-	   ('Categorías', 1),
-	   ('Clientes', 1),
-	   ('Empleados', 1),
-	   ('Facturas', 1),
-	   ('Facturas detalles', 1),
-	   ('Métodos de pago', 1),
-	   ('Productos', 1),
-	   ('Proveedores', 1)
+INSERT INTO acce.tbPantallas(pant_Nombre, pant_Url, pant_Menu, pant_UsuCreacion)
+VALUES ('Usuarios', '/Usuario/Listado', 1),
+       ('Departamentos', '/Departamento/Listado', 1),
+	   ('Municipios', '/Municipio/Listado', 1),
+	   ('EstadosCiviles', '/EstadoCivil/Listado', 1),
+	   ('Categorías', '/Categorias/Listado', 1),
+	   ('Clientes', '/Clientes/Listado', 1),
+	   ('Empleados', '/Empleados/Listado', 1),
+	   ('Facturas', '/Facturas/Listado', 1),
+	   ('FacturasDetalles', '/Facturas/Listado', 1),
+	   ('MétodosPago', '/MetodosPago/Listado', 1),
+	   ('Productos', '/Producto/Listado', 1),
+	   ('Proveedores', '/Proveedor/Listado', 1),
+	   ('Sucursales', '/Sucursal/Listado', 1)
 
 
 --***********CREACION TABLA ROLES/PANTALLA*****************---
 CREATE TABLE acce.tbPantallasPorRoles(
 	pantrole_Id					INT IDENTITY,
-	pantrole_Identificador		NVARCHAR(100) NOT NULL,
 	role_Id						INT NOT NULL,
 	pant_Id						INT NOT NULL,
 	pantrole_UsuCreacion		INT NOT NULL,
@@ -686,8 +689,35 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Insert
     @sucu_UsuCreacion INT
 AS
 BEGIN
-    INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
-    VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
+	BEGIN TRY
+		
+		IF NOT EXISTS (SELECT * FROM [maqu].tbSucursales
+						WHERE @sucu_Descripcion = sucu_Descripcion)
+		BEGIN
+
+			INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
+			VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].tbSucursales
+						WHERE @sucu_Descripcion = sucu_Descripcion
+							  AND sucu_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE [maqu].tbSucursales
+				SET sucu_Estado = 1,
+					muni_Id = @muni_Id,
+					sucu_DireccionExacta = @sucu_DireccionExacta
+				WHERE sucu_Descripcion = @sucu_Descripcion
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
 END
 
 GO
@@ -706,15 +736,41 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
     @sucu_UsuModificacion INT
 AS
 BEGIN
-    UPDATE maqu.tbSucursales
-    SET sucu_Descripcion = @sucu_Descripcion,
-        muni_Id = @muni_Id,
-        sucu_DireccionExacta = @sucu_DireccionExacta,
-        sucu_UsuModificacion = @sucu_UsuModificacion,
-        sucu_FechaModificacion = GETDATE()
-    WHERE sucu_Id = @sucu_Id;
-END
+	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM [maqu].tbSucursales
+						WHERE @sucu_Descripcion = sucu_Descripcion)
+		BEGIN			
+			UPDATE [maqu].tbSucursales
+			SET     sucu_Descripcion = @sucu_Descripcion,
+					sucu_DireccionExacta = @sucu_DireccionExacta,
+					muni_Id = @muni_Id,
+					sucu_UsuModificacion = @sucu_UsuModificacion,
+					sucu_FechaModificacion = GETDATE()
+			WHERE 	sucu_Id = @sucu_Id
 
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM [maqu].tbSucursales
+						WHERE @sucu_Descripcion = sucu_Descripcion
+							  AND sucu_Estado = 1
+							  AND sucu_Id != @sucu_Id)
+			SELECT 2
+		ELSE
+			UPDATE [maqu].tbSucursales
+			SET sucu_Estado = 1,
+				sucu_DireccionExacta = @sucu_DireccionExacta,
+				muni_Id = @muni_Id,
+			    sucu_UsuModificacion = @sucu_UsuModificacion,
+				sucu_FechaModificacion = GETDATE()
+			WHERE sucu_Descripcion = @sucu_Descripcion
+
+			SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+    
 /*Eliminar Sucursal*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
@@ -1016,7 +1072,8 @@ BEGIN
 			BEGIN
 				UPDATE [gral].[tbMunicipios]
 				SET muni_Estado = 1,
-					depa_Id = @depa_Id
+					depa_Id = @depa_Id,
+					muni_Nombre = @muni_Nombre
 				WHERE muni_id = @muni_Id
 
 				SELECT 1
@@ -1044,9 +1101,9 @@ BEGIN
 
 			UPDATE gral.tbMunicipios
 			SET muni_Nombre = @muni_Nombre,
-			depa_Id = @depa_Id,
-			muni_UsuModificacion = @muni_UsuModificacion,
-			muni_FechaModificacion = GETDATE()
+				depa_Id = @depa_Id,
+				muni_UsuModificacion = @muni_UsuModificacion,
+				muni_FechaModificacion = GETDATE()
 			WHERE muni_Id = @muni_Id
 
 			SELECT 1
@@ -1060,6 +1117,7 @@ BEGIN
 			UPDATE [gral].[tbMunicipios]
 			SET muni_Estado = 1,
 				depa_Id = @depa_Id,
+				muni_Nombre = @muni_Nombre,
 				muni_UsuModificacion = @muni_UsuModificacion,
 				muni_FechaModificacion = GETDATE()
 			WHERE muni_id = @muni_Id
@@ -2086,7 +2144,7 @@ WHERE prod.prod_Estado = 1
 
 /*Listar Producos View*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_List_View
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbProductos_List_View 
 AS
 BEGIN
 SELECT *FROM VW_maqu_tbProductos_VW
@@ -2570,14 +2628,14 @@ INSERT INTO [acce].[tbRoles]([role_Nombre], [role_UsuCreacion])
 VALUES ('Inventario', 1),
 	   ('Recursos Humanos', 1)
 
-INSERT INTO [acce].[tbPantallasPorRoles] ([pantrole_Identificador], [role_Id], [pant_Id], [pantrole_UsuCreacion])
-VALUES ('Vendedor-Facturas', 2, 7, 1),
-	   ('Vendedor-FacturasDetalles', 2, 8, 1),
-	   ('Vendedor-Clientes', 2, 5, 1),
-	   ('Inventario-Categorías', 3, 4, 1),
-	   ('Inventario-Productos', 3, 10, 1),
-	   ('Inventario-Proveedores', 3, 11, 1),
-	   ('Recursos Humanos-Empleados', 4, 6, 1)
+INSERT INTO [acce].[tbPantallasPorRoles] ([role_Id], [pant_Id], [pantrole_UsuCreacion])
+VALUES (2, 7, 1),
+	   (2, 8, 1),
+	   (2, 5, 1),
+	   (3, 4, 1),
+	   (3, 10, 1),
+	   (3, 11, 1),
+	   (4, 6, 1)
 
 GO
 EXEC maqu.UDP_maqu_tbProveedores_Insert 'LOréal Paris', 'contact@loreal.com', '1-800-322-2036', 1

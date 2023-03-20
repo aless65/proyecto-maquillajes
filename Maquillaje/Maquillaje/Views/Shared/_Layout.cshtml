@@ -582,9 +582,6 @@
                                         <a href="/MetodosPago/Listado" class="nav-link" id="metodosItem">Métodos de Pago</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="/Usuario/Listado" class="nav-link" id="usuariosItem">Usuarios</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a href="/Facturas/Listado" class="nav-link" id="facturasItem">Facturas</a>
                                     </li>
                                     <li class="nav-item">
@@ -603,12 +600,19 @@
                             </li>
                             <!-- END : Link with submenu -->
                             <!-- Regular menu link -->
-                            <li class="nav-item">
-                                <a href="./widgets.html" class="nav-link mininav-toggle">
-                                    <i class="demo-pli-gear fs-5 me-2"></i>
+                            <li class="nav-item has-sub">
 
-                                    <span class="nav-label mininav-content ms-1">Seguridad</span>
+                                <a href="#" id="menuAcceso" class="mininav-toggle nav-link collapsed">
+                                    <i class="demo-pli-gear fs-5 me-2"></i>
+                                    <span class="nav-label ms-1">Seguridad</span>
                                 </a>
+
+                                <ul id="subMenuAcceso" class="mininav-content nav collapse">
+                                    <li class="nav-item">
+                                        <a href="/Usuario/Listado" class="nav-link" id="usuariosItem">Usuarios</a>
+                                    </li>
+                                </ul>
+
                             </li>
                             <!-- END : Regular menu link -->
 

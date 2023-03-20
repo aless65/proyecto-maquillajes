@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -58,6 +59,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_maqu_tbProductos_VW item)
         {
+            item.prod_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var insertar = _maquService.InsertProducto(item);
 
             if (insertar == 1)
@@ -82,7 +84,7 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost("/Producto/Edit")]
         public IActionResult Edit(VW_maqu_tbProductos_VW item)
         {
-
+            item.prod_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var editar = _maquService.EditProducto(item);
 
             if (editar == 1)

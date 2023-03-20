@@ -2,6 +2,7 @@
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -56,7 +57,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(EmpleadoViewModel item)
         {
-
+            item.empe_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var listado = _gralService.ListadoDepartamento(out string error).ToList();
 
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
@@ -111,6 +112,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(tbEmpleados item)
         {
+            item.empe_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var update = _maquService.UpdateEmpelado(item);
 
             var listadoEstadosCiviles = _gralService.ListadoEstadosCiviles(out string error1).ToList();

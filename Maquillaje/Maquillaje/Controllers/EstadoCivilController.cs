@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -44,6 +45,7 @@ namespace Maquillaje.WebUI.Controllers
         {
             try
             {
+                item.estacivi_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 var insertar = _gralService.InsertarEstadoCivil(item);
                 if(insertar == 0)
                 {
@@ -64,6 +66,7 @@ namespace Maquillaje.WebUI.Controllers
         {
             try
             {
+                item.estacivi_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 var Editar = _gralService.EditarEstadoCivil(item);
                 if (Editar == 0)
                 {

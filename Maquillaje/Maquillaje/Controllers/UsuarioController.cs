@@ -46,6 +46,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(UsuarioViewModel item)
         {
+            item.user_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var usuario = _mapper.Map<tbUsuarios>(item);
             var insertar = _acceService.InsertUsuario(usuario);
 
@@ -65,6 +66,7 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost]
         public IActionResult Edit(tbUsuarios usuarios)
         {
+            usuarios.user_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var result = 0;
             var usuario = _mapper.Map<tbUsuarios>(usuarios);
             result = _acceService.EditUsuario(usuario);

@@ -36,7 +36,7 @@ namespace Maquillaje.DataAccess.Repository
 
             var parametros = new DynamicParameters();
             parametros.Add("@estacivi_Nombre", item.estacivi_Nombre, DbType.String, ParameterDirection.Input);
-            parametros.Add("@estacivi_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@estacivi_UsuCreacion", item.estacivi_UsuCreacion, DbType.Int32, ParameterDirection.Input);
 
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_EstadosCiviles, parametros, commandType: CommandType.StoredProcedure);
@@ -55,7 +55,7 @@ namespace Maquillaje.DataAccess.Repository
             var parametros = new DynamicParameters();
             parametros.Add("@estacivi_Id", item.estacivi_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@estacivi_Nombre", item.estacivi_Nombre, DbType.String, ParameterDirection.Input);
-            parametros.Add("@estacivi_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@estacivi_UsuModificacion", item.estacivi_UsuModificacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_EstadosCiviles, parametros, commandType: CommandType.StoredProcedure);
         }

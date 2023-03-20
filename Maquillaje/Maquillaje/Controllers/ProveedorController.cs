@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_maqu_tbProveedores_VW item)
         {
+            item.prov_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var proveedor = _mapper.Map<VW_maqu_tbProveedores_VW>(item);
             var insertar = _maquService.InsertarProveedor(proveedor);
 
@@ -75,7 +77,7 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost("/Proveedor/Edit")]
         public IActionResult Edit(VW_maqu_tbProveedores_VW item)
         {
-
+            item.prov_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var editar = _maquService.EditarProveedor(item);
 
             if (editar == 1)

@@ -2,6 +2,7 @@
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost]
         public IActionResult Create(MetodoPagoViewModel item)
         {
+            item.meto_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var metodo = _mapper.Map<tbMetodosPago>(item);
             var insertar = _maquService.InsertMetodosPago(metodo);
 
@@ -65,6 +67,7 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost]
         public IActionResult Update(MetodoPagoViewModel item)
         {
+            item.meto_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var metodo = _mapper.Map<tbMetodosPago>(item);
             var update = _maquService.UpdateMetodosPago(metodo);
 

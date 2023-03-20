@@ -40,7 +40,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@cate_Id", item.cate_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@prov_Id", item.prov_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@prod_Stock", item.prod_Stock, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@prod_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_UsuCreacion", item.prod_UsuCreacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Productos, parametros, commandType: CommandType.StoredProcedure);
         }
@@ -62,7 +62,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@cate_Id", item.cate_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@prov_Id", item.prov_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@prod_Stock", item.prod_Stock, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@prod_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_UsuModificacion", item.prod_UsuModificacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Producto, parametros, commandType: CommandType.StoredProcedure);
         }

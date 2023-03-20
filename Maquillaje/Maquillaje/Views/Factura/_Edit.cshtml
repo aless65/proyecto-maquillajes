@@ -13,6 +13,7 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input asp-for="factdeta_Id" class="form-control" id="factdeta_IdEdit" name="factdeta_Id" hidden />
                             <input asp-for="fact_Id" class="form-control" id="fact_IdEdit" name="fact_Id" hidden />
+                            <input type="hidden" id="esEditar" asp-for="esEditar" />
                             <div class="form-group">
                                 <label asp-for="cate" class="control-label"></label>
                                 <select class="form-control" id="cateEditar" asp-for="cate" asp-items="ViewBag.cate">
@@ -77,9 +78,22 @@
                 console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
             });
 
-        $(document).ajaxComplete(function () {
+        //$(document).ajaxComplete(function () {
 
-        });
+        //});
+
+        $("#factdeta_CantidadEditar").on('input', function () {
+            $.getJSON('/Factura/RevisarStock', { id: $("#prodIdEditar").val(), cantidad: $("#factdeta_CantidadEditar").val() })
+                .done(function (stock) {
+                    if (stock == 0) {
+                        console.log(stock);
+                        MostrarMensajeWarning('Stock insuficiente');
+                    } 
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
+                });
+        })
     };
 
     $("#cateEditar").change(function () {
@@ -129,9 +143,18 @@
             $("#factdeta_CantidadEditError").attr('hidden', false);
         }
 
-        if (producto != "" && cantidad != "") {
-
-            $("#formEdit").submit();
+        if (producto != "" && cantidad != "" ) {
+            $.getJSON('/Factura/RevisarStock', { id: $("#prodIdEditar").val(), cantidad: $("#factdeta_CantidadEditar").val() })
+                .done(function (stock) {
+                    if (stock == 0) {
+                        MostrarMensajeWarning('Stock insuficiente');
+                    } else {
+                        $("#formEdit").submit();
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
+                });
         }
     }
 

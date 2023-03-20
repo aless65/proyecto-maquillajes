@@ -9,15 +9,22 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" id="sucu_Id_Edit"/>
+                        <input type="hidden" id="sucu_Id_Edit" asp-for="sucu_Id"/>
                         <div class="form-group col-6">
                             <label asp-for="sucu_Descripcion" class="control-label"></label>
                             <input asp-for="sucu_Descripcion" id="sucu_Descripcion_Edit" class="form-control" />
                             <label name="lbl_sucu_Descripcion_CreateError_Edit" id="lbl_sucu_Descripcion_CreateError_Edit" class="control-label" hidden style="color: red;">Este campo es requerido</label>
                         </div>
                         <div class="form-group col-6">
+                            <label asp-for="depa_Id" class="control-label"></label>
+                            <select asp-for="depa_Id" id="depa_Id_Edit" class="form-control" asp-items="ViewBag.depa_Id">
+                                <option value="">--Seleccione un departamento--</option>
+                            </select>
+                            <label name="lbl_depa_Id_CreateError" id="lbl_depa_Id_CreateError" class="control-label" hidden style="color: red;">Este campo es requerido</label>
+                        </div>
+                        <div class="form-group col-6 mt-3">
                             <label asp-for="muni_Id" class="control-label"></label>
-                            <select asp-for="muni_Id" id="muni_Id_Edit" class="form-control" asp-items="ViewBag.muni_Id">
+                            <select asp-for="muni_Id" id="muni_Id_Edit" class="form-control">
                                 <option value="">--Seleccione un municipio--</option>
                             </select>
                             <label name="lbl_muni_Id_CreateError_Edit" id="lbl_muni_Id_CreateError_Edit" class="control-label" hidden style="color: red;">Este campo es requerido</label>
@@ -40,28 +47,6 @@
 
 <script>
     function AbrirModalEdit(cadena) {
-        $('#sucu_Descripcion_Edit').on('input', function () {
-            var c = this.selectionStart,
-                r = /['^.,;"]/gi,
-                v = $(this).val();
-            if (r.test(v)) {
-                $(this).val(v.replace(r, ''));
-                c--;
-            }
-            this.setSelectionRange(c, c);
-        });
-
-        $('#sucu_DireccionExacta_Edit').on('input', function () {
-            var c = this.selectionStart,
-                r = /['^.,;"]/gi,
-                v = $(this).val();
-            if (r.test(v)) {
-                $(this).val(v.replace(r, ''));
-                c--;
-            }
-            this.setSelectionRange(c, c);
-        });
-
 
         var datastring = cadena;
         console.log(datastring);
@@ -72,9 +57,57 @@
         $("#lbl_sucu_DireccionExacta_CreateError_Edit").attr('hidden', true);
         $("#sucu_Id_Edit").val(data[0]);
         $("#sucu_Descripcion_Edit").val(data[1]);
-        $("#muni_Id_Edit").val(data[2]);
+        $("#depa_Id_Edit").val(data[4]);
         $("#sucu_DireccionExacta_Edit").val(data[3]);
         $("#EditarSucursal").appendTo('body').modal('show');
+
+        $.getJSON('/Cliente/CargarMunicipios', { id: data[4] })
+            .done(function (municipios) {
+                $("#muni_Id_Edit").prop("disabled", false);
+                var municipiosSelect = $('#muni_Id_Edit');
+                municipiosSelect.empty();
+                municipiosSelect.append($('<option>', {
+                    value: '',
+                    text: '--Selecciona un municipio--'
+                }));
+                $.each(municipios, function (index, item) {
+                    municipiosSelect.append($('<option>', {
+                        value: item.muni_id,
+                        text: item.muni_Nombre
+                    }));
+                    console.log(item.muni_Id)
+                });
+                $("#muni_Id_Edit").val(data[2]);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+            });
+
+        
+
+        $('#depa_Id_Edit').change(function () {
+            var departamentoId = $("#depa_Id_Edit").val();
+            $.getJSON('/Cliente/CargarMunicipios', { id: departamentoId })
+                .done(function (municipios) {
+                    $("#muni_Id_Edit").prop("disabled", false);
+                    var municipiosSelect = $('#muni_Id_Edit');
+                    municipiosSelect.empty();
+                    municipiosSelect.append($('<option>', {
+                        value: '',
+                        text: '--Selecciona un municipio--'
+                    }));
+                    $.each(municipios, function (index, item) {
+                        municipiosSelect.append($('<option>', {
+                            value: item.muni_id,
+                            text: item.muni_Nombre
+                        }));
+                        console.log(item.muni_Id)
+                    });
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
+                });
+        });
     };
 </script>
 

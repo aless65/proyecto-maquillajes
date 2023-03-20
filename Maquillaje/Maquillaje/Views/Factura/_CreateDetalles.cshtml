@@ -65,7 +65,6 @@
     //    sessionStorage.setItem('id', $("#fact_Id").val());
     //});
 
-
     $("#btnContinuar").click(function () {
 
         if (!($("#prod_Id").val() > 0)) {
@@ -83,7 +82,17 @@
         if ($("#prod_Id").val() > 0 && $("#factdeta_Cantidad").val() > 0) {
             $("#fact_Id").val(sessionStorage.getItem('id'));
 
-            $("#formCreateDetalles").submit();
+            $.getJSON('/Factura/RevisarStock', { id: $("#prod_Id").val(), cantidad: $("#factdeta_Cantidad").val() })
+                .done(function (stock) {
+                    if (stock == 0) {
+                        MostrarMensajeWarning('Stock insuficiente');
+                    } else {
+                        $("#formCreateDetalles").submit();
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
+                });
         }
     });
 
@@ -110,7 +119,20 @@
             });
     })
 
-    
+
+    $("#factdeta_Cantidad").on('input', function () {
+        $.getJSON('/Factura/RevisarStock', { id: $("#prod_Id").val(), cantidad: $("#factdeta_Cantidad").val() })
+            .done(function (stock) {
+                if (stock == 0) {
+                    console.log(stock);
+                    MostrarMensajeWarning('Stock insuficiente');
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar los productos: ' + textStatus + ', ' + errorThrown);
+            });
+    })
+
 
     $("#prod_Id").change(function () {
         var prod_Id = $("#prod_Id").val();

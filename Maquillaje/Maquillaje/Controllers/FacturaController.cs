@@ -27,7 +27,12 @@ namespace Maquillaje.WebUI.Controllers
         {
 
             var listado = _maquService.ListadoFacturas();
-            //var listadoMapeado = _mapper.Map<IEnumerable<VW_tbFacturas_List>>(listado);
+
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
 
             return View(listado);
         }
@@ -57,6 +62,12 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.fact_Id = item.fact_Id;
             ViewBag.esEditar = false;
 
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             return View(item2);
         }
 
@@ -84,6 +95,11 @@ namespace Maquillaje.WebUI.Controllers
             {
                 ViewBag.fact_Id = insertar;
             }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
 
             return View(item);
         }
@@ -93,21 +109,28 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Update(int id)
         {
             var factura = _maquService.ObtenerIDFactura(id);
+
             if(factura == null)
             {
                 return RedirectToAction("Index");
             }
+
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
             var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
             var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
             var detalles = _maquService.ListadoFacturasDetalles(id);
 
             ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
-            ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
+            ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", $"clie_Nombres");
             ViewBag.meto_Id = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
             ViewBag.detalles = detalles;
             ViewBag.fact_Id = id;
-            ViewBag.esEditar = true;
 
             return View(factura);
         }
@@ -118,6 +141,8 @@ namespace Maquillaje.WebUI.Controllers
         {
             if(item.fact_Id < 1)
             {
+                string script = "MostrarMensajeDanger('No se ha encontrado la factura');";
+                TempData["Script"] = script;
                 return RedirectToAction("Index");
             }
 
@@ -131,7 +156,7 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
             ViewBag.fact_Id = item.fact_Id;
             ViewBag.detalles = detalles;
-            ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", "clie_Nombres");
+            ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", $"clie_Nombres");
             ViewBag.meto_Id = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
 
             if(item.esEditar == "no")
@@ -172,21 +197,29 @@ namespace Maquillaje.WebUI.Controllers
             {
                 if (delete == 1)
                 {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                    TempData["Script"] = script;
                     return RedirectToAction("Create", item2);
                 }
                 else
                 {
-                    return RedirectToAction("Create");
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
+                    return RedirectToAction("Create", item2);
                 }
             }
             else
             {
                 if (delete == 1)
                 {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                    TempData["Script"] = script;
                     return RedirectToAction("Update", new { id = ViewBag.fact_Id });
                 }
                 else
                 {
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
                     return RedirectToAction("Update", new { id = ViewBag.fact_Id });
                 }
             }
@@ -208,6 +241,8 @@ namespace Maquillaje.WebUI.Controllers
             {
                 if (update == 1)
                 {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                    TempData["Script"] = script;
                     return RedirectToAction("Create", item);
                 }
                 else
@@ -219,12 +254,38 @@ namespace Maquillaje.WebUI.Controllers
             {
                 if (update == 1)
                 {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                    TempData["Script"] = script;
                     return RedirectToAction("Update", new { id = ViewBag.fact_Id }); 
                 }
                 else
                 {
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
                     return RedirectToAction("Update", new { id = ViewBag.fact_Id });
                 }
+            }
+        }
+
+        [HttpGet("/Factura/Details")]
+        public IActionResult Details(int id)
+        {
+            var listado = _maquService.ListadoFacturas();
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_tbFacturas_List>>(listado).Where(X => X.fact_Id == id);
+
+            //var ddldepartamentos = _gralService.ListadoDepartamentosView(out string error1);
+
+            //ViewBag.depa_Id = new SelectList(ddldepartamentos, "depa_Id", "depa_Nombre");
+
+            if (id < 1)
+            {
+                string script = $"MostrarMensajeDanger('No se ha encontrado esta factura');";
+                TempData["Script"] = script;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(listadoMapeado);
             }
         }
 
@@ -240,5 +301,10 @@ namespace Maquillaje.WebUI.Controllers
             return Json(precio);
         }
 
+        public IActionResult RevisarStock(int id, int cantidad)
+        {
+            var stock = _maquService.RevisarStock(id, cantidad);
+            return Json(stock);
+        }
     }
 }

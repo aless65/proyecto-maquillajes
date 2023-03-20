@@ -69,5 +69,16 @@ namespace Maquillaje.DataAccess.Repository
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Editar_FacturasDetalles, parametros, commandType: CommandType.StoredProcedure);
         }
+
+        public int RevisarStock(int id, int cantidad)
+        {
+            var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@prod_Stock", cantidad, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prod_Id", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.QueryFirst<int>(ScriptsDataBase.UDP_RevisarStock, parametros, commandType: CommandType.StoredProcedure);
+        }
     }
 }

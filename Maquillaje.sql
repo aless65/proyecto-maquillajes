@@ -1147,8 +1147,37 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Insert
     @sucu_UsuCreacion INT
 AS
 BEGIN
-    INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
-    VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
+
+	BEGIN TRY
+		
+		IF NOT EXISTS (SELECT * FROM maqu.tbSucursales
+						WHERE @sucu_Descripcion = sucu_Descripcion)
+		BEGIN
+			INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
+			VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM maqu.tbSucursales
+						WHERE @sucu_Descripcion = sucu_Descripcion
+							  AND sucu_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE maqu.tbSucursales
+				SET sucu_Estado = 1,
+					sucu_Descripcion = @sucu_Descripcion,
+					muni_Id = @muni_Id,
+					sucu_DireccionExacta = @sucu_DireccionExacta
+				WHERE sucu_Descripcion = @sucu_Descripcion
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
+
 END
 
 GO
@@ -1159,7 +1188,7 @@ EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 3','0501','Calle 6',1
 
 /*Editar Sucursal*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit 1, 'Sucursal 1', '0101', 'calle rara', 1
     @sucu_Id INT,
     @sucu_Descripcion NVARCHAR(200),
     @muni_Id CHAR(4),
@@ -1167,26 +1196,80 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
     @sucu_UsuModificacion INT
 AS
 BEGIN
-    UPDATE maqu.tbSucursales
-    SET sucu_Descripcion = @sucu_Descripcion,
-        muni_Id = @muni_Id,
-        sucu_DireccionExacta = @sucu_DireccionExacta,
-        sucu_UsuModificacion = @sucu_UsuModificacion,
-        sucu_FechaModificacion = GETDATE()
-    WHERE sucu_Id = @sucu_Id;
+
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM [maqu].tbSucursales
+							WHERE @sucu_Descripcion = sucu_Descripcion)
+			BEGIN	
+				UPDATE maqu.tbSucursales
+				SET sucu_Descripcion = @sucu_Descripcion,
+					muni_Id = @muni_Id,
+					sucu_DireccionExacta = @sucu_DireccionExacta,
+					sucu_UsuModificacion = @sucu_UsuModificacion,
+					sucu_FechaModificacion = GETDATE()
+				WHERE sucu_Id = @sucu_Id;
+
+				SELECT 1
+			END
+			ELSE IF EXISTS (SELECT * FROM [maqu].tbSucursales
+							WHERE @sucu_Descripcion = sucu_Descripcion
+								  AND sucu_Estado = 1
+								  AND sucu_Id != @sucu_Id)
+				SELECT 2
+			ELSE
+				BEGIN
+					UPDATE [maqu].tbSucursales
+					SET sucu_Estado = 1,
+						muni_Id = @muni_Id,
+						sucu_DireccionExacta = @sucu_DireccionExacta,
+						sucu_UsuModificacion = @sucu_UsuModificacion,
+						sucu_FechaModificacion = GETDATE()
+					WHERE sucu_Descripcion = @sucu_Descripcion
+
+					SELECT 1
+				END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
 END
 
 /*Eliminar Sucursal*/
 GO
 CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
-@sucu_Id INT
+	@sucu_Id INT
 AS
 BEGIN
-UPDATE maqu.tbSucursales 
-SET sucu_Estado = 0
-WHERE sucu_Id = @sucu_Id
+	BEGIN TRY
+		IF NOT EXISTS (SELECT * FROM [maqu].tbSucursales WHERE sucu_Id = @sucu_Id AND sucu_Estado = 1)
+			BEGIN
+				UPDATE [maqu].tbSucursales
+				SET sucu_Estado = 0
+				WHERE sucu_Id = @sucu_Id
+				
+				SELECT 1
+			END
+		ELSE
+			SELECT 2
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+
+	UPDATE maqu.tbSucursales 
+	SET sucu_Estado = 0
+	WHERE sucu_Id = @sucu_Id
 END
 
+/*DDL muni x sucursal*/
+--GO
+--CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_gral_tbMunicipios_DDL
+--	@sucu_Id INT
+--AS
+--BEGIN
+--	SELECT [muni_Id] 
+--	FROM [maqu].[tbSucursales] T1 INNER JOIN 
+--END
 
 --**************** CATEGORIAS ****************--
 /*Insertar categoria*/
@@ -1523,11 +1606,17 @@ AS
 			(T2.clie_Nombres + ' ' + t2.clie_Apellidos) AS clie_Nombres,
 			(T3.empe_Nombres + ' ' + T3.empe_Apellidos) AS empe_Nombres,
 			T4.meto_Nombre,
-			fact_Fecha
+			fact_Fecha,
+			T5.user_NombreUsuario AS user_UsuCreacion,
+			T6.user_NombreUsuario AS user_UsuModificacion,
+			fact_FechaCreacion,
+			fact_FechaModificacion
 	FROM [maqu].[tbFacturas] T1 INNER JOIN [maqu].[tbClientes] T2
 	ON T1.clie_Id = T2.clie_Id INNER JOIN [maqu].[tbEmpleados] T3
 	ON T1.empe_Id = T3.empe_Id INNER JOIN [maqu].[tbMetodosPago] T4
-	ON T1.meto_Id = T4.meto_Id
+	ON T1.meto_Id = T4.meto_Id INNER JOIN [acce].[tbUsuarios] T5
+	ON T1.fact_UsuCreacion = T5.user_Id LEFT JOIN [acce].[tbUsuarios] T6
+	ON T1.fact_UsuModificacion = t6.user_Id
 
 /*Insertar Factura*/
 GO
@@ -2215,3 +2304,32 @@ BEGIN
 
 END
 GO
+
+GO
+CREATE OR ALTER TRIGGER maqu.trg_StockAfterUpdate
+	ON [maqu].[tbFacturasDetalles]
+	AFTER UPDATE
+AS
+BEGIN
+	UPDATE [maqu].[tbProductos]
+	SET [prod_Stock] = [prod_Stock] + (SELECT factdeta_Cantidad FROM deleted)
+	WHERE prod_Id = (SELECT prod_Id FROM deleted)
+
+	UPDATE [maqu].[tbProductos]
+	SET [prod_Stock] = [prod_Stock] - (SELECT factdeta_Cantidad FROM inserted)
+	WHERE prod_Id = (SELECT prod_Id FROM inserted)
+END
+
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbFacturas_RevisarStock 
+	@prod_Stock	INT,
+	@prod_Id	INT
+AS
+BEGIN
+	DECLARE @stockRestante INT = (SELECT prod_Stock FROM maqu.tbProductos WHERE prod_Id = @prod_Id) - @prod_Stock
+
+	IF @stockRestante < 0
+		SELECT 0
+	ELSE
+		SELECT 1
+END

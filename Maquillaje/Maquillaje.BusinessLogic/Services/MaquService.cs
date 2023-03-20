@@ -392,6 +392,11 @@ namespace Maquillaje.BusinessLogic.Services
         {
             return _facturaDetalleRepository.Update(item);
         }
+
+        public int RevisarStock(int id, int cantidad)
+        {
+            return _facturaDetalleRepository.RevisarStock(id, cantidad);
+        }
         #endregion
 
         #region Producto

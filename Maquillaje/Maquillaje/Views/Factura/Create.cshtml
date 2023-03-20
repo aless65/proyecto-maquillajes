@@ -1,8 +1,12 @@
 ﻿@model Maquillaje.WebUI.Models.FacturaViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear factura";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    decimal subtotal = 0;
+    decimal IVA = 0;
+    decimal total = 0;
 }
 
 
@@ -65,24 +69,56 @@
                     <tbody>
                         @foreach (var detalle in ViewBag.detalles)
                         {
-                        <tr>
-                            <td>@detalle.fact_Id</td>
-                            <td>@detalle.prod_Nombre</td>
-                            <td>@detalle.factdeta_Cantidad</td>
-                            <td>@detalle.factdeta_Precio</td>
-                            <td>@detalle.factdeta_PrecioTotal</td>
-                            <td>
-                                <a onclick="AbrirModalEdit('@detalle.factdeta_Id,@detalle.prod_Id,@detalle.factdeta_Cantidad,@detalle.cate_Id,@detalle.fact_Id')" id="btnEditarDetalle" class="btn btn-warning">Editar</a> |
-                                <a onclick="eliminar(@detalle.factdeta_Id, @detalle.fact_Id)" id="btnEliminarDetalle" class="btn btn-danger">Borrar</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@detalle.fact_Id</td>
+                                <td>@detalle.prod_Nombre</td>
+                                <td>@detalle.factdeta_Cantidad</td>
+                                <td>@detalle.factdeta_Precio</td>
+                                <td>@detalle.factdeta_PrecioTotal</td>
+                                <td>
+                                    <a onclick="AbrirModalEdit('@detalle.factdeta_Id,@detalle.prod_Id,@detalle.factdeta_Cantidad,@detalle.cate_Id,@detalle.fact_Id')" id="btnEditarDetalle" class="btn btn-warning">Editar</a> |
+                                    <a onclick="eliminar(@detalle.factdeta_Id, @detalle.fact_Id)" id="btnEliminarDetalle" class="btn btn-danger">Borrar</a>
+                                </td>
+                            </tr>
+
+                            subtotal = detalle.factdeta_PrecioTotal + subtotal;
                         }
                     </tbody>
                 </table>
+
+                @{
+                    IVA = subtotal * 0.15M;
+                    total = subtotal + IVA;
+                }
+                <div class="row">
+                    <div class="col-4 d-flex justify-content-end">
+                        <br />
+                        <label>Subtotal:</label>
+                        <input class="form-control" disabled value="@subtotal" />
+                        <br />
+                        <label>IVA:</label>
+                        <input class="form-control" disabled value="@(Math.Round(IVA, 2))" />
+                        <br />
+                        <label>Total:</label>
+                        <input class="form-control" disabled value="@(Math.Round(total, 2))" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
+
 
 <script>
     $("#prod_Id").prop("disabled", true);

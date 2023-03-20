@@ -39,7 +39,7 @@
                         </td>
                         <td>
                             @*<a asp-action="Edit" asp-route-id="@item.user_Id" class="btn btn-warning">Editar</a> |*@
-                            <button class="btn btn-warning" onclick="AbrirModalEdit('@item.user_Id,@item.user_EsAdmin,@item.role_Id,@item.empe_Id')">Editar</button>
+                            <button class="btn btn-warning" onclick="AbrirModalEdit('@item.user_Id,@item.user_EsAdmin,@item.role_Id,@item.empe_Id')">Editar</button> |
                             <a asp-action="Details" asp-route-id="@item.user_Id" class="btn btn-dark">Detalles</a> |
                             <button class="btn btn-danger" onclick="eliminar(@item.user_Id)">Eliminar</button>
                         </td>

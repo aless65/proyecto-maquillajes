@@ -29,9 +29,15 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _maquService.ListadoSucursales();
             var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado);
-            var ddlmunicipios = _gralService.ListadoMunicipios(out string error);
+            var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
 
-            ViewBag.muni_Id = new SelectList(ddlmunicipios, "muni_id", "muni_Nombre");
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
+
             return View(listadoMapeado);
         }
 
@@ -54,15 +60,25 @@ namespace Maquillaje.WebUI.Controllers
             var sucursal = _mapper.Map<VW_maqu_tbSucursales_VW>(item);
             var insertar = _maquService.InsertarSucursal(sucursal);
 
-            try
-            {
-                if (insertar == 1)
-                    return RedirectToAction("Index");
-            }
-            catch
-            {
+            var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
 
+            if (insertar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
             }
+            else if (insertar == 2)
+            {
+                string script = "MostrarMensajeWarning('El registro ya existe'); AbrirModalCreate();";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -73,15 +89,26 @@ namespace Maquillaje.WebUI.Controllers
             var sucursal = _mapper.Map<VW_maqu_tbSucursales_VW>(item);
             var Editar = _maquService.EditarSucursal(sucursal);
 
-            try
-            {
-                if (Editar == 1)
-                    return RedirectToAction("Index");
-            }
-            catch
-            {
+            var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
+            ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
 
+            if (Editar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
             }
+            else if (Editar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.sucu_Id},{item.sucu_Descripcion},{item.muni_Id},{item.sucu_DireccionExacta}," +
+                                $"{item.depa_Id}') ";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -90,13 +117,21 @@ namespace Maquillaje.WebUI.Controllers
         {
             var Delete = _maquService.EliminarSucursal(id);
 
-            try
+
+            if (Delete == 1)
             {
-                if (Delete == 1)
-                    return RedirectToAction("Index");
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
             }
-            catch
+            else if (Delete == 2)
             {
+                string script = $"MostrarMensajeWarning('El registro no se puede eliminar porque está siendo utilizado);";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
             }
             return RedirectToAction("Index");
         }

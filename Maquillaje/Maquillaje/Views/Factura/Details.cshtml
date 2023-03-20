@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_tbFacturas_List>
+
+@{
+    ViewData["Title"] = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h1>Detalles</h1>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model)
+        {
+        <div class="row">
+            <div class="form-group col-6">
+                <h5>ID</h5>
+                @Html.DisplayFor(modelItem => item.fact_Id)
+            </div>
+
+            <div class="form-group col-6">
+                <h5>Cliente</h5>
+                @Html.DisplayFor(modelItem => item.clie_Nombres)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Empleado</h5>
+                @Html.DisplayFor(modelItem => item.empe_Nombres)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Método de Pago</h5>
+                @Html.DisplayFor(modelItem => item.meto_Nombre)
+            </div>
+
+            <div class="form-group col-6 mt-3">
+                <h5>Fecha</h5>
+                @Html.DisplayFor(modelItem => item.fact_Fecha)
+            </div>
+        </div>
+            <div class="form-group col-3 mt-3">
+                <a asp-action="Update" asp-route-id="@item.fact_Id" id="btnEditar" class="btn btn-warning">Editar</a>
+            </div>
+        }
+        <div style="height:20px"></div>
+        <div class="card">
+            <div class="card-header"><h2>Auditoria</h2></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Accion</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><label>Creacion</label></td>
+                            <td>@Html.DisplayFor(modelItem => item.user_UsuCreacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.fact_FechaCreacion)</td>
+                        </tr>
+                        <tr>
+                            <td>Modificacion</td>
+                            <td>@Html.DisplayFor(modelItem => item.user_UsuModificacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.fact_FechaModificacion)</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-dark">Regresar</a>
+
+</div>
+
+

@@ -44,7 +44,7 @@ namespace Maquillaje.DataAccess.Repository
             using var db = new SqlConnection(AndreasContext.ConnectionString);
 
             var parametros = new DynamicParameters();
-            parametros.Add("@sucu_Id", item.sucu_Id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@sucu_Id", item.sucu_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@sucu_Descripcion", item.sucu_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@muni_Id", item.muni_Id, DbType.String, ParameterDirection.Input);
             parametros.Add("@sucu_DireccionExacta", item.sucu_DireccionExacta, DbType.String, ParameterDirection.Input);

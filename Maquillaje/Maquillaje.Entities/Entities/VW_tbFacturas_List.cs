@@ -13,5 +13,9 @@ namespace Maquillaje.Entities.Entities
         public string empe_Nombres { get; set; }
         public string meto_Nombre { get; set; }
         public DateTime fact_Fecha { get; set; }
+        public string user_UsuCreacion { get; set; }
+        public string user_UsuModificacion { get; set; }
+        public DateTime fact_FechaCreacion { get; set; }
+        public DateTime fact_FechaModificacion { get; set; }
     }
 }

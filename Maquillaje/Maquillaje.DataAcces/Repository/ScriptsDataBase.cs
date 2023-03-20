@@ -86,6 +86,7 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Insertar_FacturasDetalles = "maqu.UDP_maqu_tbFacturasDetalles_Insert";
         public static string UDP_Editar_FacturasDetalles = "maqu.UDP_maqu_tbFacturasDetalles_Update";
         public static string UDP_Eliminar_FacturasDetalles = "maqu.UDP_maqu_tbFacturasDetalles_Delete";
+        public static string UDP_RevisarStock = "maqu.UDP_maqu_tbFacturas_RevisarStock";
         #endregion
 
         #region Productos

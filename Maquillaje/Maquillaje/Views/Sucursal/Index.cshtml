@@ -52,7 +52,7 @@
                             @Html.DisplayFor(modelItem => item.muni_Nombre)
                         </td>
                         <td>
-                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.sucu_Id,@item.sucu_Descripcion,@item.muni_Id,@item.sucu_DireccionExacta')">Editar</button> |
+                            <button type="button" id="btnEditar" class="btn btn-warning" onclick="AbrirModalEdit('@item.sucu_Id,@item.sucu_Descripcion,@item.muni_Id,@item.sucu_DireccionExacta,@item.depa_Id')">Editar</button> |
                             <a asp-action="Details" asp-route-id="@item.sucu_Id" class="btn btn-dark">Detalles</a> |
                             <button class="btn btn-danger" id="btnEliminar" onclick="eliminar(@item.sucu_Id)">Borrar</button>
                         </td>
@@ -69,3 +69,22 @@
 @Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_maqu_tbSucursales_VW())
 
 @Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_maqu_tbSucursales_VW())
+
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
+
+<script>
+    $(document).ready(function () {
+        $('#menuMaquillaje').addClass('active');
+        $('#sucursalesItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+    });
+</script>

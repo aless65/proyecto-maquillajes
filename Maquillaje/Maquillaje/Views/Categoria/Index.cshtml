@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Maquillaje.WebUI.Models.CategoriaViewModel>
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_maqu_tbCategorias_VW>
 
 @{
     ViewData["Title"] = "Index";
@@ -51,11 +51,11 @@
     </div>
 </div>
 
-@Html.Partial("_Modal_Create", new Maquillaje.WebUI.Models.CategoriaViewModel())
+@Html.Partial("_Modal_Create", new Maquillaje.Entities.Entities.VW_maqu_tbCategorias_VW())
 
-@Html.Partial("_Modal_Edit", new Maquillaje.WebUI.Models.CategoriaViewModel())
+@Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_maqu_tbCategorias_VW())
 
-@Html.Partial("_Modal_Delete", new Maquillaje.WebUI.Models.CategoriaViewModel())
+@Html.Partial("_Modal_Delete", new Maquillaje.Entities.Entities.VW_maqu_tbCategorias_VW())
 
 @if (ViewBag.Script != null)
 {
@@ -67,15 +67,7 @@
 
     ViewBag.Script = null;
 }
-
-<script>
-    $(document).ready(function () {
-        $('#menuMaquillaje').addClass('active');
-        $('#categoriasItem').addClass('active');
-        $('#subMenuMaquillaje').addClass('show');
-    });
-</script>
-
+<script src="~/js/app/maqu/Categorias.js"></script>
 
 
 

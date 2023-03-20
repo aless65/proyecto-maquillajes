@@ -2,6 +2,7 @@
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -76,6 +77,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(FacturaViewModel item, int prod_Id)
         {
+            item.fact_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var factura = _mapper.Map<tbFacturas>(item);
             var insertar = _maquService.InsertFacturas(factura);
 
@@ -139,7 +141,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateDetalles(FacturaDetalleViewModel item, FacturaViewModel item2, tbFacturas factura)
         {
-            if(item.fact_Id < 1)
+            if (item.fact_Id < 1)
             {
                 string script = "MostrarMensajeDanger('No se ha encontrado la factura');";
                 TempData["Script"] = script;

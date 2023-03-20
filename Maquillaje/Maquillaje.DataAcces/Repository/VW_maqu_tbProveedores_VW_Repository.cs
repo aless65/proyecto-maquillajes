@@ -28,7 +28,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@prov_Nombre", item.prov_Nombre, DbType.String, ParameterDirection.Input);
             parametros.Add("@prov_CorreoElectronico", item.prov_CorreoElectronico, DbType.String, ParameterDirection.Input);
             parametros.Add("@prov_Telefono", item.prov_Telefono, DbType.String, ParameterDirection.Input);
-            parametros.Add("@prov_UsuCreacion", 1, DbType.String, ParameterDirection.Input);
+            parametros.Add("@prov_UsuCreacion", item.prov_UsuCreacion, DbType.String, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Proveedores, parametros, commandType: CommandType.StoredProcedure);
         }
@@ -48,7 +48,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@prov_Nombre", item.prov_Nombre, DbType.String, ParameterDirection.Input);
             parametros.Add("@prov_CorreoElectronico", item.prov_CorreoElectronico, DbType.String, ParameterDirection.Input);
             parametros.Add("@prov_Telefono", item.prov_Telefono, DbType.String, ParameterDirection.Input);
-            parametros.Add("@prov_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@prov_UsuModificacion", item.prov_UsuModificacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Proveedor, parametros, commandType: CommandType.StoredProcedure);
         }

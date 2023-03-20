@@ -28,28 +28,4 @@
         </div>
     </form>
 </div>
-
-<script>
-    function AbrirModalCreate() {
-        $("#lbl_meto_NombreCreateError").attr('hidden', true);
-        $("#CrearMetodos").appendTo('body').modal('show');
-    };
-
-    function GuardarModalCreate() {
-        var meto_Nombre = $('#meto_Nombre').val();
-
-        $("#lbl_meto_NombreCreateError").attr('hidden', true);
-
-        if (meto_Nombre != "") {
-            $("#formCreate").submit();
-
-        } else {
-            $("#lbl_meto_NombreCreateError").attr('hidden', false);
-        }
-
-        //$.get('/MetodoPago/Create', function (data) {
-        //    $(data).appendTo('body');
-        //});
-    }
-</script>
-
+<script src="~/js/app/maqu/MetodosPago.js"></script>

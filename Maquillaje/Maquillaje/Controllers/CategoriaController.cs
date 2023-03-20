@@ -25,13 +25,12 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Categoria/Details")]
         public IActionResult Details(int id)
         {
-            var listado = _maquService.CategoriaDetails(id,out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<CategoriaViewModel>>(listado);
+            var listado = _maquService.CategoriaDetails(id,out string error).Where(X => X.cate_Id == id);
 
             if (String.IsNullOrEmpty(error))
                 ModelState.AddModelError("", error);
-
-            return View(listadoMapeado);
+         
+            return View(listado);
         }
 
 
@@ -39,7 +38,6 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Index()
         {
             var listado = _maquService.ListadoCategorias(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<CategoriaViewModel>>(listado);
 
             if (TempData["Script"] is string script)
             {
@@ -50,15 +48,15 @@ namespace Maquillaje.WebUI.Controllers
             //if (String.IsNullOrEmpty(error))
             //    ModelState.AddModelError("", error);
 
-            return View(listadoMapeado);
+            return View(listado);
         }
 
         [HttpPost("/Categorias/Create")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CategoriaViewModel item)
+        public IActionResult Create(VW_maqu_tbCategorias_VW item)
         {
-            var categoria = _mapper.Map<tbCategorias>(item);
-            var insertar = _maquService.InsertCategorias(categoria);
+            item.cate_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+            var insertar = _maquService.InsertCategorias(item);
 
             try
             {
@@ -87,11 +85,11 @@ namespace Maquillaje.WebUI.Controllers
         }
 
         [HttpPost("/Categoria/Edit")]
-        public IActionResult Edit(tbCategorias categorias)
+        public IActionResult Edit(VW_maqu_tbCategorias_VW categorias)
         {
+            categorias.cate_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var result = 0;
-            var categoria = _mapper.Map<tbCategorias>(categorias);
-            result = _maquService.EditCategorias(categoria);
+            result = _maquService.EditCategorias(categorias);
 
             if (result == 1)
             {
@@ -100,7 +98,7 @@ namespace Maquillaje.WebUI.Controllers
             }
             else if (result == 2)
             {
-                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{categoria.cate_Id},{categoria.cate_Nombre}');";
+                string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{categorias.cate_Id},{categorias.cate_Nombre}');";
                 TempData["Script"] = script;
             }
             else

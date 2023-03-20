@@ -1,4 +1,4 @@
-﻿@model Maquillaje.WebUI.Models.CategoriaViewModel
+﻿@model Maquillaje.Entities.Entities.VW_maqu_tbCategorias_VW
 
     <!-- Modal -->
     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -20,15 +20,4 @@
             </div>
         </form>
     </div>
-
-    <script>
-
-    function eliminar(id) {
-
-        $("#id").val(id);
-
-        $("#modalDelete").appendTo("body").modal('show');
-
-    }
-    </script>
 

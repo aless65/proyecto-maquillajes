@@ -28,7 +28,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@muni_Id", item.muni_id, DbType.String, ParameterDirection.Input);
             parametros.Add("@muni_Nombre", item.muni_Nombre, DbType.String, ParameterDirection.Input);
             parametros.Add("@depa_Id", item.depa_Id, DbType.String, ParameterDirection.Input);
-            parametros.Add("@muni_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@muni_UsuCreacion", item.muni_UsuCreacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Municipios, parametros, commandType: CommandType.StoredProcedure);
         }
@@ -47,7 +47,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@muni_Id", item.muni_id, DbType.String, ParameterDirection.Input);
             parametros.Add("@muni_Nombre", item.muni_Nombre, DbType.String, ParameterDirection.Input);
             parametros.Add("@depa_Id", item.depa_Id, DbType.String, ParameterDirection.Input);
-            parametros.Add("@muni_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@muni_UsuModificacion", item.muni_UsuModificacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Municipios, parametros, commandType: CommandType.StoredProcedure);
         }

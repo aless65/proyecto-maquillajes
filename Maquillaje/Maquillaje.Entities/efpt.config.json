@@ -94,6 +94,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[maqu].[VW_maqu_tbCategorias_VW]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[maqu].[VW_maqu_tbClientes_DDLMunicipios]",
          "ObjectType": 3
       },

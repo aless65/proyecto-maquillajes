@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -58,7 +59,13 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_gral_tbMunicipios_VW item)
         {
-            var insertar = _gralService.InsertarMunicipio(item);
+            try
+            {
+                item.muni_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+                var insertar = _gralService.InsertarMunicipio(item);
+            }
+            catch (Exception error)
+            {
 
             if (insertar == 1)
             {
@@ -82,7 +89,13 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost("/Municipio/Edit")]
         public IActionResult Edit(VW_gral_tbMunicipios_VW item)
         {
-            var editar = _gralService.EditarMunicipio(item);
+            try
+            {
+                item.muni_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+                var editar = _gralService.EditarMunicipio(item);
+            }
+            catch (Exception error)
+            {
 
             if (editar == 1)
             {

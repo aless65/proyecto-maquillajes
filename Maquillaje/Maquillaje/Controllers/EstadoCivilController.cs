@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -49,6 +50,18 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(VW_gral_tbEstadosCiviles_VW item)
         {
+            try
+            {
+                item.estacivi_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+                var insertar = _gralService.InsertarEstadoCivil(item);
+                if(insertar == 0)
+                {
+                    //Validacion Pendiente
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception error)
+            {
 
             var insertar = _gralService.InsertarEstadoCivil(item);
 
@@ -74,6 +87,14 @@ namespace Maquillaje.WebUI.Controllers
         [HttpPost("/EstadoCivil/Edit")]
         public IActionResult Edit(VW_gral_tbEstadosCiviles_VW item)
         {
+            try
+            {
+                item.estacivi_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+                var Editar = _gralService.EditarEstadoCivil(item);
+
+            }
+            catch (Exception error)
+            {
 
             var Editar = _gralService.EditarEstadoCivil(item);
 

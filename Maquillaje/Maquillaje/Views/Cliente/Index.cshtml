@@ -98,22 +98,4 @@
 
     ViewBag.Script = null;
 }
-
-<script>
-
-    sessionStorage.clear();
-
-    $(document).ready(function () {
-        $('#menuMaquillaje').addClass('active');
-        $('#clientesItem').addClass('active');
-        $('#subMenuMaquillaje').addClass('show');
-    });
-
-    function eliminar(id) {
-
-        $("#id").val(id);
-
-        $("#modalEditar").appendTo("body").modal('show');
-
-    }
-</script>
+<script src="~/js/app/maqu/Clientes.js"></script>

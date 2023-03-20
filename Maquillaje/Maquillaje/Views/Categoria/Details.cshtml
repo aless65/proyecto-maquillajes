@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Maquillaje.WebUI.Models.CategoriaViewModel>
+﻿@model IEnumerable<Maquillaje.Entities.Entities.VW_maqu_tbCategorias_VW>
 
 @{
     ViewData["Title"] = "Details";
@@ -44,15 +44,14 @@
                     {
                         <tr>
                             <td><label>Creacion</label></td>
-                            <td>@Html.DisplayFor(modelItem => item.cate_UsuCreacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.cate_UsuCreacion_Nombre)</td>
                             <td>@Html.DisplayFor(modelItem => item.cate_FechaCreacion)</td>
                         </tr>
                         <tr>
                             <td>Modificacion</td>
-                            <td>@Html.DisplayFor(modelItem => item.cate_UsuModificacion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.cate_UsuModificacion_Nombre)</td>
                             <td>@Html.DisplayFor(modelItem => item.cate_FechaModificacion)</td>
                         </tr>
-
                     }
                 </tbody>
             </table>
@@ -62,5 +61,6 @@
 
 </div>
 
-@Html.Partial("_Modal_Edit", new Maquillaje.WebUI.Models.CategoriaViewModel())
+@Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_maqu_tbCategorias_VW())
 
+<script src="~/js/app/maqu/Categorias.js"></script>

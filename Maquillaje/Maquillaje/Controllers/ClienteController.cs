@@ -2,6 +2,7 @@
 using Maquillaje.BusinessLogic.Services;
 using Maquillaje.Entities.Entities;
 using Maquillaje.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -53,6 +54,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(ClienteViewModel item)
         {
+            item.clie_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var listado = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
@@ -95,6 +97,7 @@ namespace Maquillaje.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(tbClientes item)
         {
+            item.clie_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
             var update = _maquService.UpdateClientes(item);
 
             var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
@@ -159,7 +162,7 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Details(int id)
         {
             var listado = _maquService.DetailsClientes(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbClientes_VW>>(listado);
+            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbClientes_VW>>(listado).Where(X => X.clie_Id == id);
 
             return View(listadoMapeado);
         }

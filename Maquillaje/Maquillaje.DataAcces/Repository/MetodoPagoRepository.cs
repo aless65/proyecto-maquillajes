@@ -42,7 +42,7 @@ namespace Maquillaje.DataAccess.Repository
 
             var parametros = new DynamicParameters();
             parametros.Add("@meto_Nombre", item.meto_Nombre, DbType.String, ParameterDirection.Input);
-            parametros.Add("@meto_UsuCreacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@meto_UsuCreacion", item.meto_UsuCreacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Insertar_MetodosPago, parametros, commandType: CommandType.StoredProcedure);
         }
@@ -61,7 +61,7 @@ namespace Maquillaje.DataAccess.Repository
             var parametros = new DynamicParameters();
             parametros.Add("@meto_Id", item.meto_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@meto_Nombre", item.meto_Nombre, DbType.String, ParameterDirection.Input);
-            parametros.Add("@meto_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@meto_UsuModificacion",item.meto_UsuModificacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Editar_MetodosPago, parametros, commandType: CommandType.StoredProcedure);
         }

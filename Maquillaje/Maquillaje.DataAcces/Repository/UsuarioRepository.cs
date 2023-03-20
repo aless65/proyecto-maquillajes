@@ -45,7 +45,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@user_EsAdmin", item.user_EsAdmin, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@role_Id", item.role_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@user_UsuCreacion",1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@user_UsuCreacion",item.user_UsuCreacion, DbType.Int32, ParameterDirection.Input);
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Insertar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
         }
 
@@ -72,7 +72,7 @@ namespace Maquillaje.DataAccess.Repository
             parametros.Add("@user_EsAdmin", item.user_EsAdmin, DbType.Boolean, ParameterDirection.Input);
             parametros.Add("@role_Id", item.role_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@user_UsuModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@user_UsuModificacion", item.user_UsuModificacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Editar_Usuarios, parametros, commandType: CommandType.StoredProcedure);
         }

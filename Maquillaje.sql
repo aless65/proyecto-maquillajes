@@ -717,7 +717,7 @@ END
 
 /*Eliminar Sucursal*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete 
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
     @sucu_Id INT
 AS
 BEGIN
@@ -1549,6 +1549,27 @@ END
 --END
 
 --**************** CATEGORIAS ****************--
+SELECT * FROM maqu.tbCategorias
+/*Vista Categoria*/
+GO
+CREATE OR ALTER VIEW maqu.VW_maqu_tbCategorias_VW
+AS
+SELECT cate_Id, cate_Nombre, 
+cate_UsuCreacion,[user1].user_NombreUsuario AS cate_UsuCreacion_Nombre, cate_FechaCreacion, 
+cate_UsuModificacion,[user2].user_NombreUsuario AS cate_UsuModificacion_Nombre, cate_FechaModificacion, 
+cate_Estado
+FROM maqu.tbCategorias cate INNER JOIN acce.tbUsuarios [user1]
+ON cate.cate_UsuCreacion = [user1].user_Id LEFT JOIN acce.tbUsuarios [user2]
+ON cate.cate_UsuModificacion = [user2].user_Id
+WHERE cate.cate_Estado = 1
+
+/*Vista Categorias UDP*/
+GO
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbCategorias_VW
+AS
+BEGIN
+SELECT * FROM maqu.VW_maqu_tbCategorias_VW
+END
 /*Insertar categoria*/
 GO
 CREATE OR ALTER PROCEDURE UDP_maqu_tbCategorias_INSERT 
@@ -2489,7 +2510,26 @@ LEFT JOIN acce.tbUsuarios t5
 ON t1.user_UsuModificacion = t5.user_Id
 
 --************INICIAR SESIÓN******************--
-
+/*Cambiar Contrasena*/
+GO
+CREATE OR ALTER PROCEDURE UDP_RecuperarContrasena
+	@user_NombreUsuario	NVARCHAR(100),
+	@user_Contrasena	NVARCHAR(100)
+AS
+BEGIN
+	DECLARE @user_ContrasenaEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @user_Contrasena)
+	IF EXISTS (SELECT user_NombreUsuario FROM acce.tbUsuarios WHERE user_NombreUsuario = @user_NombreUsuario)
+	BEGIN
+	UPDATE acce.tbUsuarios 
+	SET user_Contrasena = @user_ContrasenaEncript
+	WHERE user_NombreUsuario = @user_NombreUsuario
+	SELECT 1
+	END
+	ELSE
+	BEGIN
+	SELECT 0
+	END
+END
 
 /*Login*/
 GO

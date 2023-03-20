@@ -28,42 +28,4 @@
         </div>
     </form>
 </div>
-
-<script>
-    function AbrirModalEdit(cadena) {
-        var datastring = cadena;
-        console.log(datastring);
-        var data = datastring.split(',');
-        $("#meto_Id_Edit").val(data[0]);
-        $("#meto_Nombre_Edit").val(data[1]);
-        $("#lbl_meto_NombreEditError").attr('hidden', true);
-        $("#EditarMetodos").appendTo('body').modal('show');
-
-    };
-
-    function GuardarModalEdit() {
-        var meto_Nombre = $('#meto_Nombre_Edit').val();
-
-        $("#lbl_meto_NombreEditError").attr('hidden', true);
-
-        if (meto_Nombre != "") {
-            $("#formEdit").submit();
-            console.log("Mi loco no esta vacio")
-        } else {
-            $("#lbl_meto_NombreEditError").attr('hidden', false);
-            console.log("Mi loco si esta vacio")
-        }
-
-    }
-
-    //$.ajax({
-    //    type: "POST",
-    //    url: "/MetodoPago/Create",
-    //    success: function (result) {
-    //        console.log(result);
-    //    },
-    //    error: function (xhr, status, error) {
-    //        console.log(error);
-    //    }
-    //});
-</script>
+<script src="~/js/app/maqu/MetodosPago.js"></script>

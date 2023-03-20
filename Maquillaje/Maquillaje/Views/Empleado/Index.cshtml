@@ -94,41 +94,4 @@
         </div>
     </form>
 </div>
-
-@{ 
-    <script>
-        $(document).ready(function () {
-            $.getJSON('/Usuario/RolesPantalla', { role_Id: empe_Id })
-                .done(function (municipios) {
-                    $.each(municipios, function (index, item) {
-                        $("#muni_Id").val(item.muni_id);
-                        console.log("seleccionar muni");
-                        console.log(item.muni_id);
-                    });
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    console.error('Error al cargar los municipios: ' + textStatus + ', ' + errorThrown);
-                });
-        });
-    </script>
-}
-
-<script>
-
-    sessionStorage.clear();
-
-    $(document).ready(function () {
-        $('#menuMaquillaje').addClass('active');
-        $('#empleadosItem').addClass('active');
-        $('#subMenuMaquillaje').addClass('show');
-    });
-
-    function eliminar(id) {
-
-        $("#id").val(id);
-
-        $("#modalDelete").appendTo("body").modal('show');
-
-    }
-</script>
-
+<script src="~/js/app/maqu/Empleados.js"></script>

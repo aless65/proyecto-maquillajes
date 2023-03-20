@@ -56,6 +56,7 @@ using System.Linq;
             public int? empe_UsuModificacion { get; set; }
             public DateTime? empe_FechaModificacion { get; set; }
             public bool? empe_Estado { get; set; }
+            public int sucu_Id { get; set; }
 
             public virtual tbUsuarios empe_UsuCreacionNavigation { get; set; }
             public virtual tbUsuarios empe_UsuModificacionNavigation { get; set; }

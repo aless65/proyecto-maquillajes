@@ -45,6 +45,10 @@ namespace Maquillaje.WebUI.Controllers
 
             var listadoEstadosCiviles = _gralService.ListadoEstadosCiviles(out string error1).ToList();
             ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
+            var listadoSucursales = _maquService.ListadoSucursales();
+            ViewBag.sucu_Id = new SelectList(listadoSucursales, "sucu_Id", "sucu_Descripcion");
+
+
             return View();
         }
 
@@ -59,6 +63,8 @@ namespace Maquillaje.WebUI.Controllers
 
             var listadoEstadosCiviles = _gralService.ListadoEstadosCiviles(out string error1).ToList();
             ViewBag.estacivi_Id = new SelectList(listadoEstadosCiviles, "estacivi_Id", "estacivi_Nombre");
+            var listadoSucursales = _maquService.ListadoSucursales();
+            ViewBag.sucu_Id = new SelectList(listadoSucursales, "sucu_Id", "sucu_Descripcion");
 
             var empleado = _mapper.Map<tbEmpleados>(item);
             var insertar = _maquService.InsertEmpleado(empleado);
@@ -87,6 +93,9 @@ namespace Maquillaje.WebUI.Controllers
             var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
 
+            var listadoSucursales = _maquService.ListadoSucursales();
+            ViewBag.sucu_Id = new SelectList(listadoSucursales, "sucu_Id", "sucu_Descripcion");
+
             if (listado != null)
             {
                 return View(listado);
@@ -109,6 +118,8 @@ namespace Maquillaje.WebUI.Controllers
 
             var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
+            var listadoSucursales = _maquService.ListadoSucursales();
+            ViewBag.sucu_Id = new SelectList(listadoSucursales, "sucu_Id", "sucu_Descripcion");
 
             if (update == 1)
             {

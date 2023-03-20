@@ -151,7 +151,7 @@ namespace Maquillaje.BusinessLogic.Services
         {
             try
             {
-                return _empleadoRepository.find(id);
+                return _empleadoRepository.findprocedure(id);
             }
             catch
             {
@@ -163,29 +163,10 @@ namespace Maquillaje.BusinessLogic.Services
         {
             try
             {
-                var empleadoExistente = _empleadoRepository.find(empleado.empe_Id);
-
-                if (empleadoExistente == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    empleadoExistente.empe_Nombres = empleado.empe_Nombres;
-                    empleadoExistente.empe_Apellidos = empleado.empe_Apellidos;
-                    empleadoExistente.empe_Identidad = empleado.empe_Identidad;
-                    empleadoExistente.empe_Sexo = empleado.empe_Sexo;
-                    empleadoExistente.muni_Id = empleado.muni_Id;
-                    empleadoExistente.empe_FechaNacimiento = empleado.empe_FechaNacimiento;
-                    empleadoExistente.empe_Telefono = empleado.empe_Telefono;
-                    empleadoExistente.empe_CorreoElectronico = empleado.empe_CorreoElectronico;
-                    empleadoExistente.estacivi_Id = empleado.estacivi_Id;
-                    empleadoExistente.empe_Direccion = empleado.empe_Direccion;
-
-                    return _empleadoRepository.Update(empleadoExistente); ;
-                }
+                var empleadoExistente = _empleadoRepository.Update(empleado);
+                return 1;
             }
-            catch
+            catch(Exception error)
             {
                 return 0;
             }

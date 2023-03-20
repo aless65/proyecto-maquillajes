@@ -35,6 +35,19 @@ namespace Maquillaje.BusinessLogic.Services
             }
         }
 
+        public IEnumerable<VW_acce_tbUsuarios_View> Login(string usuario, string contrasena)
+        {
+  
+            try
+            {
+                return _VW_acce_tbUsuarios_View_Repository.Login(usuario,contrasena);
+            }
+            catch (Exception e)
+            {    
+                return Enumerable.Empty<VW_acce_tbUsuarios_View>();
+            }
+        }
+
         public int InsertUsuario(tbUsuarios tbUsuarios)
         {
             return _usuarioRepository.Insert(tbUsuarios);

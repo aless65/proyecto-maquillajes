@@ -63,6 +63,12 @@
                     <select id="muni_Id" name="muni_Id" class="form-control"></select>
                 </div>
                 <div class="form-group col-6 mt-3">
+                    <label asp-for="sucu_Id" class="control-label">Sucursal</label>
+                    <select asp-for="sucu_Id" id="sucu_Id" name="sucu_Id" class="form-control" asp-items="ViewBag.sucu_Id">
+                        <option>--Seleccione una opcion--</option>
+                    </select>
+                </div>
+                <div class="form-group col-6 mt-3">
                     <label asp-for="empe_Direccion" class="control-label"></label>
                     <input asp-for="empe_Direccion" class="form-control" />
                     <span asp-validation-for="empe_Direccion" class="text-danger"></span>
@@ -78,7 +84,7 @@
                     <span asp-validation-for="empe_CorreoElectronico" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-3">
-                    <input type="submit" value="Crear" class="btn btn-success" id="btnGuardar"/>
+                    <input type="submit" value="Crear" class="btn btn-success" id="btnGuardar" />
                 </div>
             </div>
         </form>

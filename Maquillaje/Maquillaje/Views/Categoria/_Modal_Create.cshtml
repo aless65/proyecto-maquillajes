@@ -30,26 +30,3 @@
 </div>
 
 
-<script>
-    function AbrirModalCreate() {
-        $("#lbl_cate_NombreCreateError").attr('hidden', true);
-        $("#CrearCategorias").appendTo('body').modal('show');
-    };
-</script>
-
-<script>
-    function GuardarModalCreate() {
-        var cate_Nombre = $('#cate_Nombre').val();
-
-        $("#lbl_cate_NombreCreateError").attr('hidden', true);
-
-        if (cate_Nombre != "") {
-            $("#formCreate").submit();
-      
-        } else {
-            $("#lbl_cate_NombreCreateError").attr('hidden', false);
-        }
-    }
-</script>
-
-

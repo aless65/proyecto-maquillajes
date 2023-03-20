@@ -12,10 +12,19 @@
     <Folder Include="wwwroot\js\app\General\" />
     <Folder Include="wwwroot\js\app\Acceso\" />
     <Folder Include="wwwroot\js\app\Maquillaje\" />
+    <Folder Include="wwwroot\js\app\gral\" />
     <Folder Include="wwwroot\vendors\bootstrap-table\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Factura\Create.cshtml" />
+    <None Include="Views\Factura\Details.cshtml" />
+    <None Include="Views\Factura\Index.cshtml" />
+    <None Include="Views\Factura\Update.cshtml" />
+    <None Include="Views\Factura\_CreateDetalles.cshtml" />
+    <None Include="Views\Factura\_Delete.cshtml" />
+    <None Include="Views\Factura\_Edit.cshtml" />
+    <None Include="Views\Factura\_IndexDetalles.cshtml" />
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 

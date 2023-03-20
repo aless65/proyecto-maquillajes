@@ -37,4 +37,3 @@ C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entit
 C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\obj\Debug\netcoreapp3.1\Maquillaje.Entities.csproj.CoreCompileInputs.cache
 C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\obj\Debug\netcoreapp3.1\Maquillaje.Entities.dll
 C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\obj\Debug\netcoreapp3.1\Maquillaje.Entities.pdb
-C:\Users\Chris\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje.Entities\obj\Debug\netcoreapp3.1\Maquillaje.Entities.csproj.AssemblyReference.cache

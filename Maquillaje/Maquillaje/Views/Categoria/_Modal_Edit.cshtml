@@ -29,29 +29,3 @@
     </form>
 </div>
 
-<script>
-    function AbrirModalEdit(cadena) {
-        var datastring = cadena;
-        console.log(datastring);
-        var data = datastring.split(',');
-        $("#cate_Id_Edit").val(data[0]);
-        $("#cate_Nombre_Edit").val(data[1]);
-        $("#lbl_cate_NombreEditError").attr('hidden', true);
-        $("#EditarCategorias").appendTo('body').modal('show');
-    };
-</script>
-
-<script>
-    function GuardarModalEdit() {
-        var cate_Nombre = $('#cate_Nombre_Edit').val();
-
-        $("#lbl_cate_NombreEditError").attr('hidden', true);
-
-        if (cate_Nombre != "") {
-            $("#formEdit").submit();
-        } else {
-            $("#lbl_cate_NombreEditError").attr('hidden', false);
-        }
-
-    }
-</script>

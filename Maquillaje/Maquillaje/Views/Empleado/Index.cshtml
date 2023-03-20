@@ -89,23 +89,4 @@
         </div>
     </form>
 </div>
-
-<script>
-
-    sessionStorage.clear();
-
-    $(document).ready(function () {
-        $('#menuMaquillaje').addClass('active');
-        $('#empleadosItem').addClass('active');
-        $('#subMenuMaquillaje').addClass('show');
-    });
-
-    function eliminar(id) {
-
-        $("#id").val(id);
-
-        $("#modalDelete").appendTo("body").modal('show');
-
-    }
-</script>
-
+<script src="~/js/app/maqu/Empleados.js"></script>

@@ -164,7 +164,7 @@ namespace Maquillaje.BusinessLogic.Services
             try
             {
                 var empleadoExistente = _empleadoRepository.Update(empleado);
-                return 1;
+                return _empleadoRepository.Update(empleado); ;
             }
             catch(Exception error)
             {
@@ -179,7 +179,14 @@ namespace Maquillaje.BusinessLogic.Services
 
         public int DeleteEmpleado(int id)
         {
-            return _empleadoRepository.DeleteConfirmed(id);
+            try
+            {
+                return _empleadoRepository.DeleteConfirmed(id);
+            }
+            catch(Exception error)
+            {
+                return 0;
+            }
         }
 
         #endregion

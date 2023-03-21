@@ -22,7 +22,7 @@ namespace Maquillaje.DataAccess.Repository
 
             parametros.Add("@empe_Id", id, DbType.Int32, ParameterDirection.Input);
 
-            return db.QueryFirst<int>(ScriptsDataBase.UDP_Eliminar_Empleado, parametros, commandType: CommandType.StoredProcedure);
+            return db.QueryFirstOrDefault<int>(ScriptsDataBase.UDP_Eliminar_Empleado, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public tbEmpleados findprocedure(int? id)

@@ -174,6 +174,7 @@ namespace Maquillaje.WebUI.Controllers
             }
         }
 
+
         public IActionResult RolesPantalla(int role_Id, bool esAdmin, int pant_Id)
         {
             var accesopantalla = _acceService.RolesPantalla(role_Id, esAdmin, pant_Id);

@@ -830,6 +830,8 @@ CREATE OR ALTER PROCEDURE maqu.UPD_maqu_tbEmpleados_Insert
 AS
 BEGIN
 	BEGIN TRY
+	IF NOT EXISTS (SELECT empe_Identidad FROM maqu.tbEmpleados WHERE empe_Identidad = @empe_Identidad)
+	BEGIN 
 		INSERT INTO maqu.tbEmpleados(empe_Nombres, empe_Apellidos, 
 									empe_Identidad, empe_FechaNacimiento, 
 									empe_Sexo, estacivi_Id, muni_Id,sucu_Id, 
@@ -842,6 +844,28 @@ BEGIN
 				@empe_Telefono,@empe_CorreoElectronico,
 				@empe_UsuCreacion)
 		SELECT 1
+		END
+		ELSE IF EXISTS(SELECT * FROM maqu.tbEmpleados WHERE empe_Identidad = @empe_Identidad AND empe_Estado =1)
+		SELECT 2
+			ELSE
+		BEGIN
+		UPDATE tbEmpleados 
+		SET empe_Nombres = @empe_Nombres,
+		empe_Apellidos = @empe_Apellidos,
+		empe_Identidad = @empe_Identidad,
+		empe_FechaNacimiento = @empe_FechaNacimiento,
+		empe_Sexo = @empe_Sexo,
+		estacivi_Id  = @estacivi_Id,
+		muni_Id = @muni_Id,
+		sucu_Id = @sucu_Id,
+		empe_Direccion = @empe_Direccion,
+		empe_Telefono = @empe_Telefono,
+		empe_CorreoElectronico = @empe_CorreoElectronico,
+		empe_UsuCreacion = @empe_UsuCreacion
+		WHERE empe_Identidad = @empe_Identidad
+
+		SELECT 1
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -867,6 +891,8 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Update
 AS
 BEGIN
     BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM maqu.tbEmpleados WHERE empe_Identidad = @empe_Identidad)
+	BEGIN
         UPDATE maqu.tbEmpleados
         SET     empe_Nombres = @empe_Nombres,
                 empe_Apellidos = @empe_Apellidos,
@@ -881,8 +907,28 @@ BEGIN
                 empe_UsuModificacion = @empe_usuModificacion,
                 empe_FechaModificacion = GETDATE()
         WHERE   empe_Id = @empe_Id
-
         SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM maqu.tbEmpleados WHERE empe_Identidad = @empe_Identidad AND empe_Id != @empe_Id AND empe_Estado = 1)
+		SELECT 2
+		ELSE
+		BEGIN
+  UPDATE maqu.tbEmpleados
+        SET     empe_Nombres = @empe_Nombres,
+                empe_Apellidos = @empe_Apellidos,
+                empe_Identidad = @empe_Identidad,
+                empe_FechaNacimiento = @empe_FechaNacimiento,
+                empe_Sexo = @empe_Sexo,
+                estacivi_Id = @estacivi_Id,
+                muni_Id = @muni_Id,
+				sucu_Id = @sucu_Id,
+                empe_Telefono = @empe_Telefono,
+                empe_CorreoElectronico = @empe_CorreoElectronico,
+                empe_UsuModificacion = @empe_usuModificacion,
+                empe_FechaModificacion = GETDATE()
+        WHERE   empe_Id = @empe_Id
+        SELECT 1
+		END
     END TRY
     BEGIN CATCH
         SELECT 0
@@ -898,11 +944,22 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Delete
 AS
 BEGIN
 	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM maqu.tbEmpleados WHERE empe_Id = @empe_Id)
+	BEGIN
+	SELECT 0
+	END
+	ELSE 
+	IF NOT EXISTS(SELECT * FROM maqu.tbFacturas WHERE empe_Id = @empe_Id AND fact_Estado = 1)
+	BEGIN
 		UPDATE maqu.tbEmpleados
 		SET 	empe_Estado = 0
 		WHERE 	empe_Id = @empe_Id
-
 		SELECT 1
+		END
+		ELSE
+		BEGIN
+		SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1859,7 +1916,6 @@ BEGIN
 						clie_UsuModificacion = @clie_UsuModificacion,
 						clie_FechaModificacion = GETDATE()
 				WHERE   clie_Id = @clie_Id	
-
 			SELECT 1
 		END
 		ELSE IF EXISTS (SELECT * FROM [maqu].[tbClientes]
@@ -1959,7 +2015,7 @@ AS
 			(T2.clie_Nombres + ' ' + t2.clie_Apellidos) AS clie_Nombres,
 			(T3.empe_Nombres + ' ' + T3.empe_Apellidos) AS empe_Nombres,
 			T4.meto_Nombre,
-			fact_Fecha,
+			fact_Fecha,t3.sucu_Id,
 			T5.user_NombreUsuario AS user_UsuCreacion,
 			T6.user_NombreUsuario AS user_UsuModificacion,
 			fact_FechaCreacion,
@@ -1969,7 +2025,8 @@ AS
 	ON T1.empe_Id = T3.empe_Id INNER JOIN [maqu].[tbMetodosPago] T4
 	ON T1.meto_Id = T4.meto_Id INNER JOIN [acce].[tbUsuarios] T5
 	ON T1.fact_UsuCreacion = T5.user_Id LEFT JOIN [acce].[tbUsuarios] T6
-	ON T1.fact_UsuModificacion = t6.user_Id
+	ON T1.fact_UsuModificacion = t6.user_Id INNER JOIN maqu.tbSucursales sucu
+	ON t3.sucu_Id =  sucu.sucu_Id
 
 /*Insertar Factura*/
 GO
@@ -2556,8 +2613,8 @@ SELECT t1.user_Id, t1.user_NombreUsuario,
 t1.user_Contrasena, t1.user_EsAdmin, 
 t1.role_Id,t2.role_Nombre, t1.empe_Id,(SELECT t3.empe_Nombres + ' '+ empe_Apellidos) AS empe_NombreCompleto, 
 t1.user_UsuCreacion, t4.user_NombreUsuario AS user_UsuCreacion_Nombre,t1.user_FechaCreacion, 
-t1.user_UsuModificacion,t5.user_NombreUsuario AS user_UsuModificacion_Nombre, t1.user_FechaModificacion, 
-t1.user_Estado FROM acce.tbUsuarios t1 INNER JOIN acce.tbRoles t2
+t1.user_UsuModificacion,t5.user_NombreUsuario AS user_UsuModificacion_Nombre, t1.user_FechaModificacion,
+t1.user_Estado,sucu_Id FROM acce.tbUsuarios t1 INNER JOIN acce.tbRoles t2
 ON t1.role_Id = t2.role_Id
 INNER JOIN maqu.tbEmpleados t3
 ON t3.empe_Id = t1.empe_Id 
@@ -2597,9 +2654,9 @@ AS
 BEGIN
 	DECLARE @user_ContrasenaEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @user_Contrasena)
 
-	SELECT user_NombreUsuario,[empe_Nombres], [empe_Apellidos], [role_Id], [user_id],user_EsAdmin,t1.empe_Id
+	SELECT user_NombreUsuario,[empe_Nombres], [empe_Apellidos], [role_Id], [user_id],user_EsAdmin,t1.empe_Id,sucu_Id
 	FROM [acce].[tbUsuarios] T1 INNER JOIN [maqu].[tbEmpleados] T2
-	ON T1.empe_Id = T2.empe_Id
+	ON T1.empe_Id = T2.empe_Id 
 	WHERE [user_NombreUsuario] = @user_NombreUsuario
 	AND [user_Contrasena] = @user_ContrasenaEncript
 END

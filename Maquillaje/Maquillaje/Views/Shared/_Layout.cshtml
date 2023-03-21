@@ -35,11 +35,10 @@
 <body class="jumping">
     @using Microsoft.AspNetCore.Http
     @{ var session = Context.RequestServices.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-        string user_Id = ViewBag.user_Id = session?.GetString("user_Id");
-        if (user_Id == null || user_Id == "")
-        {
-            <script>window.location.href = '/Login/Index';</script>
- } }
+                    int user_Id = ViewBag.user_Id = session?.GetInt32("user_Id");
+                    if (user_Id == 0)
+                    {
+        <script>window.location.href = '/Login/Index';</script> } }
     <!-- PAGE CONTAINER -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <div id="root" class="root mn--max hd--expanded">
@@ -69,7 +68,6 @@
                 </div>
 
             </div>
-
             <div class="content__boxed">
                 <div class="content__wrap">
                     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -982,3 +980,4 @@
 
 </body>
 </html>
+

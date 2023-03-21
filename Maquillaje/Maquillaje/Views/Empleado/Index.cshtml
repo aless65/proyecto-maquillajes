@@ -95,3 +95,14 @@
     </form>
 </div>
 <script src="~/js/app/maqu/Empleados.js"></script>
+@if (ViewBag.Script != null)
+{
+    <script>
+        $(document).ready(function () {
+            @Html.Raw(ViewBag.Script)
+        });
+    </script>
+
+    ViewBag.Script = null;
+}
+

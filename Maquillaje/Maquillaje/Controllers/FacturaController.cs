@@ -26,9 +26,18 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Facturas/Listado")]
         public IActionResult Index()
         {
+            ViewBag.EsAdmin = HttpContext.Session.GetInt32("user_EsAdmin");
             ViewBag.sucursal = HttpContext.Session.GetInt32("sucu_Id");
-            var listado = _maquService.ListadoFacturas().Where(X => X.sucu_Id == ViewBag.sucursal);
-
+            var listado = Enumerable.Empty<VW_tbFacturas_List>();
+            if (ViewBag.EsAdmin == 1)
+            {
+                listado = _maquService.ListadoFacturas();
+            }
+            else
+            {
+                listado = _maquService.ListadoFacturas().Where(X => X.sucu_Id == ViewBag.sucursal);
+            }
+            
             if (TempData["Script"] is string script)
             {
                 TempData.Remove("Script");

@@ -89,5 +89,13 @@
             </div>
         </form>
     </div>
- </div>
+</div>
+@if (TempData["Script"] != null)
+{
+    <script>
+    $(function () {
+        @Html.Raw(TempData["Script"]);
+    });
+    </script>
+}
 <script src="~/js/app/maqu/Empleados.js"></script>

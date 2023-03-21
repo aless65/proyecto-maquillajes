@@ -26,6 +26,11 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Facturas/Listado")]
         public IActionResult Index()
         {
+            int user_Id = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+            if (user_Id == 0)
+            {
+                return RedirectToAction("Login","Index");
+            }
             ViewBag.EsAdmin = HttpContext.Session.GetInt32("user_EsAdmin");
             ViewBag.sucursal = HttpContext.Session.GetInt32("sucu_Id");
             var listado = Enumerable.Empty<VW_tbFacturas_List>();

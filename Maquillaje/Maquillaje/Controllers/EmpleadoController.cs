@@ -54,7 +54,6 @@ namespace Maquillaje.WebUI.Controllers
             var listadoSucursales = _maquService.ListadoSucursales();
             ViewBag.sucu_Id = new SelectList(listadoSucursales, "sucu_Id", "sucu_Descripcion");
 
-
             return View();
         }
 
@@ -78,9 +77,23 @@ namespace Maquillaje.WebUI.Controllers
             try
             {
                 if (insertar == 1)
+                {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido insertado con éxito');";
+                    TempData["Script"] = script;
                     return RedirectToAction("Index");
-                else
+                }
+                else if (insertar == 2)
+                {
+                    string script = "MostrarMensajeWarning('Un registro con este número de identidad ya existe'); console.log('se repite')";
+                    TempData["Script"] = script;
                     return View();
+                }
+                else
+                {
+                    string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                    TempData["Script"] = script;
+                    return View();
+                }
             }
             catch
             {
@@ -127,13 +140,22 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
             var listadoSucursales = _maquService.ListadoSucursales();
             ViewBag.sucu_Id = new SelectList(listadoSucursales, "sucu_Id", "sucu_Descripcion");
-
             if (update == 1)
             {
+                string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
+                TempData["Script"] = script;
                 return RedirectToAction("Index");
+            }
+            else if (update == 2)
+            {
+                string script = $"MostrarMensajeWarning('Un registro con este número de identidad ya existe');";
+                TempData["Script"] = script;
+                return View(item);
             }
             else
             {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
                 return View(item);
             }
         }

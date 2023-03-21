@@ -164,7 +164,7 @@ namespace Maquillaje.BusinessLogic.Services
             try
             {
                 var empleadoExistente = _empleadoRepository.Update(empleado);
-                return 1;
+                return _empleadoRepository.Update(empleado); ;
             }
             catch(Exception error)
             {

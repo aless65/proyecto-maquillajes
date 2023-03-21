@@ -26,8 +26,8 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Facturas/Listado")]
         public IActionResult Index()
         {
-
-            var listado = _maquService.ListadoFacturas();
+            ViewBag.sucursal = HttpContext.Session.GetInt32("sucu_Id");
+            var listado = _maquService.ListadoFacturas().Where(X => X.sucu_Id == ViewBag.sucursal);
 
             if (TempData["Script"] is string script)
             {
@@ -78,6 +78,7 @@ namespace Maquillaje.WebUI.Controllers
         public IActionResult Create(FacturaViewModel item, int prod_Id)
         {
             item.fact_UsuCreacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+            item.empe_Id = ViewBag.user_Id = HttpContext.Session.GetInt32("empe_Id");
             var factura = _mapper.Map<tbFacturas>(item);
             var insertar = _maquService.InsertFacturas(factura);
 

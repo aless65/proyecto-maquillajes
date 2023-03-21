@@ -30,7 +30,7 @@ namespace Maquillaje.DataAccess.Repository
 
             parametros.Add("@clie_Id", item.clie_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@meto_Id", item.meto_Id, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@empe_Id", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@fact_usuCreacion", item.fact_UsuCreacion, DbType.Int32, ParameterDirection.Input);
 
             return db.QueryFirst<int>(ScriptsDataBase.UDP_Insertar_Facturas, parametros, commandType: CommandType.StoredProcedure);

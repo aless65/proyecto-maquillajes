@@ -847,6 +847,11 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Delete
 AS
 BEGIN
 	BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM maqu.tbEmpleados WHERE empe_Id = @empe_Id)
+	BEGIN
+	SELECT 0
+	END
+	ELSE 
 	IF NOT EXISTS(SELECT * FROM maqu.tbFacturas WHERE empe_Id = @empe_Id AND fact_Estado = 1)
 	BEGIN
 		UPDATE maqu.tbEmpleados

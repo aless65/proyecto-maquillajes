@@ -31,6 +31,11 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _maquService.ListadoEmpleados(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<EmpleadoViewModel>>(listado);
 
+            if (TempData["Script"] is string script)
+            {
+                TempData.Remove("Script");
+                ViewBag.Script = script;
+            }
             if (String.IsNullOrEmpty(error))
                 ModelState.AddModelError("", error);
 
@@ -157,7 +162,6 @@ namespace Maquillaje.WebUI.Controllers
             {
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
         }
 
         public IActionResult CargarMunicipios(string id)

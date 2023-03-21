@@ -733,6 +733,8 @@ CREATE OR ALTER PROCEDURE maqu.UPD_maqu_tbEmpleados_Insert
 AS
 BEGIN
 	BEGIN TRY
+	IF NOT EXISTS (SELECT empe_Identidad FROM maqu.tbEmpleados WHERE empe_Identidad = @empe_Identidad)
+	BEGIN 
 		INSERT INTO maqu.tbEmpleados(empe_Nombres, empe_Apellidos, 
 									empe_Identidad, empe_FechaNacimiento, 
 									empe_Sexo, estacivi_Id, muni_Id,sucu_Id, 
@@ -745,6 +747,28 @@ BEGIN
 				@empe_Telefono,@empe_CorreoElectronico,
 				@empe_UsuCreacion)
 		SELECT 1
+		END
+		ELSE IF EXISTS(SELECT * FROM maqu.tbEmpleados WHERE empe_Identidad = @empe_Identidad AND empe_Estado =1)
+		SELECT 2
+			ELSE
+		BEGIN
+		UPDATE tbEmpleados 
+		SET empe_Nombres = @empe_Nombres,
+		empe_Apellidos = @empe_Apellidos,
+		empe_Identidad = @empe_Identidad,
+		empe_FechaNacimiento = @empe_FechaNacimiento,
+		empe_Sexo = @empe_Sexo,
+		estacivi_Id  = @estacivi_Id,
+		muni_Id = @muni_Id,
+		sucu_Id = @sucu_Id,
+		empe_Direccion = @empe_Direccion,
+		empe_Telefono = @empe_Telefono,
+		empe_CorreoElectronico = @empe_CorreoElectronico,
+		empe_UsuCreacion = @empe_UsuCreacion
+		WHERE empe_Identidad = @empe_Identidad
+
+		SELECT 1
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -770,6 +794,8 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Update
 AS
 BEGIN
     BEGIN TRY
+	IF NOT EXISTS (SELECT * FROM maqu.tbEmpleados WHERE empe_Identidad = @empe_Identidad)
+	BEGIN
         UPDATE maqu.tbEmpleados
         SET     empe_Nombres = @empe_Nombres,
                 empe_Apellidos = @empe_Apellidos,
@@ -784,8 +810,28 @@ BEGIN
                 empe_UsuModificacion = @empe_usuModificacion,
                 empe_FechaModificacion = GETDATE()
         WHERE   empe_Id = @empe_Id
-
         SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM maqu.tbEmpleados WHERE empe_Identidad = @empe_Identidad AND empe_Id != @empe_Id AND empe_Estado = 1)
+		SELECT 2
+		ELSE
+		BEGIN
+  UPDATE maqu.tbEmpleados
+        SET     empe_Nombres = @empe_Nombres,
+                empe_Apellidos = @empe_Apellidos,
+                empe_Identidad = @empe_Identidad,
+                empe_FechaNacimiento = @empe_FechaNacimiento,
+                empe_Sexo = @empe_Sexo,
+                estacivi_Id = @estacivi_Id,
+                muni_Id = @muni_Id,
+				sucu_Id = @sucu_Id,
+                empe_Telefono = @empe_Telefono,
+                empe_CorreoElectronico = @empe_CorreoElectronico,
+                empe_UsuModificacion = @empe_usuModificacion,
+                empe_FechaModificacion = GETDATE()
+        WHERE   empe_Id = @empe_Id
+        SELECT 1
+		END
     END TRY
     BEGIN CATCH
         SELECT 0
@@ -801,11 +847,17 @@ CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbEmpleados_Delete
 AS
 BEGIN
 	BEGIN TRY
+	IF NOT EXISTS(SELECT * FROM maqu.tbFacturas WHERE empe_Id = @empe_Id AND fact_Estado = 1)
+	BEGIN
 		UPDATE maqu.tbEmpleados
 		SET 	empe_Estado = 0
 		WHERE 	empe_Id = @empe_Id
-
 		SELECT 1
+		END
+		ELSE
+		BEGIN
+		SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1636,7 +1688,6 @@ BEGIN
 						clie_UsuModificacion = @clie_UsuModificacion,
 						clie_FechaModificacion = GETDATE()
 				WHERE   clie_Id = @clie_Id	
-
 			SELECT 1
 		END
 		ELSE IF EXISTS (SELECT * FROM [maqu].[tbClientes]

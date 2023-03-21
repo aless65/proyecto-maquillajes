@@ -179,7 +179,14 @@ namespace Maquillaje.BusinessLogic.Services
 
         public int DeleteEmpleado(int id)
         {
-            return _empleadoRepository.DeleteConfirmed(id);
+            try
+            {
+                return _empleadoRepository.DeleteConfirmed(id);
+            }
+            catch(Exception error)
+            {
+                return 0;
+            }
         }
 
         #endregion

@@ -137,14 +137,27 @@ namespace Maquillaje.WebUI.Controllers
         {
             var delete = _maquService.DeleteEmpleado(id);
 
+            if(delete == 0)
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+            if(delete == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
             if (delete == 1)
             {
+                    string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                    TempData["Script"] = script;
                 return RedirectToAction("Index");
             }
             else
             {
                 return RedirectToAction("Index");
             }
+            return RedirectToAction("Index");
         }
 
         public IActionResult CargarMunicipios(string id)

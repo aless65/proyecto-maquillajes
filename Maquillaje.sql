@@ -1144,7 +1144,7 @@ END
 
 /*Editar Municipios*/
 GO
-CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Edit
+CREATE OR ALTER PROCEDURE gral.UDP_gral_tbMunicipios_Edit 
 	@muni_Id				CHAR(4),
 	@muni_Nombre			NVARCHAR(150),
 	@depa_Id				CHAR(2),

@@ -1,5 +1,4 @@
-﻿sessionStorage.clear();
-
+﻿
 $(document).ready(function () {
     $('#menuMaquillaje').addClass('active');
     $('#clientesItem').addClass('active');

@@ -16,12 +16,14 @@ namespace Maquillaje.WebUI.Controllers
     {
         private readonly MaquService _maquService;
         private GralService _gralService;
+        private readonly AcceService _acceService;
         private readonly IMapper _mapper;
 
-        public ClienteController(MaquService maquService, GralService gralService, IMapper mapper)
+        public ClienteController(MaquService maquService, GralService gralService, AcceService acceService, IMapper mapper)
         {
             _maquService = maquService;
             _gralService = gralService;
+            _acceService = acceService;
             _mapper = mapper;
         }
 
@@ -37,7 +39,20 @@ namespace Maquillaje.WebUI.Controllers
                 ViewBag.Script = script;
             }
 
-            return View(listadoMapeado);
+            ViewBag.pant_Id = 6;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet("/Clientes/Create")]
@@ -46,8 +61,20 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listado, "depa_Id", "depa_Nombre");
 
+            ViewBag.pant_Id = 6;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            return View();
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost("/Clientes/Create")]
@@ -90,7 +117,20 @@ namespace Maquillaje.WebUI.Controllers
             var listadoDepa = _gralService.ListadoDepartamento(out string error).ToList();
             ViewBag.depa_Id = new SelectList(listadoDepa, "depa_Id", "depa_Nombre");
 
-            return View(cliente);
+            ViewBag.pant_Id = 6;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(cliente);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost("/Clientes/Update")]
@@ -164,7 +204,20 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _maquService.DetailsClientes(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbClientes_VW>>(listado).Where(X => X.clie_Id == id);
 
-            return View(listadoMapeado);
+            ViewBag.pant_Id = 6;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
     }

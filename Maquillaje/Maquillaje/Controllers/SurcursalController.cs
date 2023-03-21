@@ -15,41 +15,70 @@ namespace Maquillaje.WebUI.Controllers
     {
 
         private readonly MaquService _maquService;
+        private readonly AcceService _acceService;
         private readonly GralService _gralService;
         private readonly IMapper _mapper;
 
-        public SucursalController(MaquService maquService, GralService gralService, IMapper mapper)
+        public SucursalController(MaquService maquService, AcceService acceService, GralService gralService, IMapper mapper)
         {
             _maquService = maquService;
             _gralService = gralService;
+            _acceService = acceService;
             _mapper = mapper;
         }
 
         [HttpGet("/Sucursal/Listado")]
         public IActionResult Index()
         {
-            var listado = _maquService.ListadoSucursales();
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado);
-            var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
-            ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
+            ViewBag.pant_Id = 12;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            if (TempData["Script"] is string script)
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
             {
-                TempData.Remove("Script");
-                ViewBag.Script = script;
-            }
 
-            return View(listadoMapeado);
+                var listado = _maquService.ListadoSucursales();
+                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado);
+                var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
+                ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
+
+                if (TempData["Script"] is string script)
+                {
+                    TempData.Remove("Script");
+                    ViewBag.Script = script;
+                }
+
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet("/Sucursal/Details")]
         public IActionResult Details(int id)
         {
-            var listado = _maquService.ListadoSucursales();
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado).Where(X => X.sucu_Id == id);
-            var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
-            ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
-            return View(listadoMapeado);
+            ViewBag.pant_Id = 12;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                var listado = _maquService.ListadoSucursales();
+                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado).Where(X => X.sucu_Id == id);
+                var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
+                ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 

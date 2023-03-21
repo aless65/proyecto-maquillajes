@@ -32,6 +32,7 @@ CREATE TABLE acce.tbPantallas(
 	pant_Nombre				NVARCHAR(100) NOT NULL,
 	pant_Url				NVARCHAR(300) NOT NULL,
 	pant_Menu				NVARCHAR(300) NOT NULL,
+	pant_HtmlId				NVARCHAR(80) NOT NULL,
 	pant_UsuCreacion		INT NOT NULL,
 	pant_FechaCreacion		DATETIME NOT NULL CONSTRAINT DF_pant_FechaCreacion DEFAULT(GETDATE()),
 	pant_UsuModificacion	INT,
@@ -41,20 +42,19 @@ CREATE TABLE acce.tbPantallas(
 );
 GO
 
-INSERT INTO acce.tbPantallas(pant_Nombre, pant_Url, pant_Menu, pant_UsuCreacion)
-VALUES ('Usuarios', '/Usuario/Listado', 1),
-       ('Departamentos', '/Departamento/Listado', 1),
-	   ('Municipios', '/Municipio/Listado', 1),
-	   ('EstadosCiviles', '/EstadoCivil/Listado', 1),
-	   ('Categorías', '/Categorias/Listado', 1),
-	   ('Clientes', '/Clientes/Listado', 1),
-	   ('Empleados', '/Empleados/Listado', 1),
-	   ('Facturas', '/Facturas/Listado', 1),
-	   ('FacturasDetalles', '/Facturas/Listado', 1),
-	   ('MétodosPago', '/MetodosPago/Listado', 1),
-	   ('Productos', '/Producto/Listado', 1),
-	   ('Proveedores', '/Proveedor/Listado', 1),
-	   ('Sucursales', '/Sucursal/Listado', 1)
+INSERT INTO acce.tbPantallas(pant_Nombre, pant_Url, pant_Menu, pant_HtmlId, pant_UsuCreacion)
+VALUES ('Usuarios', '/Usuario/Listado', 'Seguridad', 'usuariosItem', 1),
+       ('Departamentos', '/Departamento/Listado', 'General', 'departamentosItem', 1),
+	   ('Municipios', '/Municipio/Listado', 'General', 'municipiosItem', 1),
+	   ('Estados Civiles', '/EstadoCivil/Listado', 'General', 'estadosItem', 1),
+	   ('Categorías', '/Categorias/Listado', 'Maquillaje', 'categoriasItem', 1),
+	   ('Clientes', '/Clientes/Listado', 'Maquillaje', 'clientesItem', 1),
+	   ('Empleados', '/Empleados/Listado','Maquillaje', 'empleadosItem', 1),
+	   ('Facturas', '/Facturas/Listado', 'Maquillaje', 'facturasItem', 1),
+	   ('Métodos de Pago', '/MetodosPago/Listado', 'Maquillaje', 'metodosItem', 1),
+	   ('Productos', '/Producto/Listado', 'Maquillaje', 'productosItem', 1),
+	   ('Proveedores', '/Proveedor/Listado', 'Maquillaje', 'proveedoresItem', 1),
+	   ('Sucursales', '/Sucursal/Listado', 'Maquillaje', 'sucursalesItem', 1)
 
 
 --***********CREACION TABLA ROLES/PANTALLA*****************---
@@ -773,7 +773,7 @@ END
     
 /*Eliminar Sucursal*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete 
     @sucu_Id INT
 AS
 BEGIN
@@ -793,6 +793,7 @@ BEGIN
         SELECT 0
     END CATCH
 END
+
 --**************** EMPLEADOS ****************--
 /*Empleados*/
 GO
@@ -909,7 +910,6 @@ BEGIN
 END
 GO
 
-SELECT * FROM maqu.tbEmpleados
 /*Vista empleados*/
 GO
 CREATE OR ALTER VIEW maqu.VW_maqu_tbEmpleados_View
@@ -1417,7 +1417,7 @@ END
 
 /*Eliminar metodos de pago*/
 GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago_DELETE
+CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbMetodosPago_DELETE 
 	@meto_Id INT
 AS
 BEGIN
@@ -1450,151 +1450,151 @@ BEGIN
 	WHERE [meto_Estado] = 1
 END
 
---*******************Sucursales*************************--
-/*Vista Sucursales*/
-GO
-CREATE OR ALTER VIEW maqu.VW_maqu_tbSucursales_VW
-AS
-SELECT sucu_Id, sucu_Descripcion, sucu_DireccionExacta, sucu_FechaCreacion, sucu_UsuCreacion, 
-    sucu_FechaModificacion, sucu_UsuModificacion, sucu_Estado, muni.depa_Id, depa.depa_Nombre, sucu.muni_Id, muni.muni_Nombre, 
-    [user1].user_NombreUsuario AS sucu_UsuCreacion_Nombre, [user2].user_NombreUsuario AS sucu_UsuModificacion_Nombre
-FROM maqu.tbSucursales sucu
-INNER JOIN gral.tbMunicipios muni ON sucu.muni_Id = muni.muni_id 
-LEFT JOIN acce.tbUsuarios [user1] ON sucu.sucu_UsuCreacion = [user1].user_Id
-LEFT JOIN acce.tbUsuarios [user2] ON sucu.sucu_UsuModificacion = [user2].user_Id
-INNER JOIN gral.tbDepartamentos depa ON muni.depa_Id = depa.depa_Id
-WHERE sucu.sucu_Estado = 1
+----*******************Sucursales*************************--
+--/*Vista Sucursales*/
+--GO
+--CREATE OR ALTER VIEW maqu.VW_maqu_tbSucursales_VW
+--AS
+--SELECT sucu_Id, sucu_Descripcion, sucu_DireccionExacta, sucu_FechaCreacion, sucu_UsuCreacion, 
+--    sucu_FechaModificacion, sucu_UsuModificacion, sucu_Estado, muni.depa_Id, depa.depa_Nombre, sucu.muni_Id, muni.muni_Nombre, 
+--    [user1].user_NombreUsuario AS sucu_UsuCreacion_Nombre, [user2].user_NombreUsuario AS sucu_UsuModificacion_Nombre
+--FROM maqu.tbSucursales sucu
+--INNER JOIN gral.tbMunicipios muni ON sucu.muni_Id = muni.muni_id 
+--LEFT JOIN acce.tbUsuarios [user1] ON sucu.sucu_UsuCreacion = [user1].user_Id
+--LEFT JOIN acce.tbUsuarios [user2] ON sucu.sucu_UsuModificacion = [user2].user_Id
+--INNER JOIN gral.tbDepartamentos depa ON muni.depa_Id = depa.depa_Id
+--WHERE sucu.sucu_Estado = 1
 
-/*Vista Sucursales UDP*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_VW
-AS
-BEGIN
-SELECT * FROM maqu.VW_maqu_tbSucursales_VW
-END
+--/*Vista Sucursales UDP*/
+--GO
+--CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_VW
+--AS
+--BEGIN
+--SELECT * FROM maqu.VW_maqu_tbSucursales_VW
+--END
 
-/*Insertar Sucursal*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Insert
-    @sucu_Descripcion NVARCHAR(200),
-    @muni_Id CHAR(4),
-    @sucu_DireccionExacta NVARCHAR(500),
-    @sucu_UsuCreacion INT
-AS
-BEGIN
+--/*Insertar Sucursal*/
+--GO
+--CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Insert
+--    @sucu_Descripcion NVARCHAR(200),
+--    @muni_Id CHAR(4),
+--    @sucu_DireccionExacta NVARCHAR(500),
+--    @sucu_UsuCreacion INT
+--AS
+--BEGIN
 
-	BEGIN TRY
+--	BEGIN TRY
 		
-		IF NOT EXISTS (SELECT * FROM maqu.tbSucursales
-						WHERE @sucu_Descripcion = sucu_Descripcion)
-		BEGIN
-			INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
-			VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
+--		IF NOT EXISTS (SELECT * FROM maqu.tbSucursales
+--						WHERE @sucu_Descripcion = sucu_Descripcion)
+--		BEGIN
+--			INSERT INTO maqu.tbSucursales (sucu_Descripcion, muni_Id, sucu_DireccionExacta, sucu_UsuCreacion)
+--			VALUES (@sucu_Descripcion, @muni_Id, @sucu_DireccionExacta, @sucu_UsuCreacion);
 
-			SELECT 1
-		END
-		ELSE IF EXISTS (SELECT * FROM maqu.tbSucursales
-						WHERE @sucu_Descripcion = sucu_Descripcion
-							  AND sucu_Estado = 1)
-			SELECT 2
-		ELSE
-			BEGIN
-				UPDATE maqu.tbSucursales
-				SET sucu_Estado = 1,
-					sucu_Descripcion = @sucu_Descripcion,
-					muni_Id = @muni_Id,
-					sucu_DireccionExacta = @sucu_DireccionExacta
-				WHERE sucu_Descripcion = @sucu_Descripcion
+--			SELECT 1
+--		END
+--		ELSE IF EXISTS (SELECT * FROM maqu.tbSucursales
+--						WHERE @sucu_Descripcion = sucu_Descripcion
+--							  AND sucu_Estado = 1)
+--			SELECT 2
+--		ELSE
+--			BEGIN
+--				UPDATE maqu.tbSucursales
+--				SET sucu_Estado = 1,
+--					sucu_Descripcion = @sucu_Descripcion,
+--					muni_Id = @muni_Id,
+--					sucu_DireccionExacta = @sucu_DireccionExacta
+--				WHERE sucu_Descripcion = @sucu_Descripcion
 
-				SELECT 1
-			END
-	END TRY
-	BEGIN CATCH
-		SELECT 0
-	END CATCH 
+--				SELECT 1
+--			END
+--	END TRY
+--	BEGIN CATCH
+--		SELECT 0
+--	END CATCH 
 
-END
+--END
 
-GO
+--GO
 
-EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 1','0501','Calle 5',1
-EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 2','0501','Calle 7',1
-EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 3','0501','Calle 6',1
+--EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 1','0501','Calle 5',1
+--EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 2','0501','Calle 7',1
+--EXEC maqu.UDP_maqu_tbSucursales_Insert 'Sucursal 3','0501','Calle 6',1
 
-/*Editar Sucursal*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
-    @sucu_Id INT,
-    @sucu_Descripcion NVARCHAR(200),
-    @muni_Id CHAR(4),
-    @sucu_DireccionExacta NVARCHAR(500),
-    @sucu_UsuModificacion INT
-AS
-BEGIN
+--/*Editar Sucursal*/
+--GO
+--CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Edit
+--    @sucu_Id INT,
+--    @sucu_Descripcion NVARCHAR(200),
+--    @muni_Id CHAR(4),
+--    @sucu_DireccionExacta NVARCHAR(500),
+--    @sucu_UsuModificacion INT
+--AS
+--BEGIN
 
-	BEGIN TRY
-		IF NOT EXISTS (SELECT * FROM [maqu].tbSucursales
-							WHERE @sucu_Descripcion = sucu_Descripcion)
-			BEGIN	
-				UPDATE maqu.tbSucursales
-				SET sucu_Descripcion = @sucu_Descripcion,
-					muni_Id = @muni_Id,
-					sucu_DireccionExacta = @sucu_DireccionExacta,
-					sucu_UsuModificacion = @sucu_UsuModificacion,
-					sucu_FechaModificacion = GETDATE()
-				WHERE sucu_Id = @sucu_Id;
+--	BEGIN TRY
+--		IF NOT EXISTS (SELECT * FROM [maqu].tbSucursales
+--							WHERE @sucu_Descripcion = sucu_Descripcion)
+--			BEGIN	
+--				UPDATE maqu.tbSucursales
+--				SET sucu_Descripcion = @sucu_Descripcion,
+--					muni_Id = @muni_Id,
+--					sucu_DireccionExacta = @sucu_DireccionExacta,
+--					sucu_UsuModificacion = @sucu_UsuModificacion,
+--					sucu_FechaModificacion = GETDATE()
+--				WHERE sucu_Id = @sucu_Id;
 
-				SELECT 1
-			END
-			ELSE IF EXISTS (SELECT * FROM [maqu].tbSucursales
-							WHERE @sucu_Descripcion = sucu_Descripcion
-								  AND sucu_Estado = 1
-								  AND sucu_Id != @sucu_Id)
-				SELECT 2
-			ELSE
-				BEGIN
-					UPDATE [maqu].tbSucursales
-					SET sucu_Estado = 1,
-						muni_Id = @muni_Id,
-						sucu_DireccionExacta = @sucu_DireccionExacta,
-						sucu_UsuModificacion = @sucu_UsuModificacion,
-						sucu_FechaModificacion = GETDATE()
-					WHERE sucu_Descripcion = @sucu_Descripcion
+--				SELECT 1
+--			END
+--			ELSE IF EXISTS (SELECT * FROM [maqu].tbSucursales
+--							WHERE @sucu_Descripcion = sucu_Descripcion
+--								  AND sucu_Estado = 1
+--								  AND sucu_Id != @sucu_Id)
+--				SELECT 2
+--			ELSE
+--				BEGIN
+--					UPDATE [maqu].tbSucursales
+--					SET sucu_Estado = 1,
+--						muni_Id = @muni_Id,
+--						sucu_DireccionExacta = @sucu_DireccionExacta,
+--						sucu_UsuModificacion = @sucu_UsuModificacion,
+--						sucu_FechaModificacion = GETDATE()
+--					WHERE sucu_Descripcion = @sucu_Descripcion
 
-					SELECT 1
-				END
-	END TRY
-	BEGIN CATCH
-		SELECT 0
-	END CATCH
-END
+--					SELECT 1
+--				END
+--	END TRY
+--	BEGIN CATCH
+--		SELECT 0
+--	END CATCH
+--END
 
-/*Eliminar Sucursal*/
-GO
-CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
-	@sucu_Id INT
-AS
-BEGIN
-	BEGIN TRY
-		IF NOT EXISTS (SELECT * FROM [maqu].tbSucursales WHERE sucu_Id = @sucu_Id AND sucu_Estado = 1)
-			BEGIN
-				UPDATE [maqu].tbSucursales
-				SET sucu_Estado = 0
-				WHERE sucu_Id = @sucu_Id
+--/*Eliminar Sucursal*/
+--GO
+--CREATE OR ALTER PROCEDURE maqu.UDP_maqu_tbSucursales_Delete
+--	@sucu_Id INT
+--AS
+--BEGIN
+--	BEGIN TRY
+--		IF NOT EXISTS (SELECT * FROM [maqu].tbSucursales WHERE sucu_Id = @sucu_Id AND sucu_Estado = 1)
+--			BEGIN
+--				UPDATE [maqu].tbSucursales
+--				SET sucu_Estado = 0
+--				WHERE sucu_Id = @sucu_Id
 				
-				SELECT 1
-			END
-		ELSE
-			SELECT 2
-	END TRY
-	BEGIN CATCH
-		SELECT 0
-	END CATCH
+--				SELECT 1
+--			END
+--		ELSE
+--			SELECT 2
+--	END TRY
+--	BEGIN CATCH
+--		SELECT 0
+--	END CATCH
 
-	UPDATE maqu.tbSucursales 
-	SET sucu_Estado = 0
-	WHERE sucu_Id = @sucu_Id
-END
+--	UPDATE maqu.tbSucursales 
+--	SET sucu_Estado = 0
+--	WHERE sucu_Id = @sucu_Id
+--END
 
 /*DDL muni x sucursal*/
 --GO
@@ -1607,7 +1607,6 @@ END
 --END
 
 --**************** CATEGORIAS ****************--
-SELECT * FROM maqu.tbCategorias
 /*Vista Categoria*/
 GO
 CREATE OR ALTER VIEW maqu.VW_maqu_tbCategorias_VW
@@ -2591,7 +2590,7 @@ END
 
 /*Login*/
 GO
-CREATE OR ALTER PROCEDURE UDP_Login
+CREATE OR ALTER PROCEDURE UDP_Login 
 	@user_NombreUsuario	NVARCHAR(100),
 	@user_Contrasena	NVARCHAR(100)
 AS
@@ -2746,7 +2745,7 @@ END
 
 GO
 CREATE OR ALTER PROCEDURE acce.tbRolesPorPantalla 
-	@role_Id		INT,
+	@role_Id	INT,
 	@esAdmin	BIT,
 	@pant_Id	INT
 AS
@@ -2757,4 +2756,22 @@ BEGIN
 		SELECT 1
 	ELSE
 		SELECT 0
+END
+
+GO 
+CREATE OR ALTER PROCEDURE acce.tbRolesPorPantallaMenu
+	@role_Id	INT,
+	@esAdmin	BIT
+AS
+BEGIN
+	IF @esAdmin = 1
+		BEGIN
+			SELECT DISTINCT pant_Id, pant_Nombre, pant_Url, pant_Menu, pant_HtmlId, @role_Id AS role_Id, @esAdmin AS esAdmin
+			FROM [acce].[tbPantallas] 
+		END
+	ELSE
+		SELECT DISTINCT T1.pant_Id, pant_Nombre, pant_Url, pant_Menu, pant_HtmlId, @role_Id AS role_Id, @esAdmin AS esAdmin
+		FROM [acce].[tbPantallas] T1 INNER JOIN [acce].[tbPantallasPorRoles] T2
+		ON T1.pant_Id = T2.pant_Id
+		WHERE role_Id = @role_Id
 END

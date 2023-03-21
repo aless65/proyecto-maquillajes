@@ -15,13 +15,15 @@ namespace Maquillaje.WebUI.Controllers
     public class EmpleadoController : Controller
     {
         private readonly MaquService _maquService;
+        private readonly AcceService _acceService;
         private GralService _gralService;
         private readonly IMapper _mapper;
 
-        public EmpleadoController(MaquService maquService, GralService gralService, IMapper mapper)
+        public EmpleadoController(MaquService maquService, AcceService acceService, GralService gralService, IMapper mapper)
         {
             _maquService = maquService;
             _gralService = gralService;
+            _acceService = acceService;
             _mapper = mapper;
         }
 
@@ -31,10 +33,21 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _maquService.ListadoEmpleados(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<EmpleadoViewModel>>(listado);
 
-            if (String.IsNullOrEmpty(error))
-                ModelState.AddModelError("", error);
+            ViewBag.pant_Id = 7;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            return View(listadoMapeado);
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpGet("Empleados/Create")]
@@ -49,8 +62,21 @@ namespace Maquillaje.WebUI.Controllers
             var listadoSucursales = _maquService.ListadoSucursales();
             ViewBag.sucu_Id = new SelectList(listadoSucursales, "sucu_Id", "sucu_Descripcion");
 
+            ViewBag.pant_Id = 7;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            return View();
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpPost("/Empleados/Create")]
@@ -97,13 +123,26 @@ namespace Maquillaje.WebUI.Controllers
             var listadoSucursales = _maquService.ListadoSucursales();
             ViewBag.sucu_Id = new SelectList(listadoSucursales, "sucu_Id", "sucu_Descripcion");
 
-            if (listado != null)
+            ViewBag.pant_Id = 7;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
             {
-                return View(listado);
+                if (listado != null)
+                {
+                    return View(listado);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             else
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -165,7 +204,20 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _maquService.ListadoEmpleadosView(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbEmpleados_View>>(listado).Where(X => X.empe_Id == id);
 
-            return View(listadoMapeado);
+            ViewBag.pant_Id = 7;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

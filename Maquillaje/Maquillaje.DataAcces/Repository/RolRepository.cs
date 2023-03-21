@@ -35,5 +35,16 @@ namespace Maquillaje.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<tbPantallas> PantallasMenu(tbPantallas item)
+        {
+            using var db = new SqlConnection(AndreasContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@role_Id", item.role_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@esAdmin", item.esAdmin, DbType.Boolean, ParameterDirection.Input);
+
+            return db.Query<tbPantallas>(ScriptsDataBase.UDP_PantallasMenu, parametros, commandType: CommandType.StoredProcedure);
+        }
     }
 }

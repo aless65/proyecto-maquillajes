@@ -28,22 +28,37 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Usuario/Listado")]
         public IActionResult Index()
         {
-            var listado = _acceService.ListadoUsuarios(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<UsuarioViewModel>>(listado).Where(X => X.user_Estado == true);
 
-            var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
-            ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
+            ViewBag.pant_Id = 1;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
-            ViewBag.ddlEmpleados = new SelectList(ddlEmpleados, "empe_Id", "NombreCompleto");
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-            if (TempData["Script"] is string script)
+            if (permiso == 1)
             {
-                TempData.Remove("Script");
-                ViewBag.Script = script;
+                var listado = _acceService.ListadoUsuarios(out string error);
+                var listadoMapeado = _mapper.Map<IEnumerable<UsuarioViewModel>>(listado).Where(X => X.user_Estado == true);
+
+                var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
+                ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
+
+                var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
+                ViewBag.ddlEmpleados = new SelectList(ddlEmpleados, "empe_Id", "NombreCompleto");
+
+                if (TempData["Script"] is string script)
+                {
+                    TempData.Remove("Script");
+                    ViewBag.Script = script;
+                }
+
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
 
-            return View(listadoMapeado);
         }
 
         [HttpPost]
@@ -127,22 +142,36 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Usuario/Details")]
         public IActionResult Details(int id)
         {
-            string rol = ViewBag.Rol = HttpContext.Session.GetString("role_Id");
-            string admin = ViewBag.Admin = HttpContext.Session.GetString("user_EsAdmin");
-            if ((rol != "1") && admin != "True")
+
+            ViewBag.pant_Id = 1;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                string rol = ViewBag.Rol = HttpContext.Session.GetString("role_Id");
+                string admin = ViewBag.Admin = HttpContext.Session.GetString("user_EsAdmin");
+                //if ((rol != "1") && admin != "True")
+                //{
+                //    return RedirectToAction("Index", "Home");
+
+                //}
+                var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
+                ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
+
+                var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
+                ViewBag.ddlEmpleados = new SelectList(ddlEmpleados, "empe_Id", "NombreCompleto");
+                var listado = _acceService.Details(id);
+                var listadoMapeado = _mapper.Map<IEnumerable<VW_acce_tbUsuarios_View>>(listado);
+
+                return View(listadoMapeado);
+            }
+            else
             {
                 return RedirectToAction("Index", "Home");
-
             }
-            var ddlRoles = _acceService.ListadoRoles(out string error1).ToList();
-            ViewBag.ddlRoles = new SelectList(ddlRoles, "role_Id", "role_Nombre");
-
-            var ddlEmpleados = _maquService.ListadoEmpleadosView(out string error2).ToList();
-            ViewBag.ddlEmpleados = new SelectList(ddlEmpleados, "empe_Id", "NombreCompleto");
-            var listado = _acceService.Details(id);
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_acce_tbUsuarios_View>>(listado);
-
-            return View(listadoMapeado);
         }
 
         public IActionResult RolesPantalla(int role_Id, bool esAdmin, int pant_Id)

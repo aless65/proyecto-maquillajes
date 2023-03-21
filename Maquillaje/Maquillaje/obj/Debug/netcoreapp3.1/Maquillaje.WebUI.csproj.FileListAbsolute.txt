@@ -887,3 +887,4 @@ C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\bin\D
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.Views.pdb
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.csproj.CopyComplete
 C:\Users\LAB01\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Maquillaje.WebUI.genruntimeconfig.cache
+C:\Users\PC\Documents\GitHub\proyecto-maquillajes\Maquillaje\Maquillaje\obj\Debug\netcoreapp3.1\Razor\Views\Login\Recover.cshtml.g.cs

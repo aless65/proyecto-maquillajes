@@ -14,11 +14,13 @@ namespace Maquillaje.WebUI.Controllers
     public class CategoriaController : Controller
     {
         private readonly MaquService _maquService;
+        private readonly AcceService _acceService;
         private readonly IMapper _mapper;
 
-        public CategoriaController(MaquService maquService, IMapper mapper)
+        public CategoriaController(MaquService maquService, AcceService acceService, IMapper mapper)
         {
             _maquService = maquService;
+            _acceService = acceService;
             _mapper = mapper;
         }
 
@@ -27,10 +29,21 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _maquService.CategoriaDetails(id,out string error).Where(X => X.cate_Id == id);
 
-            if (String.IsNullOrEmpty(error))
-                ModelState.AddModelError("", error);
+            ViewBag.pant_Id = 5;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if(permiso == 1)
+            {
+                return View(listado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
          
-            return View(listado);
         }
 
 
@@ -45,10 +58,20 @@ namespace Maquillaje.WebUI.Controllers
                 ViewBag.Script = script;
             }
 
-            //if (String.IsNullOrEmpty(error))
-            //    ModelState.AddModelError("", error);
+            ViewBag.pant_Id = 5;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            return View(listado);
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost("/Categorias/Create")]

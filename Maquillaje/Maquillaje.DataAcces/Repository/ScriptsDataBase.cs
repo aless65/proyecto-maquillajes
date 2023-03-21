@@ -78,6 +78,8 @@ namespace Maquillaje.DataAccess.Repository
 
         #region Roles
         public static string UDP_Listar_Roles = "acce.UDP_acce_tbRoles_List";
+        public static string UDP_Roles = "acce.tbRolesPorPantalla";
+        public static string UDP_PantallasMenu = "acce.tbRolesPorPantallaMenu";
         #endregion
 
         #region Facturas
@@ -114,10 +116,6 @@ namespace Maquillaje.DataAccess.Repository
         public static string UDP_Insertar_Sucursales = "maqu.UDP_maqu_tbSucursales_Insert";
         public static string UDP_Editar_Sucursales = "maqu.UDP_maqu_tbSucursales_Edit";
         public static string UDP_Elimnar_Sucursales = "maqu.UDP_maqu_tbSucursales_Delete";
-        #endregion
-
-        #region
-        public static string UDP_Roles = "acce.tbRolesPorPantalla";
         #endregion
     }
 }

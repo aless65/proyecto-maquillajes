@@ -14,27 +14,43 @@ namespace Maquillaje.WebUI.Controllers
     public class MetodoPagoController : Controller
     {
         private readonly MaquService _maquService;
+        private readonly AcceService _acceService;
         private readonly IMapper _mapper;
 
-        public MetodoPagoController(MaquService maquService, IMapper mapper)
+        public MetodoPagoController(MaquService maquService, AcceService acceService, IMapper mapper)
         {
             _maquService = maquService;
+            _acceService = acceService;
             _mapper = mapper;
         }
 
         [HttpGet("/MetodosPago/Listado")]
         public IActionResult Index()
         {
-            var listado = _maquService.ListadoMetodosPago();
-            var listadoMapeado = _mapper.Map<IEnumerable<MetodoPagoViewModel>>(listado);
+            ViewBag.pant_Id = 9;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            if (TempData["Script"] is string script)
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
             {
-                TempData.Remove("Script");
-                ViewBag.Script = script;
-            }
 
-            return View(listadoMapeado);
+                var listado = _maquService.ListadoMetodosPago();
+                var listadoMapeado = _mapper.Map<IEnumerable<MetodoPagoViewModel>>(listado);
+
+                if (TempData["Script"] is string script)
+                {
+                    TempData.Remove("Script");
+                    ViewBag.Script = script;
+                }
+
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
             //return View(listadoMapeado);
         }
 
@@ -116,10 +132,23 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/MetodosPago/Details")]
         public IActionResult Details(int id)
         {
-            var listado = _maquService.MetodosPagoDetails();
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbMetodosPago_View>>(listado).Where(X => X.meto_Id == id);
+            ViewBag.pant_Id = 9;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            return View(listadoMapeado);
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                var listado = _maquService.MetodosPagoDetails();
+                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbMetodosPago_View>>(listado).Where(X => X.meto_Id == id);
+
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

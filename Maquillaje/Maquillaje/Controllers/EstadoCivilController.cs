@@ -15,11 +15,13 @@ namespace Maquillaje.WebUI.Controllers
     {
 
         private readonly GralService _gralService;
+        private readonly AcceService _acceService;
         private readonly IMapper _mapper;
 
-        public EstadoCivilController(GralService gralService, IMapper mapper)
+        public EstadoCivilController(GralService gralService, AcceService acceService, IMapper mapper)
         {
             _gralService = gralService;
+            _acceService = acceService;
             _mapper = mapper;
         }
 
@@ -35,7 +37,21 @@ namespace Maquillaje.WebUI.Controllers
                 ViewBag.Script = script;
             }
 
-            return View(listadoMapeado);
+            ViewBag.pant_Id = 4;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpGet("/EstadoCivil/Details")]
@@ -43,7 +59,22 @@ namespace Maquillaje.WebUI.Controllers
         {
             var listado = _gralService.ListadoEstadosCivilesVista(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbEstadosCiviles_VW>>(listado).Where(X => X.estacivi_Id == id);
-            return View(listadoMapeado);
+
+            ViewBag.pant_Id = 4;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpPost("/EstadoCivil/Create")]
@@ -103,33 +134,34 @@ namespace Maquillaje.WebUI.Controllers
                 }
             }
             catch (Exception error)
-            {             
+            {    
+                
             }
             return RedirectToAction("Index");
         }
 
-                public IActionResult Delete(int id)
-                {
-                    var Eliminar = _gralService.EliminarEstadoCivil(id);
+        public IActionResult Delete(int id)
+        {
+            var Eliminar = _gralService.EliminarEstadoCivil(id);
 
-                    if (Eliminar == 1)
-                    {
-                        string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
-                        TempData["Script"] = script;
-                    }
-                    else if (Eliminar == 2)
-                    {
-                        string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
-                        TempData["Script"] = script;
-                    }
-                    else
-                    {
-                        string script = "MostrarMensajeDanger('Ha ocurrido un error');";
-                        TempData["Script"] = script;
-                    }
-
-                    return RedirectToAction("Index");
-                }
+            if (Eliminar == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
             }
+            else if (Eliminar == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
+            return RedirectToAction("Index");
         }
+    }
+}
     

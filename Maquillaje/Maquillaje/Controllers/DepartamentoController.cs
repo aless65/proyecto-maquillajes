@@ -13,11 +13,13 @@ namespace Maquillaje.WebUI.Controllers
     public class DepartamentoController : Controller
     {
         private readonly GralService _gralService;
+        private readonly AcceService _acceService;
         private readonly IMapper _mapper;
 
-        public DepartamentoController(GralService gralService, IMapper mapper)
+        public DepartamentoController(GralService gralService, AcceService acceService, IMapper mapper)
         {
             _gralService = gralService;
+            _acceService = acceService;
             _mapper = mapper;
         }
 
@@ -33,7 +35,20 @@ namespace Maquillaje.WebUI.Controllers
                 ViewBag.Script = script;
             }
 
-            return View(listadoMapeado);
+            ViewBag.pant_Id = 2;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet("/Departamento/Details")]
@@ -42,7 +57,20 @@ namespace Maquillaje.WebUI.Controllers
             var listado = _gralService.ListadoDepartamentosView(out string error);
             var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbDepartamentos_VW>>(listado).Where(X => X.depa_Id == id);
 
-            return View(listadoMapeado);
+            ViewBag.pant_Id = 2;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
+
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+            if (permiso == 1)
+            {
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost("/Departamento/Create")]
@@ -77,52 +105,23 @@ namespace Maquillaje.WebUI.Controllers
                 return RedirectToAction("Index");
             }
 
-           }
-            [HttpPost("/Departamento/Edit")]
-            public IActionResult Edit(VW_gral_tbDepartamentos_VW item)
+        }
+
+        [HttpPost("/Departamento/Edit")]
+        public IActionResult Edit(VW_gral_tbDepartamentos_VW item)
+        {
+            try
             {
-                try
+                item.depa_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
+                var editar = _gralService.EditarDepartamento(item);
+                if (editar == 1)
                 {
-                    item.depa_UsuModificacion = ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
-                    var editar = _gralService.EditarDepartamento(item);
-                    if (editar == 1)
-                    {
-                        string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
-                        TempData["Script"] = script;
-                    }
-                    else if (editar == 2)
-                    {
-                        string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.depa_Id},{item.depa_Id},{item.depa_Nombre}') ";
-                        TempData["Script"] = script;
-                    }
-                    else
-                    {
-                        string script = "MostrarMensajeDanger('Ha ocurrido un error');";
-                        TempData["Script"] = script;
-                    }
-                    return RedirectToAction("Index");
-                }
-                catch (Exception error)
-                {
-
-                }
-
-                return RedirectToAction("Index");
-            }
-
-            public IActionResult Delete(string id)
-            {
-
-                var delete = _gralService.EliminarDepartamento(id);
-
-                if (delete == 1)
-                {
-                    string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                    string script = $"MostrarMensajeSuccess('El registro ha sido editado con éxito');";
                     TempData["Script"] = script;
                 }
-                else if (delete == 2)
+                else if (editar == 2)
                 {
-                    string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                    string script = $"MostrarMensajeWarning('El registro ya existe'); AbrirModalEdit('{item.depa_Id},{item.depa_Id},{item.depa_Nombre}') ";
                     TempData["Script"] = script;
                 }
                 else
@@ -130,8 +129,38 @@ namespace Maquillaje.WebUI.Controllers
                     string script = "MostrarMensajeDanger('Ha ocurrido un error');";
                     TempData["Script"] = script;
                 }
-
                 return RedirectToAction("Index");
             }
+            catch (Exception error)
+            {
+
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(string id)
+        {
+
+            var delete = _gralService.EliminarDepartamento(id);
+
+            if (delete == 1)
+            {
+                string script = $"MostrarMensajeSuccess('El registro ha sido eliminado con éxito');";
+                TempData["Script"] = script;
+            }
+            else if (delete == 2)
+            {
+                string script = $"MostrarMensajeWarning('El registro ya está siendo utilizado');";
+                TempData["Script"] = script;
+            }
+            else
+            {
+                string script = "MostrarMensajeDanger('Ha ocurrido un error');";
+                TempData["Script"] = script;
+            }
+
+            return RedirectToAction("Index");
         }
     }
+}

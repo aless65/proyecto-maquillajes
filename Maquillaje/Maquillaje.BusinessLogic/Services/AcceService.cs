@@ -122,6 +122,11 @@ namespace Maquillaje.BusinessLogic.Services
         {
             return _usuarioRepository.RolesPantalla(role_Id, esAdmin, pant_Id);
         }
+
+        public IEnumerable<tbPantallas> PantallasMenu(tbPantallas item)
+        {
+            return _rolRepository.PantallasMenu(item);
+        }
         #endregion
     }
 

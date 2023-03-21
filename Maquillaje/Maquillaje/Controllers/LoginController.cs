@@ -40,6 +40,7 @@ namespace Maquillaje.WebUI.Controllers
                         HttpContext.Session.SetInt32("user_Id", item.user_Id);
                         HttpContext.Session.SetString("user_NombreUsuario",item.user_NombreUsuario);
                         HttpContext.Session.SetString("user_EsAdmin", item.user_EsAdmin.ToString());
+                        HttpContext.Session.SetInt32("role_Id", (int)item.role_Id);
 
                         TempData["user_Id"] = item.user_Id;
                         TempData["user_NombreUsuario"] = item.user_NombreUsuario;

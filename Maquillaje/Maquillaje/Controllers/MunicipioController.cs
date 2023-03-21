@@ -15,11 +15,13 @@ namespace Maquillaje.WebUI.Controllers
     {
 
         private readonly GralService _gralService;
+        private readonly AcceService _acceService;
         private readonly IMapper _mapper;
 
-        public MunicipioController(GralService gralService, IMapper mapper)
+        public MunicipioController(GralService gralService, AcceService acceService, IMapper mapper)
         {
             _gralService = gralService;
+            _acceService = acceService;
             _mapper = mapper;
         }
 
@@ -27,31 +29,58 @@ namespace Maquillaje.WebUI.Controllers
         [HttpGet("/Municipio/Listado")]
         public IActionResult Index()
         {
-            var listado = _gralService.ListadoMunicipios(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbMunicipios_VW>>(listado);
-            var ddldepartamentos = _gralService.ListadoDepartamentosView(out string error1);
+            ViewBag.pant_Id = 3;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            ViewBag.depa_Id = new SelectList(ddldepartamentos, "depa_Id", "depa_Nombre");
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-            if (TempData["Script"] is string script)
+            if (permiso == 1)
             {
-                TempData.Remove("Script");
-                ViewBag.Script = script;
-            }
 
-            return View(listadoMapeado);
+                var listado = _gralService.ListadoMunicipios(out string error);
+                var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbMunicipios_VW>>(listado);
+                var ddldepartamentos = _gralService.ListadoDepartamentosView(out string error1);
+
+                ViewBag.depa_Id = new SelectList(ddldepartamentos, "depa_Id", "depa_Nombre");
+
+                if (TempData["Script"] is string script)
+                {
+                    TempData.Remove("Script");
+                    ViewBag.Script = script;
+                }
+
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet("/Municipio/Details")]
         public IActionResult Details(string id)
         {
-            var listado = _gralService.ListadoMunicipios(out string error);
-            var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbMunicipios_VW>>(listado).Where(X => X.muni_id == id);
-            var ddldepartamentos = _gralService.ListadoDepartamentosView(out string error1);
+            ViewBag.pant_Id = 3;
+            ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+            ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            ViewBag.depa_Id = new SelectList(ddldepartamentos, "depa_Id", "depa_Nombre");
+            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-            return View(listadoMapeado);
+            if (permiso == 1)
+            {
+                var listado = _gralService.ListadoMunicipios(out string error);
+                var listadoMapeado = _mapper.Map<IEnumerable<VW_gral_tbMunicipios_VW>>(listado).Where(X => X.muni_id == id);
+                var ddldepartamentos = _gralService.ListadoDepartamentosView(out string error1);
+
+                ViewBag.depa_Id = new SelectList(ddldepartamentos, "depa_Id", "depa_Nombre");
+
+                return View(listadoMapeado);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Maquillaje.BusinessLogic.Services;
+using Maquillaje.Entities.Entities;
 using Maquillaje.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace Maquillaje.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-        public IActionResult Index()
+        public IActionResult Index(tbPantallas item)
         {
             string user_Id = HttpContext.Session.GetString("user_Id");
             if (user_Id == null || user_Id == "")
@@ -45,19 +46,31 @@ namespace Maquillaje.Controllers
                 HttpContext.Session.SetInt32("user_Id", 0);
                 HttpContext.Session.SetString("user_NombreUsuario", "");
                 HttpContext.Session.SetString("user_EsAdmin", "");
-                HttpContext.Session.SetString("role_Id", "");
+                HttpContext.Session.SetInt32("role_Id", 0);
                 return RedirectToAction("Index", "Login");
             }
             else
             {
                 ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
-                ViewBag.role_Id = HttpContext.Session.GetString("role_Id");
+                ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
+                item.role_Id = ViewBag.role_Id;
+                item.esAdmin = Convert.ToBoolean(ViewBag.user_EsAdmin);
                 HttpContext.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
                 HttpContext.Response.Headers.Add("Pragma", "no-cache");
                 HttpContext.Response.Headers.Add("Expires", "0");
             }
             return View();
+        }
+
+        public IActionResult PantallasMenu(tbPantallas item)
+        {
+            item.role_Id = (int)HttpContext.Session.GetInt32("role_Id");
+            item.esAdmin = Convert.ToBoolean(HttpContext.Session.GetString("user_EsAdmin"));
+
+            var pantallas = _acceService.PantallasMenu(item);
+
+            return Json(pantallas);
         }
 
         public IActionResult Privacy()

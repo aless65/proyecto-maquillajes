@@ -58,6 +58,14 @@
 }
 
 
+<script>
+    $(document).ready(function () {
+        $('#menuGeneral').addClass('active');
+        /*$('#clientesItem').addClass('active');*/
+        $('#subMenuGeneral').addClass('show');
+    });
+</script>
+
 @Html.Partial("_Modal_Create", new Maquillaje.Entities.Entities.VW_gral_tbDepartamentos_VW())
 
 @Html.Partial("_Modal_Edit", new Maquillaje.Entities.Entities.VW_gral_tbDepartamentos_VW())

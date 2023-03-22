@@ -31,24 +31,32 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
-
-            if (permiso == 1)
+            try
             {
-                var listado = _maquService.ListadoProveedores();
-                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProveedores_VW>>(listado);
 
-                if (TempData["Script"] is string script)
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+                if (permiso == 1)
                 {
-                    TempData.Remove("Script");
-                    ViewBag.Script = script;
-                }
+                    var listado = _maquService.ListadoProveedores();
+                    var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProveedores_VW>>(listado);
 
-                return View(listadoMapeado);
+                    if (TempData["Script"] is string script)
+                    {
+                        TempData.Remove("Script");
+                        ViewBag.Script = script;
+                    }
+
+                    return View(listadoMapeado);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
         }
 
@@ -59,18 +67,26 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
-
-            if (permiso == 1)
+            try
             {
-                var listado = _maquService.ListadoProveedores();
-                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProveedores_VW>>(listado).Where(X => X.prov_Id == id);
 
-                return View(listadoMapeado);
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+                if (permiso == 1)
+                {
+                    var listado = _maquService.ListadoProveedores();
+                    var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProveedores_VW>>(listado).Where(X => X.prov_Id == id);
+
+                    return View(listadoMapeado);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
         }
 

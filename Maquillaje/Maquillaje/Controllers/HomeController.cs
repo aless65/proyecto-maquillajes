@@ -54,8 +54,16 @@ namespace Maquillaje.Controllers
                 ViewBag.user_Id = HttpContext.Session.GetInt32("user_Id");
                 ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
                 ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
-                item.role_Id = ViewBag.role_Id;
-                item.esAdmin = Convert.ToBoolean(ViewBag.user_EsAdmin);
+                ViewBag.username = HttpContext.Session.GetString("user_NombreUsuario");
+                try
+                {
+                    item.role_Id = ViewBag.role_Id;
+                    item.esAdmin = Convert.ToBoolean(ViewBag.user_EsAdmin);
+                }
+                catch
+                {
+                    return RedirectToAction("Index", "Login");
+                }
                 HttpContext.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
                 HttpContext.Response.Headers.Add("Pragma", "no-cache");
                 HttpContext.Response.Headers.Add("Expires", "0");

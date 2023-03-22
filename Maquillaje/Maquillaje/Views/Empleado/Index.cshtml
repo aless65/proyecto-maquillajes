@@ -110,3 +110,21 @@
     sessionStorage.clear();
 </script>
 
+<script>
+    $(document).ready(function () {
+        $('#menuMaquillaje').addClass('active');
+        $('#empleadosItem').addClass('active');
+        $('#subMenuMaquillaje').addClass('show');
+    });
+
+</script>
+
+<script>
+    function eliminar(id) {
+        $("#id").val(id);
+
+        $("#modalDelete").appendTo("body").modal('show');
+    }
+
+</script>
+

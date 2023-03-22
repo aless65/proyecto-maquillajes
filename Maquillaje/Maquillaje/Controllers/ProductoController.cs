@@ -31,29 +31,37 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
-
-            if (permiso == 1)
+            try
             {
-                var listado = _maquService.ListadoProductosView();
-                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProductos_VW>>(listado);
-                var ddlcategorias = _maquService.ListadoCategorias(out string error);
-                var ddlproveedores = _maquService.ListadoProveedores();
 
-                ViewBag.cate_Id = new SelectList(ddlcategorias, "cate_Id", "cate_Nombre");
-                ViewBag.prov_Id = new SelectList(ddlproveedores, "prov_Id", "prov_Nombre");
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-                if (TempData["Script"] is string script)
+                if (permiso == 1)
                 {
-                    TempData.Remove("Script");
-                    ViewBag.Script = script;
-                }
+                    var listado = _maquService.ListadoProductosView();
+                    var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProductos_VW>>(listado);
+                    var ddlcategorias = _maquService.ListadoCategorias(out string error);
+                    var ddlproveedores = _maquService.ListadoProveedores();
 
-                return View(listadoMapeado);
+                    ViewBag.cate_Id = new SelectList(ddlcategorias, "cate_Id", "cate_Nombre");
+                    ViewBag.prov_Id = new SelectList(ddlproveedores, "prov_Id", "prov_Nombre");
+
+                    if (TempData["Script"] is string script)
+                    {
+                        TempData.Remove("Script");
+                        ViewBag.Script = script;
+                    }
+
+                    return View(listadoMapeado);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
         }
@@ -65,23 +73,31 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
-
-            if (permiso == 1)
+            try
             {
-                var listado = _maquService.ListadoProductosView();
-                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProductos_VW>>(listado).Where(X => X.prod_Id == id);
-                var ddlcategorias = _maquService.ListadoCategorias(out string error);
-                var ddlproveedores = _maquService.ListadoProveedores();
 
-                ViewBag.cate_Id = new SelectList(ddlcategorias, "cate_Id", "cate_Nombre");
-                ViewBag.prov_Id = new SelectList(ddlproveedores, "prov_Id", "prov_Nombre");
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-                return View(listadoMapeado);
+                if (permiso == 1)
+                {
+                    var listado = _maquService.ListadoProductosView();
+                    var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbProductos_VW>>(listado).Where(X => X.prod_Id == id);
+                    var ddlcategorias = _maquService.ListadoCategorias(out string error);
+                    var ddlproveedores = _maquService.ListadoProveedores();
+
+                    ViewBag.cate_Id = new SelectList(ddlcategorias, "cate_Id", "cate_Nombre");
+                    ViewBag.prov_Id = new SelectList(ddlproveedores, "prov_Id", "prov_Nombre");
+
+                    return View(listadoMapeado);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
         }
 

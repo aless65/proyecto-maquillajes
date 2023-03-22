@@ -43,6 +43,7 @@ namespace Maquillaje.WebUI.Controllers
                         HttpContext.Session.SetInt32("role_Id", (int)item.role_Id);
                         HttpContext.Session.SetInt32("empe_Id", item.empe_Id);
                         HttpContext.Session.SetInt32("sucu_Id", item.sucu_Id);
+                        ViewBag.username = HttpContext.Session.GetString("user_NombreUsuario");
                     }
                     return RedirectToAction("Index","Home");
                 }

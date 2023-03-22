@@ -121,8 +121,7 @@ ADD CONSTRAINT FK_acce_tbRoles_acce_tbUsuarios_role_UsuCreacion_user_Id 	FOREIGN
 
 GO
 INSERT INTO acce.tbRoles(role_Nombre, role_UsuCreacion)
-VALUES ('Admin', 1),
-	   ('Vendedor', 1)
+VALUES ('Vendedor', 1)
 
 
 --********* ALTERAR TABLA USUARIOS **************--
@@ -2685,13 +2684,16 @@ VALUES ('Inventario', 1),
 	   ('Recursos Humanos', 1)
 
 INSERT INTO [acce].[tbPantallasPorRoles] ([role_Id], [pant_Id], [pantrole_UsuCreacion])
-VALUES (2, 7, 1),
-	   (2, 8, 1),
+VALUES (1, 8, 1),
+	   (1, 9, 1),
+	   (1, 6, 1),
 	   (2, 5, 1),
+	   (2, 10, 1),
+	   (2, 11, 1),
+	   (3, 7, 1),
+	   (3, 12, 1),
 	   (3, 4, 1),
-	   (3, 10, 1),
-	   (3, 11, 1),
-	   (4, 6, 1)
+	   (3, 6, 1)
 
 GO
 EXEC maqu.UDP_maqu_tbProveedores_Insert 'LOréal Paris', 'contact@loreal.com', '1-800-322-2036', 1

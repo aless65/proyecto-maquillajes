@@ -106,11 +106,11 @@
 
                         <!-- Brand logo -->
                         <a href="./index.html" class="brand-img stretched-link">
-                            <img src="~/img/icono.png" alt="Nifty Logo" class="Nifty logo" width="40" height="40">
+                            <img src="~/img/icono.png" width="40" height="40">
                         </a>
 
                         <!-- Brand title -->
-                        <div class="brand-title">Nifty</div>
+                        <div class="brand-title">Andrea's</div>
 
                         <!-- You can also use IMG or SVG instead of a text element. -->
 
@@ -400,7 +400,7 @@
                                         <img class="img-sm rounded-circle" src="~/img/profile-photos/1.png" alt="Profile Picture" loading="lazy">
                                     </div>
                                     <div class="flex-grow-1 ms-3">
-                                        <h5 class="mb-0">Aaron Chavez</h5>
+                                        <h5 class="mb-0">@ViewBag.user_Nombre = session?.GetString("user_NombreUsuario");</h5>
                                         <span class="text-muted fst-italic">aaron_chavez@example.com</span>
                                     </div>
                                 </div>
@@ -494,9 +494,9 @@
                                 <!-- User name and position -->
                                 <button class="d-block btn shadow-none p-2" data-bs-toggle="collapse" data-bs-target="#usernav" aria-expanded="false" aria-controls="usernav">
                                     <span class="dropdown-toggle d-flex justify-content-center align-items-center">
-                                        <h6 class="mb-0 me-3">Aaron Chavez</h6>
+                                        <h6 class="mb-0 me-3">@ViewBag.username</h6>
                                     </span>
-                                    <small class="text-muted">Administrator</small>
+                                    @*<small class="text-muted">Administrator</small>*@
                                 </button>
 
                                 <!-- Collapsed user menu -->

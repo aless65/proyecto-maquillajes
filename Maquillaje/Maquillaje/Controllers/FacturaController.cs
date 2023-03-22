@@ -55,15 +55,22 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+            try
+            {
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-            if (permiso == 1)
-            {
-                return View(listado);
+                if (permiso == 1)
+                {
+                    return View(listado);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
 
@@ -104,16 +111,24 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+            try
+            {
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-            if (permiso == 1)
-            {
-                return View(item2);
+                if (permiso == 1)
+                {
+                    return View(item2);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
+
         }
 
 
@@ -159,41 +174,50 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
-
-
-            if (permiso == 1)
+            try
             {
-                var factura = _maquService.ObtenerIDFactura(id);
 
-                if (factura == null)
+
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+
+
+                if (permiso == 1)
                 {
-                    return RedirectToAction("Index");
-                }
+                    var factura = _maquService.ObtenerIDFactura(id);
 
-                if (TempData["Script"] is string script)
+                    if (factura == null)
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                    if (TempData["Script"] is string script)
+                    {
+                        TempData.Remove("Script");
+                        ViewBag.Script = script;
+                    }
+
+                    var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
+                    var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
+                    var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
+                    var detalles = _maquService.ListadoFacturasDetalles(id);
+
+                    ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
+                    ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", $"clie_Nombres");
+                    ViewBag.meto_Id = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
+                    ViewBag.detalles = detalles;
+                    ViewBag.fact_Id = id;
+
+
+                    return View(factura);
+                }
+                else
                 {
-                    TempData.Remove("Script");
-                    ViewBag.Script = script;
+                    return RedirectToAction("Index", "Home");
                 }
-
-                var ddlCliente = _maquService.ListadoClientes(out string error).ToList();
-                var ddlMetodo = _maquService.ListadoMetodosPago().ToList();
-                var ddlCategoria = _maquService.ListadoCategorias(out string error1).ToList();
-                var detalles = _maquService.ListadoFacturasDetalles(id);
-
-                ViewBag.cate = new SelectList(ddlCategoria, "cate_Id", "cate_Nombre");
-                ViewBag.clie_Id = new SelectList(ddlCliente, "clie_Id", $"clie_Nombres");
-                ViewBag.meto_Id = new SelectList(ddlMetodo, "meto_Id", "meto_Nombre");
-                ViewBag.detalles = detalles;
-                ViewBag.fact_Id = id;
-
-
-                return View(factura);
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
         }
 
@@ -342,24 +366,31 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+            try
+            {
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-            if (permiso == 1)
-            {
-                if (id < 1)
-            {
-                string script = $"MostrarMensajeDanger('No se ha encontrado esta factura');";
-                TempData["Script"] = script;
-                return RedirectToAction("Index");
+                if (permiso == 1)
+                {
+                    if (id < 1)
+                    {
+                        string script = $"MostrarMensajeDanger('No se ha encontrado esta factura');";
+                        TempData["Script"] = script;
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View(listadoMapeado);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return View(listadoMapeado);
-            }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
         }
 

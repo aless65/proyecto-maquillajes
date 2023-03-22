@@ -34,27 +34,35 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
-
-            if (permiso == 1)
+            try
             {
 
-                var listado = _maquService.ListadoSucursales();
-                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado);
-                var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
-                ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-                if (TempData["Script"] is string script)
+                if (permiso == 1)
                 {
-                    TempData.Remove("Script");
-                    ViewBag.Script = script;
-                }
 
-                return View(listadoMapeado);
+                    var listado = _maquService.ListadoSucursales();
+                    var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado);
+                    var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
+                    ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
+
+                    if (TempData["Script"] is string script)
+                    {
+                        TempData.Remove("Script");
+                        ViewBag.Script = script;
+                    }
+
+                    return View(listadoMapeado);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
         }
 
@@ -65,20 +73,28 @@ namespace Maquillaje.WebUI.Controllers
             ViewBag.role_Id = HttpContext.Session.GetInt32("role_Id");
             ViewBag.user_EsAdmin = HttpContext.Session.GetString("user_EsAdmin");
 
-            var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
+            try
+            {
+                var permiso = _acceService.RolesPantalla(ViewBag.role_Id, Convert.ToBoolean(ViewBag.user_EsAdmin), ViewBag.pant_Id);
 
-            if (permiso == 1)
-            {
-                var listado = _maquService.ListadoSucursales();
-                var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado).Where(X => X.sucu_Id == id);
-                var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
-                ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
-                return View(listadoMapeado);
+                if (permiso == 1)
+                {
+                    var listado = _maquService.ListadoSucursales();
+                    var listadoMapeado = _mapper.Map<IEnumerable<VW_maqu_tbSucursales_VW>>(listado).Where(X => X.sucu_Id == id);
+                    var ddlDepartamentos = _gralService.ListadoDepartamento(out string error).ToList();
+                    ViewBag.depa_Id = new SelectList(ddlDepartamentos, "depa_Id", "depa_Nombre");
+                    return View(listadoMapeado);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
+
         }
 
 
